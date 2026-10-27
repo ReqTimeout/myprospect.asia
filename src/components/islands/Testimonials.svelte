@@ -3,6 +3,7 @@
   import emblaCarouselSvelte from 'embla-carousel-svelte';
   import { Quote } from '@lucide/svelte';
   import type { Testimonial } from '../../data/testimonials';
+  import { liveJson } from '../../lib/live';
 
   interface Props {
     items: Testimonial[];
@@ -10,12 +11,28 @@
 
   let { items }: Props = $props();
 
+  let list = $state<Testimonial[]>(items);
   let embla = $state<any>(null);
   let selected = $state(0);
 
+  onMount(async () => {
+    const data = await liveJson<{ title: string; body: string; meta: { asal?: string; olahraga?: string } }[]>(
+      '/api/content/testimonials',
+    );
+    if (data && data.length > 0) {
+      list = data.map((t) => ({
+        nama: t.title,
+        asal: t.meta.asal ?? 'Atlet Prospect Asia',
+        olahraga: t.meta.olahraga ?? '',
+        kutipan: t.body,
+      }));
+      embla?.reInit?.();
+    }
+  });
+
   const onInit = (event: CustomEvent) => {
     embla = event.detail;
-    embla.on('select', () => selected = embla.selectedScrollSnap());
+    embla.on('select', () => (selected = embla.selectedScrollSnap()));
   };
 
   const scrollTo = (i: number) => embla?.scrollTo(i);
@@ -24,7 +41,7 @@
 <div class="embla" use:emblaCarouselSvelte={{ options: { loop: true, align: 'start' }, plugins: [] }} oninit={onInit}>
   <div class="embla__viewport overflow-hidden">
     <div class="embla__container flex gap-4">
-      {#each items as t (t.nama)}
+      {#each list as t (t.nama)}
         <figure class="embla__slide min-w-[85%] shrink-0 rounded-3xl border border-white/10 bg-white/5 p-6 sm:min-w-[60%] lg:min-w-[45%]">
           <Quote size={22} class="mb-3 text-gold" aria-hidden="true" />
           <blockquote class="text-sm leading-relaxed text-bone/85 sm:text-base">
@@ -36,7 +53,7 @@
             </span>
             <div class="leading-tight">
               <p class="text-sm font-bold">{t.nama}</p>
-              <p class="text-xs text-bone/50">{t.asal} · {t.olahraga}</p>
+              <p class="text-xs text-bone/50">{t.asal}{t.olahraga ? ` · ${t.olahraga}` : ''}</p>
             </div>
           </figcaption>
         </figure>
@@ -45,7 +62,7 @@
   </div>
 
   <div class="mt-5 flex justify-center gap-1">
-    {#each items as _, i (i)}
+    {#each list as _, i (i)}
       <button
         type="button"
         aria-label={`Slide ${i + 1}`}

@@ -1,6 +1,7 @@
 <script lang="ts">
   import { untrack } from 'svelte';
   import { LayoutDashboard, Users, FileText, Image as ImageIcon, Settings, LogOut, ExternalLink } from '@lucide/svelte';
+  import AdminKonten from './AdminKonten.svelte';
 
   type Status = 'baru' | 'dikontak' | 'terjadwal' | 'daftar' | 'gagal';
 
@@ -378,12 +379,7 @@
         {/if}
 
       {:else if tab === 'konten'}
-        <div class="rounded-3xl border border-dashed border-white/15 p-8 text-center">
-          <p class="display text-2xl">Konten</p>
-          <p class="mt-2 text-sm text-bone/60">
-            CRUD Program · Workshop · Testimoni · Coach · Blog — menyusul di tahap berikutnya.
-          </p>
-        </div>
+        <AdminKonten />
       {:else if tab === 'media'}
         <div class="rounded-3xl border border-dashed border-white/15 p-8 text-center">
           <p class="display text-2xl">Media</p>
