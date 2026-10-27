@@ -1,0 +1,24 @@
+---
+import Counter from './islands/Counter.svelte';
+
+const stats = [
+  { to: 2175, suffix: '+', label: 'Atlet teredukasi' },
+  { to: 25, suffix: '+', label: 'Akademi olahraga' },
+  { to: 6, suffix: '', label: 'Coach berpengalaman' },
+];
+---
+
+<section class="mx-auto max-w-6xl px-4 py-10 sm:px-6" aria-label="Stats Prospect Asia">
+  <ul class="grid grid-cols-3 gap-3 sm:gap-6">
+    {
+      stats.map((s) => (
+        <li class="rounded-3xl border border-white/10 bg-white/5 px-3 py-6 text-center sm:px-6">
+          <p class="display text-3xl text-gold sm:text-5xl">
+            <Counter client:visible to={s.to} suffix={s.suffix} />
+          </p>
+          <p class="mt-2 text-[11px] font-semibold tracking-wide text-bone/60 uppercase sm:text-xs">{s.label}</p>
+        </li>
+      ))
+    }
+  </ul>
+</section>

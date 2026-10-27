@@ -1,0 +1,99 @@
+---
+import { waLink } from '../lib/wa';
+import { programs, formatIdr } from '../data/programs';
+---
+
+<section id="program" class="mx-auto max-w-6xl scroll-mt-20 px-4 py-14 sm:px-6">
+  <div class="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+    <div>
+      <p class="text-xs font-bold tracking-[0.2em] text-gold uppercase">Program Unggulan</p>
+      <h2 class="display mt-2 text-4xl sm:text-5xl">Private 1-on-1<br />buat naik level</h2>
+    </div>
+    <p class="max-w-xs text-sm text-bone/60">
+      Semua online, jadwal fleksibel, didampingi coach. Mulai dari tes penempatan dulu.
+    </p>
+  </div>
+
+  <div class="grid gap-5 md:grid-cols-3">
+    {
+      programs.map((p) => (
+        <article class="group relative flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-ink-2 transition duration-200 hover:-translate-y-1 hover:border-brand/50 hover:shadow-[0_24px_50px_-24px_rgba(200,35,43,0.45)]">
+          {p.badge && (
+            <p
+              class:list={[
+                'px-5 py-2 text-[11px] font-black tracking-widest uppercase',
+                p.badgeTone === 'gold' ? 'bg-gold text-ink' : 'bg-brand text-white',
+              ]}
+            >
+              {p.badge}
+            </p>
+          )}
+
+          <div class="flex flex-1 flex-col p-6">
+            <div class="flex items-baseline justify-between gap-2">
+              <h3 class="display text-2xl">{p.nama}</h3>
+              {p.online && (
+                <span class="rounded-full border border-white/15 px-2 py-0.5 text-[10px] font-bold tracking-wide text-bone/60 uppercase">
+                  Online
+                </span>
+              )}
+            </div>
+            <p class="mt-1 text-xs text-bone/50">{p.sub}</p>
+
+            <div class="mt-5">
+              {p.hargaCoret ? (
+                <p class="text-sm text-bone/40 line-through">Rp{formatIdr(p.hargaCoret)}</p>
+              ) : null}
+              {p.harga > 0 ? (
+                <p class="display text-3xl text-brand">Rp{formatIdr(p.harga)}</p>
+              ) : (
+                <p class="display text-2xl text-gold">Info via WA</p>
+              )}
+              <p class="mt-0.5 text-[11px] text-bone/50">{p.satuan}</p>
+            </div>
+
+            <p class="mt-4 text-sm leading-relaxed text-bone/70">{p.ringkasan}</p>
+
+            <ul class="mt-4 space-y-2 text-[13px] text-bone/75">
+              {p.didapat.slice(0, 5).map((d) => (
+                <li class="flex gap-2">
+                  <span class="text-gold" aria-hidden="true">
+                    ✓
+                  </span>
+                  {d}
+                </li>
+              ))}
+            </ul>
+
+            <a
+              href={waLink({ program: p.nama, source: `card-${p.slug}` })}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-wa-cta={`program-${p.slug}`}
+              class="mt-6 inline-flex items-center justify-center gap-2 rounded-2xl bg-brand px-5 py-3.5 text-sm font-bold text-white transition hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none active:scale-95"
+            >
+              Daftar via WhatsApp ↗
+            </a>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+
+  <div class="mt-6 flex flex-col items-start gap-4 rounded-3xl border border-dashed border-gold/40 bg-gold/5 p-6 sm:flex-row sm:items-center sm:justify-between">
+    <div>
+      <p class="text-xs font-black tracking-widest text-gold uppercase">Coming Soon</p>
+      <p class="display mt-1 text-2xl">Membership Program</p>
+      <p class="mt-1 text-sm text-bone/60">Benefit berkelanjutan buat atlet — daftar early access dulu.</p>
+    </div>
+    <a
+      href={waLink({ program: 'Membership (early access)', source: 'membership' })}
+      target="_blank"
+      rel="noopener noreferrer"
+      data-wa-cta="membership"
+      class="rounded-2xl border border-gold px-5 py-3 text-sm font-bold text-gold transition hover:bg-gold hover:text-ink focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none active:scale-95"
+    >
+      Info Early Access ↗
+    </a>
+  </div>
+</section>

@@ -1,0 +1,52 @@
+---
+const chips = ['Fun Communication for Active Kids', 'Sports Communication for Young Athletes', 'Digital Literacy & Personal Branding'];
+---
+
+<section class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+  <div class="grid items-center gap-8 md:grid-cols-2 md:gap-12">
+    <div class="relative order-2 md:order-1">
+      <div class="grain relative overflow-hidden rounded-3xl border border-white/10 aspect-4/3">
+        <img
+          src="/media/workshop-hero.jpg"
+          alt="Atlet mengikuti sesi Sports Communication bersama coach Prospect Asia"
+          loading="lazy"
+          width="800"
+          height="600"
+          class="h-full w-full object-cover"
+          onerror="this.style.display='none'"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent" aria-hidden="true"></div>
+        <p class="display absolute bottom-4 left-5 text-xl text-bone/90 italic">Berani Bicara.</p>
+      </div>
+      <div
+        class="absolute -right-3 -bottom-3 hidden rounded-2xl border border-gold/40 bg-ink px-4 py-3 shadow-xl sm:block"
+        aria-hidden="true"
+      >
+        <p class="display text-2xl text-gold">2.175+</p>
+        <p class="text-[10px] font-bold tracking-wider text-bone/60 uppercase">atlet teredukasi</p>
+      </div>
+    </div>
+
+    <div class="order-1 md:order-2">
+      <p class="text-xs font-bold tracking-[0.2em] text-gold uppercase">Apa itu Sports Communication?</p>
+      <h2 class="display mt-3 text-4xl leading-[0.95] sm:text-5xl">
+        Skill wajib<br />
+        buat <span class="text-brand">atlet modern</span>
+      </h2>
+      <p class="mt-5 text-sm leading-relaxed text-bone/70 sm:text-base">
+        Melalui <strong class="text-bone">public speaking</strong> dan <strong class="text-bone">bahasa Inggris khusus atlet</strong>,
+        mereka belajar berkomunikasi dengan percaya diri, menghadapi media, dan membuka peluang lebih besar dalam karier olahraga.
+      </p>
+
+      <ul class="mt-6 flex flex-wrap gap-2">
+        {
+          chips.map((c) => (
+            <li class="rounded-full border border-white/15 bg-white/5 px-3.5 py-2 text-[11px] font-semibold text-bone/75 sm:text-xs">
+              {c}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>

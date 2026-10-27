@@ -1,0 +1,91 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Dock from '../components/islands/Dock.svelte';
+import Footer from '../components/Footer.astro';
+import StatsBar from '../components/StatsBar.astro';
+import CoachesSection from '../components/CoachesSection.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { partners } from '../data/partners';
+import { waLink } from '../lib/wa';
+
+const akademi = partners.filter((p) => p.jenis === 'akademi');
+const mitra = partners.filter((p) => p.jenis === 'mitra');
+---
+
+<Base title="Tentang Prospect Asia — PT Kita Berani Bicara" description="Kenal lebih dekat dengan Prospect Asia: founder, coach, dan kolaborasi akademi olahraga di Indonesia.">
+  <Header />
+
+  <main class="pt-14">
+    <section class="mx-auto max-w-4xl px-4 py-14 sm:px-6">
+      <p class="text-xs font-bold tracking-[0.2em] text-gold uppercase">Tentang Kami</p>
+      <h1 class="display mt-2 text-5xl leading-[0.95] sm:text-6xl">
+        Kita Berani<br /><span class="text-brand">Bicara</span>
+      </h1>
+      <p class="mt-6 text-base leading-relaxed text-bone/70">
+        Prospect Asia adalah program <strong class="text-bone">Sports Communication</strong> dari
+        <strong class="text-bone"> PT Kita Berani Bicara</strong>. Kami membekali atlet muda dengan
+        public speaking &amp; bahasa Inggris khusus konteks olahraga — supaya mereka tidak hanya jago
+        di lapangan, tapi juga percaya diri di depan media, sponsor, dan panggung internasional.
+      </p>
+
+      <div class="mt-8 rounded-3xl border border-white/10 bg-white/5 p-6">
+        <p class="text-xs font-black tracking-widest text-gold uppercase">Founder</p>
+        <p class="display mt-2 text-3xl">Ferri Ahrial</p>
+        <p class="mt-2 text-sm leading-relaxed text-bone/65">
+          Sports Communication Trainer for Athletes · ex-media PERSIB Bandung &amp; PSSI.
+          Mendampingi atlet berbicara di depan media sejak 2025.
+        </p>
+      </div>
+    </section>
+
+    <StatsBar />
+
+    <CoachesSection />
+
+    <section class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+      <div class="grid gap-10 md:grid-cols-2">
+        <div>
+          <p class="text-xs font-black tracking-widest text-gold uppercase">Kerja Sama Klub & Akademi</p>
+          <ul class="mt-4 space-y-2.5">
+            {
+              akademi.map((a) => (
+                <li class="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-bone/85">
+                  <span class="h-2 w-2 shrink-0 rounded-full bg-brand" aria-hidden="true" />
+                  {a.nama}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <div>
+          <p class="text-xs font-black tracking-widest text-gold uppercase">Mitra Resmi</p>
+          <ul class="mt-4 space-y-2.5">
+            {
+              mitra.map((m) => (
+                <li class="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-bone/85">
+                  <span class="h-2 w-2 shrink-0 rounded-full bg-gold" aria-hidden="true" />
+                  {m.nama}
+                </li>
+              ))
+            }
+          </ul>
+          <a
+            href={waLink({ program: 'Kerja sama akademi/klub', source: 'tentang' })}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-wa-cta="tentang"
+            class="mt-6 inline-flex rounded-2xl bg-brand px-6 py-3.5 text-sm font-bold text-white transition hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none active:scale-95"
+          >
+            Ajak akademimu kolaborasi ↗
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <CtaBand />
+  </main>
+
+  <Footer />
+  <Dock client:load />
+</Base>

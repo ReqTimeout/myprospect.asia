@@ -16,6 +16,8 @@
 
   --animate-pulse-soft: pulse-soft 2.4s ease-in-out infinite;
   --animate-marquee: marquee 32s linear infinite;
+  --animate-slide-up: slide-up 0.28s cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
+  --animate-fade-in: fade-in 0.4s ease both;
 
   @keyframes pulse-soft {
     0%, 100% { transform: scale(1); opacity: 1; }
@@ -25,6 +27,16 @@
   @keyframes marquee {
     from { transform: translateX(0); }
     to { transform: translateX(-50%); }
+  }
+
+  @keyframes slide-up {
+    from { opacity: 0; transform: translateY(16px) scale(0.96); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 }
 
@@ -63,6 +75,151 @@ body {
 
 .angle-cut {
   clip-path: polygon(0 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%);
+}
+
+.prose-custom {
+  color: color-mix(in srgb, var(--color-bone) 80%, transparent);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.prose-custom h2 {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  color: var(--color-bone);
+  font-size: 1.75rem;
+  line-height: 1.1;
+  margin-top: 2.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose-custom h3 {
+  color: var(--color-bone);
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-top: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose-custom p {
+  margin-bottom: 1.1rem;
+}
+
+.prose-custom strong {
+  color: var(--color-bone);
+}
+
+.prose-custom a {
+  color: var(--color-gold);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.prose-custom ul,
+.prose-custom ol {
+  margin: 1.25rem 0;
+  padding-left: 1.5rem;
+}
+
+.prose-custom ul {
+  list-style: none;
+}
+
+.prose-custom ul li {
+  position: relative;
+  padding-left: 0.25rem;
+  margin-bottom: 0.6rem;
+}
+
+.prose-custom ul li::before {
+  content: "✓";
+  position: absolute;
+  left: -1.5rem;
+  color: var(--color-gold);
+}
+
+.prose-custom ol {
+  list-style: decimal;
+}
+
+.prose-custom ol li {
+  margin-bottom: 0.6rem;
+  padding-left: 0.35rem;
+}
+
+.prose-custom ol li::marker {
+  color: var(--color-gold);
+  font-weight: 700;
+}
+
+.prose-custom blockquote {
+  border-left: 3px solid var(--color-gold);
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 0 1rem 1rem 0;
+  padding: 1rem 1.25rem;
+  margin: 1.75rem 0;
+  font-style: italic;
+  color: color-mix(in srgb, var(--color-bone) 88%, transparent);
+}
+
+.prose-custom {
+  color: color-mix(in srgb, var(--color-bone) 82%, transparent);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.prose-custom > * + * {
+  margin-top: 1.1em;
+}
+
+.prose-custom h2 {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  text-transform: uppercase;
+  color: var(--color-bone);
+  margin-top: 2em;
+}
+
+.prose-custom h3 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--color-bone);
+  margin-top: 1.8em;
+}
+
+.prose-custom strong {
+  color: var(--color-bone);
+  font-weight: 700;
+}
+
+.prose-custom a {
+  color: var(--color-gold);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.prose-custom ul,
+.prose-custom ol {
+  padding-left: 1.4em;
+}
+
+.prose-custom ul {
+  list-style: disc;
+}
+
+.prose-custom ol {
+  list-style: decimal;
+}
+
+.prose-custom li + li {
+  margin-top: 0.4em;
+}
+
+.prose-custom blockquote {
+  border-left: 3px solid var(--color-gold);
+  padding: 0.4em 0 0.4em 1.1em;
+  font-style: italic;
+  color: color-mix(in srgb, var(--color-bone) 70%, transparent);
 }
 
 @media (prefers-reduced-motion: reduce) {
