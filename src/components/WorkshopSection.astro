@@ -43,15 +43,23 @@ import { workshops, formatIdr } from '../data/workshops';
             ))}
           </ul>
 
-          <a
-            href={waLink({ program: `Workshop ${w.nama}`, source: `workshop-${w.slug}` })}
-            target="_blank"
-            rel="noopener noreferrer"
-            data-wa-cta={`workshop-${w.slug}`}
-            class="mt-6 inline-flex items-center justify-center gap-2 rounded-2xl border border-gold px-5 py-3.5 text-sm font-bold text-gold transition hover:bg-gold hover:text-ink focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none active:scale-95"
-          >
-            Booking via WhatsApp ↗
-          </a>
+          <div class="mt-6 flex flex-wrap items-center gap-3">
+            <a
+              href={waLink({ program: w.nama, source: `workshop-${w.slug}` })}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-wa-cta={`workshop-${w.slug}`}
+              class="inline-flex items-center justify-center gap-2 rounded-2xl border border-gold px-5 py-3.5 text-sm font-bold text-gold transition hover:bg-gold hover:text-ink focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none active:scale-95"
+            >
+              Booking via WhatsApp ↗
+            </a>
+            <a
+              href={`/workshop/${w.slug}`}
+              class="rounded-xl px-2 py-3 text-xs font-bold text-gold transition hover:underline focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none"
+            >
+              Detail →
+            </a>
+          </div>
         </article>
       ))
     }

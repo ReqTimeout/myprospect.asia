@@ -65,15 +65,23 @@ import { programs, formatIdr } from '../data/programs';
               ))}
             </ul>
 
-            <a
-              href={waLink({ program: p.nama, source: `card-${p.slug}` })}
-              target="_blank"
-              rel="noopener noreferrer"
-              data-wa-cta={`program-${p.slug}`}
-              class="mt-6 inline-flex items-center justify-center gap-2 rounded-2xl bg-brand px-5 py-3.5 text-sm font-bold text-white transition hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none active:scale-95"
-            >
-              Daftar via WhatsApp ↗
-            </a>
+            <div class="mt-6 flex flex-wrap items-center gap-3">
+              <a
+                href={waLink({ program: p.nama, source: `card-${p.slug}` })}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-wa-cta={`program-${p.slug}`}
+                class="inline-flex items-center justify-center gap-2 rounded-2xl bg-brand px-5 py-3.5 text-sm font-bold text-white transition hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none active:scale-95"
+              >
+                Daftar via WhatsApp ↗
+              </a>
+              <a
+                href={`/program/${p.slug}`}
+                class="rounded-xl px-2 py-3 text-xs font-bold text-gold transition hover:underline focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none"
+              >
+                Detail →
+              </a>
+            </div>
           </div>
         </article>
       ))

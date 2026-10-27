@@ -31,5 +31,35 @@ const {
   </head>
   <body class="min-h-dvh antialiased">
     <slot />
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function () {
+        window.dataLayer.push(arguments);
+      };
+      window.addEventListener('pa:popup_open', function () {
+        window.gtag('event', 'popup_open');
+      });
+      function beacon(path, data) {
+        try {
+          if (navigator.sendBeacon) {
+            navigator.sendBeacon(path, new Blob([JSON.stringify(data)], { type: 'application/json' }));
+          }
+        } catch (e) {}
+      }
+      document.addEventListener('click', function (e) {
+        var el = e.target && e.target.closest ? e.target.closest('[data-wa-cta]') : null;
+        if (!el || el.tagName !== 'A') return;
+        var slug = el.getAttribute('data-wa-cta') || 'unknown';
+        window.gtag('event', 'wa_click', { cta: slug });
+        beacon('/api/click', { slug: slug });
+      });
+      document.addEventListener('submit', function (e) {
+        var form = e.target;
+        if (!form || !form.getAttribute || form.getAttribute('action') !== '/api/leads') return;
+        var btn = form.querySelector('[data-wa-cta]');
+        window.gtag('event', 'lead_submit', { cta: btn ? btn.getAttribute('data-wa-cta') : 'form' });
+        if (btn) beacon('/api/click', { slug: btn.getAttribute('data-wa-cta') });
+      });
+    </script>
   </body>
 </html>
