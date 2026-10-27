@@ -343,7 +343,7 @@ Output awal = `*.pages.dev` preview dulu; production domain aktif setelah NS pro
 | **F1 — Fondasi** | scaffold repo + design tokens + deploy preview ke pages.dev | ✅ selesai (D1 `prospect-db`, Pages `myprospect`) |
 | **F2 — Halaman publik** | Home (13 section, bab 6.1) + program/workshop/blog/tentang/faq, dock iOS | ✅ selesai (11 rute, audit pw-vision 0 bug) |
 | **F3 — Wa-first konversi** | popup, form lead→D1→wa.deep-link, click GA events | ✅ selesai (`/api/leads` 302 pre-filled, honeypot, `/api/click`, dataLayer events) |
-| **F4 — Admin island** | Leads + Konten + Media/R2 + Pengaturan + Access login | 🟡 F4a selesai: login (HMAC cookie + secret Pages), middleware proteksi `/admin*`, Dashboard + Leads (filter status, patch status, catatan, tombol WA per lead); sisa: Konten CRUD, Pengaturan, Media (R2), integrasi CF Access |
+| **F4 — Admin island** | Leads + Konten + Media/R2 + Pengaturan + Access login | 🟡 F4a+F4b selesai: login HMAC cookie + middleware, Dashboard, Leads (filter/patch/catatan/WA), **Pengaturan live** (WA number, popup text/delay/aktif, GA4 ID — via `/api/settings`, popup & form lead ikut); sisa: Konten CRUD (butuh sinkron data↔site), Media (R2), CF Access |
 | **F5 — Produksi** | assets generate (MiniMax A1–A6), foto klien final, SEO schema, GA4, custom domain live | 🟡 A1–A6 selesai (7 gambar, ter-wire: OG, favicon, hero backdrop, membership, workshop, CTA band); sisa: schema.org, GA4 ID, custom domain, foto klien final |
 | **F2b (fase 2)** | Membership aktif, materi online/LMS, WA Cloud API auto-reply, EN (opsional) | ⬜ |
 

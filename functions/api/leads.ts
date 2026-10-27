@@ -1,5 +1,7 @@
 type Env = { DB: D1Database };
 
+import { getSettings } from './settings';
+
 function normWa(raw: string): string {
   let d = raw.replace(/\D/g, '');
   if (d.startsWith('0')) d = '62' + d.slice(1);
@@ -40,5 +42,8 @@ export const onRequestPost = async (context: { request: Request; env: Env }): Pr
     (catatan ? ` Catatan: ${catatan}.` : '') +
     ` Sumber: ${sumber}. Boleh info jadwal & detailnya?`;
 
-  return Response.redirect(`https://wa.me/6285924041004?text=${encodeURIComponent(text)}`, 302);
+  const settings = await getSettings(env);
+  const waNumber = settings.wa_number || '6285924041004';
+
+  return Response.redirect(`https://wa.me/${waNumber}?text=${encodeURIComponent(text)}`, 302);
 };

@@ -51,6 +51,18 @@
   let catatanDraft = $state('');
   let saving = $state(false);
 
+  let settingsForm = $state({
+    wa_number: '',
+    popup_enabled: '1',
+    popup_text: '',
+    popup_delay_sec: '8',
+    ga4_id: '',
+  });
+  let settingsLoaded = $state(false);
+  let settingsSaving = $state(false);
+  let settingsMsg = $state('');
+  let settingsErr = $state('');
+
   async function api(path: string, init?: RequestInit): Promise<Response> {
     const res = await fetch(path, init);
     if (res.status === 401) {
@@ -88,8 +100,49 @@
     const t = tab;
     if (t === 'dashboard' || t === 'leads') {
       untrack(() => refresh());
+    } else if (t === 'pengaturan') {
+      untrack(() => loadSettings());
     }
   });
+
+  async function loadSettings() {
+    settingsMsg = '';
+    settingsErr = '';
+    try {
+      const res = await api('/api/admin/settings');
+      const s = (await res.json()) as Record<string, string>;
+      settingsForm = {
+        wa_number: s.wa_number ?? '',
+        popup_enabled: s.popup_enabled ?? '1',
+        popup_text: s.popup_text ?? '',
+        popup_delay_sec: s.popup_delay_sec ?? '8',
+        ga4_id: s.ga4_id ?? '',
+      };
+      settingsLoaded = true;
+    } catch (e) {
+      if ((e as Error).message !== 'unauthorized') settingsErr = 'Gagal memuat pengaturan.';
+    }
+  }
+
+  async function saveSettings(e?: Event) {
+    e?.preventDefault();
+    settingsSaving = true;
+    settingsMsg = '';
+    settingsErr = '';
+    try {
+      const res = await api('/api/admin/settings', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(settingsForm),
+      });
+      if (!res.ok) throw new Error(await res.text());
+      settingsMsg = 'Tersimpan. Popup & nomor WA langsung aktif — GA4 aktif di muat halaman berikutnya.';
+    } catch (e2) {
+      if ((e2 as Error).message !== 'unauthorized') settingsErr = (e2 as Error).message || 'Gagal menyimpan.';
+    } finally {
+      settingsSaving = false;
+    }
+  }
 
   async function setFilter(f: 'semua' | Status) {
     if (filter === f) return;
@@ -340,12 +393,86 @@
           </p>
         </div>
       {:else}
-        <div class="rounded-3xl border border-dashed border-white/15 p-8 text-center">
-          <p class="display text-2xl">Pengaturan</p>
-          <p class="mt-2 text-sm text-bone/60">
-            No WA, teks popup, GA4 ID, meta SEO — menyusul (tabel <code class="text-gold">settings</code> sudah
-            siap di D1).
-          </p>
+        <div class="max-w-xl space-y-5">
+          <div>
+            <h2 class="display text-3xl">Pengaturan</h2>
+            <p class="mt-1 text-sm text-bone/55">Perubahan popup &amp; nomor WA langsung aktif.</p>
+          </div>
+
+          {#if !settingsLoaded}
+            <p class="text-sm text-bone/50">{settingsErr || 'Memuat…'}</p>
+          {:else}
+            <div class="space-y-4 rounded-3xl border border-white/10 bg-white/5 p-5">
+              <div>
+                <label for="set-wa" class="block text-xs font-black tracking-widest text-gold uppercase">Nomor WhatsApp</label>
+                <input
+                  id="set-wa"
+                  bind:value={settingsForm.wa_number}
+                  inputmode="numeric"
+                  class="mt-2 w-full rounded-xl border border-white/15 bg-ink px-3.5 py-3 text-sm focus:border-gold focus:outline-none"
+                  placeholder="6285924041004"
+                />
+              </div>
+
+              <div>
+                <label for="set-text" class="block text-xs font-black tracking-widest text-gold uppercase">Teks popup</label>
+                <input
+                  id="set-text"
+                  bind:value={settingsForm.popup_text}
+                  maxlength="200"
+                  class="mt-2 w-full rounded-xl border border-white/15 bg-ink px-3.5 py-3 text-sm focus:border-gold focus:outline-none"
+                />
+              </div>
+
+              <div class="flex flex-wrap items-end gap-4">
+                <div>
+                  <label for="set-delay" class="block text-xs font-black tracking-widest text-gold uppercase">Delay popup (detik)</label>
+                  <input
+                    id="set-delay"
+                    bind:value={settingsForm.popup_delay_sec}
+                    inputmode="numeric"
+                    class="mt-2 w-28 rounded-xl border border-white/15 bg-ink px-3.5 py-3 text-sm focus:border-gold focus:outline-none"
+                  />
+                </div>
+                <label class="flex items-center gap-2 pb-3 text-sm font-semibold text-bone/80">
+                  <input
+                    type="checkbox"
+                    checked={settingsForm.popup_enabled === '1'}
+                    onchange={(e) =>
+                      (settingsForm.popup_enabled = (e.currentTarget as HTMLInputElement).checked ? '1' : '0')}
+                    class="h-4 w-4 accent-[#c8232b]"
+                  />
+                  Popup aktif
+                </label>
+              </div>
+
+              <div>
+                <label for="set-ga" class="block text-xs font-black tracking-widest text-gold uppercase">GA4 Measurement ID</label>
+                <input
+                  id="set-ga"
+                  bind:value={settingsForm.ga4_id}
+                  placeholder="G-XXXXXXXXXX (opsional)"
+                  class="mt-2 w-full rounded-xl border border-white/15 bg-ink px-3.5 py-3 text-sm focus:border-gold focus:outline-none"
+                />
+              </div>
+
+              <button
+                type="button"
+                disabled={settingsSaving}
+                onclick={saveSettings}
+                class="w-full rounded-2xl bg-brand px-6 py-3.5 text-sm font-bold text-white transition hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none active:scale-95 disabled:opacity-50"
+              >
+                {settingsSaving ? 'Menyimpan…' : 'Simpan pengaturan'}
+              </button>
+
+              {#if settingsMsg}
+                <p class="text-xs text-gold">{settingsMsg}</p>
+              {/if}
+              {#if settingsErr}
+                <p class="text-xs text-brand">{settingsErr}</p>
+              {/if}
+            </div>
+          {/if}
         </div>
       {/if}
     </main>

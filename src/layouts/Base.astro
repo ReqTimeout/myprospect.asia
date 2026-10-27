@@ -70,6 +70,20 @@ const ogImageUrl = new URL(ogImage.src, Astro.site).href;
         window.gtag('event', 'lead_submit', { cta: btn ? btn.getAttribute('data-wa-cta') : 'form' });
         if (btn) beacon('/api/click', { slug: btn.getAttribute('data-wa-cta') });
       });
+      fetch('/api/settings')
+        .then(function (r) {
+          return r.ok ? r.json() : null;
+        })
+        .then(function (s) {
+          var id = s && s.ga4_id;
+          if (!id || !/^G-[A-Z0-9]{6,20}$/.test(id)) return;
+          var el = document.createElement('script');
+          el.async = true;
+          el.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(id);
+          document.head.appendChild(el);
+          window.gtag('config', id);
+        })
+        .catch(function () {});
     </script>
   </body>
 </html>

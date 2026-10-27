@@ -6,6 +6,8 @@
   let open = $state(false);
   let dismissed = $state(false);
   let fired = $state(false);
+  let popupText = $state('Hai! Mau tanya lebih jauh soal program? Chat aja langsung, gratis kok. 😊');
+  let waNumber = $state('');
 
   const KEY = 'pa_popup_seen';
 
@@ -25,14 +27,8 @@
   }
 
   onMount(() => {
-    try {
-      if (sessionStorage.getItem(KEY)) {
-        dismissed = true;
-        return;
-      }
-    } catch {}
-
-    const timer = window.setTimeout(show, 8000);
+    let cancelled = false;
+    let timer = 0;
 
     const onScroll = () => {
       const doc = document.documentElement;
@@ -40,8 +36,39 @@
       if (pct >= 0.4) show();
     };
 
-    window.addEventListener('scroll', onScroll, { passive: true });
+    (async () => {
+      let enabled = '1';
+      let delay = '8';
+      let text = '';
+      let wa = '';
+      try {
+        const res = await fetch('/api/settings');
+        if (res.ok) {
+          const s = (await res.json()) as Record<string, string>;
+          enabled = s.popup_enabled ?? '1';
+          delay = s.popup_delay_sec ?? '8';
+          text = s.popup_text ?? '';
+          wa = s.wa_number ?? '';
+        }
+      } catch {}
+
+      if (cancelled || enabled !== '1') return;
+      if (text) popupText = text;
+      if (wa) waNumber = wa;
+
+      try {
+        if (sessionStorage.getItem(KEY)) {
+          dismissed = true;
+          return;
+        }
+      } catch {}
+
+      timer = window.setTimeout(show, Math.min(Number(delay) || 8, 120) * 1000);
+      window.addEventListener('scroll', onScroll, { passive: true });
+    })();
+
     return () => {
+      cancelled = true;
       window.clearTimeout(timer);
       window.removeEventListener('scroll', onScroll);
     };
@@ -76,11 +103,11 @@
       </div>
 
       <p class="mb-3 rounded-2xl rounded-tl-md bg-white/8 px-3 py-2 text-[13px] leading-relaxed text-bone/85">
-        Hai! Mau tanya lebih jauh soal program? Chat aja langsung, gratis kok. 😊
+        {popupText}
       </p>
 
       <a
-        href={waLink({ source: 'popup' })}
+        href={waLink({ source: 'popup', number: waNumber })}
         target="_blank"
         rel="noopener noreferrer"
         data-wa-cta="popup"
