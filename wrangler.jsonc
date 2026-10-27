@@ -1,0 +1,23 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "myprospect",
+  "compatibility_date": "2026-10-27",
+  "pages_build_output_dir": "./dist",
+  "observability": {
+    "enabled": true
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "prospect-db",
+      "database_id": "cf06163c-557d-4625-aedb-d4b9dd1b4514",
+      "migrations_dir": "./migrations"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "MEDIA",
+      "bucket_name": "prospect-media"
+    }
+  ]
+}

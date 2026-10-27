@@ -1,0 +1,35 @@
+---
+import '@fontsource-variable/plus-jakarta-sans/index.css';
+import '@fontsource/anton/index.css';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const {
+  title,
+  description = 'Prospect Asia — Sports Communication Program untuk atlet modern. Public speaking & bahasa Inggris khusus atlet, via WhatsApp.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="id-ID">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0a0a0a" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="id_ID" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <title>{title}</title>
+  </head>
+  <body class="min-h-dvh antialiased">
+    <slot />
+  </body>
+</html>
