@@ -7,6 +7,7 @@ import LeadForm from '../../components/LeadForm.astro';
 import { workshops, formatIdr, type Workshop } from '../../data/workshops';
 import { faqs } from '../../data/faq';
 import { waLink } from '../../lib/wa';
+import { courseSchema } from '../../lib/seo';
 
 export function getStaticPaths() {
   return workshops.map((w) => ({ params: { slug: w.slug }, props: { w } }));
@@ -16,9 +17,16 @@ const { w } = Astro.props as { w: Workshop };
 const miniFaq = faqs.filter((f) => f.grup === 'Workshop').slice(0, 3);
 const ctaWa = waLink({ program: w.nama, source: `workshop-detail-${w.slug}` });
 const durasiKecil = w.durasi.split('·')[1]?.trim() ?? w.durasi;
+const schema = courseSchema({
+  name: w.nama,
+  description: w.ringkasan,
+  url: `https://myprospect.asia/workshop/${w.slug}`,
+  price: w.harga,
+  duration: w.durasi,
+});
 ---
 
-<Base title={`${w.nama} — Workshop untuk Akademi`} description={w.ringkasan}>
+<Base title={`${w.nama} — Workshop untuk Akademi`} description={w.ringkasan} schema={schema}>
   <Header />
 
   <main class="pt-14">

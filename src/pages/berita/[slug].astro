@@ -20,9 +20,21 @@ const related = (await getCollection('berita', (p) => p.data.status === 'publish
   .slice(0, 2);
 
 const fmt = new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'NewsArticle',
+  headline: post.data.title,
+  description: post.data.desc,
+  datePublished: post.data.pubDate.toISOString(),
+  inLanguage: 'id',
+  author: { '@type': 'Organization', name: 'Prospect Asia' },
+  publisher: { '@type': 'Organization', name: 'Prospect Asia', logo: { '@type': 'ImageObject', url: 'https://myprospect.asia/favicon.png' } },
+  mainEntityOfPage: `https://myprospect.asia/berita/${post.id}`,
+};
 ---
 
-<Base title={`${post.data.title} — Prospect Asia`} description={post.data.desc}>
+<Base title={`${post.data.title} — Prospect Asia`} description={post.data.desc} schema={schema}>
   <Header />
 
   <main class="pt-14">

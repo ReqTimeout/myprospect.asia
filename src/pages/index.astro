@@ -18,11 +18,17 @@ import Footer from '../components/Footer.astro';
 import { waLink } from '../lib/wa';
 import { partners } from '../data/partners';
 import { testimonials } from '../data/testimonials';
+import { faqs } from '../data/faq';
+import { organizationSchema, faqSchema } from '../lib/seo';
 
 const partnerNames = partners.map((p) => p.nama);
+const schema = [organizationSchema, faqSchema(faqs)];
 ---
 
-<Base title="Prospect Asia — Jadi Atlet Modern | Sports Communication Program">
+<Base
+  title="Prospect Asia — Jadi Atlet Modern | Sports Communication Program"
+  schema={schema}
+>
   <Header />
 
   <main>

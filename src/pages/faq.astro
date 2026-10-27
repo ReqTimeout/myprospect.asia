@@ -5,11 +5,13 @@ import Dock from '../components/islands/Dock.svelte';
 import Footer from '../components/Footer.astro';
 import CtaBand from '../components/CtaBand.astro';
 import { faqs } from '../data/faq';
+import { faqSchema } from '../lib/seo';
 
 const grup = ['Umum', 'Program', 'Workshop', 'Pembayaran'] as const;
+const schema = faqSchema(faqs);
 ---
 
-<Base title="FAQ — Prospect Asia" description="Pertanyaan seputar program Sports Communication, workshop akademi, dan pendaftaran via WhatsApp.">
+<Base title="FAQ — Prospect Asia" description="Pertanyaan seputar program Sports Communication, workshop akademi, dan pendaftaran via WhatsApp." schema={schema}>
   <Header />
 
   <main class="pt-14">

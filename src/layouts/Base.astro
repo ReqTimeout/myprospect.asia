@@ -4,15 +4,18 @@ import '@fontsource/anton/index.css';
 import '../styles/global.css';
 import { getImage } from 'astro:assets';
 import ogBg from '../assets/generated/a2-og-bg.jpg';
+import { jsonLd } from '../lib/seo';
 
 interface Props {
   title: string;
   description?: string;
+  schema?: Record<string, unknown> | Record<string, unknown>[];
 }
 
 const {
   title,
   description = 'Prospect Asia — Sports Communication Program untuk atlet modern. Public speaking & bahasa Inggris khusus atlet, via WhatsApp.',
+  schema,
 } = Astro.props;
 
 const ogImage = await getImage({ src: ogBg, width: 1200, height: 630, format: 'jpg', fit: 'cover' });
@@ -37,6 +40,7 @@ const ogImageUrl = new URL(ogImage.src, Astro.site).href;
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/favicon.png" />
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    {schema && <script type="application/ld+json" set:html={jsonLd(schema)} />}
     <title>{title}</title>
   </head>
   <body class="min-h-dvh antialiased">

@@ -8,6 +8,7 @@ import { programs, formatIdr, type Program } from '../../data/programs';
 import { testimonials } from '../../data/testimonials';
 import { faqs } from '../../data/faq';
 import { waLink } from '../../lib/wa';
+import { courseSchema } from '../../lib/seo';
 
 export function getStaticPaths() {
   return programs.map((p) => ({ params: { slug: p.slug }, props: { p } }));
@@ -19,9 +20,15 @@ const testi = testimonials[idx % testimonials.length];
 const miniFaq = faqs.filter((f) => f.grup === 'Program').slice(0, 3);
 const chips = [p.online ? 'Online' : 'Offline', p.satuan.replace(/^\//, '').trim(), 'Tes penempatan'];
 const ctaWa = waLink({ program: p.nama, source: `detail-${p.slug}` });
+const schema = courseSchema({
+  name: p.nama,
+  description: p.ringkasan,
+  url: `https://myprospect.asia/program/${p.slug}`,
+  price: p.harga,
+});
 ---
 
-<Base title={`${p.nama} — Prospect Asia`} description={p.ringkasan}>
+<Base title={`${p.nama} — Prospect Asia`} description={p.ringkasan} schema={schema}>
   <Header />
 
   <main class="pt-14">
