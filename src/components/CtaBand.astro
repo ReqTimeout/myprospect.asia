@@ -1,13 +1,19 @@
 ---
+import { Image } from 'astro:assets';
 import { waLink } from '../lib/wa';
+import speedlines from '../assets/generated/a5-speedlines.jpg';
 ---
 
 <section class="relative overflow-hidden border-y border-white/10 bg-gradient-to-br from-brand/25 via-ink-2 to-ink grain">
-  <div
-    class="pointer-events-none absolute inset-0 opacity-30"
-    style="background-image: repeating-linear-gradient(115deg, transparent 0 22px, rgba(230,168,23,0.16) 22px 23px);"
+  <Image
+    src={speedlines}
+    alt=""
+    width={1600}
+    height={900}
+    loading="lazy"
+    class="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-40 mix-blend-screen"
     aria-hidden="true"
-  ></div>
+  />
 
   <div class="relative mx-auto max-w-4xl px-4 py-16 text-center sm:px-6 sm:py-20">
     <p class="text-xs font-bold tracking-[0.25em] text-gold uppercase">#JadiAtletModern</p>

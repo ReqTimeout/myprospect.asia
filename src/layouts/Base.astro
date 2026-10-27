@@ -2,6 +2,8 @@
 import '@fontsource-variable/plus-jakarta-sans/index.css';
 import '@fontsource/anton/index.css';
 import '../styles/global.css';
+import { getImage } from 'astro:assets';
+import ogBg from '../assets/generated/a2-og-bg.jpg';
 
 interface Props {
   title: string;
@@ -12,6 +14,9 @@ const {
   title,
   description = 'Prospect Asia — Sports Communication Program untuk atlet modern. Public speaking & bahasa Inggris khusus atlet, via WhatsApp.',
 } = Astro.props;
+
+const ogImage = await getImage({ src: ogBg, width: 1200, height: 630, format: 'jpg', fit: 'cover' });
+const ogImageUrl = new URL(ogImage.src, Astro.site).href;
 ---
 
 <!doctype html>
@@ -25,7 +30,12 @@ const {
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="id_ID" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
     <title>{title}</title>
   </head>

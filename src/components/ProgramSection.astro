@@ -1,6 +1,8 @@
 ---
+import { Image } from 'astro:assets';
 import { waLink } from '../lib/wa';
 import { programs, formatIdr } from '../data/programs';
+import membershipArt from '../assets/generated/a3-membership.jpg';
 ---
 
 <section id="program" class="mx-auto max-w-6xl scroll-mt-20 px-4 py-14 sm:px-6">
@@ -94,6 +96,15 @@ import { programs, formatIdr } from '../data/programs';
       <p class="display mt-1 text-2xl">Membership Program</p>
       <p class="mt-1 text-sm text-bone/60">Benefit berkelanjutan buat atlet — daftar early access dulu.</p>
     </div>
+    <Image
+      src={membershipArt}
+      alt=""
+      width={440}
+      height={248}
+      loading="lazy"
+      aria-hidden="true"
+      class="hidden h-24 w-44 rounded-2xl border border-gold/30 object-cover sm:block"
+    />
     <a
       href={waLink({ program: 'Membership (early access)', source: 'membership' })}
       target="_blank"

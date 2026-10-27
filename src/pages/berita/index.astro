@@ -1,10 +1,12 @@
 ---
+import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Header from '../../components/Header.astro';
 import Dock from '../../components/islands/Dock.svelte';
 import Footer from '../../components/Footer.astro';
 import { waLink } from '../../lib/wa';
+import heroBackdrop from '../../assets/generated/a1-hero-wide.jpg';
 
 const posts = (await getCollection('berita', (p) => p.data.status === 'published')).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
@@ -18,12 +20,28 @@ const fmt = new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'short', y
   <Header />
 
   <main class="pt-14">
-    <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-      <p class="text-xs font-bold tracking-[0.2em] text-gold uppercase">Berita Atlet Modern</p>
-      <h1 class="display mt-2 text-5xl sm:text-6xl">Kabar terbaru</h1>
-      <p class="mt-3 max-w-xl text-sm text-bone/65">
-        Cerita atlet, bintang baru, dan kolaborasi akademi — semuanya di sini.
-      </p>
+    <section class="relative overflow-hidden border-b border-white/10">
+      <Image
+        src={heroBackdrop}
+        alt=""
+        width={1920}
+        height={1080}
+        loading="eager"
+        aria-hidden="true"
+        class="absolute inset-0 h-full w-full object-cover opacity-35"
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/88 to-ink/60" aria-hidden="true"></div>
+
+      <div class="relative mx-auto max-w-6xl px-4 py-14 sm:px-6">
+        <p class="text-xs font-bold tracking-[0.2em] text-gold uppercase">Blog</p>
+        <h1 class="display mt-2 text-5xl sm:text-6xl">Berita Atlet Modern</h1>
+        <p class="mt-3 max-w-xl text-sm text-bone/60 sm:text-base">
+          Kabar program, sorotan atlet, dan kolaborasi akademi — semuanya dari kacamata Sports Communication.
+        </p>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
 
       <div class="mt-8 flex flex-wrap gap-2" role="list">
         {

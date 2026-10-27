@@ -344,7 +344,7 @@ Output awal = `*.pages.dev` preview dulu; production domain aktif setelah NS pro
 | **F2 — Halaman publik** | Home (13 section, bab 6.1) + program/workshop/blog/tentang/faq, dock iOS | ✅ selesai (11 rute, audit pw-vision 0 bug) |
 | **F3 — Wa-first konversi** | popup, form lead→D1→wa.deep-link, click GA events | ✅ selesai (`/api/leads` 302 pre-filled, honeypot, `/api/click`, dataLayer events) |
 | **F4 — Admin island** | Leads + Konten + Media/R2 + Pengaturan + Access login | ⬜ berikutnya (R2 masih perlu Enable di dashboard CF) |
-| **F5 — Produksi** | assets generate (MiniMax A1–A6), foto klien final, SEO schema, GA4, custom domain live | ⬜ |
+| **F5 — Produksi** | assets generate (MiniMax A1–A6), foto klien final, SEO schema, GA4, custom domain live | 🟡 A1–A6 selesai (7 gambar, ter-wire: OG, favicon, hero backdrop, membership, workshop, CTA band); sisa: schema.org, GA4 ID, custom domain, foto klien final |
 | **F2b (fase 2)** | Membership aktif, materi online/LMS, WA Cloud API auto-reply, EN (opsional) | ⬜ |
 
 **Catatan build (27 Okt 2026):** binding R2 di `wrangler.jsonc` dikomentari sementara — deploy Functions gagal kalau bucket belum ada. Aktifkan R2 di dashboard CF → `wrangler r2 bucket create prospect-media` → uncomment binding. Git push masih 403: fine-grained PAT sudah melihat repo tapi butuh izin **Contents: Read and write**.
