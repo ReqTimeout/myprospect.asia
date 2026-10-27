@@ -1,0 +1,64 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+
+<Base title="Login Admin — Prospect Asia" description="Area admin Prospect Asia.">
+  <main class="flex min-h-dvh items-center justify-center bg-ink px-4">
+    <div class="w-full max-w-sm rounded-3xl border border-white/10 bg-ink-2 p-8">
+      <p class="display skew-mark text-3xl">Prospect</p>
+      <p class="mt-1 text-xs font-black tracking-[0.25em] text-gold uppercase">Admin Panel</p>
+
+      <form id="login-form" class="mt-8 space-y-4">
+        <label for="password" class="block text-xs font-black tracking-widest text-bone/60 uppercase">
+          Password
+        </label>
+        <input
+          id="password"
+          name="password"
+          type="password"
+          required
+          autocomplete="current-password"
+          class="w-full rounded-2xl border border-white/15 bg-ink px-4 py-3.5 text-sm text-bone placeholder:text-bone/35 focus:border-gold focus:outline-none"
+          placeholder="••••••••"
+        />
+        <p id="error" class="hidden text-sm text-brand"></p>
+        <button
+          type="submit"
+          class="w-full rounded-2xl bg-brand px-6 py-3.5 text-sm font-bold text-white transition hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none active:scale-95"
+        >
+          Masuk
+        </button>
+      </form>
+
+      <p class="mt-6 text-center text-[11px] text-bone/40">
+        Akses terbatas tim Prospect Asia · dibatasi Cloudflare
+      </p>
+    </div>
+  </main>
+
+  <script is:inline>
+    document.getElementById('login-form').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      var err = document.getElementById('error');
+      err.classList.add('hidden');
+      var password = document.getElementById('password').value;
+      try {
+        var res = await fetch('/api/admin/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password: password }),
+        });
+        if (res.ok) {
+          window.location.href = '/admin';
+        } else {
+          var msg = await res.text();
+          err.textContent = msg || 'Login gagal.';
+          err.classList.remove('hidden');
+        }
+      } catch (ex) {
+        err.textContent = 'Jaringan bermasalah, coba lagi.';
+        err.classList.remove('hidden');
+      }
+    });
+  </script>
+</Base>

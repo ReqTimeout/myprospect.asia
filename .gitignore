@@ -10,3 +10,4 @@ dist/
 *.log
 *.zip
 .DS_Store
+.env.admin
