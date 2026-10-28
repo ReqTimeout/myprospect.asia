@@ -1,5 +1,4 @@
 ---
-import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Header from '../components/Header.astro';
 import Dock from '../components/islands/Dock.svelte';
@@ -9,7 +8,6 @@ import CoachesSection from '../components/CoachesSection.astro';
 import CtaBand from '../components/CtaBand.astro';
 import { partners } from '../data/partners';
 import { waLink } from '../lib/wa';
-import heroBackdrop from '../assets/generated/a1-hero-vertical.jpg';
 
 const akademi = partners.filter((p) => p.jenis === 'akademi');
 const mitra = partners.filter((p) => p.jenis === 'mitra');
@@ -20,11 +18,11 @@ const mitra = partners.filter((p) => p.jenis === 'mitra');
 
   <main class="pt-14">
     <section class="relative overflow-hidden border-b border-white/10">
-      <Image
-        src={heroBackdrop}
+      <img
+        src="/media/session-online.jpg"
         alt=""
-        width={1080}
-        height={1920}
+        width="1200"
+        height="670"
         loading="eager"
         aria-hidden="true"
         class="absolute inset-0 h-full w-full object-cover opacity-35"

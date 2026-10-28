@@ -17,6 +17,12 @@ const { w } = Astro.props as { w: Workshop };
 const miniFaq = faqs.filter((f) => f.grup === 'Workshop').slice(0, 3);
 const ctaWa = waLink({ program: w.nama, source: `workshop-detail-${w.slug}` });
 const durasiKecil = w.durasi.split('·')[1]?.trim() ?? w.durasi;
+const heroFoto: Record<string, string> = {
+  starter: '/media/workshop-crowd.jpg',
+  premium: '/media/interview-zone.jpg',
+};
+const hero = heroFoto[w.slug] ?? '/media/workshop-hero.jpg';
+const docs = Array.from({ length: 8 }, (_, i) => `/media/docs-${i + 1}.jpg`);
 const schema = courseSchema({
   name: w.nama,
   description: w.ringkasan,
@@ -32,8 +38,8 @@ const schema = courseSchema({
   <main class="pt-14">
     <section class="relative overflow-hidden border-b border-white/10">
       <img
-        src="/media/workshop-hero.jpg"
-        alt="Workshop Sports Communication untuk akademi olahraga"
+        src={hero}
+        alt="Suasana workshop Sports Communication bersama akademi olahraga"
         width="1600"
         height="900"
         fetchpriority="high"
@@ -106,6 +112,27 @@ const schema = courseSchema({
           ))
         }
       </ul>
+    </section>
+
+    <section class="mx-auto max-w-4xl px-4 py-14 sm:px-6">
+      <p class="text-xs font-black tracking-widest text-gold uppercase">Dokumentasi</p>
+      <h2 class="display mt-2 text-3xl sm:text-4xl">Suasana di lapangan</h2>
+      <div class="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+        {
+          docs.map((d) => (
+            <div class="grain relative overflow-hidden rounded-2xl border border-white/10 aspect-4/3">
+              <img
+                src={d}
+                alt="Dokumentasi workshop Prospect Asia"
+                loading="lazy"
+                width="1000"
+                height="667"
+                class="h-full w-full object-cover transition duration-500 hover:scale-105"
+              />
+            </div>
+          ))
+        }
+      </div>
     </section>
 
     <section class="border-y border-white/10 bg-white/[0.03]">
