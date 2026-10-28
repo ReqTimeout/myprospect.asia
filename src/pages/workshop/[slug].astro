@@ -68,6 +68,7 @@ const schema = courseSchema({
                 <>
                   <p class="display text-5xl text-brand">Rp{formatIdr(w.harga)}</p>
                   <p class="mt-1 text-xs text-bone/55">/ sesi · {durasiKecil}</p>
+                  {w.catatan && <p class="mt-1.5 text-xs font-black text-gold">{w.catatan}</p>}
                 </>
               ) : (
                 <>

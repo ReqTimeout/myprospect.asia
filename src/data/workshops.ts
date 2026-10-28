@@ -6,6 +6,7 @@ export type Workshop = {
   ringkasan: string;
   didapat: string[];
   target: string;
+  catatan?: string;
 };
 
 export const workshops: Workshop[] = [
@@ -21,8 +22,10 @@ export const workshops: Workshop[] = [
       'Mengenal public speaking khusus atlet',
       'Pembuatan konten tentang Sports Communication',
       'Dampingan Sports Communication coach berpengalaman',
+      'Gifts & E-certificate',
     ],
     target: 'Akademi / klub · minimal 10 peserta',
+    catatan: '50 peserta → cuma IDR 40.000/atlet',
   },
   {
     slug: 'premium',
@@ -40,6 +43,7 @@ export const workshops: Workshop[] = [
       'Door prize',
     ],
     target: 'Akademi / klub · minimal 10 peserta',
+    catatan: '100 peserta → cuma IDR 38.900/atlet',
   },
   {
     slug: 'pro',

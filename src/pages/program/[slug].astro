@@ -20,6 +20,12 @@ const testi = testimonials[idx % testimonials.length];
 const miniFaq = faqs.filter((f) => f.grup === 'Program').slice(0, 3);
 const chips = [p.online ? 'Online' : 'Offline', p.satuan.replace(/^\//, '').trim(), 'Tes penempatan'];
 const ctaWa = waLink({ program: p.nama, source: `detail-${p.slug}` });
+const heroFotos: Record<string, string> = {
+  'elite-1on1': '/media/session-elite.jpg',
+  'premium-1on1': '/media/session-premium.jpg',
+  'small-group': '/media/session-smallgroup.jpg',
+};
+const heroFoto = heroFotos[p.slug] ?? '/media/hero-athletes.jpg';
 const schema = courseSchema({
   name: p.nama,
   description: p.ringkasan,
@@ -34,12 +40,12 @@ const schema = courseSchema({
   <main class="pt-14">
     <section class="relative overflow-hidden border-b border-white/10">
       <img
-        src="/media/hero-athletes.jpg"
-        alt="Atlet Prospect Asia siap tampil percaya diri"
-        width="1080"
-        height="1350"
+        src={heroFoto}
+        alt="Sesi Sports Communication Prospect Asia"
+        width="1400"
+        height="788"
         fetchpriority="high"
-        class="absolute inset-0 h-full w-full object-cover object-[50%_20%] opacity-30"
+        class="absolute inset-0 h-full w-full object-cover object-[50%_25%] opacity-30"
       />
       <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/92 to-ink/70" aria-hidden="true"></div>
 
