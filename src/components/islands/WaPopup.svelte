@@ -81,28 +81,28 @@
     role="dialog"
     aria-label="Chat admin"
   >
-    <div class="rounded-3xl border border-white/10 bg-ink-2/95 p-4 shadow-[0_24px_50px_-16px_rgba(0,0,0,0.8)] backdrop-blur-xl">
+    <div class="rounded-3xl border border-ink/10 bg-paper-deep/95 p-4 shadow-[0_24px_50px_-16px_rgba(36,26,18,0.3)] backdrop-blur-xl">
       <div class="mb-2 flex items-start justify-between gap-2">
         <div class="flex items-center gap-2">
-          <span class="flex h-8 w-8 items-center justify-center rounded-full bg-brand text-[11px] font-black text-white italic">
+          <span class="flex h-8 w-8 items-center justify-center rounded-full bg-brand text-[11px] font-black text-ink italic">
             P
           </span>
           <div class="leading-tight">
             <p class="text-xs font-bold">Admin Prospect</p>
-            <p class="text-[10px] text-bone/50">online · balas cepat</p>
+            <p class="text-[10px] text-ink/50">online · balas cepat</p>
           </div>
         </div>
         <button
           type="button"
           onclick={close}
-          class="rounded-full p-1 text-bone/50 transition hover:bg-white/10 hover:text-bone focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none"
+          class="rounded-full p-1 text-ink/50 transition hover:bg-ink/[0.06] hover:text-ink focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
           aria-label="Tutup"
         >
           <X size={14} />
         </button>
       </div>
 
-      <p class="mb-3 rounded-2xl rounded-tl-md bg-white/8 px-3 py-2 text-[13px] leading-relaxed text-bone/85">
+      <p class="mb-3 rounded-2xl rounded-tl-md bg-paper-deep px-3 py-2 text-[13px] leading-relaxed text-ink/85">
         {popupText}
       </p>
 
@@ -111,7 +111,7 @@
         target="_blank"
         rel="noopener noreferrer"
         data-wa-cta="popup"
-        class="flex w-full items-center justify-center gap-2 rounded-xl bg-brand px-4 py-3 text-[13px] font-bold text-white transition hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none active:scale-95"
+        class="flex w-full items-center justify-center gap-2 rounded-xl bg-brand px-4 py-3 text-[13px] font-bold text-ink transition hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none active:scale-95"
       >
         <MessageCircle size={16} strokeWidth={2.4} />
         Chat admin sekarang

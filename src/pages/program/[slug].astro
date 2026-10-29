@@ -38,7 +38,7 @@ const schema = courseSchema({
   <Header />
 
   <main class="pt-14">
-    <section class="relative overflow-hidden border-b border-white/10">
+    <section class="relative overflow-hidden border-b border-ink/10">
       <img
         src={heroFoto}
         alt="Sesi Sports Communication Prospect Asia"
@@ -47,17 +47,17 @@ const schema = courseSchema({
         fetchpriority="high"
         class="absolute inset-0 h-full w-full object-cover object-[50%_25%] opacity-30"
       />
-      <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/92 to-ink/70" aria-hidden="true"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-paper via-paper/92 to-paper/70" aria-hidden="true"></div>
 
       <div class="relative mx-auto max-w-4xl px-4 py-14 sm:px-6">
-        <a href="/#program" class="inline-block py-2 text-sm font-bold text-gold transition hover:underline">← Semua program</a>
+        <a href="/#program" class="inline-block py-2 text-sm font-bold text-brand-dark transition hover:underline">← Semua program</a>
 
         {
           p.badge && (
             <p
               class:list={[
                 'mt-6 inline-block rounded-full px-3 py-1 text-[11px] font-black tracking-widest uppercase',
-                p.badgeTone === 'gold' ? 'bg-gold text-ink' : 'bg-brand text-white',
+                p.badgeTone === 'gold' ? 'bg-gold text-ink' : 'bg-brand text-ink',
               ]}
             >
               {p.badge}
@@ -66,12 +66,12 @@ const schema = courseSchema({
         }
 
         <h1 class="display mt-4 text-5xl leading-[0.95] sm:text-7xl">{p.nama}</h1>
-        <p class="mt-3 text-base text-bone/70 sm:text-lg">{p.sub}</p>
+        <p class="mt-3 text-base text-ink/70 sm:text-lg">{p.sub}</p>
 
         <div class="mt-6 flex flex-wrap gap-2">
           {
             chips.map((c) => (
-              <span class="rounded-full border border-white/20 bg-white/5 px-3.5 py-1.5 text-xs font-semibold text-bone/75">
+              <span class="rounded-full border border-ink/20 bg-white px-3.5 py-1.5 text-xs font-semibold text-ink/75">
                 {c}
               </span>
             ))
@@ -80,22 +80,22 @@ const schema = courseSchema({
 
         <div class="mt-8 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            {p.hargaCoret ? <p class="text-sm text-bone/45 line-through">Rp{formatIdr(p.hargaCoret)}</p> : null}
+            {p.hargaCoret ? <p class="text-sm text-ink/45 line-through">Rp{formatIdr(p.hargaCoret)}</p> : null}
             {
               p.harga > 0 ? (
                 <p class="display text-5xl text-brand">Rp{formatIdr(p.harga)}</p>
               ) : (
-                <p class="display text-4xl text-gold">Info via WhatsApp</p>
+                <p class="display text-4xl text-brand-dark">Info via WhatsApp</p>
               )
             }
-            <p class="mt-1 text-xs text-bone/55">{p.satuan}</p>
+            <p class="mt-1 text-xs text-ink/55">{p.satuan}</p>
           </div>
           <a
             href={ctaWa}
             target="_blank"
             rel="noopener noreferrer"
             data-wa-cta={`detail-${p.slug}`}
-            class="inline-flex items-center justify-center rounded-2xl bg-brand px-7 py-4 text-sm font-bold text-white transition hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none active:scale-95"
+            class="inline-flex items-center justify-center rounded-2xl bg-brand px-7 py-4 text-sm font-bold text-ink transition hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none active:scale-95"
           >
             Daftar via WhatsApp ↗
           </a>
@@ -104,12 +104,12 @@ const schema = courseSchema({
     </section>
 
     <section class="mx-auto max-w-4xl px-4 py-14 sm:px-6">
-      <p class="text-xs font-black tracking-widest text-gold uppercase">Apa yang akan dikuasai</p>
+      <p class="text-xs font-black tracking-widest text-brand-dark uppercase">Apa yang akan dikuasai</p>
       <h2 class="display mt-2 text-3xl sm:text-4xl">Komunikasi level atlet pro</h2>
       <ul class="mt-6 grid gap-3 sm:grid-cols-2">
         {
           p.dikuasai.map((d) => (
-            <li class="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-sm text-bone/85">
+            <li class="flex items-start gap-3 rounded-2xl border border-ink/10 bg-white px-4 py-3.5 text-sm text-ink/85">
               <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-gold text-[11px] font-black text-ink" aria-hidden="true">
                 ✓
               </span>
@@ -120,9 +120,9 @@ const schema = courseSchema({
       </ul>
     </section>
 
-    <section class="border-y border-white/10 bg-white/[0.03]">
+    <section class="border-y border-ink/10 bg-white">
       <div class="mx-auto max-w-4xl px-4 py-14 sm:px-6">
-        <p class="text-xs font-black tracking-widest text-gold uppercase">Yang didapatkan</p>
+        <p class="text-xs font-black tracking-widest text-brand-dark uppercase">Yang didapatkan</p>
         <h2 class="display mt-2 text-3xl sm:text-4xl">Benefit lengkap</h2>
         <ul class="mt-6 space-y-3">
           {
@@ -132,7 +132,7 @@ const schema = courseSchema({
                 <li
                   class:list={[
                     'flex items-start gap-3 rounded-2xl px-4 py-3.5 text-sm',
-                    gold ? 'border border-gold/40 bg-gold/10 text-gold' : 'border border-white/10 bg-white/5 text-bone/85',
+                    gold ? 'border border-gold/40 bg-gold/10 text-brand-dark' : 'border border-ink/10 bg-white text-ink/85',
                   ]}
                 >
                   <span aria-hidden="true">{gold ? '★' : '✓'}</span>
@@ -147,15 +147,15 @@ const schema = courseSchema({
     </section>
 
     <section class="mx-auto max-w-4xl px-4 py-14 sm:px-6">
-      <p class="text-xs font-black tracking-widest text-gold uppercase">Peningkatan bulanan</p>
+      <p class="text-xs font-black tracking-widest text-brand-dark uppercase">Peningkatan bulanan</p>
       <h2 class="display mt-2 text-3xl sm:text-4xl">4 bulan, 4 lompatan</h2>
       <ol class="relative mt-8 space-y-6 border-l-2 border-gold/40 pl-6">
         {
           p.journey.map((j) => (
             <li class="relative">
-              <span class="absolute -left-[31px] top-1 h-4 w-4 rounded-full border-2 border-gold bg-ink" aria-hidden="true" />
-              <p class="text-xs font-black tracking-widest text-gold uppercase">{j.bulan}</p>
-              <p class="mt-1 text-base font-semibold text-bone">{j.teks}</p>
+              <span class="absolute -left-[31px] top-1 h-4 w-4 rounded-full border-2 border-gold bg-paper" aria-hidden="true" />
+              <p class="text-xs font-black tracking-widest text-brand-dark uppercase">{j.bulan}</p>
+              <p class="mt-1 text-base font-semibold text-ink">{j.teks}</p>
             </li>
           ))
         }
@@ -163,27 +163,27 @@ const schema = courseSchema({
     </section>
 
     <section class="mx-auto max-w-4xl px-4 pb-14 sm:px-6">
-      <figure class="rounded-3xl border border-white/10 bg-gradient-to-br from-brand/15 to-transparent p-7">
-        <blockquote class="text-lg leading-relaxed text-bone/90 italic sm:text-xl">“{testi.kutipan}”</blockquote>
-        <figcaption class="mt-4 text-sm text-bone/60">
-          <span class="font-bold text-bone">{testi.nama}</span> · {testi.asal} · {testi.olahraga}
+      <figure class="rounded-3xl border border-ink/10 bg-gradient-to-br from-brand/15 to-transparent p-7">
+        <blockquote class="text-lg leading-relaxed text-ink/90 italic sm:text-xl">“{testi.kutipan}”</blockquote>
+        <figcaption class="mt-4 text-sm text-ink/60">
+          <span class="font-bold text-ink">{testi.nama}</span> · {testi.asal} · {testi.olahraga}
         </figcaption>
       </figure>
     </section>
 
-    <section class="border-t border-white/10 bg-white/[0.03]">
+    <section class="border-t border-ink/10 bg-white">
       <div class="mx-auto max-w-4xl px-4 py-14 sm:px-6">
-        <p class="text-xs font-black tracking-widest text-gold uppercase">FAQ mini</p>
+        <p class="text-xs font-black tracking-widest text-brand-dark uppercase">FAQ mini</p>
         <h2 class="display mt-2 text-3xl sm:text-4xl">Yang sering ditanya</h2>
         <div class="mt-6 space-y-3">
           {
             miniFaq.map((f, i) => (
-              <details class="group rounded-2xl border border-white/10 bg-ink-2 open:border-gold/40" open={i === 0}>
-                <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-sm font-bold sm:text-base focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none">
+              <details class="group rounded-2xl border border-ink/10 bg-paper-deep open:border-gold/40" open={i === 0}>
+                <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-sm font-bold sm:text-base focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none">
                   {f.q}
-                  <span class="text-gold transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+                  <span class="text-brand-dark transition-transform group-open:rotate-45" aria-hidden="true">+</span>
                 </summary>
-                <p class="px-5 pb-5 text-sm leading-relaxed text-bone/70">{f.a}</p>
+                <p class="px-5 pb-5 text-sm leading-relaxed text-ink/70">{f.a}</p>
               </details>
             ))
           }
@@ -194,9 +194,9 @@ const schema = courseSchema({
     <section id="daftar" class="mx-auto max-w-4xl scroll-mt-20 px-4 py-14 sm:px-6">
       <div class="grid gap-8 md:grid-cols-2">
         <div>
-          <p class="text-xs font-black tracking-widest text-gold uppercase">Mulai sekarang</p>
+          <p class="text-xs font-black tracking-widest text-brand-dark uppercase">Mulai sekarang</p>
           <h2 class="display mt-2 text-3xl sm:text-4xl">Isi data,<br />admin lanjut di WA</h2>
-          <p class="mt-4 text-sm leading-relaxed text-bone/65">
+          <p class="mt-4 text-sm leading-relaxed text-ink/65">
             Setelah formulir dikirim, WhatsApp langsung terbuka dengan pesan yang sudah terisi — admin tinggal
             membalas untuk jadwal, tes penempatan, dan cara bayar.
           </p>
@@ -205,7 +205,7 @@ const schema = courseSchema({
             target="_blank"
             rel="noopener noreferrer"
             data-wa-cta={`detail-bawah-${p.slug}`}
-            class="mt-6 inline-flex rounded-2xl border border-gold px-6 py-3.5 text-sm font-bold text-gold transition hover:bg-gold hover:text-ink focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none active:scale-95"
+            class="mt-6 inline-flex rounded-2xl border border-gold px-6 py-3.5 text-sm font-bold text-brand-dark transition hover:bg-gold hover:text-ink focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none active:scale-95"
           >
             Chat langsung tanpa form ↗
           </a>

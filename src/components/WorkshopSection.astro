@@ -6,9 +6,9 @@ import { workshops, formatIdr } from '../data/workshops';
 <section id="workshop" class="mx-auto max-w-6xl scroll-mt-20 px-4 py-14 sm:px-6">
   <div class="mb-8 grid items-center gap-6 md:grid-cols-[1.2fr_1fr]">
     <div class="max-w-2xl">
-      <p class="text-xs font-bold tracking-[0.2em] text-gold uppercase">Kolaborasi Akademi / Klub</p>
+      <p class="text-xs font-bold tracking-[0.2em] text-brand-dark uppercase">Kolaborasi Akademi / Klub</p>
       <h2 class="display mt-2 text-4xl sm:text-5xl">Workshop buat<br />atlet binaanmu</h2>
-      <p class="mt-3 text-sm leading-relaxed text-bone/65 sm:text-base">
+      <p class="mt-3 text-sm leading-relaxed text-ink/65 sm:text-base">
         Sesi 90–120 menit, interaktif, praktik langsung. Minimal 10 peserta — didampingi coach Sports Communication.
       </p>
     </div>
@@ -18,35 +18,35 @@ import { workshops, formatIdr } from '../data/workshops';
       width="1280"
       height="853"
       loading="lazy"
-      class="hidden rounded-3xl border border-white/10 md:block"
+      class="hidden rounded-3xl border border-ink/10 md:block"
     />
   </div>
 
-  <div class="grid gap-5 md:grid-cols-3">
+  <div class="grid gap-5 md:grid-cols-3" data-reveal-group>
     {
       workshops.map((w) => (
-        <article class="flex flex-col rounded-3xl border border-white/10 bg-gradient-to-b from-white/6 to-transparent p-6 transition duration-200 hover:-translate-y-1 hover:border-gold/50">
+        <article data-reveal="pop" class="card-soft card-lift flex flex-col rounded-3xl p-6">
           <div class="flex items-center justify-between gap-2">
             <h3 class="display text-2xl">{w.nama}</h3>
-            <span class="rounded-full border border-white/15 px-2.5 py-1 text-[10px] font-bold text-bone/60">{w.durasi}</span>
+            <span class="rounded-full border border-ink/15 px-2.5 py-1 text-[10px] font-bold text-ink/60">{w.durasi}</span>
           </div>
 
           <div class="mt-4">
             {w.harga > 0 ? (
-              <p class="display text-3xl text-gold">Rp{formatIdr(w.harga)}</p>
+              <p class="display text-3xl text-brand-dark">Rp{formatIdr(w.harga)}</p>
             ) : (
-              <p class="display text-2xl text-gold">Custom</p>
+              <p class="display text-2xl text-brand-dark">Custom</p>
             )}
-            <p class="mt-0.5 text-[11px] text-bone/50">per sesi · {w.target}</p>
-            {w.catatan && <p class="mt-1 text-[11px] font-black text-gold">{w.catatan}</p>}
+            <p class="mt-0.5 text-[11px] text-ink/50">per sesi · {w.target}</p>
+            {w.catatan && <p class="mt-1 text-[11px] font-black text-brand-dark">{w.catatan}</p>}
           </div>
 
-          <p class="mt-4 text-sm leading-relaxed text-bone/70">{w.ringkasan}</p>
+          <p class="mt-4 text-sm leading-relaxed text-ink/70">{w.ringkasan}</p>
 
-          <ul class="mt-4 flex-1 space-y-2 text-[13px] text-bone/75">
+          <ul class="mt-4 flex-1 space-y-2 text-[13px] text-ink/75">
             {w.didapat.map((d) => (
               <li class="flex gap-2">
-                <span class="text-gold" aria-hidden="true">
+                <span class="text-brand-dark" aria-hidden="true">
                   ✓
                 </span>
                 {d}
@@ -60,13 +60,13 @@ import { workshops, formatIdr } from '../data/workshops';
               target="_blank"
               rel="noopener noreferrer"
               data-wa-cta={`workshop-${w.slug}`}
-              class="inline-flex items-center justify-center gap-2 rounded-2xl border border-gold px-5 py-3.5 text-sm font-bold text-gold transition hover:bg-gold hover:text-ink focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none active:scale-95"
+              class="inline-flex items-center justify-center gap-2 rounded-2xl border border-gold px-5 py-3.5 text-sm font-bold text-brand-dark transition hover:bg-gold hover:text-ink focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none active:scale-95"
             >
               Booking via WhatsApp ↗
             </a>
             <a
               href={`/workshop/${w.slug}`}
-              class="rounded-xl px-2 py-3 text-xs font-bold text-gold transition hover:underline focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none"
+              class="rounded-xl px-2 py-3 text-xs font-bold text-brand-dark transition hover:underline focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
             >
               Detail →
             </a>

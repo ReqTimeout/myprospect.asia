@@ -22,7 +22,7 @@
 <div class="flex flex-col gap-8 md:flex-row md:items-start md:gap-12">
   <div class="md:w-1/2">
     <div
-      class="inline-flex rounded-2xl border border-white/10 bg-white/5 p-1"
+      class="inline-flex rounded-2xl border border-ink/10 bg-white p-1 shadow-sm"
       role="tablist"
       aria-label="Level program"
     >
@@ -33,8 +33,8 @@
           aria-selected={active === level}
           onclick={() => (active = level)}
           class={[
-            'rounded-xl px-3.5 py-2.5 text-xs font-bold tracking-wide transition focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none sm:text-sm',
-            active === level ? 'bg-brand text-white' : 'text-bone/60',
+            'rounded-xl px-3.5 py-2.5 text-xs font-bold tracking-wide transition focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none sm:text-sm',
+            active === level ? 'bg-brand text-ink' : 'text-ink/60',
           ]}
         >
           {level}
@@ -42,22 +42,22 @@
       {/each}
     </div>
 
-    <p class="mt-5 text-sm leading-relaxed text-bone/70 md:text-base">
+    <p class="mt-5 text-sm leading-relaxed text-ink/70 md:text-base">
       {levelInfo[active]}
     </p>
 
-    <p class="mt-4 inline-block rounded-full border border-gold/40 bg-gold/10 px-3.5 py-1.5 text-xs font-semibold text-gold">
+    <p class="mt-4 inline-block rounded-full border border-gold/40 bg-gold/10 px-3.5 py-1.5 text-xs font-semibold text-brand-dark">
       Level ditentukan lewat tes penempatan
     </p>
   </div>
 
   <ol class="relative md:w-1/2">
-    <span class="absolute top-2 bottom-2 left-[11px] w-px bg-gradient-to-b from-gold via-gold/40 to-transparent" aria-hidden="true">
+    <span class="absolute top-2 bottom-2 left-[11px] w-px bg-gradient-to-b from-brand via-brand/40 to-transparent" aria-hidden="true">
     </span>
     {#each months as m, i (m.bulan)}
       <li class="relative flex gap-4 pb-6 last:pb-0">
         <span
-          class="relative z-10 mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-gold/50 bg-ink text-gold"
+          class="relative z-10 mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-gold/50 bg-paper text-brand-dark"
         >
           {#if i < 3}
             <Check size={12} strokeWidth={3} />
@@ -66,8 +66,8 @@
           {/if}
         </span>
         <div>
-          <p class="text-[11px] font-bold tracking-widest text-gold uppercase">{m.bulan}</p>
-          <p class="mt-0.5 text-sm text-bone/85 sm:text-base">{m.teks}</p>
+          <p class="text-[11px] font-bold tracking-widest text-brand-dark uppercase">{m.bulan}</p>
+          <p class="mt-0.5 text-sm text-ink/85 sm:text-base">{m.teks}</p>
         </div>
       </li>
     {/each}

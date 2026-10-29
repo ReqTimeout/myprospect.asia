@@ -3,13 +3,13 @@ import Base from '../../layouts/Base.astro';
 ---
 
 <Base title="Login Admin — Prospect Asia" description="Area admin Prospect Asia.">
-  <main class="flex min-h-dvh items-center justify-center bg-ink px-4">
-    <div class="w-full max-w-sm rounded-3xl border border-white/10 bg-ink-2 p-8">
+  <main class="flex min-h-dvh items-center justify-center bg-paper px-4">
+    <div class="w-full max-w-sm rounded-3xl border border-ink/10 bg-paper-deep p-8">
       <p class="display skew-mark text-3xl">Prospect</p>
-      <p class="mt-1 text-xs font-black tracking-[0.25em] text-gold uppercase">Admin Panel</p>
+      <p class="mt-1 text-xs font-black tracking-[0.25em] text-brand-dark uppercase">Admin Panel</p>
 
       <form id="login-form" class="mt-8 space-y-4">
-        <label for="password" class="block text-xs font-black tracking-widest text-bone/60 uppercase">
+        <label for="password" class="block text-xs font-black tracking-widest text-ink/60 uppercase">
           Password
         </label>
         <input
@@ -18,19 +18,19 @@ import Base from '../../layouts/Base.astro';
           type="password"
           required
           autocomplete="current-password"
-          class="w-full rounded-2xl border border-white/15 bg-ink px-4 py-3.5 text-sm text-bone placeholder:text-bone/35 focus:border-gold focus:outline-none"
+          class="w-full rounded-2xl border border-ink/15 bg-paper px-4 py-3.5 text-sm text-ink placeholder:text-ink/35 focus:border-gold focus:outline-none"
           placeholder="••••••••"
         />
         <p id="error" class="hidden text-sm text-brand"></p>
         <button
           type="submit"
-          class="w-full rounded-2xl bg-brand px-6 py-3.5 text-sm font-bold text-white transition hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none active:scale-95"
+          class="w-full rounded-2xl bg-brand px-6 py-3.5 text-sm font-bold text-ink transition hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none active:scale-95"
         >
           Masuk
         </button>
       </form>
 
-      <p class="mt-6 text-center text-[11px] text-bone/40">
+      <p class="mt-6 text-center text-[11px] text-ink/40">
         Akses terbatas tim Prospect Asia · dibatasi Cloudflare
       </p>
     </div>

@@ -4,26 +4,35 @@ import { waLink } from '../lib/wa';
 ---
 
 <header
-  class="fixed inset-x-0 top-0 z-50 border-b border-white/5 bg-ink/70 backdrop-blur-xl"
+  class="fixed inset-x-0 top-0 z-50 border-b border-ink/8 bg-paper/80 backdrop-blur-xl"
 >
   <div class="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:px-6">
-    <a href="/" class="flex items-center gap-2 py-2 focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none">
+    <a href="/" class="group flex items-center gap-2 py-2 focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none">
       <img
-        src="/media/logo-prospect-white.png"
+        src="/media/logo-prospect-black.png"
         alt="Prospect"
         width="1000"
         height="233"
-        class="h-5 w-auto sm:h-6"
+        class="h-5 w-auto transition group-hover:-translate-y-0.5 sm:h-6"
       />
-      <span class="hidden rounded-sm bg-brand px-1.5 py-0.5 text-[9px] font-black tracking-wider text-white sm:inline">ASIA</span>
+      <span class="hidden rounded-sm bg-crimson px-1.5 py-0.5 text-[9px] font-black tracking-wider text-white sm:inline">ASIA</span>
     </a>
 
     <nav class="hidden items-center gap-6 lg:flex" aria-label="Navigasi atas">
-      <a href="/#program" class="py-2 text-sm font-semibold text-bone/70 transition hover:text-bone">Program</a>
-      <a href="/#workshop" class="py-2 text-sm font-semibold text-bone/70 transition hover:text-bone">Workshop</a>
-      <a href="/berita" class="py-2 text-sm font-semibold text-bone/70 transition hover:text-bone">Berita</a>
-      <a href="/tentang" class="py-2 text-sm font-semibold text-bone/70 transition hover:text-bone">Tentang</a>
-      <a href="/faq" class="py-2 text-sm font-semibold text-bone/70 transition hover:text-bone">FAQ</a>
+      {
+        [
+          { href: '/#program', label: 'Program' },
+          { href: '/#workshop', label: 'Workshop' },
+          { href: '/berita', label: 'Berita' },
+          { href: '/tentang', label: 'Tentang' },
+          { href: '/faq', label: 'FAQ' },
+        ].map((n) => (
+          <a href={n.href} class="group relative py-2 text-sm font-semibold text-ink/70 transition hover:text-ink focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none">
+            {n.label}
+            <span class="absolute inset-x-0 bottom-1 h-0.5 origin-left scale-x-0 rounded-full bg-gradient-to-r from-brand to-gold transition-transform duration-300 group-hover:scale-x-100" aria-hidden="true" />
+          </a>
+        ))
+      }
     </nav>
 
     <a
@@ -31,7 +40,8 @@ import { waLink } from '../lib/wa';
       target="_blank"
       rel="noopener noreferrer"
       data-wa-cta="header"
-      class="hidden rounded-xl bg-brand px-4 py-2.5 text-xs font-bold tracking-wide text-white uppercase transition hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none active:scale-95 sm:inline-block"
+      data-magnetic
+      class="btn-pop hidden rounded-xl bg-brand px-4 py-2.5 text-xs font-bold tracking-wide text-ink uppercase shadow-[0_10px_24px_-10px_rgba(255,122,26,0.55)] hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none sm:inline-block"
     >
       Chat WA · {SITE.waDisplay}
     </a>

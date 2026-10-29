@@ -12,17 +12,17 @@ const fmt = new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'short', y
 <section class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
   <div class="mb-8 flex items-end justify-between gap-4">
     <div>
-      <p class="text-xs font-bold tracking-[0.2em] text-gold uppercase">Berita Atlet Modern</p>
+      <p class="text-xs font-bold tracking-[0.2em] text-brand-dark uppercase">Berita Atlet Modern</p>
       <h2 class="display mt-2 text-4xl sm:text-5xl">Kabar terbaru</h2>
     </div>
-    <a href="/berita" class="shrink-0 py-1.5 text-sm font-bold text-gold transition hover:underline focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none">
+    <a href="/berita" class="shrink-0 py-1.5 text-sm font-bold text-brand-dark transition hover:underline focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none">
       Lihat semua →
     </a>
   </div>
 
   {
     posts.length === 0 ? (
-      <p class="rounded-3xl border border-dashed border-white/15 p-8 text-center text-sm text-bone/50">
+      <p class="rounded-3xl border border-dashed border-ink/15 p-8 text-center text-sm text-ink/50">
         Artikel sedang disiapkan. Mau jadi yang pertama tahu? Chat admin.
       </p>
     ) : (
@@ -30,9 +30,9 @@ const fmt = new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'short', y
         {posts.map((post) => (
           <a
             href={`/berita/${post.id}`}
-            class="group flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-ink-2 transition duration-200 hover:-translate-y-1 hover:border-gold/50 focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none"
+            class="card-soft group flex flex-col overflow-hidden rounded-3xl transition duration-200 hover:-translate-y-1 hover:border-brand/50 focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
           >
-            <div class="relative aspect-16/10 overflow-hidden bg-gradient-to-br from-brand/40 via-ink-2 to-gold/25">
+            <div class="relative aspect-16/10 overflow-hidden bg-gradient-to-br from-brand/25 via-brand-soft to-gold/30">
               {post.data.cover && (
                 <img
                   src={post.data.cover}
@@ -43,14 +43,14 @@ const fmt = new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'short', y
                   class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
                 />
               )}
-              <span class="absolute top-3 left-3 rounded-full bg-ink/85 px-2.5 py-1 text-[10px] font-black tracking-wider text-gold uppercase backdrop-blur">
+              <span class="absolute top-3 left-3 rounded-full bg-paper/85 px-2.5 py-1 text-[10px] font-black tracking-wider text-brand-dark uppercase backdrop-blur">
                 {post.data.kategori}
               </span>
             </div>
             <div class="flex flex-1 flex-col p-5">
-              <p class="text-[11px] text-bone/45">{fmt.format(post.data.pubDate)}</p>
-              <h3 class="mt-1.5 text-base leading-snug font-bold transition group-hover:text-gold">{post.data.title}</h3>
-              <p class="mt-2 line-clamp-2 text-[13px] text-bone/60">{post.data.desc}</p>
+              <p class="text-[11px] text-ink/45">{fmt.format(post.data.pubDate)}</p>
+              <h3 class="mt-1.5 text-base leading-snug font-bold transition group-hover:text-brand-dark">{post.data.title}</h3>
+              <p class="mt-2 line-clamp-2 text-[13px] text-ink/60">{post.data.desc}</p>
             </div>
           </a>
         ))}
@@ -58,14 +58,14 @@ const fmt = new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'short', y
     )
   }
 
-  <p class="mt-8 text-center text-sm text-bone/55">
+  <p class="mt-8 text-center text-sm text-ink/55">
     Punya cerita atlet hebat?{' '}
     <a
       href={waLink({ program: 'Berita Atlet Modern', source: 'blog-cta' })}
       target="_blank"
       rel="noopener noreferrer"
       data-wa-cta="blog-cta"
-      class="inline-block py-1.5 font-bold text-gold hover:underline"
+      class="inline-block py-1.5 font-bold text-brand-dark hover:underline"
     >
       Kirim ke kami via WhatsApp ↗
     </a>

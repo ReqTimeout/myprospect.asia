@@ -18,14 +18,14 @@ const opsi = pilihWorkshop ? workshops.map((w) => w.nama) : programs.map((p) => 
 <form
   method="POST"
   action="/api/leads"
-  class="rounded-3xl border border-white/10 bg-white/5 p-6 focus-within:border-gold/40"
+  class="card-soft rounded-3xl p-6 focus-within:border-brand/40"
 >
   <input type="hidden" name="sumber" value={sumber} />
 
   {
     variant === 'akademi' ? (
       <>
-        <label for="lead-nama" class="block text-xs font-black tracking-widest text-gold uppercase">
+        <label for="lead-nama" class="block text-xs font-black tracking-widest text-brand-dark uppercase">
           Nama PIC
         </label>
         <input
@@ -35,9 +35,9 @@ const opsi = pilihWorkshop ? workshops.map((w) => w.nama) : programs.map((p) => 
           maxlength="80"
           autocomplete="name"
           placeholder="Nama Anda"
-          class="mt-2 w-full rounded-2xl border border-white/15 bg-ink px-4 py-3 text-sm text-bone placeholder:text-bone/35 focus:border-gold focus:outline-none"
+          class="mt-2 w-full rounded-2xl border border-ink/15 bg-paper px-4 py-3 text-sm text-ink placeholder:text-ink/35 focus:border-brand focus:outline-none"
         />
-        <label for="lead-akademi" class="mt-4 block text-xs font-black tracking-widest text-gold uppercase">
+        <label for="lead-akademi" class="mt-4 block text-xs font-black tracking-widest text-brand-dark uppercase">
           Nama akademi / klub
         </label>
         <input
@@ -46,12 +46,12 @@ const opsi = pilihWorkshop ? workshops.map((w) => w.nama) : programs.map((p) => 
           required
           maxlength="120"
           placeholder="cth: Akademi Futsal Margahayu Raya"
-          class="mt-2 w-full rounded-2xl border border-white/15 bg-ink px-4 py-3 text-sm text-bone placeholder:text-bone/35 focus:border-gold focus:outline-none"
+          class="mt-2 w-full rounded-2xl border border-ink/15 bg-paper px-4 py-3 text-sm text-ink placeholder:text-ink/35 focus:border-brand focus:outline-none"
         />
       </>
     ) : (
       <>
-        <label for="lead-nama" class="block text-xs font-black tracking-widest text-gold uppercase">
+        <label for="lead-nama" class="block text-xs font-black tracking-widest text-brand-dark uppercase">
           Nama atlet / wali
         </label>
         <input
@@ -61,13 +61,13 @@ const opsi = pilihWorkshop ? workshops.map((w) => w.nama) : programs.map((p) => 
           maxlength="80"
           autocomplete="name"
           placeholder="Nama Anda"
-          class="mt-2 w-full rounded-2xl border border-white/15 bg-ink px-4 py-3 text-sm text-bone placeholder:text-bone/35 focus:border-gold focus:outline-none"
+          class="mt-2 w-full rounded-2xl border border-ink/15 bg-paper px-4 py-3 text-sm text-ink placeholder:text-ink/35 focus:border-brand focus:outline-none"
         />
       </>
     )
   }
 
-  <label for="lead-wa" class="mt-4 block text-xs font-black tracking-widest text-gold uppercase">
+  <label for="lead-wa" class="mt-4 block text-xs font-black tracking-widest text-brand-dark uppercase">
     Nomor WhatsApp
   </label>
   <input
@@ -79,12 +79,12 @@ const opsi = pilihWorkshop ? workshops.map((w) => w.nama) : programs.map((p) => 
     autocomplete="tel"
     pattern="[0-9\s+()-]{10,18}"
     placeholder="08xx xxxx xxxx"
-    class="mt-2 w-full rounded-2xl border border-white/15 bg-ink px-4 py-3 text-sm text-bone placeholder:text-bone/35 focus:border-gold focus:outline-none"
+    class="mt-2 w-full rounded-2xl border border-ink/15 bg-paper px-4 py-3 text-sm text-ink placeholder:text-ink/35 focus:border-brand focus:outline-none"
   />
 
   {
     pilihProgram ? (
-      <label for="lead-program" class="mt-4 block text-xs font-black tracking-widest text-gold uppercase">
+      <label for="lead-program" class="mt-4 block text-xs font-black tracking-widest text-brand-dark uppercase">
         Program yang diminati
       </label>
     ) : (
@@ -96,7 +96,7 @@ const opsi = pilihWorkshop ? workshops.map((w) => w.nama) : programs.map((p) => 
       <select
         id="lead-program"
         name="program"
-        class="mt-2 w-full rounded-2xl border border-white/15 bg-ink px-4 py-3 text-sm text-bone focus:border-gold focus:outline-none"
+        class="mt-2 w-full rounded-2xl border border-ink/15 bg-paper px-4 py-3 text-sm text-ink focus:border-brand focus:outline-none"
       >
         {opsi.map((o) => (
           <option value={o}>{o}</option>
@@ -115,11 +115,11 @@ const opsi = pilihWorkshop ? workshops.map((w) => w.nama) : programs.map((p) => 
   <button
     type="submit"
     data-wa-cta={`form-${sumber}`}
-    class="mt-6 flex w-full items-center justify-center gap-2 rounded-2xl bg-brand px-6 py-4 text-sm font-bold text-white transition hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none active:scale-95"
+    class="mt-6 flex w-full items-center justify-center gap-2 rounded-2xl bg-brand px-6 py-4 text-sm font-bold text-ink transition hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none active:scale-95"
   >
     Kirim & lanjut ke WhatsApp ↗
   </button>
-  <p class="mt-3 text-center text-[11px] text-bone/50">
+  <p class="mt-3 text-center text-[11px] text-ink/50">
     Data Anda hanya dipakai admin untuk membalas via WhatsApp. Admin balas di jam kerja.
   </p>
 </form>

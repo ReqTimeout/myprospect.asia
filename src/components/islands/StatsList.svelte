@@ -27,11 +27,11 @@
 
 <ul class="grid grid-cols-3 gap-3 sm:gap-6">
   {#each list as s (s.label)}
-    <li class="rounded-3xl border border-white/10 bg-white/5 px-3 py-6 text-center sm:px-6">
-      <p class="display text-3xl text-gold sm:text-5xl">
+    <li class="rounded-3xl border border-ink/10 bg-white px-3 py-6 shadow-soft text-center sm:px-6">
+      <p class="display text-3xl text-brand-dark sm:text-5xl">
         <Counter to={s.to} suffix={s.suffix} />
       </p>
-      <p class="mt-2 text-[11px] font-semibold tracking-wide text-bone/60 uppercase sm:text-xs">{s.label}</p>
+      <p class="mt-2 text-[11px] font-semibold tracking-wide text-ink/60 uppercase sm:text-xs">{s.label}</p>
     </li>
   {/each}
 </ul>

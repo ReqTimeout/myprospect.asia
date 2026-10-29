@@ -66,7 +66,7 @@
   ]}
 >
   <div
-    class="flex items-end gap-1 rounded-3xl border border-white/10 bg-ink/80 px-2 py-2 shadow-[0_18px_40px_-12px_rgba(0,0,0,0.7)] backdrop-blur-xl"
+    class="flex items-end gap-1 rounded-3xl border border-ink/10 bg-paper/85 px-2 py-2 shadow-[0_18px_40px_-12px_rgba(36,26,18,0.28)] backdrop-blur-xl"
   >
     {#each items as item (item.id)}
       {@const isActive = active === item.id && !item.wa}
@@ -76,7 +76,7 @@
           target="_blank"
           rel="noopener noreferrer"
           data-wa-cta="dock"
-          class="ml-1 flex h-13 w-13 items-center justify-center rounded-2xl bg-brand text-white shadow-[0_8px_20px_-6px_rgba(200,35,43,0.7)] transition active:scale-90 focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none"
+          class="ml-1 flex h-13 w-13 items-center justify-center rounded-2xl bg-brand text-ink shadow-[0_10px_22px_-8px_rgba(255,122,26,0.7)] transition active:scale-90 focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
           aria-label="Chat WhatsApp admin"
         >
           <item.icon size={24} strokeWidth={2.2} />
@@ -86,8 +86,8 @@
           href={item.href}
           data-dock={item.id}
           class={[
-            'relative flex min-w-15 flex-col items-center gap-0.5 rounded-2xl px-2.5 pt-1.5 pb-1 transition focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none',
-            isActive ? 'text-gold' : 'text-bone/60',
+            'relative flex min-w-15 flex-col items-center gap-0.5 rounded-2xl px-2.5 pt-1.5 pb-1 transition focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none',
+            isActive ? 'text-brand-dark' : 'text-ink/60',
           ]}
           aria-current={isActive ? 'page' : undefined}
         >

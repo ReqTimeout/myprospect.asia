@@ -42,9 +42,9 @@
   <div class="embla__viewport overflow-hidden">
     <div class="embla__container flex gap-4">
       {#each list as t (t.nama)}
-        <figure class="embla__slide min-w-[85%] shrink-0 rounded-3xl border border-white/10 bg-white/5 p-6 sm:min-w-[60%] lg:min-w-[45%]">
-          <Quote size={22} class="mb-3 text-gold" aria-hidden="true" />
-          <blockquote class="text-sm leading-relaxed text-bone/85 sm:text-base">
+        <figure class="embla__slide card-soft min-w-[85%] shrink-0 rounded-3xl p-6 sm:min-w-[60%] lg:min-w-[45%]">
+          <Quote size={22} class="mb-3 text-brand-dark" aria-hidden="true" />
+          <blockquote class="text-sm leading-relaxed text-ink/85 sm:text-base">
             “{t.kutipan}”
           </blockquote>
           <figcaption class="mt-5 flex items-center gap-3">
@@ -53,7 +53,7 @@
             </span>
             <div class="leading-tight">
               <p class="text-sm font-bold">{t.nama}</p>
-              <p class="text-xs text-bone/50">{t.asal}{t.olahraga ? ` · ${t.olahraga}` : ''}</p>
+              <p class="text-xs text-ink/50">{t.asal}{t.olahraga ? ` · ${t.olahraga}` : ''}</p>
             </div>
           </figcaption>
         </figure>
@@ -67,12 +67,12 @@
         type="button"
         aria-label={`Slide ${i + 1}`}
         onclick={() => scrollTo(i)}
-        class="flex h-6 w-6 items-center justify-center rounded-full transition-all focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none"
+        class="flex h-6 w-6 items-center justify-center rounded-full transition-all focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
       >
         <span
           class={[
             'h-2 rounded-full transition-all',
-            selected === i ? 'w-6 bg-gold' : 'w-2 bg-white/25',
+            selected === i ? 'w-6 bg-brand' : 'w-2 bg-ink/20',
           ]}
         ></span>
       </button>
