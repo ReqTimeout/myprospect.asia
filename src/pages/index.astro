@@ -45,6 +45,9 @@ const schema = [organizationSchema, faqSchema(faqs)];
       ></div>
       <div class="art-dots absolute inset-0 [mask-image:linear-gradient(to_bottom,transparent,black_55%,transparent)]" aria-hidden="true"></div>
       <div class="hero-glow absolute inset-0" aria-hidden="true"></div>
+      <div class="art-pitch absolute inset-x-0 bottom-0 h-[70%] opacity-60 [mask-image:linear-gradient(to_top,black,transparent)]" aria-hidden="true"></div>
+      <div class="sport-ball sport-ball--orange -left-6 top-[38%] hidden h-12 w-12 animate-float lg:block" aria-hidden="true"></div>
+      <div class="sport-ball right-[4%] top-[22%] hidden h-8 w-8 animate-float-slow xl:block" aria-hidden="true"></div>
       <div data-parallax="-30" class="pointer-events-none absolute top-24 left-[8%] hidden animate-float -rotate-12 rounded-2xl border-3 border-ink/10 bg-white px-4 py-2 shadow-soft sm:block" aria-hidden="true">
         <span class="display text-lg text-ink">SPEAK LOUD!</span>
       </div>
@@ -115,8 +118,11 @@ const schema = [organizationSchema, faqSchema(faqs)];
         <p class="eyebrow text-xs font-bold tracking-[0.2em] text-brand-dark uppercase">Level & Journey</p>
         <h2 class="display mt-2 text-4xl sm:text-5xl">Dari nol sampai<br />siap panggung</h2>
       </div>
-      <div class="card-soft rounded-3xl p-6 sm:p-8">
-        <LevelJourney client:visible />
+      <div class="card-soft relative overflow-hidden rounded-3xl p-6 sm:p-8">
+        <div class="art-net absolute inset-0 opacity-60 [mask-image:linear-gradient(to_bottom_right,black,transparent_60%)]" aria-hidden="true"></div>
+        <div class="relative">
+          <LevelJourney client:visible />
+        </div>
       </div>
     </section>
 

@@ -8,6 +8,8 @@ import membershipArt from '../assets/generated/a3-membership.jpg';
 <section id="program" class="relative mx-auto max-w-6xl overflow-hidden scroll-mt-20 px-4 py-14 sm:px-6">
   <div class="art-blob -top-20 -left-24 h-64 w-64" style="background: radial-gradient(circle, rgba(255,195,46,0.2), transparent 68%);" aria-hidden="true"></div>
   <div class="art-ring right-4 top-8 hidden h-20 w-20 border-crimson/20 sm:block" aria-hidden="true"></div>
+  <div class="art-balls-orange absolute -top-6 right-0 h-40 w-40 opacity-60 [mask-image:linear-gradient(to_bottom_left,black,transparent)]" aria-hidden="true"></div>
+  <div class="sport-ball sport-ball--orange left-[46%] top-24 hidden h-9 w-9 -rotate-12 lg:block" aria-hidden="true"></div>
   <p class="ghost-word bottom-2 right-0 hidden text-[5rem] lg:block" aria-hidden="true">1-on-1</p>
   <div class="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
     <div>
@@ -93,11 +95,12 @@ import membershipArt from '../assets/generated/a3-membership.jpg';
     }
   </div>
 
-  <div class="mt-6 flex flex-col items-start gap-4 rounded-3xl border border-dashed border-gold/40 bg-gold/5 p-6 sm:flex-row sm:items-center sm:justify-between">
-    <div>
-      <p class="eyebrow text-xs font-black tracking-widest text-brand-dark uppercase">Coming Soon</p>
-      <p class="display mt-1 text-2xl">Membership Program</p>
-      <p class="mt-1 text-sm text-ink/60">Benefit berkelanjutan buat atlet — daftar early access dulu.</p>
+  <div class="relative mt-6 flex flex-col items-start gap-4 overflow-hidden rounded-3xl bg-gradient-to-br from-brand via-brand to-brand-dark p-6 shadow-[0_24px_50px_-20px_rgba(255,122,26,0.6)] sm:flex-row sm:items-center sm:justify-between">
+    <div class="art-stripes-light absolute inset-0 opacity-50" aria-hidden="true"></div>
+    <div class="relative">
+      <p class="text-xs font-black tracking-widest text-white/80 uppercase">Coming Soon</p>
+      <p class="display mt-1 text-2xl text-white">Membership Program</p>
+      <p class="mt-1 text-sm text-white/85">Benefit berkelanjutan buat atlet — daftar early access dulu.</p>
     </div>
     <Image
       src={membershipArt}
@@ -106,14 +109,14 @@ import membershipArt from '../assets/generated/a3-membership.jpg';
       height={248}
       loading="lazy"
       aria-hidden="true"
-      class="hidden h-24 w-44 rounded-2xl border border-gold/30 object-cover sm:block"
+      class="relative hidden h-24 w-44 rounded-2xl border border-white/30 object-cover sm:block"
     />
     <a
       href={waLink({ program: 'Membership (early access)', source: 'membership' })}
       target="_blank"
       rel="noopener noreferrer"
       data-wa-cta="membership"
-      class="rounded-2xl border border-gold px-5 py-3 text-sm font-bold text-brand-dark transition hover:bg-gold hover:text-ink focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none active:scale-95"
+      class="relative rounded-2xl bg-white px-5 py-3 text-sm font-bold text-ink transition hover:bg-gold-soft focus-visible:ring-2 focus-visible:ring-ink focus-visible:outline-none active:scale-95"
     >
       Info Early Access ↗
     </a>

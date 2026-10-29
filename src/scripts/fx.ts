@@ -1,102 +1,31 @@
 import Lenis from 'lenis';
 import { animate } from 'motion';
 
-const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const osReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const stored = localStorage.getItem('pa-motion');
+const forcedOn = stored === 'on';
+const forcedOff = stored === 'off';
+const reduced = !forcedOn && (osReduced || forcedOff);
 
-async function initGsap() {
-  if (reduced) return;
-  const { gsap } = await import('gsap');
-  const { ScrollTrigger } = await import('gsap/ScrollTrigger');
-  gsap.registerPlugin(ScrollTrigger);
+if (forcedOn) document.documentElement.classList.add('motion-on');
+if (forcedOff) document.documentElement.classList.add('motion-off');
 
-  document.querySelectorAll<HTMLElement>('[data-parallax]').forEach((el) => {
-    const dist = parseFloat(el.dataset.parallax || '-30');
-    gsap.to(el, {
-      y: dist,
-      ease: 'none',
-      scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: 0.7 },
-    });
+function initMotionToggle() {
+  const btn = document.querySelector<HTMLButtonElement>('[data-motion-toggle]');
+  if (!btn) return;
+  const label = btn.querySelector<HTMLElement>('[data-motion-label]');
+  const state = () => (forcedOff ? 'off' : forcedOn ? 'on' : 'auto');
+  const paint = () => {
+    const s = state();
+    if (label) label.textContent = s === 'off' ? 'Animasi mati' : s === 'on' ? 'Animasi on' : 'Animasi';
+    btn.setAttribute('aria-pressed', s === 'off' ? 'true' : 'false');
+  };
+  paint();
+  btn.addEventListener('click', () => {
+    const next = state() === 'off' ? 'on' : 'off';
+    localStorage.setItem('pa-motion', next);
+    location.reload();
   });
-
-  await document.fonts.ready;
-  const { SplitText } = await import('gsap/SplitText');
-
-  const heroTitle = document.querySelector<HTMLElement>('[data-hero="title"]');
-  const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-
-  if (heroTitle) {
-    const lines = new SplitText(heroTitle, { type: 'lines', mask: 'lines', autoSplit: true });
-    tl.from(lines.lines, { yPercent: 108, duration: 1, stagger: 0.09, ease: 'power4.out' }, 0.1);
-  }
-  const badge = document.querySelector<HTMLElement>('[data-hero="badge"]');
-  if (badge) tl.from(badge, { y: -18, opacity: 0, duration: 0.7, ease: 'back.out(2)' }, 0.05);
-  const sub = document.querySelector<HTMLElement>('[data-hero="sub"]');
-  if (sub) tl.from(sub, { y: 22, opacity: 0, duration: 0.8 }, 0.75);
-  const photo = document.querySelector<HTMLElement>('[data-hero="photo"]');
-  if (photo) tl.from(photo, { scale: 0.88, y: 40, opacity: 0, duration: 1.2, ease: 'expo.out' }, 0.55);
-  const cta = document.querySelector<HTMLElement>('[data-hero="cta"]');
-  if (cta) tl.from(cta, { y: 26, opacity: 0, duration: 0.8, ease: 'back.out(1.7)' }, 1);
-
-  document.querySelectorAll<HTMLElement>('.display').forEach((el) => {
-    if (el.closest('astro-island')) return;
-    if (el.hasAttribute('data-reveal') || el.closest('[data-reveal]')) return;
-    if (el.hasAttribute('data-hero')) return;
-    if (!(el.textContent ?? '').trim()) return;
-    try {
-      const st = new SplitText(el, { type: 'chars', autoSplit: true, mask: 'chars' });
-      gsap.from(st.chars, {
-        yPercent: 115,
-        opacity: 0,
-        rotate: 3,
-        duration: 0.75,
-        ease: 'power4.out',
-        stagger: 0.016,
-        scrollTrigger: { trigger: el, start: 'top 90%', once: true },
-      });
-    } catch {
-      /* heading kecil — skip split */
-    }
-  });
-}
-
-function initScrollProgress() {
-  const bar = document.querySelector<HTMLElement>('.scroll-progress');
-  if (!bar) return;
-  let current = 0;
-  let target = 0;
-  const loop = () => {
-    current += (target - current) * 0.12;
-    bar.style.transform = `scaleX(${current.toFixed(4)})`;
-    requestAnimationFrame(loop);
-  };
-  const update = () => {
-    const max = document.documentElement.scrollHeight - window.innerHeight;
-    target = max > 0 ? Math.min(window.scrollY / max, 1) : 0;
-  };
-  window.addEventListener('scroll', update, { passive: true });
-  update();
-  requestAnimationFrame(loop);
-}
-
-function initSpotlight() {
-  const hero = document.querySelector<HTMLElement>('.hero-glow');
-  if (!hero || reduced || !window.matchMedia('(pointer: fine)').matches) return;
-  let tx = 50;
-  let ty = 26;
-  let cx = 50;
-  let cy = 26;
-  const loop = () => {
-    cx += (tx - cx) * 0.08;
-    cy += (ty - cy) * 0.08;
-    hero.style.setProperty('--mx', `${cx}%`);
-    hero.style.setProperty('--my', `${cy}%`);
-    requestAnimationFrame(loop);
-  };
-  window.addEventListener('pointermove', (e) => {
-    tx = (e.clientX / window.innerWidth) * 100;
-    ty = (e.clientY / window.innerHeight) * 100;
-  }, { passive: true });
-  requestAnimationFrame(loop);
 }
 
 function initReveal() {
@@ -177,20 +106,101 @@ function initLenis() {
   });
 }
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => {
-    initReveal();
-    initMagnetic();
-    initLenis();
-    initScrollProgress();
-    initSpotlight();
-    initGsap().catch(() => {});
+async function initGsap() {
+  if (reduced) return;
+  const { gsap } = await import('gsap');
+  const { ScrollTrigger } = await import('gsap/ScrollTrigger');
+  gsap.registerPlugin(ScrollTrigger);
+
+  document.querySelectorAll<HTMLElement>('[data-parallax]').forEach((el) => {
+    const dist = parseFloat(el.dataset.parallax || '-30');
+    gsap.to(el, {
+      y: dist,
+      ease: 'none',
+      scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: 0.7 },
+    });
   });
-} else {
+
+  await document.fonts.ready;
+  const { SplitText } = await import('gsap/SplitText');
+  document.querySelectorAll<HTMLElement>('.display').forEach((el) => {
+    if (el.closest('astro-island')) return;
+    if (el.hasAttribute('data-reveal') || el.closest('[data-reveal]')) return;
+    if (el.hasAttribute('data-hero')) return;
+    if (!(el.textContent ?? '').trim()) return;
+    try {
+      const st = new SplitText(el, { type: 'chars', autoSplit: true, mask: 'chars' });
+      gsap.from(st.chars, {
+        yPercent: 115,
+        opacity: 0,
+        rotate: 3,
+        duration: 0.75,
+        ease: 'power4.out',
+        stagger: 0.016,
+        scrollTrigger: { trigger: el, start: 'top 90%', once: true },
+      });
+    } catch {
+      /* heading kecil — skip split */
+    }
+  });
+}
+
+function initScrollProgress() {
+  const bar = document.querySelector<HTMLElement>('.scroll-progress');
+  if (!bar) return;
+  let current = 0;
+  let target = 0;
+  const loop = () => {
+    current += (target - current) * 0.12;
+    bar.style.transform = `scaleX(${current.toFixed(4)})`;
+    requestAnimationFrame(loop);
+  };
+  const update = () => {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    target = max > 0 ? Math.min(window.scrollY / max, 1) : 0;
+  };
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+  requestAnimationFrame(loop);
+}
+
+function initSpotlight() {
+  const hero = document.querySelector<HTMLElement>('.hero-glow');
+  if (!hero || reduced || !window.matchMedia('(pointer: fine)').matches) return;
+  let tx = 50;
+  let ty = 26;
+  let cx = 50;
+  let cy = 26;
+  const loop = () => {
+    cx += (tx - cx) * 0.08;
+    cy += (ty - cy) * 0.08;
+    hero.style.setProperty('--mx', `${cx}%`);
+    hero.style.setProperty('--my', `${cy}%`);
+    requestAnimationFrame(loop);
+  };
+  window.addEventListener(
+    'pointermove',
+    (e) => {
+      tx = (e.clientX / window.innerWidth) * 100;
+      ty = (e.clientY / window.innerHeight) * 100;
+    },
+    { passive: true }
+  );
+  requestAnimationFrame(loop);
+}
+
+function boot() {
+  initMotionToggle();
   initReveal();
   initMagnetic();
   initLenis();
   initScrollProgress();
   initSpotlight();
   initGsap().catch(() => {});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', boot);
+} else {
+  boot();
 }
