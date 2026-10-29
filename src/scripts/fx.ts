@@ -3,6 +3,44 @@ import { animate } from 'motion';
 
 const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+async function initGsap() {
+  if (reduced) return;
+  const { gsap } = await import('gsap');
+  const { ScrollTrigger } = await import('gsap/ScrollTrigger');
+  gsap.registerPlugin(ScrollTrigger);
+
+  document.querySelectorAll<HTMLElement>('[data-parallax]').forEach((el) => {
+    const dist = parseFloat(el.dataset.parallax || '-30');
+    gsap.to(el, {
+      y: dist,
+      ease: 'none',
+      scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: 0.7 },
+    });
+  });
+
+  await document.fonts.ready;
+  const { SplitText } = await import('gsap/SplitText');
+  document.querySelectorAll<HTMLElement>('.display').forEach((el) => {
+    if (el.closest('astro-island')) return;
+    if (el.hasAttribute('data-reveal') || el.closest('[data-reveal]')) return;
+    if (!(el.textContent ?? '').trim()) return;
+    try {
+      const st = new SplitText(el, { type: 'chars', autoSplit: true, mask: 'chars' });
+      gsap.from(st.chars, {
+        yPercent: 115,
+        opacity: 0,
+        rotate: 3,
+        duration: 0.75,
+        ease: 'power4.out',
+        stagger: 0.016,
+        scrollTrigger: { trigger: el, start: 'top 90%', once: true },
+      });
+    } catch {
+      /* heading kecil — skip split */
+    }
+  });
+}
+
 function initReveal() {
   const groups = document.querySelectorAll('[data-reveal-group]');
   groups.forEach((g) => {
@@ -86,9 +124,11 @@ if (document.readyState === 'loading') {
     initReveal();
     initMagnetic();
     initLenis();
+    initGsap().catch(() => {});
   });
 } else {
   initReveal();
   initMagnetic();
   initLenis();
+  initGsap().catch(() => {});
 }

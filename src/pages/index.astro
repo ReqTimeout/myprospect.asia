@@ -44,10 +44,10 @@ const schema = [organizationSchema, faqSchema(faqs)];
         aria-hidden="true"
       ></div>
       <div class="art-dots absolute inset-0 [mask-image:linear-gradient(to_bottom,transparent,black_55%,transparent)]" aria-hidden="true"></div>
-      <div class="pointer-events-none absolute top-24 left-[8%] hidden animate-float -rotate-12 rounded-2xl border-3 border-ink/10 bg-white px-4 py-2 shadow-soft sm:block" aria-hidden="true">
+      <div data-parallax="-30" class="pointer-events-none absolute top-24 left-[8%] hidden animate-float -rotate-12 rounded-2xl border-3 border-ink/10 bg-white px-4 py-2 shadow-soft sm:block" aria-hidden="true">
         <span class="display text-lg text-ink">SPEAK LOUD!</span>
       </div>
-      <div class="pointer-events-none absolute right-[7%] bottom-40 hidden animate-float-slow rotate-6 rounded-full border-3 border-brand/25 bg-brand-soft px-5 py-2 sm:block" aria-hidden="true">
+      <div data-parallax="24" class="pointer-events-none absolute right-[7%] bottom-40 hidden animate-float-slow rotate-6 rounded-full border-3 border-brand/25 bg-brand-soft px-5 py-2 sm:block" aria-hidden="true">
         <span class="text-sm font-black text-brand-dark">2.175+ atlet</span>
       </div>
       <div class="pointer-events-none absolute top-1/2 left-[12%] hidden h-4 w-4 rotate-45 rounded-sm bg-crimson sm:block" aria-hidden="true"></div>
@@ -100,9 +100,11 @@ const schema = [organizationSchema, faqSchema(faqs)];
 
     <AboutSection />
 
-    <section class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+    <section class="relative mx-auto max-w-6xl overflow-hidden px-4 py-14 sm:px-6">
+      <div class="art-ring left-6 top-14 hidden h-16 w-16 border-gold/40 sm:block" aria-hidden="true"></div>
+      <div class="art-diamond top-10 right-10 h-3 w-3 bg-crimson/50 hidden sm:block" aria-hidden="true"></div>
       <div class="mb-8 max-w-2xl">
-        <p class="text-xs font-bold tracking-[0.2em] text-brand-dark uppercase">Level & Journey</p>
+        <p class="eyebrow text-xs font-bold tracking-[0.2em] text-brand-dark uppercase">Level & Journey</p>
         <h2 class="display mt-2 text-4xl sm:text-5xl">Dari nol sampai<br />siap panggung</h2>
       </div>
       <div class="card-soft rounded-3xl p-6 sm:p-8">
@@ -114,9 +116,10 @@ const schema = [organizationSchema, faqSchema(faqs)];
 
     <WorkshopSection />
 
-    <section class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+    <section class="relative mx-auto max-w-6xl overflow-hidden px-4 py-14 sm:px-6">
+      <div class="art-blob -top-20 right-[-6rem] h-64 w-64" style="background: radial-gradient(circle, rgba(255,195,46,0.16), transparent 68%);" aria-hidden="true"></div>
       <div class="mb-8">
-        <p class="text-xs font-bold tracking-[0.2em] text-brand-dark uppercase">Kata Mereka</p>
+        <p class="eyebrow text-xs font-bold tracking-[0.2em] text-brand-dark uppercase">Kata Mereka</p>
         <h2 class="display mt-2 text-4xl sm:text-5xl">Testimoni atlet</h2>
       </div>
       <Testimonials client:visible items={testimonials} />

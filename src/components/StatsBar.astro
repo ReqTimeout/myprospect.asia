@@ -8,6 +8,8 @@ const stats = [
 ];
 ---
 
-<section class="mx-auto max-w-6xl px-4 py-10 sm:px-6" aria-label="Stats Prospect Asia">
+<section class="relative mx-auto max-w-6xl px-4 py-10 sm:px-6" aria-label="Stats Prospect Asia">
+  <div class="art-ring -top-4 right-6 h-14 w-14 border-crimson/25 hidden sm:block" aria-hidden="true"></div>
+  <div class="art-diamond top-6 left-8 h-3 w-3 bg-crimson/60 hidden sm:block" aria-hidden="true"></div>
   <StatsList client:visible stats={stats} />
 </section>

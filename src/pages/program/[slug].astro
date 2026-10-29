@@ -48,6 +48,8 @@ const schema = courseSchema({
         class="absolute inset-0 h-full w-full object-cover object-[50%_25%] opacity-30"
       />
       <div class="absolute inset-0 bg-gradient-to-t from-paper via-paper/92 to-paper/70" aria-hidden="true"></div>
+      <div class="art-ring right-10 top-24 hidden h-14 w-14 border-crimson/20 sm:block" aria-hidden="true"></div>
+      <div class="art-diamond right-24 top-40 h-2.5 w-2.5 bg-crimson/50 hidden sm:block" aria-hidden="true"></div>
 
       <div class="relative mx-auto max-w-4xl px-4 py-14 sm:px-6">
         <a href="/#program" class="inline-block py-2 text-sm font-bold text-brand-dark transition hover:underline">← Semua program</a>
@@ -104,7 +106,7 @@ const schema = courseSchema({
     </section>
 
     <section class="mx-auto max-w-4xl px-4 py-14 sm:px-6">
-      <p class="text-xs font-black tracking-widest text-brand-dark uppercase">Apa yang akan dikuasai</p>
+      <p class="eyebrow text-xs font-black tracking-widest text-brand-dark uppercase">Apa yang akan dikuasai</p>
       <h2 class="display mt-2 text-3xl sm:text-4xl">Komunikasi level atlet pro</h2>
       <ul class="mt-6 grid gap-3 sm:grid-cols-2">
         {
@@ -122,7 +124,7 @@ const schema = courseSchema({
 
     <section class="border-y border-ink/10 bg-white">
       <div class="mx-auto max-w-4xl px-4 py-14 sm:px-6">
-        <p class="text-xs font-black tracking-widest text-brand-dark uppercase">Yang didapatkan</p>
+        <p class="eyebrow text-xs font-black tracking-widest text-brand-dark uppercase">Yang didapatkan</p>
         <h2 class="display mt-2 text-3xl sm:text-4xl">Benefit lengkap</h2>
         <ul class="mt-6 space-y-3">
           {
@@ -147,14 +149,14 @@ const schema = courseSchema({
     </section>
 
     <section class="mx-auto max-w-4xl px-4 py-14 sm:px-6">
-      <p class="text-xs font-black tracking-widest text-brand-dark uppercase">Peningkatan bulanan</p>
+      <p class="eyebrow text-xs font-black tracking-widest text-brand-dark uppercase">Peningkatan bulanan</p>
       <h2 class="display mt-2 text-3xl sm:text-4xl">4 bulan, 4 lompatan</h2>
       <ol class="relative mt-8 space-y-6 border-l-2 border-gold/40 pl-6">
         {
           p.journey.map((j) => (
             <li class="relative">
               <span class="absolute -left-[31px] top-1 h-4 w-4 rounded-full border-2 border-gold bg-paper" aria-hidden="true" />
-              <p class="text-xs font-black tracking-widest text-brand-dark uppercase">{j.bulan}</p>
+              <p class="eyebrow text-xs font-black tracking-widest text-brand-dark uppercase">{j.bulan}</p>
               <p class="mt-1 text-base font-semibold text-ink">{j.teks}</p>
             </li>
           ))
@@ -173,7 +175,7 @@ const schema = courseSchema({
 
     <section class="border-t border-ink/10 bg-white">
       <div class="mx-auto max-w-4xl px-4 py-14 sm:px-6">
-        <p class="text-xs font-black tracking-widest text-brand-dark uppercase">FAQ mini</p>
+        <p class="eyebrow text-xs font-black tracking-widest text-brand-dark uppercase">FAQ mini</p>
         <h2 class="display mt-2 text-3xl sm:text-4xl">Yang sering ditanya</h2>
         <div class="mt-6 space-y-3">
           {
@@ -194,7 +196,7 @@ const schema = courseSchema({
     <section id="daftar" class="mx-auto max-w-4xl scroll-mt-20 px-4 py-14 sm:px-6">
       <div class="grid gap-8 md:grid-cols-2">
         <div>
-          <p class="text-xs font-black tracking-widest text-brand-dark uppercase">Mulai sekarang</p>
+          <p class="eyebrow text-xs font-black tracking-widest text-brand-dark uppercase">Mulai sekarang</p>
           <h2 class="display mt-2 text-3xl sm:text-4xl">Isi data,<br />admin lanjut di WA</h2>
           <p class="mt-4 text-sm leading-relaxed text-ink/65">
             Setelah formulir dikirim, WhatsApp langsung terbuka dengan pesan yang sudah terisi — admin tinggal

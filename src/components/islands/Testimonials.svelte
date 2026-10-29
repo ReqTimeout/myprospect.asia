@@ -42,7 +42,7 @@
   <div class="embla__viewport overflow-hidden">
     <div class="embla__container flex gap-4">
       {#each list as t (t.nama)}
-        <figure class="embla__slide card-soft min-w-[85%] shrink-0 rounded-3xl p-6 sm:min-w-[60%] lg:min-w-[45%]">
+        <figure class="embla__slide card-soft card-lift min-w-[85%] shrink-0 rounded-3xl p-6 sm:min-w-[60%] lg:min-w-[45%]">
           <Quote size={22} class="mb-3 text-brand-dark" aria-hidden="true" />
           <blockquote class="text-sm leading-relaxed text-ink/85 sm:text-base">
             “{t.kutipan}”

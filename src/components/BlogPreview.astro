@@ -9,10 +9,12 @@ const posts = (await getCollection('berita', (p) => p.data.status === 'published
 const fmt = new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
 ---
 
-<section class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+<section class="relative mx-auto max-w-6xl overflow-hidden px-4 py-14 sm:px-6">
+  <div class="art-dots absolute inset-x-0 bottom-0 h-32 opacity-50 [mask-image:linear-gradient(to_top,black,transparent)]" aria-hidden="true"></div>
+  <div class="art-ring top-10 right-10 hidden h-12 w-12 border-gold/50 sm:block" aria-hidden="true"></div>
   <div class="mb-8 flex items-end justify-between gap-4">
     <div>
-      <p class="text-xs font-bold tracking-[0.2em] text-brand-dark uppercase">Berita Atlet Modern</p>
+      <p class="eyebrow text-xs font-bold tracking-[0.2em] text-brand-dark uppercase">Berita Atlet Modern</p>
       <h2 class="display mt-2 text-4xl sm:text-5xl">Kabar terbaru</h2>
     </div>
     <a href="/berita" class="shrink-0 py-1.5 text-sm font-bold text-brand-dark transition hover:underline focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none">

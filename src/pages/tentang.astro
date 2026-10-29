@@ -28,9 +28,14 @@ const mitra = partners.filter((p) => p.jenis === 'mitra');
         class="absolute inset-0 h-full w-full object-cover opacity-35"
       />
       <div class="absolute inset-0 bg-gradient-to-t from-paper via-paper/85 to-paper/55" aria-hidden="true"></div>
+      <div class="art-ring right-8 top-16 hidden h-16 w-16 border-crimson/25 sm:block" aria-hidden="true"></div>
+      <div class="art-diamond right-28 top-44 h-3 w-3 bg-crimson/60 hidden sm:block" aria-hidden="true"></div>
+      <div class="pointer-events-none absolute left-4 bottom-10 hidden animate-float-slow rotate-6 rounded-2xl border-3 border-ink/10 bg-white px-3.5 py-1.5 shadow-soft sm:block" aria-hidden="true">
+        <span class="display text-base text-ink">SINCE 2025</span>
+      </div>
 
       <div class="relative mx-auto max-w-4xl px-4 py-16 sm:px-6">
-        <p class="text-xs font-bold tracking-[0.2em] text-brand-dark uppercase">Tentang Kami</p>
+        <p class="eyebrow text-xs font-bold tracking-[0.2em] text-brand-dark uppercase">Tentang Kami</p>
         <h1 class="display mt-2 text-5xl leading-[0.95] sm:text-6xl">
           Kita Berani<br /><span class="text-brand">Bicara</span>
         </h1>
@@ -42,7 +47,7 @@ const mitra = partners.filter((p) => p.jenis === 'mitra');
         </p>
 
         <div class="mt-8 rounded-3xl card-soft p-6">
-          <p class="text-xs font-black tracking-widest text-brand-dark uppercase">Founder</p>
+          <p class="eyebrow text-xs font-black tracking-widest text-brand-dark uppercase">Founder</p>
           <p class="display mt-2 text-3xl">Ferri Ahrial</p>
           <p class="mt-2 text-sm leading-relaxed text-ink/65">
             Sports Communication Trainer for Athletes · ex-media PERSIB Bandung &amp; PSSI.
@@ -59,7 +64,7 @@ const mitra = partners.filter((p) => p.jenis === 'mitra');
     <section class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
       <div class="grid gap-10 md:grid-cols-2">
         <div>
-          <p class="text-xs font-black tracking-widest text-brand-dark uppercase">Kerja Sama Klub & Akademi</p>
+          <p class="eyebrow text-xs font-black tracking-widest text-brand-dark uppercase">Kerja Sama Klub & Akademi</p>
           <ul class="mt-4 space-y-2.5">
             {
               akademi.map((a) => (
@@ -72,7 +77,7 @@ const mitra = partners.filter((p) => p.jenis === 'mitra');
           </ul>
         </div>
         <div>
-          <p class="text-xs font-black tracking-widest text-brand-dark uppercase">Mitra Resmi</p>
+          <p class="eyebrow text-xs font-black tracking-widest text-brand-dark uppercase">Mitra Resmi</p>
           <ul class="mt-4 space-y-2.5">
             {
               mitra.map((m) => (

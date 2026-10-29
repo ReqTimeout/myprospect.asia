@@ -3,10 +3,15 @@ import { waLink } from '../lib/wa';
 import { workshops, formatIdr } from '../data/workshops';
 ---
 
-<section id="workshop" class="mx-auto max-w-6xl scroll-mt-20 px-4 py-14 sm:px-6">
+<section id="workshop" class="relative mx-auto max-w-6xl overflow-hidden scroll-mt-20 px-4 py-14 sm:px-6">
+  <div class="art-dots absolute inset-x-0 top-0 h-40 opacity-50 [mask-image:linear-gradient(to_bottom,black,transparent)]" aria-hidden="true"></div>
+  <div class="art-blob top-24 -right-28 h-72 w-72" style="background: radial-gradient(circle, rgba(255,195,46,0.18), transparent 68%); animation-delay: -5s;" aria-hidden="true"></div>
+  <div class="pointer-events-none absolute right-6 top-10 hidden -rotate-6 rounded-2xl border-3 border-crimson/25 bg-white px-3.5 py-1.5 shadow-soft sm:block" aria-hidden="true">
+    <span class="display text-base text-crimson">GO!</span>
+  </div>
   <div class="mb-8 grid items-center gap-6 md:grid-cols-[1.2fr_1fr]">
     <div class="max-w-2xl">
-      <p class="text-xs font-bold tracking-[0.2em] text-brand-dark uppercase">Kolaborasi Akademi / Klub</p>
+      <p class="eyebrow text-xs font-bold tracking-[0.2em] text-brand-dark uppercase">Kolaborasi Akademi / Klub</p>
       <h2 class="display mt-2 text-4xl sm:text-5xl">Workshop buat<br />atlet binaanmu</h2>
       <p class="mt-3 text-sm leading-relaxed text-ink/65 sm:text-base">
         Sesi 90–120 menit, interaktif, praktik langsung. Minimal 10 peserta — didampingi coach Sports Communication.

@@ -3,9 +3,11 @@ import { faqs } from '../data/faq';
 import FaqAccordion from './islands/FaqAccordion.svelte';
 ---
 
-<section class="mx-auto max-w-3xl px-4 py-14 sm:px-6">
+<section class="relative mx-auto max-w-3xl overflow-hidden px-4 py-14 sm:px-6">
+  <p class="ghost-word right-2 top-2 hidden text-[9rem] !text-crimson/[0.08] lg:block" aria-hidden="true">?</p>
+  <div class="art-blob -top-16 -left-20 h-56 w-56" style="background: radial-gradient(circle, rgba(255,195,46,0.18), transparent 68%);" aria-hidden="true"></div>
   <div class="mb-8 text-center">
-    <p class="text-xs font-bold tracking-[0.2em] text-brand-dark uppercase">FAQ</p>
+    <p class="eyebrow text-xs font-bold tracking-[0.2em] text-brand-dark uppercase">FAQ</p>
     <h2 class="display mt-2 text-4xl sm:text-5xl">Pertanyaan yang<br />sering muncul</h2>
   </div>
 
