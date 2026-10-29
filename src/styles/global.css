@@ -229,8 +229,8 @@ body {
 
 [data-reveal] {
   opacity: 0;
-  transform: translateY(26px);
-  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(36px);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
   transition-delay: var(--rd, 0ms);
   will-change: opacity, transform;
 }
@@ -248,7 +248,63 @@ body {
 }
 
 [data-reveal="pop"] {
-  transform: scale(0.9);
+  transform: scale(0.92);
+}
+
+.hero-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(460px circle at var(--mx, 50%) var(--my, 26%), rgba(255, 122, 26, 0.18), transparent 62%);
+}
+
+.scroll-hint span {
+  animation: scroll-dot 1.8s ease-in-out infinite;
+}
+
+@keyframes scroll-dot {
+  0% { transform: translateY(0); opacity: 0; }
+  30% { opacity: 1; }
+  100% { transform: translateY(14px); opacity: 0; }
+}
+
+.page-curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  pointer-events: none;
+  background: linear-gradient(160deg, var(--color-brand), var(--color-gold));
+  transform-origin: top center;
+  animation: curtain-out 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+}
+
+.page-curtain::after {
+  content: "PROSPECT";
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 8vw, 5rem);
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+@keyframes curtain-out {
+  to { transform: scaleY(0); opacity: 0; }
+}
+
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 60;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  background: linear-gradient(90deg, var(--color-brand), var(--color-gold));
+  pointer-events: none;
 }
 
 [data-reveal].rd-in {
@@ -329,10 +385,9 @@ body {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    transition-duration: 0.16s !important;
   }
   [data-reveal] {
-    opacity: 1 !important;
     transform: none !important;
   }
 }

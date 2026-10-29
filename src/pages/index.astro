@@ -44,6 +44,7 @@ const schema = [organizationSchema, faqSchema(faqs)];
         aria-hidden="true"
       ></div>
       <div class="art-dots absolute inset-0 [mask-image:linear-gradient(to_bottom,transparent,black_55%,transparent)]" aria-hidden="true"></div>
+      <div class="hero-glow absolute inset-0" aria-hidden="true"></div>
       <div data-parallax="-30" class="pointer-events-none absolute top-24 left-[8%] hidden animate-float -rotate-12 rounded-2xl border-3 border-ink/10 bg-white px-4 py-2 shadow-soft sm:block" aria-hidden="true">
         <span class="display text-lg text-ink">SPEAK LOUD!</span>
       </div>
@@ -53,17 +54,17 @@ const schema = [organizationSchema, faqSchema(faqs)];
       <div class="pointer-events-none absolute top-1/2 left-[12%] hidden h-4 w-4 rotate-45 rounded-sm bg-crimson sm:block" aria-hidden="true"></div>
       <div class="pointer-events-none absolute right-[14%] top-56 hidden h-3 w-3 rounded-full bg-gold sm:block" aria-hidden="true"></div>
 
-      <p data-reveal="fade" class="relative z-10 mb-5 inline-block rounded-full border border-brand/30 bg-brand/10 px-4 py-1.5 text-[11px] font-bold tracking-[0.2em] text-brand-dark uppercase sm:text-xs">
+      <p data-hero="badge" class="relative z-10 mb-5 inline-block rounded-full border border-brand/30 bg-brand/10 px-4 py-1.5 text-[11px] font-bold tracking-[0.2em] text-brand-dark uppercase sm:text-xs">
         #JadiAtletModern
       </p>
 
-      <h1 data-reveal class="display relative z-10 text-[12vw] leading-[0.92] sm:text-6xl md:text-7xl lg:text-8xl">
+      <h1 data-hero="title" class="display relative z-10 text-[12vw] leading-[0.92] sm:text-6xl md:text-7xl lg:text-8xl">
         Jadi Atlet<br />
         <span class="hl-brand">Modern</span> dengan<br />
         Sports Communication
       </h1>
 
-      <p data-reveal class="relative z-10 mt-5 max-w-md text-sm leading-relaxed text-ink/70 sm:text-base">
+      <p data-hero="sub" class="relative z-10 mt-5 max-w-md text-sm leading-relaxed text-ink/70 sm:text-base">
         Public speaking &amp; bahasa Inggris khusus atlet — biar suaramu sekuat performamu.
         Online, fleksibel, didampingi coach berpengalaman.
       </p>
@@ -75,7 +76,7 @@ const schema = [organizationSchema, faqSchema(faqs)];
           width="910"
           height="405"
           fetchpriority="high"
-          data-reveal="pop"
+          data-hero="photo"
           class="w-full drop-shadow-[0_28px_50px_rgba(36,26,18,0.25)]"
         />
       </div>
@@ -86,12 +87,19 @@ const schema = [organizationSchema, faqSchema(faqs)];
         rel="noopener noreferrer"
         data-wa-cta="hero"
         data-magnetic
+        data-hero="cta"
         class="btn-pop relative z-10 mt-7 inline-flex items-center gap-2 rounded-2xl bg-brand px-8 py-4 text-sm font-bold tracking-wide text-ink uppercase shadow-[0_18px_40px_-14px_rgba(255,122,26,0.65)] hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
       >
         Daftar via WhatsApp
         <span aria-hidden="true">↗</span>
       </a>
       <p class="relative z-10 mt-3 text-xs text-ink/50">Konsultasi gratis · jawab cepat di jam kerja</p>
+      <div class="relative z-10 mt-10 flex flex-col items-center gap-1.5 text-ink/40" aria-hidden="true">
+        <span class="text-[10px] font-bold tracking-[0.25em] uppercase">Scroll</span>
+        <span class="scroll-hint block h-9 w-5 rounded-full border-2 border-ink/25 pt-1.5">
+          <span class="block h-1.5 w-1.5 rounded-full bg-brand"></span>
+        </span>
+      </div>
     </section>
 
     <Marquee items={partnerNames} />
