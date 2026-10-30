@@ -14,6 +14,26 @@
   let list = $state<Testimonial[]>(items);
   let embla = $state<any>(null);
   let selected = $state(0);
+  let paused = $state(false);
+
+  const photos = [
+    { src: '/media/workshop-crowd.jpg', alt: 'Atlet Prospect Asia berlatih public speaking bersama' },
+    { src: '/media/docs-7.jpg', alt: 'Atlet yang siap diwawancara' },
+    { src: '/media/workshop-live-2.jpg', alt: 'Coach Prospect Asia mendampingi atlet saat sesi' },
+  ];
+
+  let timer: ReturnType<typeof setInterval> | null = null;
+
+  const startAuto = () => {
+    if (timer || paused) return;
+    timer = setInterval(() => embla?.scrollNext(), 5000);
+  };
+
+  const stopAuto = () => {
+    if (!timer) return;
+    clearInterval(timer);
+    timer = null;
+  };
 
   onMount(async () => {
     const data = await liveJson<{ title: string; body: string; meta: { asal?: string; olahraga?: string } }[]>(
@@ -28,40 +48,81 @@
       }));
       embla?.reInit?.();
     }
+    startAuto();
+    return () => stopAuto();
   });
 
   const onInit = (event: CustomEvent) => {
     embla = event.detail;
     embla.on('select', () => (selected = embla.selectedScrollSnap()));
+    startAuto();
   };
 
   const scrollTo = (i: number) => embla?.scrollTo(i);
 </script>
 
-<div class="embla" use:emblaCarouselSvelte={{ options: { loop: true, align: 'start' }, plugins: [] }} oninit={onInit}>
+<div
+  class="embla"
+  use:emblaCarouselSvelte={{ options: { loop: true, align: 'start' }, plugins: [] }}
+  oninit={onInit}
+  onmouseenter={() => {
+    paused = true;
+    stopAuto();
+  }}
+  onmouseleave={() => {
+    paused = false;
+    startAuto();
+  }}
+  onfocusin={() => {
+    paused = true;
+    stopAuto();
+  }}
+  onfocusout={() => {
+    paused = false;
+    startAuto();
+  }}
+>
   <div class="embla__viewport overflow-hidden">
     <div class="embla__container flex gap-4">
-      {#each list as t (t.nama)}
-        <figure class="embla__slide card-soft card-lift min-w-[85%] shrink-0 rounded-3xl p-6 sm:min-w-[60%] lg:min-w-[45%]">
-          <Quote size={22} class="mb-3 text-brand-dark" aria-hidden="true" />
-          <blockquote class="text-sm leading-relaxed text-ink/85 sm:text-base">
-            “{t.kutipan}”
-          </blockquote>
-          <figcaption class="mt-5 flex items-center gap-3">
-            <span class="flex h-10 w-10 items-center justify-center rounded-full bg-brand/20 text-sm font-black text-brand italic">
-              {t.nama[0]}
-            </span>
-            <div class="leading-tight">
-              <p class="text-sm font-bold">{t.nama}</p>
-              <p class="text-xs text-ink/50">{t.asal}{t.olahraga ? ` · ${t.olahraga}` : ''}</p>
+      {#each list as t, i (t.nama)}
+        <figure class="embla__slide card-soft card-lift w-[88%] shrink-0 overflow-hidden rounded-3xl sm:w-[62%] lg:w-[46%]">
+          <div class="grid sm:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
+            <div class="relative aspect-16/10 overflow-hidden bg-paper-deep sm:aspect-auto">
+              <img
+                src={photos[i % photos.length].src}
+                alt={photos[i % photos.length].alt}
+                loading="lazy"
+                width="1280"
+                height="800"
+                class="absolute inset-0 h-full w-full object-cover"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/20 to-transparent"></div>
+              <Quote size={26} class="absolute bottom-3 left-4 text-white/90" aria-hidden="true" />
+              <span class="absolute top-3 right-3 rounded-full border border-white/40 bg-white/20 px-2.5 py-1 text-[10px] font-bold tracking-wide text-white uppercase backdrop-blur-sm">
+                Atlet Prospect Asia
+              </span>
             </div>
-          </figcaption>
+            <div class="flex flex-col justify-center p-6">
+              <blockquote class="text-sm leading-relaxed text-ink/85 sm:text-base">
+                “{t.kutipan}”
+              </blockquote>
+              <figcaption class="mt-5 flex items-center gap-3">
+                <span class="flex h-11 w-11 items-center justify-center rounded-full bg-brand/20 text-base font-black text-brand italic">
+                  {t.nama[0]}
+                </span>
+                <div class="leading-tight">
+                  <p class="text-sm font-bold">{t.nama}</p>
+                  <p class="text-xs text-ink/50">{t.asal}{t.olahraga ? ` · ${t.olahraga}` : ''}</p>
+                </div>
+              </figcaption>
+            </div>
+          </div>
         </figure>
       {/each}
     </div>
   </div>
 
-  <div class="mt-5 flex justify-center gap-1">
+  <div class="mt-6 flex items-center justify-center gap-1">
     {#each list as _, i (i)}
       <button
         type="button"
@@ -77,5 +138,9 @@
         ></span>
       </button>
     {/each}
+    <span class="ml-3 hidden items-center gap-1.5 text-[11px] font-bold tracking-wide text-ink/40 uppercase sm:inline-flex">
+      <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-brand"></span>
+      Auto
+    </span>
   </div>
 </div>

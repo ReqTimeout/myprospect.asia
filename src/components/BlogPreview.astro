@@ -1,22 +1,25 @@
 ---
 import { getCollection } from 'astro:content';
 import { waLink } from '../lib/wa';
+import SportArt from './SportArt.astro';
 
 const posts = (await getCollection('berita', (p) => p.data.status === 'published'))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
   .slice(0, 3);
 
 const fmt = new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
+const fallbackCovers = ['/media/hero-athletes.jpg', '/media/workshop-crowd.jpg', '/media/docs-7.jpg'];
+const doubled = posts.length ? [...posts, ...posts] : [];
 ---
 
 <section class="relative mx-auto max-w-6xl overflow-hidden px-4 py-14 sm:px-6">
+  <SportArt variant="net" stroke="#241a12" opacity={0.08} class="absolute inset-0 h-full w-full [mask-image:linear-gradient(to_top_right,black,transparent_65%)]" />
   <div class="art-dots absolute inset-x-0 bottom-0 h-32 opacity-50 [mask-image:linear-gradient(to_top,black,transparent)]" aria-hidden="true"></div>
   <div class="art-ring top-10 right-10 hidden h-12 w-12 border-gold/50 sm:block" aria-hidden="true"></div>
-  <div class="art-net absolute inset-0 opacity-50 [mask-image:linear-gradient(to_top_right,black,transparent_55%)]" aria-hidden="true"></div>
   <div class="mb-8 flex items-end justify-between gap-4">
     <div>
       <p class="eyebrow text-xs font-bold tracking-[0.2em] text-brand-dark uppercase">Berita Atlet Modern</p>
-      <h2 class="display mt-2 text-4xl sm:text-5xl">Kabar terbaru</h2>
+      <h2 class="display mt-2 text-5xl leading-[0.9] sm:text-6xl">Kabar terbaru</h2>
     </div>
     <a href="/berita" class="shrink-0 py-1.5 text-sm font-bold text-brand-dark transition hover:underline focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none">
       Lihat semua →
@@ -29,34 +32,38 @@ const fmt = new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'short', y
         Artikel sedang disiapkan. Mau jadi yang pertama tahu? Chat admin.
       </p>
     ) : (
-      <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {posts.map((post) => (
-          <a
-            href={`/berita/${post.id}`}
-            class="card-soft group flex flex-col overflow-hidden rounded-3xl transition duration-200 hover:-translate-y-1 hover:border-brand/50 focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
-          >
-            <div class="relative aspect-16/10 overflow-hidden bg-gradient-to-br from-brand/25 via-brand-soft to-gold/30">
-              {post.data.cover && (
+      <div class="rail-wrap -mx-4 px-4 sm:mx-0 sm:px-0">
+        <div class="rail" style="--rail-speed: 52s">
+          {doubled.map((post, i) => (
+            <a
+              href={`/berita/${post.id}`}
+              class="card-soft group flex w-72 shrink-0 flex-col overflow-hidden rounded-3xl transition duration-200 hover:-translate-y-1 hover:border-brand/50 focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none sm:w-80"
+            >
+              <div class="relative aspect-16/10 overflow-hidden bg-gradient-to-br from-brand/25 via-brand-soft to-gold/30">
                 <img
-                  src={post.data.cover}
+                  src={post.data.cover ?? fallbackCovers[i % fallbackCovers.length]}
                   alt=""
                   loading="lazy"
                   width="640"
                   height="400"
-                  class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                  class="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
                 />
-              )}
-              <span class="absolute top-3 left-3 rounded-full bg-paper/85 px-2.5 py-1 text-[10px] font-black tracking-wider text-brand-dark uppercase backdrop-blur">
-                {post.data.kategori}
-              </span>
-            </div>
-            <div class="flex flex-1 flex-col p-5">
-              <p class="text-[11px] text-ink/45">{fmt.format(post.data.pubDate)}</p>
-              <h3 class="mt-1.5 text-base leading-snug font-bold transition group-hover:text-brand-dark">{post.data.title}</h3>
-              <p class="mt-2 line-clamp-2 text-[13px] text-ink/60">{post.data.desc}</p>
-            </div>
-          </a>
-        ))}
+                <div class="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/10 to-transparent"></div>
+                <span class="absolute top-3 left-3 rounded-full bg-paper/85 px-2.5 py-1 text-[10px] font-black tracking-wider text-brand-dark uppercase backdrop-blur">
+                  {post.data.kategori}
+                </span>
+              </div>
+              <div class="flex flex-1 flex-col p-5">
+                <p class="text-[11px] text-ink/45">{fmt.format(post.data.pubDate)}</p>
+                <h3 class="mt-1.5 text-base leading-snug font-bold transition group-hover:text-brand-dark">{post.data.title}</h3>
+                <p class="mt-2 line-clamp-2 text-[13px] text-ink/60">{post.data.desc}</p>
+                <span class="mt-4 inline-flex items-center gap-1 text-[12px] font-bold text-brand-dark">
+                  Baca artikel <span aria-hidden="true">→</span>
+                </span>
+              </div>
+            </a>
+          ))}
+        </div>
       </div>
     )
   }

@@ -1,0 +1,31 @@
+---
+interface GalleryImage {
+  src: string;
+  alt: string;
+}
+
+interface Props {
+  images: GalleryImage[];
+  step?: number;
+  class?: string;
+  imgClass?: string;
+}
+
+const { images, step = 5, class: cls = '', imgClass = '' } = Astro.props;
+const duration = images.length * step;
+---
+
+<div class={`gallery ${cls}`} style={`--gallery-step:${step}s`}>
+  {
+    images.map((im, i) => (
+      <img
+        src={im.src}
+        alt={im.alt}
+        loading={i === 0 ? 'eager' : 'lazy'}
+        decoding="async"
+        class={imgClass}
+        style={`animation-delay:${i * step}s; animation-duration:${duration}s`}
+      />
+    ))
+  }
+</div>

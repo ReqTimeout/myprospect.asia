@@ -109,6 +109,8 @@ Token di `src/styles/global.css` (`@theme`):
 - Font: **Anton** (display, `.display` + `skew-mark`) & **Plus Jakarta Sans Variable** (body) — keduanya via `@fontsource`, bukan CDN.
 - **Logo**: materi `Website Material/Images/Logo Black.png` = 2539×591, **hitam polos 100%** (chip "ASIA" TIDAK ada di materi — jangan karang lagi). Dipakai `public/media/logo-prospect-black.png` di header terang. Logo putih (`logo-prospect-white.png`) masih ada untuk usage gelap.
 - Utilitas: `card-soft` (kartu putih + shadow), `card-lift` (hover lift), `btn-pop`, `eyebrow` (titik merah via ::before), `ghost-word` (kata besar transparan), `art-dots`, `art-blob`, `art-pitch`, `art-pitch-orange`, `art-court`, `art-balls`, `art-balls-orange`, `art-net`, `art-track`, `art-stripes`, `sport-ball` (bola CSS), `art-ring`, `art-diamond`.
+- Utilitas premium baru (Okt 2026): `.gallery` + `.gallery img` (crossfade autoplay murni CSS, durasi via `--gallery-step`), `.ken-burns` (zoom 20s untuk background foto), `.rail-wrap` + `.rail` (rail horizontal autoplay, `translateX(-50%)`, pause saat hover/focus, `--rail-speed`), `.art-panel` (radial glow premium).
+- Komponen reusable baru: `src/components/SportArt.astro` (SVG inline varian `stadium|court|net`, prop `stroke` + `opacity`) dan `src/components/AutoGallery.astro` (galeri foto autoplay props `images`, `step`, `class`, `imgClass`). Dipakai di Level & Journey, Program, Testimonials, Coaches, Berita, Workshop, dan CTA.
 - Admin **tetap dark** (pakai `bg-ink`/`text-bone`) — jangan di-sweep saat ganti tema.
 
 ---
@@ -125,11 +127,11 @@ Token di `src/styles/global.css` (`@theme`):
 | Magnetic button | `motion` (spring) + pointermove pada `[data-magnetic]` |
 | Mouse spotlight | `.hero-glow` radial gradient mengikuti kursor (`--mx/--my`, lerp 0.08) |
 | Scroll progress | `.scroll-progress` `scaleX` di atas (lerp 0.12) |
-| Gerak kontinu | Semua motif sport bergerak: `stripe-move`, `motif-drift`, `pitch-drift`, `track-drift`, `float` pada bola, ring dashed berputar |
-| Toggle animasi | Tombol kiri bawah: siklus **ON ⇄ OFF** (`localStorage 'pa-motion'`). **Default ON** — setting OS tidak lagi mematikan. Label: "Animasi: ON" / "Animasi: OFF" |
-| Reduced motion | `prefers-reduced-motion` **diabaikan** sejak Okt 2026 (user mengeluh "animasi ga jalan di desktop" — ternyata macOS Reduce Motion ON). Animasi mati hanya bila toggle di-OFF-kan (`html.motion-off`) |
+| Gerak kontinu | Semua motif sport bergerak: `stripe-move`, `motif-drift`, `pitch-drift`, `track-drift`, `float` pada bola, ring dashed berputar, plus rail autoplay (`rail-slide`), galeri crossfade (`gallery-fade`), dan ken-burns (`ken-burns`) |
+| Toggle animasi | **Dihapus (Okt 2026)** — tombol "Animasi" di kiri bawah sudah dihapus dari `Base.astro` + `fx.ts` + CSS. User: "ko malah aneh ada nyalakan animasi gimana sih" |
+| Reduced motion | `prefers-reduced-motion` **diabaikan** sejak Okt 2026 (user mengeluh "animasi ga jalan di desktop" — ternyata macOS Reduce Motion ON). `fx.ts` sekarang `const reduced = false;` dan blok `@media (prefers-reduced-motion: reduce)` di CSS sudah dihapus |
 
-**Catatan penting untuk agent berikutnya:** user sempatyskali melaporkan "animasi ga jalan" → 3 penyebab nyata: (1) cache browser → hard refresh, (2) toggle diklik ke OFF, (3) OS Reduce Motion ON. Karena itu motion intro dipindah dari GSAP ke **CSS murni** (tidak bergantung JS) dan status toggle selalu ditulis di label.
+**Catatan penting untuk agent berikutnya:** user sempatyskali melaporkan "animasi ga jalan" → 3 penyebab nyata: (1) cache browser → hard refresh, (2) ~~toggle diklik ke OFF~~ (toggle sudah dihapus), (3) OS Reduce Motion ON (sudah diabaikan). Karena itu motion intro dipindah dari GSAP ke **CSS murni** (tidak bergantung JS). Kalau menambah motion baru, jangan pernah reinstate gate `prefers-reduced-motion`.
 
 ---
 
@@ -146,7 +148,8 @@ Semua foto materi sudah terpasang. Sumber = `Website Material/Images/`:
 | `session-online.jpg` | `Student's Bright Video Study Call (1).png` | hero Tentang |
 | `docs-1..8.jpg` | 8× `Workshop/BIA_*.JPG` | galeri "Suasana di lapangan" (detail workshop) |
 | `workshop-live.jpg`, `workshop-live-2.jpg` | BIA_0403, BIA_0358 | section Workshop (home) |
-| `session-{elite,premium,smallgroup}.jpg` | stock session photos | backdrop hero detail program |
+| `session-{elite,premium,smallgroup}.jpg` | stock session photos | backdrop hero detail program **+ header kartu program (home)** |
+| `program-elite.jpg` | crop `Website Material/Program - Product/1.png` (foto klien asli) | background band "Membership Program" (home) |
 | `logo-prospect-black.png` | `Logo Black.png` | header (light) |
 | `logo-prospect-white.png` | konversi Logo Black | footer/band gelap |
 | `hero-athletes.jpg` | studio shot 7 atlet | fallback hero program detail |
@@ -266,7 +269,7 @@ Status terakhir: **audit 22/22 · 0 bug**, e2e konten 24/24, motion probe (title
 4. Masukkan GA4 ID via admin Pengaturan (tanpa deploy).
 5. Selesaikan klaim "SPEAK LOUD!"-style copy atau formalkan bahasa (copy sekarang playful; klien mungkin mau lebih formal).
 6. Tambah halaman artikel berita dari MDX lama ke D1 (agar bisa diedit admin) — `scripts/gen-posts-seed.mjs` sudah disiapkan.
-7. Checklist a11y: kontras teks oranye di atas putih (`brand-dark` untuk teks kecil), target sentuh ≥44px (audit terakhir 0 masalah), dan pastikan `prefers-reduced-motion` tetapkick-in.
+7. Checklist a11y: kontras teks oranye di atas putih (`brand-dark` untuk teks kecil), target sentuh ≥44px (audit terakhir 0 masalah). `prefers-reduced-motion` **tidak** lagi dipakai sebagai gate animasi (user minta animasi selalu jalan).
 
 ---
 
@@ -283,7 +286,8 @@ Status terakhir: **audit 22/22 · 0 bug**, e2e konten 24/24, motion probe (title
 
 1. Baca §4 (routing) & §6 (tokens) sebelum menyentuh kode.
 2. Kalau ganti tema: ubah `@theme` di `src/styles/global.css`, **kecuali** `ink-2`/`bone` (admin), dan **kecuali** `functions/berita/[slug].ts` (CSS inline).
-3. Kalau menambah motion: taruh di `src/scripts/fx.ts` (JS) atau keyframes CSS; hormati kelas `html.motion-off` (satu-satunya cara mematikan animasi sekarang).
+3. Kalau menambah motion: taruh di `src/scripts/fx.ts` (JS) atau keyframes CSS. **Jangan** reintroduce gate `prefers-reduced-motion` — user minta animasi selalu hidup.
 4. Kalau menambah konten: pakai API admin + D1 (tanpa deploy) — jangan tambah file MDX kecuali seed.
 5. Verifikasi selalu: `npm run build` → `wrangler pages deploy` → `myprospect-audit.mjs` (harus 0 bug) → screenshot → commit+push.
-6. Kalau user bilang "animasi ga jalan": cek (a) hard refresh, (b) label tombol "Animasi: ON/OFF" di kiri bawah (default ON; nilai lama `auto` di localStorage dianggap ON), (c) aset JS/CSS lama di cache.
+6. Kalau user bilang "animasi ga jalan": cek (a) hard refresh, (b) aset JS/CSS lama di cache. Toggle animasi **sudah dihapus** — jangan cari lagi.
+7. Kalau menambah heading baru: jangan pakai kelas `.hl-brand` (gradient `background-clip:text`) di dalam elemen yang kena GSAP SplitText — SplitText memecah karakter dan gradient pecah → teks jadi tak terlihat. Pakai `text-brand-dark`.

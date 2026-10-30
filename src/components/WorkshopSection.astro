@@ -1,33 +1,74 @@
 ---
 import { waLink } from '../lib/wa';
 import { workshops, formatIdr } from '../data/workshops';
+import AutoGallery from './AutoGallery.astro';
+import SportArt from './SportArt.astro';
+
+const gallery = [
+  {
+    src: '/media/workshop-live.jpg',
+    alt: 'Atlet akademi mengikuti Sports Communication Workshop bersama coach Prospect Asia',
+  },
+  {
+    src: '/media/workshop-live-2.jpg',
+    alt: 'Sesi simulasi wawancara atlet di workshop Prospect Asia',
+  },
+  {
+    src: '/media/workshop-crowd.jpg',
+    alt: 'Suasana workshop Prospect Asia bersama atlet akademi mitra',
+  },
+];
 ---
 
 <section id="workshop" class="relative mx-auto max-w-6xl overflow-hidden scroll-mt-20 px-4 py-14 sm:px-6">
+  <SportArt variant="stadium" stroke="#241a12" opacity={0.08} class="absolute inset-0 h-full w-full [mask-image:linear-gradient(to_top,black,transparent_75%)]" />
   <div class="art-dots absolute inset-x-0 top-0 h-40 opacity-50 [mask-image:linear-gradient(to_bottom,black,transparent)]" aria-hidden="true"></div>
   <div class="art-blob top-24 -right-28 h-72 w-72" style="background: radial-gradient(circle, rgba(255,195,46,0.18), transparent 68%); animation-delay: -5s;" aria-hidden="true"></div>
   <div class="art-track absolute inset-x-0 bottom-0 h-56 opacity-70" aria-hidden="true"></div>
-  <div class="art-pitch-orange absolute inset-x-0 bottom-0 h-72 opacity-50 [mask-image:linear-gradient(to_top,black,transparent_70%)]" aria-hidden="true"></div>
   <div class="sport-ball left-5 bottom-24 hidden h-14 w-14 -rotate-12 lg:block" aria-hidden="true"></div>
   <div class="pointer-events-none absolute right-6 top-10 hidden -rotate-6 rounded-2xl border-3 border-crimson/25 bg-white px-3.5 py-1.5 shadow-soft sm:block" aria-hidden="true">
     <span class="display text-base text-crimson">GO!</span>
   </div>
-  <div class="mb-8 grid items-center gap-6 md:grid-cols-[1.2fr_1fr]">
+
+  <div class="mb-8 grid items-center gap-8 md:grid-cols-[1.1fr_1fr]">
     <div class="max-w-2xl">
       <p class="eyebrow text-xs font-bold tracking-[0.2em] text-brand-dark uppercase">Kolaborasi Akademi / Klub</p>
-      <h2 class="display mt-2 text-4xl sm:text-5xl">Workshop buat<br />atlet binaanmu</h2>
-      <p class="mt-3 text-sm leading-relaxed text-ink/65 sm:text-base">
+      <h2 class="display mt-2 text-5xl leading-[0.9] sm:text-6xl">
+        Workshop buat<br />
+        <span class="text-brand-dark">atlet binaanmu</span>
+      </h2>
+      <p class="mt-4 text-sm leading-relaxed text-ink/65 sm:text-base">
         Sesi 90–120 menit, interaktif, praktik langsung. Minimal 10 peserta — didampingi coach Sports Communication.
       </p>
+      <div class="mt-5 flex flex-wrap gap-2">
+        <span class="rounded-full border border-ink/12 bg-white px-3 py-1.5 text-[11px] font-bold tracking-wide text-ink/70">
+          2.175+ atlet teredukasi
+        </span>
+        <span class="rounded-full border border-ink/12 bg-white px-3 py-1.5 text-[11px] font-bold tracking-wide text-ink/70">
+          25 akademi mitra
+        </span>
+        <span class="rounded-full border border-ink/12 bg-white px-3 py-1.5 text-[11px] font-bold tracking-wide text-ink/70">
+          Sesi 90–120 menit
+        </span>
+      </div>
     </div>
-    <img
-      src="/media/workshop-live.jpg"
-      alt="Atlet akademi mengikuti Sports Communication Workshop bersama coach Prospect Asia"
-      width="1280"
-      height="853"
-      loading="lazy"
-      class="hidden rounded-3xl border border-ink/10 md:block"
-    />
+
+    <div class="relative overflow-hidden rounded-3xl border border-ink/10 shadow-[0_28px_60px_-30px_rgba(36,26,18,0.45)]">
+      <AutoGallery
+        images={gallery}
+        step={5}
+        class="aspect-4/3 w-full"
+        imgClass="h-full w-full object-cover"
+      />
+      <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent"></div>
+      <span class="pointer-events-none absolute top-3 left-3 inline-flex items-center gap-1.5 rounded-full bg-ink/70 px-3 py-1.5 text-[10px] font-black tracking-widest text-white uppercase backdrop-blur-sm">
+        <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-brand"></span>
+        Live
+      </span>
+      <span class="pointer-events-none absolute bottom-3 left-4 text-[11px] font-bold tracking-[0.16em] text-white/90 uppercase">
+        Suasana di lapangan
+      </span>
+    </div>
   </div>
 
   <div class="grid gap-5 md:grid-cols-3" data-reveal-group>

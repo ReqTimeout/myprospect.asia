@@ -4,6 +4,7 @@ import Header from '../components/Header.astro';
 import Dock from '../components/islands/Dock.svelte';
 import WaPopup from '../components/islands/WaPopup.svelte';
 import Marquee from '../components/Marquee.astro';
+import SportArt from '../components/SportArt.astro';
 import StatsBar from '../components/StatsBar.astro';
 import AboutSection from '../components/AboutSection.astro';
 import LevelJourney from '../components/islands/LevelJourney.svelte';
@@ -112,14 +113,26 @@ const schema = [organizationSchema, faqSchema(faqs)];
     <AboutSection />
 
     <section class="relative mx-auto max-w-6xl overflow-hidden px-4 py-14 sm:px-6">
+      <SportArt variant="net" stroke="#ff7a1a" opacity={0.1} class="absolute inset-0 h-full w-full [mask-image:linear-gradient(to_bottom_right,black,transparent_70%)]" />
       <div class="art-ring left-6 top-14 hidden h-16 w-16 border-gold/40 sm:block" aria-hidden="true"></div>
       <div class="art-diamond top-10 right-10 h-3 w-3 bg-crimson/50 hidden sm:block" aria-hidden="true"></div>
-      <div class="mb-8 max-w-2xl">
-        <p class="eyebrow text-xs font-bold tracking-[0.2em] text-brand-dark uppercase">Level & Journey</p>
-        <h2 class="display mt-2 text-4xl sm:text-5xl">Dari nol sampai<br />siap panggung</h2>
+      <div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p class="eyebrow text-xs font-bold tracking-[0.2em] text-brand-dark uppercase">Level &amp; Journey</p>
+          <h2 class="display mt-2 text-5xl leading-[0.9] sm:text-6xl lg:text-7xl">
+            Dari nol sampai<br />
+            <span class="relative inline-block">
+              <span class="text-brand-dark">siap panggung</span>
+              <span class="absolute -bottom-1 left-0 h-2.5 w-full rounded-full bg-gold/55" aria-hidden="true"></span>
+            </span>
+          </h2>
+        </div>
+        <p class="max-w-xs text-sm leading-relaxed text-ink/60">
+          Tiga level, satu jalur: dasar, berkembang, lalu tampil di depan publik.
+        </p>
       </div>
       <div class="card-soft relative overflow-hidden rounded-3xl p-6 sm:p-8">
-        <div class="art-net absolute inset-0 opacity-60 [mask-image:linear-gradient(to_bottom_right,black,transparent_60%)]" aria-hidden="true"></div>
+        <SportArt variant="court" stroke="#241a12" opacity={0.08} class="absolute inset-0 h-full w-full [mask-image:linear-gradient(to_bottom_right,black,transparent_60%)]" />
         <div class="relative">
           <LevelJourney client:visible />
         </div>

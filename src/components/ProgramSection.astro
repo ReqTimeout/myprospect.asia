@@ -1,8 +1,20 @@
 ---
-import { Image } from 'astro:assets';
 import { waLink } from '../lib/wa';
 import { programs, formatIdr } from '../data/programs';
-import membershipArt from '../assets/generated/a3-membership.jpg';
+import SportArt from './SportArt.astro';
+
+const programPhoto: Record<string, string> = {
+  'elite-1on1': '/media/session-elite.jpg',
+  'premium-1on1': '/media/session-premium.jpg',
+  'small-group': '/media/session-smallgroup.jpg',
+};
+
+const membershipBenefits = [
+  'Sesi rutin tanpa ribet booking ulang',
+  'Materi & e-library eksklusif atlet',
+  'Priority support dari coach',
+  'Community atlet lintas cabang',
+];
 ---
 
 <section id="program" class="relative mx-auto max-w-6xl overflow-hidden scroll-mt-20 px-4 py-14 sm:px-6">
@@ -25,27 +37,40 @@ import membershipArt from '../assets/generated/a3-membership.jpg';
     {
       programs.map((p) => (
         <article data-reveal="pop" class="card-soft group relative flex flex-col overflow-hidden rounded-3xl transition duration-200 hover:-translate-y-1 hover:border-brand/50 hover:shadow-[0_24px_50px_-24px_rgba(255,122,26,0.4)]">
-          {p.badge && (
-            <p
-              class:list={[
-                'px-5 py-2 text-[11px] font-black tracking-widest uppercase',
-                p.badgeTone === 'gold' ? 'bg-gold text-ink' : 'bg-brand text-ink',
-              ]}
-            >
-              {p.badge}
+          <div class="relative aspect-16/10 overflow-hidden bg-paper-deep">
+            <img
+              src={programPhoto[p.slug]}
+              alt={`Atlet mengikuti sesi ${p.nama} bersama coach Prospect Asia`}
+              loading="lazy"
+              width="1376"
+              height="768"
+              class="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-ink/75 via-ink/15 to-transparent"></div>
+            {p.badge && (
+              <p
+                class:list={[
+                  'absolute top-3 left-3 rounded-full px-3 py-1 text-[10px] font-black tracking-widest uppercase shadow-sm',
+                  p.badgeTone === 'gold' ? 'bg-gold text-ink' : 'bg-brand text-ink',
+                ]}
+              >
+                {p.badge}
+              </p>
+            )}
+            {p.online && (
+              <span class="absolute top-3 right-3 rounded-full border border-white/40 bg-white/20 px-2.5 py-1 text-[10px] font-bold tracking-wide text-white uppercase backdrop-blur-sm">
+                Online
+              </span>
+            )}
+            <p class="absolute right-4 bottom-3 left-4 text-[11px] font-bold tracking-[0.16em] text-white/90 uppercase">
+              {p.sub}
             </p>
-          )}
+          </div>
 
           <div class="flex flex-1 flex-col p-6">
             <div class="flex items-baseline justify-between gap-2">
               <h3 class="display text-2xl">{p.nama}</h3>
-              {p.online && (
-                <span class="rounded-full border border-ink/15 px-2 py-0.5 text-[10px] font-bold tracking-wide text-ink/60 uppercase">
-                  Online
-                </span>
-              )}
             </div>
-            <p class="mt-1 text-xs text-ink/50">{p.sub}</p>
 
             <div class="mt-5">
               {p.hargaCoret ? (
@@ -95,30 +120,45 @@ import membershipArt from '../assets/generated/a3-membership.jpg';
     }
   </div>
 
-  <div class="relative mt-6 flex flex-col items-start gap-4 overflow-hidden rounded-3xl bg-gradient-to-br from-brand via-brand to-brand-dark p-6 shadow-[0_24px_50px_-20px_rgba(255,122,26,0.6)] sm:flex-row sm:items-center sm:justify-between">
-    <div class="art-stripes-light absolute inset-0 opacity-50" aria-hidden="true"></div>
-    <div class="relative">
-      <p class="text-xs font-black tracking-widest text-white/80 uppercase">Coming Soon</p>
-      <p class="display mt-1 text-2xl text-white">Membership Program</p>
-      <p class="mt-1 text-sm text-white/85">Benefit berkelanjutan buat atlet — daftar early access dulu.</p>
-    </div>
-    <Image
-      src={membershipArt}
+  <div class="relative mt-6 overflow-hidden rounded-3xl bg-brand-dark shadow-[0_28px_60px_-24px_rgba(255,122,26,0.55)]">
+    <img
+      src="/media/program-elite.jpg"
       alt=""
-      width={440}
-      height={248}
       loading="lazy"
-      aria-hidden="true"
-      class="relative hidden h-24 w-44 rounded-2xl border border-white/30 object-cover sm:block"
+      class="ken-burns absolute inset-0 h-full w-full object-cover opacity-30"
     />
-    <a
-      href={waLink({ program: 'Membership (early access)', source: 'membership' })}
-      target="_blank"
-      rel="noopener noreferrer"
-      data-wa-cta="membership"
-      class="relative rounded-2xl bg-white px-5 py-3 text-sm font-bold text-ink transition hover:bg-gold-soft focus-visible:ring-2 focus-visible:ring-ink focus-visible:outline-none active:scale-95"
-    >
-      Info Early Access ↗
-    </a>
+    <div class="absolute inset-0 bg-gradient-to-r from-brand-dark via-brand-dark/92 to-brand/80" aria-hidden="true"></div>
+    <SportArt variant="stadium" stroke="#ffffff" opacity={0.2} class="absolute inset-0 h-full w-full" />
+    <div class="relative flex flex-col items-start gap-6 p-6 sm:p-8 lg:flex-row lg:items-center lg:justify-between">
+      <div>
+        <span class="inline-flex items-center gap-2 rounded-full bg-gold px-3 py-1 text-[10px] font-black tracking-widest text-ink uppercase">
+          <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-ink"></span>
+          Coming Soon
+        </span>
+        <h3 class="display mt-3 text-3xl text-white sm:text-4xl">Membership Program</h3>
+        <p class="mt-2 max-w-md text-sm leading-relaxed text-white/85">
+          Benefit berkelanjutan buat atlet — daftar early access dulu biar dapat slot lebih awal.
+        </p>
+        <ul class="mt-5 grid gap-2 sm:grid-cols-2">
+          {membershipBenefits.map((b) => (
+            <li class="flex items-start gap-2 text-[13px] text-white/90">
+              <span class="mt-0.5 text-gold" aria-hidden="true">
+                ✓
+              </span>
+              {b}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <a
+        href={waLink({ program: 'Membership (early access)', source: 'membership' })}
+        target="_blank"
+        rel="noopener noreferrer"
+        data-wa-cta="membership"
+        class="relative shrink-0 rounded-2xl bg-white px-5 py-3 text-sm font-bold text-ink transition hover:bg-gold focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none active:scale-95"
+      >
+        Info Early Access ↗
+      </a>
+    </div>
   </div>
 </section>

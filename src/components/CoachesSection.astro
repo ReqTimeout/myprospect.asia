@@ -1,49 +1,109 @@
 ---
 import { coaches } from '../data/coaches';
+import SportArt from './SportArt.astro';
+
+const doubled = [...coaches, ...coaches];
 ---
 
 <section class="relative mx-auto max-w-6xl overflow-hidden px-4 py-14 sm:px-6">
+  <SportArt variant="court" stroke="#241a12" opacity={0.09} class="absolute inset-0 h-full w-full [mask-image:linear-gradient(to_left,black,transparent_70%)]" />
   <div class="art-blob -bottom-24 -left-24 h-64 w-64" style="background: radial-gradient(circle, rgba(255,122,26,0.14), transparent 68%); animation-delay: -9s;" aria-hidden="true"></div>
   <div class="art-diamond -top-2 right-24 h-2.5 w-2.5 bg-crimson/60 hidden sm:block" aria-hidden="true"></div>
-  <div class="art-court absolute inset-0 opacity-70 [mask-image:linear-gradient(to_left,black,transparent_65%)]" aria-hidden="true"></div>
   <div class="sport-ball sport-ball--orange right-[8%] bottom-16 hidden h-10 w-10 rotate-12 xl:block" aria-hidden="true"></div>
-  <p class="ghost-word top-4 -right-2 hidden text-[4.5rem] lg:block" aria-hidden="true">Coach</p>
-  <div class="mb-8">
-    <p class="eyebrow text-xs font-bold tracking-[0.2em] text-brand-dark uppercase">Sports Communication Coaches</p>
-    <h2 class="display mt-2 text-4xl sm:text-5xl">Didampingi<br />yang sudah turun lapangan</h2>
+  <p class="ghost-word top-4 right-4 hidden text-[4.5rem] lg:block" aria-hidden="true">Coach</p>
+
+  <div class="mb-8 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+    <div>
+      <p class="eyebrow text-xs font-bold tracking-[0.2em] text-brand-dark uppercase">Sports Communication Coaches</p>
+      <h2 class="display mt-2 text-5xl leading-[0.9] sm:text-6xl">
+        Didampingi<br />
+        <span class="text-brand-dark">yang sudah turun lapangan</span>
+      </h2>
+    </div>
+    <p class="max-w-sm text-sm leading-relaxed text-ink/60">
+      Enam coach berlisensi, dari ex-media PERSIB &amp; PSSI sampai atlet JPN berprestasi. Formatnya satu-on-one atau
+      small group, jadi atlet tetap dibimbing langsung.
+    </p>
   </div>
 
-  <div class="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 sm:mx-0 sm:px-0" style="scrollbar-width: thin;">
-    {
-      coaches.map((c) => (
-        <article class="card-soft card-lift group w-56 shrink-0 snap-start rounded-3xl p-5 sm:w-64">
-          <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-brand to-brand-dark display text-2xl text-ink italic">
-            {c.nama[0]}
-          </div>
-          <h3 class="mt-4 text-base font-bold">{c.nama}</h3>
-          <p class="mt-0.5 text-xs text-ink/55">{c.peran}</p>
+  <div class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_300px] lg:items-stretch">
+    <div class="rail-wrap -mx-4 px-4 sm:mx-0 sm:px-0">
+      <div class="rail" style="--rail-speed: 58s">
+        {
+          doubled.map((c) => (
+            <article class="card-soft card-lift group relative flex w-60 shrink-0 flex-col overflow-hidden rounded-3xl sm:w-64">
+              <SportArt
+                variant="court"
+                stroke="#241a12"
+                opacity={0.12}
+                class="pointer-events-none absolute inset-0 h-full w-full [mask-image:linear-gradient(to_top,black,transparent_65%)]"
+              />
+              <div class="relative flex flex-1 flex-col">
+                <div class="flex items-center gap-3 border-b border-ink/8 bg-gradient-to-r from-brand/12 via-brand-soft/60 to-transparent px-5 py-4">
+                  <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-brand to-brand-dark display text-xl text-ink italic">
+                    {c.nama[0]}
+                  </span>
+                  <div class="leading-tight">
+                    <h3 class="text-base font-bold">{c.nama}</h3>
+                    <p class="text-[11px] font-bold tracking-wide text-brand-dark uppercase">{c.peran}</p>
+                  </div>
+                </div>
+                <div class="flex-1 p-5">
+                  <div class="flex flex-wrap gap-1.5">
+                    {c.ielts && (
+                      <span class="rounded-full border border-gold/40 bg-gold/10 px-2 py-0.5 text-[10px] font-bold text-brand-dark">
+                        IELTS Certified
+                      </span>
+                    )}
+                    {c.stat && (
+                      <span class="rounded-full border border-ink/15 px-2 py-0.5 text-[10px] font-bold text-ink/70">
+                        {c.stat}
+                      </span>
+                    )}
+                    {c.olahraga && (
+                      <span class="rounded-full border border-ink/15 px-2 py-0.5 text-[10px] font-bold text-ink/70">
+                        {c.olahraga}
+                      </span>
+                    )}
+                  </div>
 
-          <div class="mt-3 flex flex-wrap gap-1.5">
-            {c.ielts && (
-              <span class="rounded-full border border-gold/40 bg-gold/10 px-2 py-0.5 text-[10px] font-bold text-brand-dark">
-                IELTS Certified
-              </span>
-            )}
-            {c.stat && (
-              <span class="rounded-full border border-ink/15 px-2 py-0.5 text-[10px] font-bold text-ink/70">
-                {c.stat}
-              </span>
-            )}
-            {c.olahraga && (
-              <span class="rounded-full border border-ink/15 px-2 py-0.5 text-[10px] font-bold text-ink/70">
-                {c.olahraga}
-              </span>
-            )}
-          </div>
+                  {c.bio && <p class="mt-3 text-[13px] leading-relaxed text-ink/60">{c.bio}</p>}
 
-          {c.bio && <p class="mt-3 text-[13px] leading-relaxed text-ink/60">{c.bio}</p>}
-        </article>
-      ))
-    }
+                  <ul class="mt-4 space-y-1.5 text-[12px] text-ink/55">
+                    {['Public Speaking', 'Simulasi Wawancara Media', 'English for Athletes'].map((f) => (
+                      <li class="flex items-center gap-1.5">
+                        <span class="text-brand-dark" aria-hidden="true">
+                          ✓
+                        </span>
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+
+    <aside class="relative overflow-hidden rounded-3xl border border-ink/10 shadow-soft">
+      <img
+        src="/media/mic-kid.jpg"
+        alt="Atlet muda siap berbicara di depan mikrofon"
+        width="857"
+        height="1063"
+        loading="lazy"
+        class="h-full max-h-96 w-full object-cover lg:max-h-none"
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/25 to-transparent"></div>
+      <SportArt variant="net" stroke="#ffffff" opacity={0.16} class="absolute inset-0 h-full w-full" />
+      <div class="absolute right-5 bottom-5 left-5">
+        <p class="display text-2xl leading-tight text-white">“Takut salah ngomong?”</p>
+        <p class="mt-1 text-xs leading-relaxed text-white/85">
+          Latihan microphone, simulasi wawancara, dan latihan percaya diri seperti di depan wartawanan.
+        </p>
+      </div>
+    </aside>
   </div>
 </section>

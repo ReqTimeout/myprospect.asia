@@ -1,30 +1,7 @@
 import Lenis from 'lenis';
 import { animate } from 'motion';
 
-const stored = localStorage.getItem('pa-motion');
-const forcedOff = stored === 'off';
-const reduced = forcedOff;
-
-if (!forcedOff) document.documentElement.classList.add('motion-on');
-if (forcedOff) document.documentElement.classList.add('motion-off');
-
-function initMotionToggle() {
-  const btn = document.querySelector<HTMLButtonElement>('[data-motion-toggle]');
-  if (!btn) return;
-  const label = btn.querySelector<HTMLElement>('[data-motion-label]');
-  const state = (): 'on' | 'off' => (forcedOff ? 'off' : 'on');
-  const paint = () => {
-    const s = state();
-    if (label) label.textContent = s === 'on' ? 'Animasi: ON' : 'Animasi: OFF';
-    btn.dataset.state = s;
-    btn.setAttribute('aria-pressed', s === 'off' ? 'true' : 'false');
-  };
-  paint();
-  btn.addEventListener('click', () => {
-    localStorage.setItem('pa-motion', state() === 'on' ? 'off' : 'on');
-    location.reload();
-  });
-}
+const reduced = false;
 
 function initReveal() {
   const groups = document.querySelectorAll('[data-reveal-group]');
@@ -73,11 +50,13 @@ function initMagnetic() {
       btn.style.transform = '';
       if (raf) cancelAnimationFrame(raf);
       raf = 0;
-      animate(
-        btn,
-        { x: [{ to: 0 }], y: [{ to: 0 }] },
-        { type: 'spring', stiffness: 320, damping: 16, duration: 0.45 }
-      ).catch(() => {});
+      try {
+        animate(
+          btn,
+          { x: [{ to: 0 }], y: [{ to: 0 }] },
+          { type: 'spring', stiffness: 320, damping: 16, duration: 0.45 }
+        );
+      } catch {}
     });
   });
 }
@@ -188,7 +167,6 @@ function initSpotlight() {
 }
 
 function boot() {
-  initMotionToggle();
   initReveal();
   initMagnetic();
   initLenis();
