@@ -16,10 +16,10 @@ Website **WA-first** untuk **Prospect Asia (PT Kita Berani Bicara)** — program
 
 | Item | Nilai |
 |---|---|
-| Produksi | `https://myprospect-7uk.pages.dev` |
-| Admin | `https://myprospect-7uk.pages.dev/admin` (password ada di `.env.admin` — gitignored) |
+| Produksi | `https://myprospect.asia` (domain kustom — canonical, `og:url`, sitemap, robots semua ikut) · fallback `https://myprospect-7uk.pages.dev` |
+| Admin | `https://myprospect.asia/admin` (password ada di `.env.admin` — gitignored) |
 | Preview deploy | `https://<hash>.myprospect-7uk.pages.dev` (hash dicetak tiap `wrangler pages deploy`) |
-| Placeholder domain | `https://myprospect.asia` (belum diarahkan; DNS masih di Hostinger) |
+| Domain kustom (LIVE) | `https://myprospect.asia` + `https://www.myprospect.asia` → Pages project `myprospect`, CNAME → `myprospect-7uk.pages.dev`, status `active` (lihat §22.1) |
 | Pages project | `myprospect` · D1 database `prospect-db` (id `cf06163c-557d-4625-aedb-d4b9dd1b4514`) |
 | Remote git | `git@github.com:ReqTimeout/myprospect.asia.git` (SSH! HTTPS+PAT ditolak 403) |
 | Akun CF | ID ada di `.env.cf` (gitignored) |
@@ -263,6 +263,7 @@ Jebakan penting:
 | Chromium headless | `/Users/maabook/Library/Caches/ms-playwright/chromium_headless_shell-1243/chrome-headless-shell-mac-arm64/chrome-headless-shell` | dipakai kedua script di atas (`playwright-core` di `node_modules`, gitignored) |
 | Screenshot + audit kontras | `scripts/verify-home.mjs` | `node scripts/verify-home.mjs <base-url>` → screenshot per area (partners/badge/vip/level/program + full page) ke `~/Downloads/vc-*.png` untuk desktop 1440×900 + mobile 390×844, sekaligus audit kontras WCAG (kirim `oklab()` + compositing alpha + sampling gradient). **Screenshot wajib dibaca via vision** — angka kontras tidak menangkap "kepotong"/"tidak premium" |
 | Screenshot + kontras (home + detail berita) | `scripts/verify-revisi.mjs` | `node scripts/verify-revisi.mjs <base-url>` → **2 halaman** (home & `/berita/bintang-gohan`) × 2 viewport; screenshot per area ke `~/Downloads/rv-*.png`, audit kontras WCAG dengan selector per halaman, plus cek overflow (`docScrollW` vs viewport). Untuk revisi yang menyentuh header/footer/program/mitra **dan** halaman detail berita |
+| E2E domain + admin guard | `scripts/verify-domain.mjs` | `set -a && . ./.env.admin && set +a && node scripts/verify-domain.mjs [base-url]` → **39 cek**: guard admin (401 + 302 `/admin/`→login), login benar/salah + atribut cookie (`HttpOnly`/`Secure`/`SameSite=Lax`), semua endpoint admin 200+JSON, logout, API publik, canonical/`og:url` pakai domain kustom, **www → apex 301**, sitemap + robots, plus alur lead (302 → `wa.me` + validasi 400). **Wajib tiap kali domain/SEO/admin/alur lead diubah** |
 
 Alur wajib: `npm run build` → serve `dist/` → `audit-frames.mjs` → **baca frame via vision** → perbaiki → ulangi → `audit-clip.mjs` → deploy → audit live → commit+push.
 
@@ -287,6 +288,7 @@ Status terakhir: **audit 22/22 · 0 bug**, e2e konten 24/24, motion probe (title
 - `src/lib/seo.ts`: `organizationSchema` (EducationalOrganization), `faqSchema` (FAQPage), `courseSchema` (Course), `jsonLd()`.
 - JSON-LD terpasang di: home (Organization+FAQ), `/faq` (FAQ), detail program & workshop (Course), detail berita (NewsArticle, di dalam function template).
 - OG image dari `src/assets/generated/a2-og-bg.jpg` (masih nuansa gelap — **belum** di-regenerate ke tema terang).
+- `og:url` **ditambahkan Okt 2026** (sebelumnya tidak ada sama sekali) + `og:site_name` + `twitter:title/description/image`. `canonicalUrl` dihitung sekali di `src/layouts/Base.astro` lalu dipakai bersama untuk `<link rel="canonical">` **dan** `og:url` supaya tidak pernah beda host.
 - GA4: loader runtime di `Base.astro` ambil `/api/settings`, injeksi gtag bila ID valid. **Belum ada ID GA4** (menunggu klien).
 - Sitemap: `@astrojs/sitemap` (aktif). `plan.md` menyebut `astro:transitions` sudah diuji.
 
@@ -296,12 +298,12 @@ Status terakhir: **audit 22/22 · 0 bug**, e2e konten 24/24, motion probe (title
 
 1. **R2 belum aktif** (error 10042) → Media tab kosong. Activate di dashboard → `wrangler r2 bucket create prospect-media` → uncomment blok `r2_buckets` di `wrangler.jsonc`.
 2. **ID GA4** belum ada (loader sudah siap).
-3. **Domain kustom**: `myprospect.asia` masih di DNS Hostinger; perlu arahkan ke Pages (CNAME `myprospect-7uk.pages.dev`) + set custom domain di dashboard.
+3. ~~**Domain kustom**~~ → **SELESAI (Okt 2026)**: `myprospect.asia` + `www.myprospect.asia` sudah ter-attach ke Pages project dan `verification_data.status = active`. Lihat §22.1 untuk langkah & jebakan DNS-nya.
 4. **Harga Workshop Pro** belum ada (tampil "Custom").
 5. **Folder kosong** di `Website Material/`: `Coaches Picture/`, `Copywriting/`, `Testimonials/` — menunggu file klien.
 6. **Handle IG/TikTok** resmi belum ada (teks di program menyebut "Konten atlet di Instagram Prospect Asia").
 7. Foto klien final untuk program/coaches (yang dipakai sekarang mix foto workshop + stock session).
-8. **Logo resmi mitra** (Djanur Football Academy, Dream Baller ID, PB Jaya Raya Ragunan, Akademi Futsal Margahayu Raya, MFC Marunda, SSBRBC, Little Pep, Pep Sports, Exortive, RS Limijati) — **sudah dicek ulang di Okt 2026**: nol file logo di repo, `public/media/`, `Website Material/`, ZIP klien, dan PDF klien (PDF-nya **0 objek gambar** — 0 `/Subtype /Image`). Poster `Website Material/Program - Product/1-3.png` juga sudah dibuka satu per satu: hanya berisi logo Prospect Asia, bukan logo mitra. Jadi lencana SVG tetap dipakai. Taruh file asli di `public/media/partners/<slug>.png|svg|jpg|webp` → otomatis terpakai tanpa ubah kode.
+8. **Logo resmi mitra** (Djanur Football Academy, Dream Baller ID, PB Jaya Raya Ragunan, Akademi Futsal Margahayu Raya, MFC Marunda, SSBRBC, Little Pep, Pep Sports, Exortive, RS Limijati) — **sudah dicek ulang di Okt 2026**: nol file logo di repo, `public/media/`, `Website Material/`, ZIP klien, dan PDF klien (PDF-nya **0 objek gambar** — 0 `/Subtype /Image`). Poster `Website Material/Program - Product/1-3.png` juga sudah dibuka satu per satu: hanya berisi logo Prospect Asia, bukan logo mitra. **Putaran audit kedua (Okt 2026)** menambahkan: `Program - Product/Workshop.pdf` punya **24 objek gambar**, tapi setelah diekstrak hanya **6 gambar unik** (logo Prospect Asia ×2, logo "P" putih, satu gradien oranye polos, 2 foto) — **tetap tidak ada logo mitra**; dan ZIP klien (25 entri) identik dengan folder hasil ekstrak, jadi tidak ada file tersembunyi. Detail di §22.3. Jadi lencana SVG tetap dipakai. Taruh file asli di `public/media/partners/<slug>.png|svg|jpg|webp` → otomatis terpakai tanpa ubah kode.
 
 ---
 
@@ -310,7 +312,7 @@ Status terakhir: **audit 22/22 · 0 bug**, e2e konten 24/24, motion probe (title
 > Arah desain aktif sejak Okt 2026 = **"Broadcast / Scoreboard"**: pita ticker, papan skor, tiket sobek, kartu pemain ala jersey, spotlight kursor. Artwork coach saat ini **CSS/SVG art** (bukan foto) karena ImageGen kehabisan kredit dan `Website Material/Coaches Picture/` masih kosong.
 
 1. Regenerasi OG image + aset generated ke nuansa terang (MiniMax image-01) — `src/assets/generated/a2-og-bg.jpg` dst.
-2. Pasang custom domain + A-record/CNAME di DNS Hostinger; set domain di Pages; add `myprospect.asia` ke `SITE.url` & canonical.
+2. ~~Pasang custom domain~~ → **SELESAI (Okt 2026)**, lihat §22.1. `SITE.url` & canonical sudah `https://myprospect.asia` sejak awal.
 3. Aktifkan R2 → implementasikan upload media di tab Media (proxy `/media/*`).
 4. Masukkan GA4 ID via admin Pengaturan (tanpa deploy).
 5. Selesaikan klaim "SPEAK LOUD!"-style copy atau formalkan bahasa (copy sekarang playful; klien mungkin mau lebih formal).
@@ -444,3 +446,91 @@ Halaman `/berita/<slug>` dilayani `functions/berita/[slug].ts` — **HTML templa
 - **Grid 2 kolom tanpa placement eksplisit** → sidebar otomatis menempati kolom 1 dan artikel kolom 2 (terbalik). Fix: `.post-main{grid-column:1}` + `.post-side{grid-column:2}` di `min-width:1024px`. **Wajib cek screenshot desktop** — audit DOM dan audit overflow tidak menangkap urutan kolom.
 - **Footer di atas `paper-deep`** menyisakan margin tipis: teks oranye kecil (`brand-dark` 4.49:1) dan abu-abu `text-ink/40`–`/45` (2.4–2.8:1, gagal WCAG). Semua dinaikkan ke `/65`–`/70` dan `brand-dark` digelapkan ke `#bc4c00`.
 - `safeCover` dipindah ke atas `page()` supaya urutan deklarasinya jelas (menghindari TDZ).
+
+---
+
+## 22. Domain kustom + verifikasi E2E (Okt 2026)
+
+### 22.1 Domain kustom: apa yang sebenarnya terjadi
+
+`myprospect.asia` **sudah** ada di DNS Cloudflare, tapi **tidak pernah diarahkan ke Pages**:
+
+| Temuan | Bukti |
+|---|---|
+| `A myprospect.asia → 2.57.91.91` (IP parking Hostinger), `proxied: true` | `GET /zones/{zone}/dns_records` |
+| `https://myprospect.asia/` membalas **"Parked Domain name on Hostinger DNS system"** | `curl -sI` |
+| Halaman `pages.dev` **tidak punya** `myprospect.asia` di daftar domain-nya | `GET /accounts/{acc}/pages/projects/myprospect/domains` → `domains: ["myprospect-7uk.pages.dev"]` |
+| `SITE.url` + `canonical` + `sitemap` **sudah** menunjuk ke domain kustom | `src/data/site.ts`, `src/lib/seo.ts` |
+
+Jadi situsnya sebenarnya **belum pernah** tampil di `myprospect.asia` — canonical/sitemap menunjuk ke halaman parked (bahaya SEO).
+
+**Langkah perbaikan (semua via Cloudflare API, token di `.env.cf`)**:
+
+1. Hapus `A myprospect.asia → 2.57.91.91` (ID `5a41222cc2a661215f31fb02925a8542`) — ini yang bikin domain parked.
+2. Hapus `CNAME www.myprospect.asia → myprospect.asia` (ID `6a79a0355f99b6cc5867c1042e7ac14b`).
+3. `POST /accounts/{acc}/pages/projects/myprospect/domains` dengan `{name: "myprospect.asia"}` → status `initializing`, lalu `{name: "www.myprospect.asia"}` → `pending`.
+4. **Jebakan**: Pages melaporkan `verification_data.error_message = "CNAME record not set"` dan **tidak** membuatkan record otomatis → harus bikin manual.
+5. Bikin `CNAME myprospect.asia → myprospect-7uk.pages.dev` (`proxied: true`) dan `CNAME www.myprospect.asia → myprospect-7uk.pages.dev` (`proxied: true`).
+6. ±45 detik kedua domain jadi `verification_data.status = active`. `https://myprospect.asia/` dan `https://www.myprospect.asia/` sama-sama membalas 200 dengan situs asli.
+
+> **Jangan** pakai `A` record untuk custom domain Pages — Pages butuh CNAME → `{subdomain}.pages.dev`. Record yang dihapus (parking Hostinger) **tidak** otomatis dibikin ulang oleh Pages.
+
+**Redirect `www` → apex (Okt 2026)**: keduanya sama-sama menyajikan situs identik = duplikat konten, padahal `canonical`/`og:url`/`sitemap` menunjuk ke apex. Solusinya **di dalam kode**, bukan di dashboard: `functions/_middleware.ts` memotong host `www.myprospect.asia` dan membalas **301** ke apex dengan path + query utuh.
+
+```ts
+const APEX = 'myprospect.asia';
+if (url.hostname === `www.${APEX}`) { url.hostname = APEX; url.protocol = 'https:'; return Response.redirect(url.toString(), 301); }
+```
+
+Penting: blok ini **di atas** cek admin, supaya `www.../admin/` ikut dipindah (301) dan bukan minta login lebih dulu di host yang salah. `myprospect-7uk.pages.dev` dan preview deploy **tidak** kena (hostname-nya bukan `www.myprospect.asia`).
+
+### 22.2 Yang sempat rusak & sudah diperbaiki
+
+| Gejala | Penyebab | Fix |
+|---|---|---|
+| `og:url` tidak ada sama sekali di homepage | `src/layouts/Base.astro` tidak pernah menulis meta itu | Tambah `og:url` + `og:site_name` + `twitter:title/description/image`; `canonicalUrl` dipakai bersama untuk `canonical` & `og:url` |
+| Copyright footer detail berita dobel: "© 2026 PT Kita Berani Bicara — PT Kita Berani Bicara" | `functions/berita/[slug].ts` menempelkan `— PT Kita Berani Bicara` ke `SITE_CFG.legal` yang isinya sudah nama itu | `© ${year} ${SITE_CFG.legal}. All rights reserved.` — sama persis dengan `Footer.astro` |
+| Tahun di footer detail berita tampil **1970** | **Di runtime Cloudflare Workers, `Date.now()` = 0 di module scope** (belum ada I/O), jadi `new Date().getFullYear()` di top-level menghasilkan 1970 | Hitung tahun **di dalam handler** (request time → sudah benar). Dibuktikan probe: `modYear:1970, modNow:0` vs `beforeIo:2026, reqNow:1793361081430` |
+
+> **Jebakan Workers ini berlaku untuk semua `functions/`**: jangan pernah memanggil `new Date()` / `Date.now()` di module scope — hitung di dalam handler.
+
+### 22.3 Audit ulang `Website Material/` (Okt 2026, putaran kedua)
+
+- **24 file** dalam folder + **3 folder kosong** (`Coaches Picture/`, `Copywriting/`, `Testimonials/` — masih placeholder `.gitkeep`).
+- ZIP klien `Website Material-20261027T121107Z-1-001.zip` = **25 entri, identik** dengan folder hasil ekstrak → **tidak ada file tersembunyi** yang terlewat.
+- `Web Material.pdf` = **0 objek gambar** (`/Subtype /Image` = 0) → **teks saja**. Isinya persis: "Kerja sama klub & akademi: Djanur Football Academy, Dream Baller ID, PB Jaya Raya Ragunan, Akademi Futsal Margahayu Raya, MFC Marunda, SSBRBC" + "Mitra resmi: Little Pep, Pep Sports, Exortive, RS Limijati" → **nama saja, tanpa logo**.
+- `Program - Product/Workshop.pdf` = **24 objek gambar**, tapi setelah diekstrak (PyMuPDF) hanya **6 gambar unik**: logo Prospect Asia (×2), logo "P" putih, satu gradien oranye polos, dan 2 foto. **Tidak ada logo mitra.**
+- **Kesimpulan**: lencana SVG yang dipakai sekarang tetap; drop-in path `public/media/partners/<slug>.{svg,png,jpg,jpeg,webp,avif}` tetap berlaku (deteksi otomatis via `existsSync` saat build).
+
+**Data yang sudah cocok dengan PDF klien (tidak dikarang)**:
+
+| Data | Isi | Cocok dengan PDF? |
+|---|---|---|
+| `src/data/workshops.ts` | Starter **1.999.000** (90 menit, "50 peserta → IDR 40.000/atlet") · Premium **3.899.000** (120 menit fun practical, "100 peserta → IDR 38.900/atlet") | Ya |
+| `src/data/coaches.ts` | Ferri Ahrial, Ilham Ahmad, Fathur Fathurrahman, Farhana Ayya, Salim, Ido | Ya |
+| `src/data/testimonials.ts` | Gohan, Hudzaifah, Zio | Ya |
+
+**Aset belum terpakai**: `Online Soccer Coaching Session (1).png`, `Teenager's Sunny Video Session (1).png`, `Video Call at the Sports Academy (1).png`.
+
+### 22.4 Alur lead diuji end-to-end di domain kustom
+
+`functions/api/leads.ts` diverifikasi langsung di `https://myprospect.asia`:
+
+| Skenario | Hasil |
+|---|---|
+| Form native (`nama` + `wa` valid) | **302 → `https://wa.me/6285924041004?text=...`** (pesan ter-pre-fill) |
+| JSON valid | **200** `{ok:true, waUrl}` |
+| Tanpa `wa` | **400** "Data belum lengkap — mohon isi nama dan nomor WhatsApp." |
+| `wa` pendek | **400** "Nomor WhatsApp belum valid. Contoh: 081234567890." |
+| Baris benar-benar masuk D1 | Ya — `wa` ternormalisasi jadi `6281234567890`, `status = 'baru'` (dicek via `wrangler d1 execute prospect-db --remote`) |
+| Baris tes dibersihkan | Ya — `DELETE ... WHERE sumber LIKE 'verify-domain%'` → tabel `leads` kembali 0 baris |
+
+> **Honeypot**: field `website` di form native **mencegah** penyimpanan ke D1, tapi redirect ke WhatsApp tetap jalan → dipakai `scripts/verify-domain.mjs` supaya tes lead **tidak mengotori** D1. Jalur JSON **tidak** membaca honeypot (selalu simpan) — itu jalur `RegisterModal.svelte` untuk pengguna sungguhan.
+
+### 22.5 Status verifikasi 30 Okt 2026 (domain kustom, produksi)
+
+- `scripts/verify-domain.mjs https://myprospect.asia` → **SEMUA PASS (39/39)**, termasuk `www → apex 301` dan `www /admin -> 301`.
+- `scripts/verify-revisi.mjs https://myprospect.asia` → 4 kombinasi (home + `/berita/bintang-gohan` × 1440×900 + 390×844), `docW == vw`, **0 error, 0 request gagal, 0 pelanggaran kontras**.
+- `https://www.myprospect.asia/` → **301 → `https://myprospect.asia/`** (1 redirect, lalu 200 — tidak ada loop).
+- `https://myprospect-7uk.pages.dev/` → 200, **tidak** ikut ke-redirect.
+- 3 slug berita (`2175-atlet-berani-bicara`, `bintang-gohan`, `kolaborasi-workshop-starter`) → 200 semua.
