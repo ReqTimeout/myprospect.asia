@@ -36,7 +36,17 @@ export type PostInput = {
   pub_date: string;
   body: string;
   status: string;
+  cover: string;
 };
+
+// Cover hanya boleh path relatif di dalam /media — mencegah URL javascript: dari input admin.
+export function coverPath(v: unknown): string {
+  if (typeof v !== 'string') return '';
+  const s = v.trim();
+  if (!s) return '';
+  if (!/^\/media\/[A-Za-z0-9._-]+$/.test(s)) return '';
+  return s;
+}
 
 export function parsePost(body: unknown): PostInput | string {
   const b = (body ?? {}) as Record<string, unknown>;
@@ -54,7 +64,7 @@ export function parsePost(body: unknown): PostInput | string {
   if (bodyMd.length < 1 || bodyMd.length > 50000) return 'isi berita tidak valid';
   const status = typeof b.status === 'string' && (POST_STATUS as readonly string[]).includes(b.status) ? b.status : null;
   if (!status) return 'status tidak valid';
-  return { slug, title, desc, kategori, pub_date, body: bodyMd, status };
+  return { slug, title, desc, kategori, pub_date, body: bodyMd, status, cover: coverPath(b.cover) };
 }
 
 export type ContentInput = {

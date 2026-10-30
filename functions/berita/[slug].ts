@@ -12,6 +12,22 @@ type PostRow = {
   pub_date: string;
   body: string;
   status: string;
+  cover: string;
+};
+
+// Cover per kategori sebagai cadangan kalau admin belum mengisi kolom cover.
+const COVER_FALLBACK: Record<string, string> = {
+  Kolaborasi: '/media/workshop-crowd.jpg',
+  Bintang: '/media/hero-athletes.jpg',
+  Berita: '/media/interview-zone.jpg',
+};
+
+const SITE = 'https://myprospect.asia';
+
+const safeCover = (raw: string | undefined, kategori: string): string => {
+  const s = (raw ?? '').trim();
+  if (/^\/media\/[A-Za-z0-9._-]+$/.test(s)) return s;
+  return COVER_FALLBACK[kategori] ?? '/media/interview-zone.jpg';
 };
 
 const esc = (s: string): string =>
@@ -41,7 +57,9 @@ const page = (opts: {
 }): string => {
   const { post, related, waUrl, ga4 } = opts;
   const htmlBody = marked.parse(post.body, { async: false }) as string;
-  const canonical = `https://myprospect.asia/berita/${post.slug}`;
+  const canonical = `${SITE}/berita/${post.slug}`;
+  const cover = safeCover(post.cover, post.kategori);
+  const coverAbs = `${SITE}${cover}`;
   const schema = JSON.stringify({
     '@context': 'https://schema.org',
     '@type': 'NewsArticle',
@@ -53,8 +71,9 @@ const page = (opts: {
     publisher: {
       '@type': 'Organization',
       name: 'Prospect Asia',
-      logo: { '@type': 'ImageObject', url: 'https://myprospect.asia/favicon.png' },
+      logo: { '@type': 'ImageObject', url: `${SITE}/favicon.png` },
     },
+    image: coverAbs,
     mainEntityOfPage: canonical,
   }).replace(/</g, '\\u003c');
 
@@ -85,7 +104,10 @@ const page = (opts: {
 <meta property="og:title" content="${esc(post.title)}">
 <meta property="og:description" content="${esc(post.desc)}">
 <meta property="og:url" content="${canonical}">
+<meta property="og:image" content="${esc(coverAbs)}">
+<meta property="og:image:alt" content="${esc(post.title)}">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="${esc(coverAbs)}">
 <link rel="icon" href="/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -103,6 +125,10 @@ a{color:inherit;text-decoration:none}
 .logo i{color:var(--brand);font-style:normal}
 .nav-a{display:inline-block;font-size:13px;font-weight:700;color:var(--brand-dark);padding:10px 0}
 .wrap{max-width:48rem;margin:0 auto;padding:0 16px}
+.hero{position:relative;margin:6px 0 26px;border-radius:24px;overflow:hidden;background:var(--paper-deep);box-shadow:0 22px 50px -28px rgba(36,26,18,.45)}
+.hero img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover}
+.hero::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top,rgba(36,26,18,.42),rgba(36,26,18,0) 58%)}
+.hero figcaption{position:absolute;left:14px;bottom:12px;z-index:1;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.9);text-shadow:0 2px 8px rgba(0,0,0,.5)}
 main{padding-top:8px}
 .back{display:inline-block;padding:14px 0;font-size:14px;font-weight:700;color:var(--brand-dark)}
 .back:hover{text-decoration:underline}
@@ -146,6 +172,10 @@ footer a{color:var(--brand-dark);font-weight:700;display:inline-block;padding:8p
 <main>
   <div class="wrap">
     <a class="back" href="/berita/">← Semua berita</a>
+    <figure class="hero">
+      <img src="${esc(cover)}" alt="Gambar utama: ${esc(post.title)}" width="1280" height="720" loading="eager" fetchpriority="high" decoding="async" />
+      <figcaption>${esc(post.kategori)}</figcaption>
+    </figure>
     <div class="meta"><span class="chip">${esc(post.kategori)}</span><time datetime="${esc(post.pub_date)}">${fmtDate(post.pub_date)}</time></div>
     <h1>${esc(post.title)}</h1>
     <p class="lede">${esc(post.desc)}</p>
@@ -179,7 +209,7 @@ export const onRequestGet = async (context: {
   }
 
   const post = await context.env.DB.prepare(
-    'SELECT slug, title, "desc" AS "desc", kategori, pub_date, body, status FROM posts WHERE slug = ?',
+    'SELECT slug, title, "desc" AS "desc", kategori, pub_date, body, status, cover FROM posts WHERE slug = ?',
   )
     .bind(slug)
     .first<PostRow>();

@@ -2,7 +2,7 @@ type Env = { DB: D1Database };
 
 export const onRequestGet = async (context: { env: Env }): Promise<Response> => {
   const rows = await context.env.DB.prepare(
-    `SELECT slug, title, "desc" AS "desc", kategori, pub_date, status
+    `SELECT slug, title, "desc" AS "desc", kategori, pub_date, status, cover
      FROM posts WHERE status = 'published' ORDER BY pub_date DESC, slug DESC LIMIT 100`,
   ).all();
 

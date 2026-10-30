@@ -2,7 +2,7 @@
   import { onMount } from 'svelte';
   import { liveJson } from '../../lib/live';
 
-  type Post = { id: string; title: string; desc: string; kategori: string; pubDate: string };
+  type Post = { id: string; title: string; desc: string; kategori: string; pubDate: string; cover: string };
 
   interface Props {
     posts: Post[];
@@ -16,7 +16,7 @@
 
   onMount(async () => {
     const data = await liveJson<
-      { slug: string; title: string; desc: string; kategori: string; pub_date: string }[]
+      { slug: string; title: string; desc: string; kategori: string; pub_date: string; cover: string }[]
     >('/api/posts');
     if (data && data.length > 0) {
       list = data.map((p) => ({
@@ -25,6 +25,7 @@
         desc: p.desc,
         kategori: p.kategori,
         pubDate: `${p.pub_date}T00:00:00Z`,
+        cover: p.cover ?? '',
       }));
     }
   });
@@ -37,6 +38,17 @@
       class="group flex flex-col overflow-hidden rounded-3xl border border-ink/10 bg-paper-deep transition duration-200 hover:-translate-y-1 hover:border-gold/50 focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
     >
       <div class="relative aspect-16/10 overflow-hidden bg-gradient-to-br from-brand/25 via-brand-soft to-gold/30">
+        {#if post.cover}
+          <img
+            src={post.cover}
+            alt=""
+            loading="lazy"
+            width="640"
+            height="400"
+            class="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-ink/45 via-transparent to-transparent"></div>
+        {/if}
         <span class="absolute top-3 left-3 rounded-full bg-paper/85 px-2.5 py-1 text-[10px] font-black tracking-wider text-brand-dark uppercase backdrop-blur">
           {post.kategori}
         </span>

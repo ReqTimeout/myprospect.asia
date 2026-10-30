@@ -4,8 +4,8 @@
 
   type Sub = 'berita' | 'testimoni' | 'faq' | 'statistik';
 
-  type Post = { slug: string; title: string; desc: string; kategori: string; pub_date: string; status: string; body: string };
-  type PostForm = { slug: string; title: string; desc: string; kategori: string; pub_date: string; body: string; status: string; isNew: boolean };
+  type Post = { slug: string; title: string; desc: string; kategori: string; pub_date: string; status: string; body: string; cover: string };
+  type PostForm = { slug: string; title: string; desc: string; kategori: string; pub_date: string; body: string; status: string; cover: string; isNew: boolean };
 
   type Item = { id: string; title: string; body: string; meta: Record<string, unknown>; sort: number; active: number };
   type ItemForm = { id: string | null; title: string; body: string; meta: Record<string, unknown>; sort: number; active: boolean };
@@ -102,13 +102,14 @@
       pub_date: new Date().toISOString().slice(0, 10),
       body: '',
       status: 'published',
+      cover: '',
       isNew: true,
     };
   }
 
   function editPost(p: Post) {
     slugTouched = true;
-    postForm = { ...p, isNew: false };
+    postForm = { ...p, cover: p.cover ?? '', isNew: false };
   }
 
   async function savePost() {
@@ -284,6 +285,18 @@
               <option value="draft">Draft</option>
             </select>
           </div>
+        </div>
+        <div>
+          <label for="p-cover" class={labelCls}>Gambar utama (path /media/...)</label>
+          <input id="p-cover" class={inputCls} bind:value={postForm.cover} placeholder="/media/workshop-crowd.jpg" />
+          {#if postForm.cover}
+            <img
+              src={postForm.cover}
+              alt="Pratinjau gambar utama"
+              class="mt-2 aspect-16/9 w-full rounded-xl object-cover"
+              onerror={(e) => ((e.currentTarget as HTMLImageElement).style.display = 'none')}
+            />
+          {/if}
         </div>
         <div>
           <label for="p-desc" class={labelCls}>Deskripsi (ringkas)</label>

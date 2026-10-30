@@ -66,6 +66,7 @@ const kategori = ['Berita', 'Bintang', 'Kolaborasi'] as const;
             desc: p.data.desc,
             kategori: p.data.kategori,
             pubDate: p.data.pubDate.toISOString(),
+            cover: p.data.cover ?? '',
           }))}
         />
       </div>

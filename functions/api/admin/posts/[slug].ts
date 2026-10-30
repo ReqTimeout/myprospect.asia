@@ -23,9 +23,9 @@ export const onRequestPut = async (context: Ctx): Promise<Response> => {
   if (!exists) return json({ error: 'tidak ditemukan' }, 404);
 
   await context.env.DB.prepare(
-    'UPDATE posts SET title = ?, "desc" = ?, kategori = ?, pub_date = ?, body = ?, status = ?, updated_at = datetime(\'now\') WHERE slug = ?',
+    'UPDATE posts SET title = ?, "desc" = ?, kategori = ?, pub_date = ?, body = ?, status = ?, cover = ?, updated_at = datetime(\'now\') WHERE slug = ?',
   )
-    .bind(p.title, p.desc, p.kategori, p.pub_date, p.body, p.status, slug)
+    .bind(p.title, p.desc, p.kategori, p.pub_date, p.body, p.status, p.cover, slug)
     .run();
 
   return json({ ok: true, slug });

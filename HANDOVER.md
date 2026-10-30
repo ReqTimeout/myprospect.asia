@@ -80,7 +80,7 @@ src/
   data/                      site, programs, workshops, faq, coaches, partners, testimonials
   content/berita/*.md        koleksi MDX (seed lama; konten live kini di D1)
 functions/                   Pages Functions (lihat §4)
-migrations/                  0001_init.sql, 0002_content.sql, 0003_seed_posts.sql
+migrations/                  0001_init.sql, 0002_content.sql, 0003_seed_posts.sql, 0004_posts_cover.sql, 0005_seed_covers.sql
 scripts/gen-posts-seed.mjs   generator SQL seed dari MDX
 public/media/                aset gambar hasil proses (lihat §8)
 docs/preview/                bukti visual animasi (gif + filmstrip)
@@ -171,7 +171,7 @@ Belum dipakai & masih ada: `Online Soccer Coaching Session (1).png`, `Teenager's
 | `leads` | lead dari form (nama, wa, program, catatan, sumber, status, created_at) |
 | `settings` | key-value (wa_number, popup aktif, ga4_id, ...) |
 | `wa_clicks` | tracking klik CTA (slug, created_at) |
-| `posts` | berita: slug, title, desc, kategori, pub_date, body(markdown), status, updated_at |
+| `posts` | berita: slug, title, desc, kategori, pub_date, body(markdown), status, cover, updated_at |
 | `content_items` | id, kind(`testimonials`/`faq`/`stats`), title, body, meta(JSON), sort, active |
 
 Tabel `programs/workshops/testimonials/coaches/partners` ada di migration 0001 tapi **data sumber kini ada di `src/data/*.ts`** (statis) — content_items yang dipakai admin.
@@ -193,7 +193,22 @@ npx wrangler d1 execute prospect-db --remote --command "SELECT count(*) FROM pos
 - form-encoded (classic) → 302 redirect ke `wa.me` (dipakai `LeadForm.astro` di `/tentang`).
 Isi JSON: `{ nama, wa, program, catatan, sumber }`. Insert ke D1 `leads` + balas link `wa.me` bernomor admin. Kegagalan DB/settings **tidak** menggagalkan handoff ke WhatsApp (di-`try/catch`).
 **Admin** (butuh cookie `pa_admin`): `POST /api/admin/login` · `POST /api/admin/logout` · `GET /api/admin/stats` · `GET/PATCH /api/admin/leads` · `GET/PUT /api/admin/settings` · `GET/POST /api/admin/posts` · `PUT/DELETE /api/admin/posts/{slug}` · `GET/POST /api/admin/content/{kind}` · `PUT/DELETE /api/admin/content/{kind}/{id}`.
-Validator bersama: `functions/_lib/content.ts` (KINDS, FAQ_GRUP, KATEGORI, POST_STATUS, parsePost/parseContent).
+Validator bersama: `functions/_lib/content.ts` (KINDS, FAQ_GRUP, KATEGORI, POST_STATUS, parsePost/parseContent, coverPath).
+
+### 10.1 Cover / featured image berita (Okt 2026)
+
+**Dua sumber data berita** — jangan dicampur:
+- `src/content/berita/*.mdx` (collection Astro) → dipakai **halaman list** `/berita/` (static, punya frontmatter `cover`).
+- D1 `posts` → dipakai **halaman detail** `/berita/{slug}` yang di-render oleh **Pages Function `functions/berita/[slug].ts`** (bukan halaman Astro).
+
+Kolom `cover` ditambahkan ke tabel `posts` lewat `migrations/0004_posts_cover.sql`; nilainya diisi `migrations/0005_seed_covers.sql` (dari frontmatter MDX). **Ordering penting**: `0003_seed_posts.sql` (seed lama) jalan sebelum `0004`, jadi file seed itu tidak boleh menyebut kolom `cover`.
+Regenerasi dua-duanya: `node scripts/gen-posts-seed.mjs` (menulis 0003 + 0005).
+
+Alur data cover:
+1. Admin isi kolom "Gambar utama" di panel admin → `POST/PUT /api/admin/posts` → `parsePost` → `coverPath()` (hanya path `/media/...` yang diterima, sisanya jadi string kosong).
+2. `GET /api/posts` mengirim `cover` → dipakai kartu di `/berita/`.
+3. `functions/berita/[slug].ts` SELECT `cover` → render `<figure class="hero">` + `og:image`/`twitter:image` + JSON-LD `image`.
+4. Kalau `cover` kosong → fallback per kategori (`Kolaborasi` → `workshop-crowd.jpg`, `Bintang` → `hero-athletes.jpg`, `Berita` → `interview-zone.jpg`).
 
 ---
 

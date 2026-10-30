@@ -4,7 +4,7 @@ type Env = { DB: D1Database };
 
 export const onRequestGet = async (context: { env: Env }): Promise<Response> => {
   const rows = await context.env.DB.prepare(
-    'SELECT slug, title, "desc" AS "desc", kategori, pub_date, status, body, updated_at FROM posts ORDER BY pub_date DESC, slug DESC LIMIT 200',
+    'SELECT slug, title, "desc" AS "desc", kategori, pub_date, status, body, cover, updated_at FROM posts ORDER BY pub_date DESC, slug DESC LIMIT 200',
   ).all();
   return json(rows.results ?? []);
 };
@@ -24,9 +24,9 @@ export const onRequestPost = async (context: { request: Request; env: Env }): Pr
   if (exists) return bad('Slug sudah dipakai berita lain');
 
   await context.env.DB.prepare(
-    'INSERT INTO posts (slug, title, "desc", kategori, pub_date, body, status) VALUES (?, ?, ?, ?, ?, ?, ?)',
+    'INSERT INTO posts (slug, title, "desc", kategori, pub_date, body, status, cover) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
   )
-    .bind(p.slug, p.title, p.desc, p.kategori, p.pub_date, p.body, p.status)
+    .bind(p.slug, p.title, p.desc, p.kategori, p.pub_date, p.body, p.status, p.cover)
     .run();
 
   return json({ ok: true, slug: p.slug }, 201);
