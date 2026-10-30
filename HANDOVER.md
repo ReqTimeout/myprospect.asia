@@ -750,7 +750,7 @@ Sebelum perubahan, oranye berperan sebagai **bidang luas** — kartu StatsBar pe
 | Hero "MODERN" | oranye → emas | gradien **hitam → oranye → emas** (`.hl-brand`) |
 | Harga program/workshop | `text-brand-dark` | `text-ink` (hitam) |
 | Badge "Hemat" | `bg-brand` | `bg-ink` + teks oranye |
-| Heading About/Workshop | oranye pekat | **ink + sapuan marker oranye** (`.hl-swash`) |
+| Heading Coach/About/Workshop/Level | oranye pekat | **ink + sapuan marker oranye** (`.hl-swash`) |
 | Heading Program | oranye pekat | putih + `.hl-swash--dark` (marker oranye diredupkan) |
 | Band Membership | emas (gold) | oranye penuh (emas dibuang dari palet) |
 
@@ -767,7 +767,7 @@ Semua pattern murni CSS/SVG — tanpa aset gambar baru, tanpa ImageGen.
 | `.pat-noise` / `.pat-noise-light` | butiran film (feTurbulence SVG) | hero, scoreboard, pita CTA |
 | `.pat-fade-tr` / `.pat-fade-bl` | mask untuk memudarkan pattern ke arah sudut | semua layer pattern |
 | `.pat-dash` | garis oranye putus-putus | garis teknis kartu |
-| `.hl-swash` | **sapuan marker oranye di belakang teks** | Coach, About, Workshop, Program |
+| `.hl-swash` | **sapuan marker oranye di belakang teks** | Coach, About, Workshop, Level & Journey |
 | `.hl-swash--dark` | varian diredupkan untuk latar gelap | heading Program |
 
 Ukuran pattern diatur inline lewat `style="--pat-gap: 9px"` (jarak titik default 7px).
