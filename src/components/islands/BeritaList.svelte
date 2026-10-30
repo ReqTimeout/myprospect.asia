@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { liveJson } from '../../lib/live';
+  import { categoryStyle } from '../../data/categories';
 
   type Post = { id: string; title: string; desc: string; kategori: string; pubDate: string; cover: string };
 
@@ -33,6 +34,7 @@
 
 <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
   {#each list as post (post.id)}
+    {@const cat = categoryStyle(post.kategori)}
     <a
       href={`/berita/${post.id}`}
       class="group flex flex-col overflow-hidden rounded-3xl border border-ink/10 bg-paper-deep transition duration-200 hover:-translate-y-1 hover:border-gold/50 focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
@@ -49,7 +51,11 @@
           />
           <div class="absolute inset-0 bg-gradient-to-t from-ink/45 via-transparent to-transparent"></div>
         {/if}
-        <span class="absolute top-3 left-3 rounded-full bg-paper/85 px-2.5 py-1 text-[10px] font-black tracking-wider text-brand-dark uppercase backdrop-blur">
+        <span
+          class="absolute top-3 left-3 inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[10px] font-black tracking-wider uppercase backdrop-blur"
+          style="background: rgba(255,252,247,0.92); color: {cat.text}; border-color: {cat.border};"
+        >
+          <span class="h-1.5 w-1.5 rounded-full" style="background: {cat.dot}"></span>
           {post.kategori}
         </span>
       </div>
