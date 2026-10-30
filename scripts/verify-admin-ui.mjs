@@ -45,7 +45,7 @@ const VIEWPORTS = [
   { name: 'mobile', width: 390, height: 844 },
 ];
 
-const TABS = ['Leads', 'Konten', 'Media', 'Pengaturan'];
+const TABS = ['Analitik', 'Leads', 'Konten', 'Media', 'Pengaturan'];
 
 let fails = 0;
 const shots = [];
@@ -72,6 +72,9 @@ for (const vp of VIEWPORTS) {
   });
 
   const shot = async (label) => {
+    // kartu dashboard punya animasi fade-up; screenshot tanpa jeda sempat menangkap
+    // keadaan setengah transparan sehingga terlihat seperti panel kosong
+    await page.waitForTimeout(900);
     const file = `${OUT}/ad-${vp.name}-${label}.png`;
     await page.screenshot({ path: file, fullPage: true });
     shots.push(file);
@@ -106,15 +109,79 @@ for (const vp of VIEWPORTS) {
   check('3 password benar -> masuk /admin', /\/admin\/?$/.test(page.url()), page.url());
   const keluar = await page.locator(`button:has-text("Keluar")`).count();
   check('3 header admin tampil (tombol Keluar)', keluar > 0);
+
+  // dashboard = tab awal: tunggu sampai hero analitik ter-render (bukan skeleton)
+  const dashSiap = await page
+    .waitForFunction(
+      () => {
+        const m = document.querySelector('main');
+        return !!m && /pengunjung unik/.test(m.innerText) && !/Memuat/.test(m.innerText);
+      },
+      { timeout: 15000 },
+    )
+    .then(() => true)
+    .catch(() => false);
   const statsTxt = (await page.locator('main').first().innerText().catch(() => '')) || '';
-  check('3 dashboard merender statistik', /Lead hari ini|Total lead/i.test(statsTxt));
-  check('3 tidak ada "Memuat…" yang nyangkut', !/^\s*Memuat…?\s*$/.test(statsTxt));
+  check('3 dashboard analitik selesai dimuat', dashSiap, `${statsTxt.trim().length} char`);
+  check('3 KPI trafik tampil', /Pengunjung unik/i.test(statsTxt) && /Halaman dilihat/i.test(statsTxt) && /Klik WhatsApp/i.test(statsTxt) && /Lead masuk/i.test(statsTxt));
+  check('3 corong konversi tampil', /Corong konversi/i.test(statsTxt) && /kunjungan → klik WA/i.test(statsTxt));
+  check('3 panel halaman & lead terbaru', /Halaman terpopuler/i.test(statsTxt) && /Lead terbaru/i.test(statsTxt));
+  check('3 tidak ada angka NaN', !/NaN/.test(statsTxt));
+
+  const jalur = await page.locator('main path.jejak').count();
+  check('3 grafik SVG dirender (jalur pv + uv + sparkline)', jalur >= 3, `${jalur} path`);
+  const kolom = await page.locator('main svg rect.kolom').count();
+  check('3 kolom grafik interaktif sebaris jumlah hari', kolom === 14, `${kolom} kolom`);
   await shot('02-dashboard');
+
+  // 3b) ganti periode -> benar-benar meminta data baru
+  const responsHari = [];
+  page.on('response', (r) => {
+    const m = r.url().match(/api\/admin\/stats\?hari=(\d+)/);
+    if (m) responsHari.push(m[1]);
+  });
+  await page.click('main button:has-text("30h")');
+  const hari30 = await page
+    .waitForFunction(
+      () => {
+        const b = [...document.querySelectorAll('main button')].find((x) => x.textContent.trim() === '30h');
+        const kolom = document.querySelectorAll('main svg rect.kolom').length;
+        return !!b && b.getAttribute('aria-pressed') === 'true' && kolom === 30;
+      },
+      { timeout: 15000 },
+    )
+    .then(() => true)
+    .catch(() => false);
+  check('3b pilih 30 hari -> grafik ikut berubah', hari30 && responsHari.includes('30'), responsHari.join(','));
+  await shot('02b-dashboard-30h');
+
+  await page.click('main button:has-text("14h")');
+  await page
+    .waitForFunction(() => document.querySelectorAll('main svg rect.kolom').length === 14, { timeout: 15000 })
+    .catch(() => {});
+  check('3b balik ke 14 hari', (await page.locator('main svg rect.kolom').count()) === 14);
+
+  // 3c) hover kolom grafik memunculkan tooltip harian
+  await page.locator('main svg rect.kolom').nth(10).hover().catch(() => {});
+  const tooltip = await page
+    .waitForFunction(
+      () => {
+        const m = document.querySelector('main');
+        return !!m && /\d+ klik WA · \d+ lead/.test(m.innerText);
+      },
+      { timeout: 8000 },
+    )
+    .then(() => true)
+    .catch(() => false);
+  check('3c hover grafik memunculkan tooltip hari', tooltip);
+  if (vp.name === 'desktop') await shot('02c-tooltip');
 
   // 4) tiap tab: nav harus menyorot tab yang benar DAN kontennya benar-benar selesai dimuat.
   // (cek "panjang teks > 10" saja pernah lolos padahal tab masih "Memuat…" — jangan ulang kesalahan itu)
   const EXPECT = {
-    Leads: /Belum ada lead|Nama|WhatsApp|filter/i,
+    // innerText menghormati text-transform: uppercase -> semua pola di sini case-insensitive
+    Analitik: /Analitik trafik|Sumber trafik|Perangkat pengunjung|Tombol WhatsApp/i,
+    Leads: /Belum ada lead|WA ·|belum dikontak|Filter status/i,
     Konten: /Tulis berita|BERITA|PUBLISHED|Testimoni/i,
     Media: /prospect-media|R2/i,
     Pengaturan: /Nomor WhatsApp|Simpan pengaturan/i,
