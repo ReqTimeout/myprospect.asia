@@ -101,7 +101,7 @@ Token di `src/styles/global.css` (`@theme`):
 | `--color-ink-2` | `#17110b` | **khusus admin panel** (tetap dark) |
 | `--color-bone` | `#f7f5f2` | **khusus admin panel** (teks di admin) |
 | `--color-brand` | `#ff7a1a` | **oranye utama** (CTA, harga, band, aksen) |
-| `--color-brand-dark` | `#e05e00` | teks oranye (kontras), hover |
+| `--color-brand-dark` | `#c04f00` | teks oranye (kontras), hover — Okt 2026 digelapkan dari `#e05e00` supaya teks kecil oranye di atas putih lolos 4.5:1 |
 | `--color-brand-soft` | `#ffe3c4` | chip, badge, tint |
 | `--color-gold` | `#ffc32e` | badge tier, aksen kuning |
 | `--color-crimson` | `#c8232b` | **aksen merah** (titik eyebrow, ring, diamond, stiker) |
@@ -115,6 +115,8 @@ Token di `src/styles/global.css` (`@theme`):
 - **Jebakan Tailwind v4 (penting)**: CSS kustom yang tidak diberi `@layer` **mengalahkan** utility Tailwind (utility ada di `@layer utilities`). Contoh nyata: `position: relative` di `.jersey` menimpa utility `absolute inset-0` → tinggi elemen jadi 0 → banner coach tampak hitam. Kalau utility yang harus menang, bungkus CSS kustom dengan `@layer components`.
 - Komponen reusable baru: `src/components/SportArt.astro` (SVG inline varian `stadium|court|net`, prop `stroke` + `opacity`) dan `src/components/AutoGallery.astro` (galeri foto autoplay props `images`, `step`, `class`, `imgClass`). Dipakai di Level & Journey, Program, Testimonials, Coaches, Berita, Workshop, dan CTA.
 - Komponen baru: `src/components/TickerRibbon.astro` — pita ticker berjalan (props `items`, `speed`, `tone` = `ink|brand|none`, `class`). Root = `.rail-wrap ticker-fade overflow-hidden`. Dipakai di StatsBar (scoreboard) dan section lain.
+- Utilitas & komponen homepage (Okt 2026, revisi "Mitra + Program"): `.crest*` (lencana mitra SVG), `.live-badge` + `.live-dot` (badge "Online" hijau berdenyut), `.prog-bg*` + `.prog-card` (kartu program yang menyatu dengan latar), `.vip-card*` + `.vip-rule` + `.vip-cta` (kartu Membership premium). Komponen: `src/components/PartnerLogo.astro`, `src/components/ProgramBackdrop.astro`, tipe `CrestShape` di `src/data/crest.ts`.
+- **Jebakan kontras kartu di section gelap**: `.surface-ink` memberi `color:#fff` ke seluruh turunannya. Kartu terang (`.card-soft`, `.prog-card`) **wajib** mendeklarasikan `color` sendiri — kalau tidak, judul kartu ikut putih dan hilang di atas gradient krem. `.prog-card` sudah mengaturnya (`color: var(--color-ink)`).
 - Admin **tetap dark** (pakai `bg-ink`/`text-bone`) — jangan di-sweep saat ganti tema.
 
 ---
@@ -257,6 +259,7 @@ Jebakan penting:
 | Audit frame + overflow + reveal | `scripts/audit-frames.mjs` | `node scripts/audit-frames.mjs <base-url> <tag>` → screenshot per viewport-slice ke `/tmp/f-<tag>-<view>-<NN>.png` (desktop 1440×900 + mobile 390×844), plus laporan `horizontalOverflow`, elemen meluber, `revealNotIn`, dan error console. **Frame-nya lalu dibaca lewat vision** — wajib, angka saja tidak menangkap "kepotong"/"ga rapih" |
 | Deteksi kepotong / tumpang tindih | `scripts/audit-clip.mjs` | `node scripts/audit-clip.mjs <base-url>` → 10 halaman × 2 viewport; cek (1) teks terpotong di elemen `overflow:hidden`, (2) elemen keluar viewport tanpa mask ancestor, (3) elemen `fixed` menutupi elemen interaktif >30%. Target **0 overflow & 0 covered** |
 | Chromium headless | `/Users/maabook/Library/Caches/ms-playwright/chromium_headless_shell-1243/chrome-headless-shell-mac-arm64/chrome-headless-shell` | dipakai kedua script di atas (`playwright-core` di `node_modules`, gitignored) |
+| Screenshot + audit kontras | `scripts/verify-home.mjs` | `node scripts/verify-home.mjs <base-url>` → screenshot per area (partners/badge/vip/level/program + full page) ke `~/Downloads/vc-*.png` untuk desktop 1440×900 + mobile 390×844, sekaligus audit kontras WCAG (kirim `oklab()` + compositing alpha + sampling gradient). **Screenshot wajib dibaca via vision** — angka kontras tidak menangkap "kepotong"/"tidak premium" |
 
 Alur wajib: `npm run build` → serve `dist/` → `audit-frames.mjs` → **baca frame via vision** → perbaiki → ulangi → `audit-clip.mjs` → deploy → audit live → commit+push.
 
@@ -295,6 +298,7 @@ Status terakhir: **audit 22/22 · 0 bug**, e2e konten 24/24, motion probe (title
 5. **Folder kosong** di `Website Material/`: `Coaches Picture/`, `Copywriting/`, `Testimonials/` — menunggu file klien.
 6. **Handle IG/TikTok** resmi belum ada (teks di program menyebut "Konten atlet di Instagram Prospect Asia").
 7. Foto klien final untuk program/coaches (yang dipakai sekarang mix foto workshop + stock session).
+8. **Logo resmi mitra** (Djanur Football Academy, Dream Baller ID, PB Jaya Raya Ragunan, Akademi Futsal Margahayu Raya, MFC Marunda, SSBRBC, Little Pep, Pep Sports, Exortive, RS Limijati) — belum ada di materi mana pun. Saat ini pakai lencana SVG. Taruh file asli di `public/media/partners/<slug>.png|svg|jpg|webp` → otomatis terpakai tanpa ubah kode.
 
 ---
 
@@ -364,3 +368,41 @@ Status terakhir: **audit 22/22 · 0 bug**, e2e konten 24/24, motion probe (title
 - `src/components/SportIcon.astro` → 9 SVG inline (sepak-bola, futsal, basket, voli, bulu-tangkis, renang, atletik, tinju, piala) dengan animasi per cabang.
 - `src/data/sports.ts` → tipe `Sport` + data `cabangOlahraga`. **Wajib**: komponen Astro tidak bisa export type dari frontmatter → taruh di modul `src/data/*` lalu import.
 - Kelas animasi CSS: `.si-roll .si-bounce .si-float .si-swing .si-wave .si-run .si-punch .si-shine` (keyframes dengan nama sama di `global.css`).
+
+---
+
+## 20. Revisi homepage: Mitra + Program (Okt 2026)
+
+Enam permintaan klien via anotasi browser, semuanya sudah di-deploy & diverifikasi di desktop 1440×900 + mobile 390×844.
+
+### 20.1 Lencana mitra (bukan logo asli)
+
+- **Realita**: logo asli mitra **tidak ada** di repo, `public/media/`, `Website Material/`, ZIP klien, maupun PDF — dan tidak bisa di-scrape (Instagram memblokir). Jadi tidak dikarang warna brand palsu.
+- Solusi: sistem **lencana SVG** di palet ink + aksen brand (`src/components/PartnerLogo.astro`), bentuk varies per mitra via `crest` (`shield|hex|round|banner|oval`, tipe di `src/data/crest.ts`). Monogram 2 huruf, stroke oranye, inner hairline putih.
+- **Jalur logo asli sudah siap**: `PartnerLogo` checking `public/media/partners/<slug>.{svg,png,jpg,jpeg,webp,avif}` saat build (`existsSync`). Taruh file asli di folder itu → otomatis dipakai, **tanpa ubah kode**.
+- Data: `src/data/partners.ts` → `Partner = { nama, slug, jenis, crest }`.
+
+### 20.2 Badge "Online" hijau berdenyut
+
+- `.live-badge` (hijau tua + border hijau + backdrop blur) + `.live-dot` dengan `::after` animasi `live-ring` (scale 1→3.4, opacity .8→0, 2s infinite).
+- Dipakai di kanan-atas foto kartu program. Badge lama "ONLINE" oranye di kartu Small Group **dihapus** (duplikat kata) → diganti badge "KELOMPOK".
+
+### 20.3 Kartu Membership premium
+
+- `.vip-card`: border gradien emas (mask-composite) + 4 `.vip-card__corner` + `.vip-rule` + chip "Batch 01 · Kuota awal" + `.vip-cta` gradien emas→oranye + `.vip-card__shine` (sweep 5.5s).
+
+### 20.4 Foto di Level & Journey
+
+- `src/components/islands/LevelJourney.svelte`: `levelMeta` & `months` sekarang punya `foto`/`alt`; blok foto besar dibungkus `{#key active}` + `in:fade` (320ms) → foto berganti saat tab ditekan; thumbnail bulan 48×48.
+
+### 20.5 Latar sporty pada section Program
+
+- `src/components/ProgramBackdrop.astro` (z-0, `pointer-events:none`) + konten `relative z-10`: garis lapangan (drift), 4 bola (drift), sapuan cahaya (beam), vignette **yang gelapnya di tepi** supaya tengah tetap bersih.
+- Kartu pakai `.prog-card` (gradient krem + rim + backdrop blur) → kartu terlihat menyatu dengan scene tapi tetap titik fokus.
+
+### 20.6 Perbaikan kontras (harus dibaca!)
+
+- **Judul kartu program sebelumnya putih di atas kartu krem → tidak terbaca sama sekali.** Penyebab: `.surface-ink` memberi `color:#fff` ke semua turunan, dan `.prog-card` tidak mendeklarasikan `color` sendiri. Fix: `.prog-card { color: var(--color-ink); }` + `text-ink` eksplisit di `<h3>`.
+- `--color-brand-dark` digelapkan `#e05e00` → `#c04f00` (teks kecil oranye di atas putih kini 4.8:1, sebelumnya 3.6:1 gagal). Ini memengaruhi ~117 pemakaian `brand-dark` di seluruh situs.
+- Harga utama `text-brand` → `text-brand-dark` (2.4:1 → 3.4:1), chip "Hemat" jadi `bg-brand text-ink`, angka indeks `01/02/03` → `text-brand-dark`, harga coret & "/6 sesi/bulan" → `text-ink/65`.
+- Verifikasi: `scripts/verify-home.mjs` → audit kontras WCAG (harus 0 pelanggaran nyata; yang tersisa hanya false-positive teks di atas foto).

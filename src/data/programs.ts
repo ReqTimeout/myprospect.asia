@@ -91,7 +91,7 @@ export const programs: Program[] = [
     hargaCoret: 750_000,
     harga: 299_000,
     satuan: '/ 6 sesi / bulan',
-    badge: 'ONLINE',
+    badge: 'KELOMPOK',
     badgeTone: 'red',
     ringkasan: 'Cocok untuk rekan setim atau atlet lintas cabang — belajar bareng, harga lebih ringan.',
     dikuasai: [

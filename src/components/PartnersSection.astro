@@ -1,14 +1,7 @@
 ---
 import Chapter from './Chapter.astro';
+import PartnerLogo from './PartnerLogo.astro';
 import { partners } from '../data/partners';
-
-const mono = (nama: string) =>
-  nama
-    .split(/\s+/)
-    .filter((w) => /^[A-Za-z]/.test(w))
-    .slice(0, 2)
-    .map((w) => w[0]?.toUpperCase() ?? '')
-    .join('');
 
 const grup = [
   { key: 'akademi', judul: 'Akademi & klub' },
@@ -47,14 +40,19 @@ const grup = [
                 {items.map((p, i) => (
                   <li
                     data-reveal="pop"
-                    class="group flex items-center gap-3 rounded-2xl border border-ink/10 bg-white/85 px-4 py-3.5 shadow-soft transition duration-300 hover:-translate-y-1 hover:border-brand/45 hover:bg-white"
+                    class="group flex items-center gap-3.5 rounded-2xl border border-ink/10 bg-white/85 px-4 py-3.5 shadow-soft transition duration-300 hover:-translate-y-1 hover:border-brand/45 hover:bg-white"
                     style={`transition-delay:${Math.min(i * 50, 300)}ms`}
                   >
-                    <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-ink text-sm font-black text-brand transition duration-300 group-hover:bg-brand group-hover:text-ink">
-                      {mono(p.nama)}
+                    <span class="relative flex h-14 w-14 shrink-0 items-center justify-center">
+                      <span class="absolute inset-0 rounded-2xl bg-ink/8 transition duration-300 group-hover:bg-brand/12" />
+                      <span class="relative h-full w-full transition duration-300 group-hover:scale-105">
+                        <PartnerLogo slug={p.slug} nama={p.nama} crest={p.crest} />
+                      </span>
                     </span>
                     <span class="min-w-0">
-                      <span class="block text-sm leading-tight font-bold text-ink">{p.nama}</span>
+                      <span class="block text-sm leading-tight font-bold text-ink transition group-hover:text-brand-dark">
+                        {p.nama}
+                      </span>
                       <span class="mt-1 block text-[10px] font-black tracking-widest text-brand-dark uppercase">
                         {p.jenis === 'akademi' ? 'Akademi' : 'Mitra'}
                       </span>

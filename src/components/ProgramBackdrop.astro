@@ -1,0 +1,44 @@
+---
+// Latar sporty untuk section Program: garis lapangan yang melayang + bola yang
+// menghanyut + cahaya sapuan. Energi di tepi, bagian tengah tetap tenang
+// supaya kartu tetap jadi titik fokus.
+---
+
+<div class="prog-bg z-0" aria-hidden="true">
+  <svg
+    class="prog-bg__lines"
+    viewBox="0 0 1200 600"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    preserveAspectRatio="xMidYMid slice"
+  >
+    <g stroke="#ffffff" stroke-width="2.5" opacity="0.13">
+      <rect x="40" y="40" width="1120" height="520" rx="18"></rect>
+      <line x1="600" y1="40" x2="600" y2="560"></line>
+      <circle cx="600" cy="300" r="112"></circle>
+      <circle cx="600" cy="300" r="8"></circle>
+      <rect x="40" y="190" width="180" height="220"></rect>
+      <rect x="980" y="190" width="180" height="220"></rect>
+      <path d="M220 245 a80 80 0 0 1 0 110"></path>
+      <path d="M980 245 a80 80 0 0 0 0 110"></path>
+    </g>
+    <g stroke="#ffffff" stroke-width="1.6" opacity="0.09">
+      <path d="M-120 120 L1320 680"></path>
+      <path d="M-120 190 L1320 750"></path>
+      <path d="M-120 50 L1320 610"></path>
+    </g>
+    <g fill="#ffffff" opacity="0.11">
+      <circle cx="150" cy="120" r="22"></circle>
+      <circle cx="1060" cy="470" r="18"></circle>
+      <circle cx="1120" cy="140" r="12"></circle>
+    </g>
+  </svg>
+
+  <span class="prog-bg__ball left-[6%] top-[16%] h-8 w-8"></span>
+  <span class="prog-bg__ball prog-bg__ball--b right-[9%] top-[22%] h-5 w-5"></span>
+  <span class="prog-bg__ball prog-bg__ball--c left-[16%] bottom-[14%] h-6 w-6"></span>
+  <span class="prog-bg__ball prog-bg__ball--b right-[22%] bottom-[8%] h-4 w-4"></span>
+
+  <div class="prog-bg__beam"></div>
+  <div class="prog-bg__vignette"></div>
+</div>

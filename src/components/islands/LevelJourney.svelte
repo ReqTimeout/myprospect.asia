@@ -1,5 +1,6 @@
 <script lang="ts">
   import { Check, ClipboardCheck, Target } from '@lucide/svelte';
+  import { fade } from 'svelte/transition';
 
   const levels = ['Basic', 'Development', 'Impact'] as const;
   type Level = (typeof levels)[number];
@@ -10,32 +11,56 @@
     Impact: 'Komunikasi dengan percaya diri — siap wawancara media & panggung.',
   };
 
-  const levelMeta: Record<Level, { no: string; judul: string; fokus: string[]; target: string }> = {
+  const levelMeta: Record<
+    Level,
+    { no: string; judul: string; fokus: string[]; target: string; foto: string; fotoAlt: string }
+  > = {
     Basic: {
       no: '01',
       judul: 'Bangun Fondasi',
       fokus: ['Public speaking dasar', 'Grammar & pronunciation', 'Body language', 'Perkenalan diri'],
       target: 'Siap tampil 1–2 menit di depan kamera',
+      foto: '/media/mic-kid.jpg',
+      fotoAlt: 'Atlet muda pertama kali memegang mikrofon di lapangan',
     },
     Development: {
       no: '02',
       judul: 'Kembangkan Diri',
       fokus: ['Storytelling atlet', 'Simulasi wawancara', 'Bahasa Inggris situasi nyata', 'Konten & branding diri'],
       target: 'Siap tampil 3–5 menit & latihan media',
+      foto: '/media/docs-4.jpg',
+      fotoAlt: 'Atlet latihan wawancara dengan perekam tangan',
     },
     Impact: {
       no: '03',
       judul: 'Siak Panggung',
       fokus: ['Konferensi pers', 'On-camera presence', 'Media kit & bio', 'Sponsorship & personal branding'],
       target: 'Siap tampil di panggung & depan wartawanan',
+      foto: '/media/interview-zone.jpg',
+      fotoAlt: 'Atlet menjawab pertanyaan wartawan dengan kamera',
     },
   };
 
   const months = [
-    { bulan: 'Bulan 1', teks: 'Atlet bisa berkomunikasi' },
-    { bulan: 'Bulan 2', teks: 'Atlet bisa mengekspresikan diri' },
-    { bulan: 'Bulan 3', teks: 'Atlet bisa mewakili diri & tim' },
-    { bulan: 'Bulan 4', teks: 'Atlet bisa membangun identitas diri' },
+    { bulan: 'Bulan 1', teks: 'Atlet bisa berkomunikasi', foto: '/media/mic-kid.jpg', alt: 'Atlet memegang mikrofon' },
+    {
+      bulan: 'Bulan 2',
+      teks: 'Atlet bisa mengekspresikan diri',
+      foto: '/media/docs-4.jpg',
+      alt: 'Latihan wawancara atlet',
+    },
+    {
+      bulan: 'Bulan 3',
+      teks: 'Atlet bisa mewakili diri & tim',
+      foto: '/media/docs-6.jpg',
+      alt: 'Dua atlet mengobrol di tribun stadion',
+    },
+    {
+      bulan: 'Bulan 4',
+      teks: 'Atlet bisa membangun identitas diri',
+      foto: '/media/interview-zone.jpg',
+      alt: 'Atlet di zona wawancara media',
+    },
   ];
 
   let active = $state<Level>('Basic');
@@ -63,6 +88,20 @@
           {level}
         </button>
       {/each}
+    </div>
+
+    <div class="mt-6 overflow-hidden rounded-3xl border border-ink/10 bg-white shadow-soft">
+      {#key active}
+        <img
+          src={meta.foto}
+          alt={meta.fotoAlt}
+          width="1024"
+          height="640"
+          loading="lazy"
+          class="aspect-16/10 w-full object-cover"
+          in:fade={{ duration: 320 }}
+        />
+      {/key}
     </div>
 
     <div class="mt-6 flex items-start gap-4">
@@ -115,9 +154,19 @@
               <span class="h-1.5 w-1.5 rounded-full bg-gold"></span>
             {/if}
           </span>
-          <div>
-            <p class="text-[11px] font-bold tracking-widest text-brand-dark uppercase">{m.bulan}</p>
-            <p class="mt-0.5 text-sm text-ink/85 sm:text-base">{m.teks}</p>
+          <div class="flex items-center gap-3">
+            <img
+              src={m.foto}
+              alt={m.alt}
+              width="96"
+              height="96"
+              loading="lazy"
+              class="h-12 w-12 shrink-0 rounded-xl object-cover ring-1 ring-ink/10"
+            />
+            <div>
+              <p class="text-[11px] font-bold tracking-widest text-brand-dark uppercase">{m.bulan}</p>
+              <p class="mt-0.5 text-sm text-ink/85 sm:text-base">{m.teks}</p>
+            </div>
           </div>
         </li>
       {/each}

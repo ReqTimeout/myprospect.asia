@@ -1,0 +1,88 @@
+---
+import { existsSync } from 'node:fs';
+import type { CrestShape } from '../data/crest';
+
+interface Props {
+  slug: string;
+  nama: string;
+  crest?: CrestShape;
+  class?: string;
+}
+
+const { slug, nama, crest = 'shield', class: cls = '' } = Astro.props;
+
+const mono = (nama: string) => {
+  const words = nama.split(/\s+/).filter((w) => /[A-Za-z]/.test(w));
+  if (words.length === 0) return '?';
+  if (words.length === 1) {
+    const w = words[0];
+    return (w.length <= 2 ? w : w.slice(0, 2)).toUpperCase();
+  }
+  return words
+    .slice(0, 2)
+    .map((w) => w[0].toUpperCase())
+    .join('');
+};
+
+// Kalau klien sempat menaruh file logo asli (public/media/partners/<slug>.png|jpg|webp|svg)
+// komponen otomatis memakainya — tidak perlu ubah kode.
+const exts = ['svg', 'png', 'jpg', 'jpeg', 'webp', 'avif'];
+const realLogo =
+  exts
+    .map((e) => `media/partners/${slug}.${e}`)
+    .map((p) => new URL(`../public/${p}`, import.meta.url).pathname)
+    .find((p) => existsSync(p)) ?? null;
+
+const outer: Record<CrestShape, string> = {
+  shield: 'M32 2.5 L59.5 12 V32.5 C59.5 47.5 46.5 57.5 32 61.5 C17.5 57.5 4.5 47.5 4.5 32.5 V12 Z',
+  hex: 'M32 3 L57.5 17 V47 L32 61 L6.5 47 V17 Z',
+  round: 'M32 2.5 A29.5 29.5 0 1 1 31.99 2.5 Z',
+  banner: 'M6 4 H58 V42 L32 61 L6 42 Z',
+  oval: 'M32 2.5 C48 2.5 61 15 61 32 C61 49 48 61.5 32 61.5 C16 61.5 3 49 3 32 C3 15 16 2.5 32 2.5 Z',
+};
+
+const inner: Record<CrestShape, string> = {
+  shield: 'M32 8 L53.5 15.5 V32.5 C53.5 44 43 52 32 55.5 C21 52 10.5 44 10.5 32.5 V15.5 Z',
+  hex: 'M32 9 L51.5 20 V44 L32 55 L12.5 44 V20 Z',
+  round: 'M32 8.5 A23.5 23.5 0 1 1 31.99 8.5 Z',
+  banner: 'M11 9 H53 V39.5 L32 54 L11 39.5 Z',
+  oval: 'M32 8.5 C44.5 8.5 55 18.5 55 32 C55 45.5 44.5 55.5 32 55.5 C19.5 55.5 9 45.5 9 32 C9 18.5 19.5 8.5 32 8.5 Z',
+};
+
+const gid = `crest-${slug}`;
+---
+
+{
+  realLogo ? (
+    <img
+      src={`/media/partners/${slug}.${realLogo.split('.').pop()}`}
+      alt={`Logo ${nama}`}
+      width="64"
+      height="64"
+      loading="lazy"
+      class:list={['crest object-contain', cls]}
+    />
+  ) : (
+    <svg viewBox="0 0 64 64" class:list={['crest', cls]} role="img" aria-label={`Lencana ${nama}`}>
+      <defs>
+        <linearGradient id={gid} x1="0" y1="0" x2="0.35" y2="1">
+          <stop class="crest-stop-a" offset="0" />
+          <stop class="crest-stop-b" offset="1" />
+        </linearGradient>
+      </defs>
+      <path d={outer[crest]} fill={`url(#${gid})`} />
+      <path d={outer[crest]} fill="none" stroke="rgba(255,122,26,0.55)" stroke-width="1.6" />
+      <path d={inner[crest]} fill="none" stroke="rgba(255,255,255,0.16)" stroke-width="1" />
+      <text
+        x="32"
+        y="40.5"
+        text-anchor="middle"
+        font-size="20"
+        letter-spacing="0.6"
+        class="crest-mono"
+      >
+        {mono(nama)}
+      </text>
+    </svg>
+  )
+}

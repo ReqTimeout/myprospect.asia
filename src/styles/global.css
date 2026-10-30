@@ -7,7 +7,7 @@
   --color-ink-2: #17110b;
   --color-bone: #f7f5f2;
   --color-brand: #ff7a1a;
-  --color-brand-dark: #e05e00;
+  --color-brand-dark: #c04f00;
   --color-brand-soft: #ffe3c4;
   --color-gold: #ffc32e;
   --color-gold-soft: #ffe58a;
@@ -920,5 +920,270 @@ body {
 .surface-ink-hair {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ── Lencana mitra (crest) ───────────────────────────────
+   Bentuk varies per mitra, palet monokrom ink + aksen brand
+   supaya terbaca sebagai satu keluarga desain, bukan logo palsu. */
+.crest {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.crest-stop-a {
+  stop-color: #3d2b1d;
+}
+
+.crest-stop-b {
+  stop-color: #221710;
+}
+
+.crest-mono {
+  font-family: var(--font-display);
+  fill: var(--color-brand);
+  transition: fill 0.3s ease;
+}
+
+.group:hover .crest-stop-a {
+  stop-color: #ffa257;
+}
+
+.group:hover .crest-stop-b {
+  stop-color: var(--color-brand-dark);
+}
+
+.group:hover .crest-mono {
+  fill: var(--color-ink);
+}
+
+/* ── Badge "Online": hijau live ─────────────────────────── */
+.live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  border: 1px solid rgba(52, 211, 153, 0.55);
+  border-radius: 9999px;
+  background: rgba(6, 78, 59, 0.55);
+  padding: 0.2rem 0.55rem;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #6ee7b7;
+  text-transform: uppercase;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 0 0 1px rgba(52, 211, 153, 0.12), 0 6px 18px -8px rgba(16, 185, 129, 0.7);
+}
+
+.live-dot {
+  position: relative;
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: #34d399;
+  box-shadow: 0 0 8px 1px rgba(52, 211, 153, 0.9);
+}
+
+.live-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: #34d399;
+  animation: live-ring 2s ease-out infinite;
+}
+
+@keyframes live-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+
+@keyframes live-ring {
+  0% { transform: scale(1); opacity: 0.8; }
+  70% { transform: scale(3.4); opacity: 0; }
+  100% { transform: scale(3.4); opacity: 0; }
+}
+
+.live-badge:hover {
+  background: rgba(6, 78, 59, 0.75);
+  border-color: rgba(52, 211, 153, 0.85);
+}
+
+/* ── Latar sporty section Program ─────────────────────────
+   Energi di tepi, tengah tetap gelap → fokus tetap di kartu. */
+.prog-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.prog-bg__lines {
+  position: absolute;
+  inset: -12% -25%;
+  opacity: 0.5;
+  animation: pitch-scroll 26s linear infinite;
+}
+
+.prog-bg__beam {
+  position: absolute;
+  top: -30%;
+  left: -40%;
+  width: 42%;
+  height: 160%;
+  transform: rotate(16deg);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 122, 26, 0.14),
+    rgba(255, 195, 46, 0.07),
+    transparent
+  );
+  animation: beam-sweep 11s ease-in-out infinite;
+}
+
+.prog-bg__vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(115% 85% at 50% 48%, transparent 22%, rgba(23, 17, 11, 0.82) 100%),
+    linear-gradient(to bottom, rgba(23, 17, 11, 0.55), transparent 22%, transparent 70%, rgba(23, 17, 11, 0.6));
+}
+
+.prog-bg__ball {
+  position: absolute;
+  border-radius: 9999px;
+  background:
+    radial-gradient(circle at 32% 30%, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0) 42%),
+    linear-gradient(140deg, #ffb066, var(--color-brand) 45%, #b34700);
+  box-shadow: 0 10px 26px -10px rgba(255, 122, 26, 0.85);
+  animation: ball-drift 17s ease-in-out infinite;
+}
+
+.prog-bg__ball--b {
+  background:
+    radial-gradient(circle at 32% 30%, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0) 42%),
+    linear-gradient(140deg, #ffe08a, var(--color-gold) 45%, #a97400);
+  animation-duration: 23s;
+  animation-delay: -6s;
+}
+
+.prog-bg__ball--c {
+  background:
+    radial-gradient(circle at 32% 30%, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0) 42%),
+    linear-gradient(140deg, #f0837f, var(--color-crimson) 45%, #7d1216);
+  animation-duration: 29s;
+  animation-delay: -12s;
+}
+
+@keyframes pitch-scroll {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-6%, 2.5%, 0); }
+}
+
+@keyframes beam-sweep {
+  0% { transform: translateX(0) rotate(16deg); opacity: 0; }
+  12% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { transform: translateX(320%) rotate(16deg); opacity: 0; }
+}
+
+@keyframes ball-drift {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  33% { transform: translate3d(28px, -34px, 0) rotate(140deg); }
+  66% { transform: translate3d(-20px, 26px, 0) rotate(280deg); }
+}
+
+/* Kartu "melebur" dengan latar: tepi lebih terang + blur tipis.
+   color: var(--color-ink) wajib — kartu ini berada di section gelap
+   (.surface-ink memberi color:#fff), tanpa itu judul kartu ikut putih
+   dan tidak terbaca di atas gradient krem. */
+.prog-card {
+  color: var(--color-ink);
+  background: linear-gradient(168deg, #fffdfa 0%, #fff6ea 58%, #ffeeDC 100%);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 26px 60px -30px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 122, 26, 0.08);
+  backdrop-filter: blur(6px);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.prog-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 122, 26, 0.55);
+  box-shadow: 0 30px 70px -28px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 122, 26, 0.32),
+    0 0 42px -12px rgba(255, 122, 26, 0.45);
+}
+
+/* ── Kartu VIP Membership ───────────────────────────────── */
+.vip-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  border: 1px solid rgba(255, 195, 46, 0.45);
+  background:
+    linear-gradient(158deg, rgba(255, 195, 46, 0.16), rgba(255, 122, 26, 0.05) 38%, rgba(23, 17, 11, 0.55)),
+    rgba(23, 17, 11, 0.55);
+  box-shadow:
+    0 30px 70px -30px rgba(0, 0, 0, 0.85),
+    inset 0 1px 0 rgba(255, 220, 140, 0.35);
+  backdrop-filter: blur(10px);
+}
+
+.vip-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(145deg, rgba(255, 220, 140, 0.85), rgba(255, 122, 26, 0.15) 45%, transparent 70%);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.vip-card__shine {
+  position: absolute;
+  top: -60%;
+  left: -35%;
+  width: 45%;
+  height: 220%;
+  transform: rotate(18deg);
+  background: linear-gradient(90deg, transparent, rgba(255, 236, 180, 0.28), transparent);
+  animation: vip-shine 5.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.vip-card__corner {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-color: rgba(255, 195, 46, 0.75);
+  border-style: solid;
+  pointer-events: none;
+}
+
+.vip-rule {
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255, 195, 46, 0.75), rgba(255, 195, 46, 0.08));
+}
+
+@keyframes vip-shine {
+  0% { transform: translateX(-40%) rotate(18deg); opacity: 0; }
+  18% { opacity: 1; }
+  55% { transform: translateX(340%) rotate(18deg); opacity: 0; }
+  100% { transform: translateX(340%) rotate(18deg); opacity: 0; }
+}
+
+.vip-cta {
+  background: linear-gradient(100deg, var(--color-gold), #ffb02e 55%, var(--color-brand));
+  box-shadow: 0 14px 30px -14px rgba(255, 195, 46, 0.75);
+}
+
+.vip-cta:hover {
+  background: linear-gradient(100deg, #ffd45e, var(--color-gold) 55%, #ff8f3d);
 }
 

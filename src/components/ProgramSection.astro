@@ -2,6 +2,7 @@
 import { waLink } from '../lib/wa';
 import { programs, formatIdr } from '../data/programs';
 import SportArt from './SportArt.astro';
+import ProgramBackdrop from './ProgramBackdrop.astro';
 import Chapter from './Chapter.astro';
 
 const programPhoto: Record<string, string> = {
@@ -27,7 +28,8 @@ const hemat = (coret: number | undefined, harga: number) =>
   <div class="art-balls-orange absolute -top-6 right-0 h-40 w-40 opacity-60 [mask-image:linear-gradient(to_bottom_left,black,transparent)]" aria-hidden="true"></div>
   <div class="sport-ball sport-ball--orange left-[46%] top-24 hidden h-9 w-9 -rotate-12 lg:block" aria-hidden="true"></div>
   <p class="ghost-word ghost-word--light bottom-2 right-0 hidden text-[5rem] lg:block" aria-hidden="true">1-on-1</p>
-  <div class="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+  <ProgramBackdrop />
+  <div class="mb-8 relative z-10 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
     <div>
       <Chapter num="05" label="Program Unggulan" tone="light" class="mb-6" />
       <h2 class="display text-5xl leading-[0.9] sm:text-6xl lg:text-7xl text-white">
@@ -40,13 +42,13 @@ const hemat = (coret: number | undefined, harga: number) =>
     </p>
   </div>
 
-  <div class="grid gap-5 md:grid-cols-3" data-reveal-group>
+  <div class="relative z-10 grid gap-5 md:grid-cols-3" data-reveal-group>
     {
       programs.map((p, i) => (
         <article
           data-reveal="pop"
           data-spot
-          class="spot card-soft group relative flex flex-col overflow-hidden rounded-3xl transition duration-200 hover:-translate-y-1 hover:border-brand/50 hover:shadow-[0_24px_50px_-24px_rgba(255,122,26,0.4)]"
+          class="spot prog-card group relative flex flex-col overflow-hidden rounded-3xl"
         >
           <div
             class="ticket relative aspect-16/10 overflow-hidden bg-paper-deep"
@@ -72,7 +74,8 @@ const hemat = (coret: number | undefined, harga: number) =>
               </p>
             )}
             {p.online && (
-              <span class="absolute top-3 right-3 rounded-full border border-white/40 bg-white/20 px-2.5 py-1 text-[10px] font-bold tracking-wide text-white uppercase backdrop-blur-sm">
+              <span class="live-badge absolute top-3 right-3">
+                <span class="live-dot" aria-hidden="true"></span>
                 Online
               </span>
             )}
@@ -83,29 +86,29 @@ const hemat = (coret: number | undefined, harga: number) =>
 
           <div class="relative z-10 flex flex-1 flex-col p-6">
             <div class="flex items-start justify-between gap-3">
-              <h3 class="display text-2xl">{p.nama}</h3>
-              <span class="display shrink-0 text-4xl leading-none text-brand/20">
+              <h3 class="display text-2xl text-ink">{p.nama}</h3>
+              <span class="display shrink-0 text-4xl leading-none text-brand-dark">
                 {String(i + 1).padStart(2, '0')}
               </span>
             </div>
 
             <div class="mt-4">
               {p.hargaCoret ? (
-                <p class="text-sm text-ink/40 line-through">Rp{formatIdr(p.hargaCoret)}</p>
+                <p class="text-sm text-ink/65 line-through">Rp{formatIdr(p.hargaCoret)}</p>
               ) : null}
               <div class="mt-0.5 flex flex-wrap items-center gap-2">
                 {p.harga > 0 ? (
-                  <p class="display text-3xl leading-none text-brand">Rp{formatIdr(p.harga)}</p>
+                  <p class="display text-3xl leading-none text-brand-dark">Rp{formatIdr(p.harga)}</p>
                 ) : (
                   <p class="display text-2xl leading-none text-brand-dark">Info via WA</p>
                 )}
                 {hemat(p.hargaCoret, p.harga) > 0 && (
-                  <span class="rounded-full bg-brand/12 px-2 py-0.5 text-[10px] font-black tracking-wide text-brand-dark uppercase">
+                  <span class="rounded-full bg-brand px-2 py-0.5 text-[10px] font-black tracking-wide text-ink uppercase">
                     Hemat {hemat(p.hargaCoret, p.harga)}%
                   </span>
                 )}
               </div>
-              <p class="mt-1.5 text-[11px] text-ink/50">{p.satuan}</p>
+              <p class="mt-1.5 text-[11px] text-ink/65">{p.satuan}</p>
             </div>
 
             <p class="mt-4 text-sm leading-relaxed text-ink/70">{p.ringkasan}</p>
@@ -147,7 +150,7 @@ const hemat = (coret: number | undefined, harga: number) =>
     }
   </div>
 
-  <div class="relative mt-6 overflow-hidden rounded-3xl bg-[#1c1208] shadow-[0_28px_60px_-24px_rgba(0,0,0,0.6)] ring-1 ring-white/12">
+  <div class="relative z-10 mt-6 overflow-hidden rounded-3xl bg-[#1c1208] shadow-[0_28px_60px_-24px_rgba(0,0,0,0.6)] ring-1 ring-white/12">
     <img
       src="/media/program-elite.jpg"
       alt=""
@@ -179,11 +182,21 @@ const hemat = (coret: number | undefined, harga: number) =>
       </div>
 
       <div class="relative lg:justify-self-end">
-        <div class="rounded-3xl border border-white/15 bg-white/10 p-5 backdrop-blur-md sm:p-6">
-          <p class="text-[10px] font-black tracking-[0.22em] text-gold uppercase">Early Access</p>
-          <p class="display mt-2 text-2xl text-white">Slot terbatas</p>
-          <p class="mt-1.5 text-[12px] leading-relaxed text-white/75">
+        <div class="vip-card p-5 sm:p-6">
+          <span class="vip-card__shine" aria-hidden="true"></span>
+          <span class="vip-card__corner left-3 top-3 border-l border-t" aria-hidden="true"></span>
+          <span class="vip-card__corner right-3 top-3 border-r border-t" aria-hidden="true"></span>
+          <span class="vip-card__corner bottom-3 left-3 border-b border-l" aria-hidden="true"></span>
+          <span class="vip-card__corner right-3 bottom-3 border-r border-b" aria-hidden="true"></span>
+
+          <p class="text-[10px] font-black tracking-[0.24em] text-gold uppercase">Early Access</p>
+          <p class="display mt-2 text-3xl text-white">Slot terbatas</p>
+          <div class="vip-rule my-3.5"></div>
+          <p class="text-[12px] leading-relaxed text-white/78">
             Daftar sekarang, dapat prioritas tempat di batch pertama.
+          </p>
+          <p class="mt-3 inline-flex items-center gap-2 rounded-full border border-gold/45 bg-gold/12 px-3 py-1 text-[10px] font-black tracking-[0.18em] text-gold uppercase">
+            Batch 01 · Kuota awal
           </p>
           <a
             href={waLink({ program: 'Membership (early access)', source: 'membership' })}
@@ -193,7 +206,7 @@ const hemat = (coret: number | undefined, harga: number) =>
             data-register
             data-program="Membership (early access)"
             data-source="membership"
-            class="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-white px-5 py-3.5 text-sm font-bold text-ink transition hover:bg-gold focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none active:scale-95"
+            class="vip-cta mt-4 inline-flex w-full items-center justify-center gap-2 rounded-2xl px-5 py-3.5 text-sm font-bold text-ink transition focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none active:scale-95"
           >
             Daftar Early Access ↗
           </a>
