@@ -6,29 +6,64 @@
   let open = $state(false);
   let dismissed = $state(false);
   let fired = $state(false);
+  let mobile = $state(false);
+  let closing = $state(false);
+  let autoTimer = 0;
+  let closeTimer = 0;
   let popupText = $state('Hai! Mau tanya lebih jauh soal program? Chat aja langsung, gratis kok. 😊');
   let waNumber = $state('');
 
   const KEY = 'pa_popup_seen';
 
-  function show() {
-    if (fired || dismissed) return;
+  function openCard(auto: boolean) {
     fired = true;
+    closing = false;
     open = true;
     try {
       sessionStorage.setItem(KEY, '1');
     } catch {}
     window.dispatchEvent(new CustomEvent('pa:popup_open'));
+    window.clearTimeout(autoTimer);
+    if (auto) autoTimer = window.setTimeout(collapse, 6500);
+  }
+
+  function collapse() {
+    if (!open) return;
+    window.clearTimeout(autoTimer);
+    closing = true;
+    window.clearTimeout(closeTimer);
+    closeTimer = window.setTimeout(() => {
+      open = false;
+      closing = false;
+    }, 220);
+  }
+
+  function show() {
+    if (fired || dismissed) return;
+    openCard(true);
   }
 
   function close() {
+    window.clearTimeout(autoTimer);
+    window.clearTimeout(closeTimer);
     open = false;
+    closing = false;
     dismissed = true;
+  }
+
+  function toggle() {
+    if (open) {
+      close();
+      return;
+    }
+    openCard(false);
   }
 
   onMount(() => {
     let cancelled = false;
     let timer = 0;
+
+    mobile = window.matchMedia('(max-width: 1023px)').matches;
 
     const onScroll = () => {
       const doc = document.documentElement;
@@ -63,6 +98,10 @@
         }
       } catch {}
 
+      // Di mobile kartu tidak pernah muncul otomatis — hanya bubble kecil yang bisa diklik,
+      // supaya CTA dan judul tidak tertutup.
+      if (mobile) return;
+
       timer = window.setTimeout(show, Math.min(Number(delay) || 8, 120) * 1000);
       window.addEventListener('scroll', onScroll, { passive: true });
     })();
@@ -70,14 +109,30 @@
     return () => {
       cancelled = true;
       window.clearTimeout(timer);
+      window.clearTimeout(autoTimer);
+      window.clearTimeout(closeTimer);
       window.removeEventListener('scroll', onScroll);
     };
   });
 </script>
 
+{#if !open && !dismissed && !mobile}
+  <button
+    type="button"
+    onclick={toggle}
+    class="fixed right-4 bottom-6 z-40 hidden h-12 w-12 items-center justify-center rounded-full bg-brand text-ink shadow-[0_14px_30px_-10px_rgba(255,122,26,0.75)] transition hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none active:scale-90 lg:flex"
+    aria-label="Buka chat WhatsApp admin"
+  >
+    <span class="pointer-events-none absolute inset-1 animate-ping rounded-full bg-brand/35" aria-hidden="true"></span>
+    <MessageCircle class="relative" size={22} strokeWidth={2.2} />
+  </button>
+{/if}
+
 {#if open}
   <div
-    class="fixed right-4 bottom-24 z-40 w-64 origin-bottom-right animate-slide-up lg:bottom-6"
+    class="fixed right-4 bottom-6 z-40 w-[min(17rem,calc(100vw-2rem))] origin-bottom-right"
+    class:animate-slide-up={!closing}
+    class:animate-slide-down={closing}
     role="dialog"
     aria-label="Chat admin"
   >
@@ -111,7 +166,8 @@
         target="_blank"
         rel="noopener noreferrer"
         data-wa-cta="popup"
-        class="flex w-full items-center justify-center gap-2 rounded-xl bg-brand px-4 py-3 text-[13px] font-bold text-ink transition hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none active:scale-95"
+        onclick={() => window.clearTimeout(autoTimer)}
+        class="flex w-full items-center justify-center gap-2 rounded-xl bg-brand px-3 py-2.5 text-[13px] font-bold text-ink transition hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none active:scale-95"
       >
         <MessageCircle size={16} strokeWidth={2.4} />
         Chat admin sekarang

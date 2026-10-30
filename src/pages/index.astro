@@ -4,6 +4,7 @@ import Header from '../components/Header.astro';
 import Dock from '../components/islands/Dock.svelte';
 import WaPopup from '../components/islands/WaPopup.svelte';
 import Marquee from '../components/Marquee.astro';
+import TickerRibbon from '../components/TickerRibbon.astro';
 import SportArt from '../components/SportArt.astro';
 import StatsBar from '../components/StatsBar.astro';
 import AboutSection from '../components/AboutSection.astro';
@@ -106,6 +107,19 @@ const schema = [organizationSchema, faqSchema(faqs)];
       </div>
     </section>
 
+    <TickerRibbon
+      items={[
+        'Sports Communication',
+        'Public Speaking',
+        'English for Athletes',
+        'Media Interview',
+        'Personal Branding',
+        'Jalur Atlet Modern',
+      ]}
+      speed={34}
+      tone="ink"
+    />
+
     <Marquee items={partnerNames} />
 
     <StatsBar />
@@ -116,7 +130,7 @@ const schema = [organizationSchema, faqSchema(faqs)];
       <SportArt variant="net" stroke="#ff7a1a" opacity={0.1} class="absolute inset-0 h-full w-full [mask-image:linear-gradient(to_bottom_right,black,transparent_70%)]" />
       <div class="art-ring left-6 top-14 hidden h-16 w-16 border-gold/40 sm:block" aria-hidden="true"></div>
       <div class="art-diamond top-10 right-10 h-3 w-3 bg-crimson/50 hidden sm:block" aria-hidden="true"></div>
-      <div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+      <div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <p class="eyebrow text-xs font-bold tracking-[0.2em] text-brand-dark uppercase">Level &amp; Journey</p>
           <h2 class="display mt-2 text-5xl leading-[0.9] sm:text-6xl lg:text-7xl">
@@ -127,7 +141,7 @@ const schema = [organizationSchema, faqSchema(faqs)];
             </span>
           </h2>
         </div>
-        <p class="max-w-xs text-sm leading-relaxed text-ink/60">
+        <p class="max-w-xs pt-6 text-sm leading-relaxed text-ink/60 sm:pt-8">
           Tiga level, satu jalur: dasar, berkembang, lalu tampil di depan publik.
         </p>
       </div>
@@ -147,7 +161,7 @@ const schema = [organizationSchema, faqSchema(faqs)];
       <div class="art-blob -top-20 right-[-6rem] h-64 w-64" style="background: radial-gradient(circle, rgba(255,195,46,0.16), transparent 68%);" aria-hidden="true"></div>
       <div class="mb-8">
         <p class="eyebrow text-xs font-bold tracking-[0.2em] text-brand-dark uppercase">Kata Mereka</p>
-        <h2 class="display mt-2 text-4xl sm:text-5xl">Testimoni atlet</h2>
+        <h2 class="display mt-2 text-5xl sm:text-6xl lg:text-7xl">Testimoni atlet</h2>
       </div>
       <Testimonials client:visible items={testimonials} />
     </section>

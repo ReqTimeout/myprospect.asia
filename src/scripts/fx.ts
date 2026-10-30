@@ -106,7 +106,13 @@ async function initGsap() {
     if (el.hasAttribute('data-hero')) return;
     if (!(el.textContent ?? '').trim()) return;
     try {
-      const st = new SplitText(el, { type: 'chars', autoSplit: true, mask: 'chars' });
+      // type 'chars,words' → GSAP membungkus tiap kata, jadi kata tidak pernah patah di tengah
+      const st = new SplitText(el, {
+        type: 'chars,words',
+        autoSplit: true,
+        mask: 'chars',
+        wordsClass: 'split-word',
+      });
       gsap.from(st.chars, {
         yPercent: 115,
         opacity: 0,
@@ -119,6 +125,21 @@ async function initGsap() {
     } catch {
       /* heading kecil — skip split */
     }
+  });
+}
+
+function initCardSpotlight() {
+  if (reduced || !window.matchMedia('(pointer: fine)').matches) return;
+  document.querySelectorAll<HTMLElement>('[data-spot]').forEach((card) => {
+    card.addEventListener(
+      'pointermove',
+      (e) => {
+        const r = card.getBoundingClientRect();
+        card.style.setProperty('--mx', `${(((e.clientX - r.left) / r.width) * 100).toFixed(2)}%`);
+        card.style.setProperty('--my', `${(((e.clientY - r.top) / r.height) * 100).toFixed(2)}%`);
+      },
+      { passive: true }
+    );
   });
 }
 
@@ -170,6 +191,7 @@ function boot() {
   initReveal();
   initMagnetic();
   initLenis();
+  initCardSpotlight();
   initScrollProgress();
   initSpotlight();
   initGsap().catch(() => {});

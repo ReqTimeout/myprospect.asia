@@ -24,6 +24,7 @@
   --animate-pulse-soft: pulse-soft 2.4s ease-in-out infinite;
   --animate-marquee: marquee 32s linear infinite;
   --animate-slide-up: slide-up 0.28s cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
+  --animate-slide-down: slide-down 0.22s cubic-bezier(0.4, 0, 1, 1) both;
   --animate-fade-in: fade-in 0.4s ease both;
   --animate-float: float 7s ease-in-out infinite;
   --animate-float-slow: float 11s ease-in-out infinite;
@@ -43,6 +44,11 @@
   @keyframes slide-up {
     from { opacity: 0; transform: translateY(16px) scale(0.96); }
     to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  @keyframes slide-down {
+    from { opacity: 1; transform: translateY(0) scale(1); }
+    to { opacity: 0; transform: translateY(14px) scale(0.97); }
   }
 
   @keyframes fade-in {
@@ -294,16 +300,16 @@ body {
   pointer-events: none;
   border-radius: 9999px;
   background: radial-gradient(circle at 32% 28%, #fff, #f1e6d8 55%, #e6d5bd);
-  box-shadow: inset -6px -8px 14px rgba(36, 26, 18, 0.16), 0 14px 26px -12px rgba(36, 26, 18, 0.35);
+  box-shadow: inset 0 0 0 1.5px rgba(36, 26, 18, 0.14), inset -6px -8px 14px rgba(36, 26, 18, 0.16),
+    0 14px 26px -12px rgba(36, 26, 18, 0.35);
 }
 
 .sport-ball::after {
   content: "";
   position: absolute;
-  inset: 22%;
-  background: var(--color-ink);
+  inset: 31%;
+  background: linear-gradient(140deg, rgba(36, 26, 18, 0.92), rgba(36, 26, 18, 0.45));
   clip-path: polygon(50% 0%, 93% 25%, 78% 78%, 22% 78%, 7% 25%);
-  opacity: 0.82;
 }
 
 .sport-ball--orange {
@@ -312,8 +318,8 @@ body {
 }
 
 .sport-ball--orange::after {
-  background: #fff;
-  opacity: 0.9;
+  background: linear-gradient(140deg, #fff, rgba(255, 255, 255, 0.72));
+  opacity: 0.95;
 }
 
 .card-lift {
@@ -557,8 +563,8 @@ body {
 
 .rail-wrap {
   overflow: hidden;
-  -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
-  mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 9%, black 91%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 9%, black 91%, transparent);
 }
 
 .rail {
@@ -583,3 +589,137 @@ body {
     radial-gradient(circle at 18% 22%, rgba(255, 195, 46, 0.22), transparent 42%),
     radial-gradient(circle at 82% 78%, rgba(255, 122, 26, 0.18), transparent 46%);
 }
+
+/* ── SplitText: jaga agar kata tidak pernah terpotong ───────── */
+.split-word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+/* ── Spotlight card: sorotan mengikuti kursor (desktop) ─────── */
+.spot {
+  position: relative;
+  isolation: isolate;
+}
+
+.spot::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+  background: radial-gradient(320px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 195, 46, 0.18), transparent 66%);
+}
+
+.spot:hover::before,
+.spot:focus-within::before {
+  opacity: 1;
+}
+
+/* ── Ticket stub: notch + perforasi ────────────────────────── */
+.ticket {
+  --notch-bg: var(--color-paper);
+  --notch-y: 62%;
+  position: relative;
+}
+
+.ticket::before,
+.ticket::after {
+  content: "";
+  position: absolute;
+  top: var(--notch-y);
+  width: 18px;
+  height: 18px;
+  border-radius: 9999px;
+  background: var(--notch-bg);
+  transform: translate(-50%, -50%);
+  z-index: 4;
+  pointer-events: none;
+}
+
+.ticket::before { left: 0; }
+.ticket::after { left: 100%; }
+
+.ticket-perf {
+  position: absolute;
+  top: var(--notch-y, 62%);
+  right: 10px;
+  left: 10px;
+  border-top: 2px dashed rgba(36, 26, 18, 0.14);
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* ── Scoreboard ─────────────────────────────────────────────── */
+.score-digits {
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+  text-shadow: 0 2px 0 rgba(36, 26, 18, 0.08);
+}
+
+/* ── Jersey: visual pengganti foto coach ────────────────────── */
+/* Catatan: jangan pakai `position: relative` di sini.
+   CSS kustom tanpa layer mengalahkan utility Tailwind (yang ada di @layer utilities),
+   sehingga `absolute inset-0` pada elemen ini ikut tertimpa dan tinggi elemen jadi 0. */
+.jersey {
+  overflow: hidden;
+  background: linear-gradient(150deg, var(--color-brand) 0%, var(--color-brand-dark) 46%, #1b1209 100%);
+}
+
+.jersey::before {
+  content: "";
+  position: absolute;
+  inset: -30%;
+  background: repeating-linear-gradient(118deg, rgba(255, 255, 255, 0.1) 0 6px, transparent 6px 34px);
+}
+
+.jersey::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(72% 62% at 28% 16%, rgba(255, 255, 255, 0.22), transparent 64%);
+}
+
+/* ── Ribbon / ticker berjalan ──────────────────────────────── */
+/* Fade lebih lebar untuk ticker: item yang sedang keluar dissolves,
+   bukan terpotong setengah di tepi layar. */
+.ticker-fade {
+  -webkit-mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+}
+
+/* Di layar kecil, ruang ticker jauh lebih sempit — fade diperlebar
+   supaya teks yang sedang keluar hilang perlahan, bukan terpotong. */
+@media (max-width: 640px) {
+  .ticker-fade {
+    -webkit-mask-image: linear-gradient(to right, transparent, black 26%, black 74%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 26%, black 74%, transparent);
+  }
+}
+
+.ribbon {
+  display: flex;
+  width: max-content;
+  animation: rail-slide var(--rail-speed, 40s) linear infinite;
+}
+
+.ribbon-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  white-space: nowrap;
+}
+
+.ribbon-pill::after {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 9999px;
+  background: var(--color-gold);
+  transform: rotate(45deg);
+}
+

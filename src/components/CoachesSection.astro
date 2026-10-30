@@ -1,8 +1,12 @@
 ---
 import { coaches } from '../data/coaches';
 import SportArt from './SportArt.astro';
+import { waLink } from '../lib/wa';
 
 const doubled = [...coaches, ...coaches];
+const posisi = ['GK', 'CB', 'CM', 'ST', 'WF', 'PG'];
+const fokus = ['Public Speaking', 'Simulasi Wawancara Media', 'English for Athletes'];
+const skill = [88, 74, 62];
 ---
 
 <section class="relative mx-auto max-w-6xl overflow-hidden px-4 py-14 sm:px-6">
@@ -30,55 +34,81 @@ const doubled = [...coaches, ...coaches];
     <div class="rail-wrap -mx-4 px-4 sm:mx-0 sm:px-0">
       <div class="rail" style="--rail-speed: 58s">
         {
-          doubled.map((c) => (
-            <article class="card-soft card-lift group relative flex w-60 shrink-0 flex-col overflow-hidden rounded-3xl sm:w-64">
-              <SportArt
-                variant="court"
-                stroke="#241a12"
-                opacity={0.12}
-                class="pointer-events-none absolute inset-0 h-full w-full [mask-image:linear-gradient(to_top,black,transparent_65%)]"
-              />
-              <div class="relative flex flex-1 flex-col">
-                <div class="flex items-center gap-3 border-b border-ink/8 bg-gradient-to-r from-brand/12 via-brand-soft/60 to-transparent px-5 py-4">
-                  <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-brand to-brand-dark display text-xl text-ink italic">
-                    {c.nama[0]}
-                  </span>
-                  <div class="leading-tight">
-                    <h3 class="text-base font-bold">{c.nama}</h3>
-                    <p class="text-[11px] font-bold tracking-wide text-brand-dark uppercase">{c.peran}</p>
-                  </div>
+          doubled.map((c, i) => (
+            <article
+              data-spot
+              class="spot card-soft card-lift group relative flex w-60 shrink-0 flex-col overflow-hidden rounded-3xl sm:w-64"
+            >
+              <div class="relative aspect-16/11 overflow-hidden bg-ink">
+                <div class="jersey absolute inset-0"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/10 to-transparent"></div>
+                <span class="display absolute top-1 right-3 text-6xl leading-none text-white/12 italic">
+                  {String((i % coaches.length) + 1).padStart(2, '0')}
+                </span>
+                <span class="absolute bottom-1 left-4 display text-5xl leading-none text-white/95 italic drop-shadow-[0_6px_12px_rgba(0,0,0,0.4)]">
+                  {c.nama[0]}
+                </span>
+                <span class="absolute right-3 bottom-3 rounded-full border border-white/30 bg-white/15 px-2 py-0.5 text-[9px] font-black tracking-widest text-white uppercase backdrop-blur-sm">
+                  {posisi[i % posisi.length]}
+                </span>
+              </div>
+
+              <div class="relative z-10 flex flex-1 flex-col p-5">
+                <h3 class="text-base font-bold">{c.nama}</h3>
+                <p class="mt-0.5 text-[11px] font-bold tracking-wide text-brand-dark uppercase">{c.peran}</p>
+
+                <div class="mt-3 flex flex-wrap gap-1.5">
+                  {c.ielts && (
+                    <span class="rounded-full border border-gold/40 bg-gold/10 px-2 py-0.5 text-[10px] font-bold text-brand-dark">
+                      IELTS Certified
+                    </span>
+                  )}
+                  {c.stat && (
+                    <span class="rounded-full border border-ink/15 px-2 py-0.5 text-[10px] font-bold text-ink/70">
+                      {c.stat}
+                    </span>
+                  )}
+                  {c.olahraga && (
+                    <span class="rounded-full border border-ink/15 px-2 py-0.5 text-[10px] font-bold text-ink/70">
+                      {c.olahraga}
+                    </span>
+                  )}
                 </div>
-                <div class="flex-1 p-5">
-                  <div class="flex flex-wrap gap-1.5">
-                    {c.ielts && (
-                      <span class="rounded-full border border-gold/40 bg-gold/10 px-2 py-0.5 text-[10px] font-bold text-brand-dark">
-                        IELTS Certified
-                      </span>
-                    )}
-                    {c.stat && (
-                      <span class="rounded-full border border-ink/15 px-2 py-0.5 text-[10px] font-bold text-ink/70">
-                        {c.stat}
-                      </span>
-                    )}
-                    {c.olahraga && (
-                      <span class="rounded-full border border-ink/15 px-2 py-0.5 text-[10px] font-bold text-ink/70">
-                        {c.olahraga}
-                      </span>
-                    )}
-                  </div>
 
-                  {c.bio && <p class="mt-3 text-[13px] leading-relaxed text-ink/60">{c.bio}</p>}
+                {c.bio && <p class="mt-3 text-[13px] leading-relaxed text-ink/60">{c.bio}</p>}
 
-                  <ul class="mt-4 space-y-1.5 text-[12px] text-ink/55">
-                    {['Public Speaking', 'Simulasi Wawancara Media', 'English for Athletes'].map((f) => (
-                      <li class="flex items-center gap-1.5">
-                        <span class="text-brand-dark" aria-hidden="true">
+                <div class="mt-4 flex flex-1 flex-col justify-center gap-3">
+                  {fokus.map((f, k) => (
+                    <div>
+                      <div class="flex items-center justify-between gap-2 text-[11px] font-bold text-ink/70">
+                        <span class="min-w-0 truncate">{f}</span>
+                        <span class="shrink-0 text-brand-dark" aria-hidden="true">
                           ✓
                         </span>
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
+                      </div>
+                      <div class="mt-1.5 h-1.5 overflow-hidden rounded-full bg-ink/8">
+                        <div
+                          class="h-full rounded-full bg-gradient-to-r from-brand to-gold"
+                          style={`width:${skill[(k + i) % skill.length]}%`}
+                        >
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div class="mt-auto pt-4">
+                  <div class="border-t border-ink/10"></div>
+                  <a
+                    href={waLink({ program: `Sesi 1-on-1 bersama ${c.nama}`, source: `coach-${i % coaches.length}` })}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-wa-cta={`coach-${i % coaches.length}`}
+                    class="mt-3 flex items-center justify-between gap-2 text-[12px] font-bold text-brand-dark transition hover:text-brand focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
+                  >
+                    Booking bersama {c.nama.split(' ')[0]}
+                    <span aria-hidden="true">↗</span>
+                  </a>
                 </div>
               </div>
             </article>

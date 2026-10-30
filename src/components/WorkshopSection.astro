@@ -33,7 +33,7 @@ const gallery = [
   <div class="mb-8 grid items-center gap-8 md:grid-cols-[1.1fr_1fr]">
     <div class="max-w-2xl">
       <p class="eyebrow text-xs font-bold tracking-[0.2em] text-brand-dark uppercase">Kolaborasi Akademi / Klub</p>
-      <h2 class="display mt-2 text-5xl leading-[0.9] sm:text-6xl">
+      <h2 class="display mt-2 text-5xl leading-[0.9] sm:text-6xl lg:text-7xl">
         Workshop buat<br />
         <span class="text-brand-dark">atlet binaanmu</span>
       </h2>
@@ -73,52 +73,68 @@ const gallery = [
 
   <div class="grid gap-5 md:grid-cols-3" data-reveal-group>
     {
-      workshops.map((w) => (
-        <article data-reveal="pop" class="card-soft card-lift flex flex-col rounded-3xl p-6">
-          <div class="flex items-center justify-between gap-2">
-            <h3 class="display text-2xl">{w.nama}</h3>
-            <span class="rounded-full border border-ink/15 px-2.5 py-1 text-[10px] font-bold text-ink/60">{w.durasi}</span>
-          </div>
-
-          <div class="mt-4">
-            {w.harga > 0 ? (
-              <p class="display text-3xl text-brand-dark">Rp{formatIdr(w.harga)}</p>
-            ) : (
-              <p class="display text-2xl text-brand-dark">Custom</p>
-            )}
-            <p class="mt-0.5 text-[11px] text-ink/50">per sesi · {w.target}</p>
-            {w.catatan && <p class="mt-1 text-[11px] font-black text-brand-dark">{w.catatan}</p>}
-          </div>
-
-          <p class="mt-4 text-sm leading-relaxed text-ink/70">{w.ringkasan}</p>
-
-          <ul class="mt-4 flex-1 space-y-2 text-[13px] text-ink/75">
-            {w.didapat.map((d) => (
-              <li class="flex gap-2">
-                <span class="text-brand-dark" aria-hidden="true">
-                  ✓
+      workshops.map((w, i) => (
+        <article data-reveal="pop" data-spot class="spot card-soft card-lift flex flex-col overflow-hidden rounded-3xl">
+          <div class="relative z-10 flex flex-1 flex-col p-6">
+            <div class="min-h-[3.25rem] md:min-h-[5.25rem]">
+              <div class="flex items-start justify-between gap-3">
+                <h3 class="display line-clamp-2 text-2xl leading-tight">{w.nama}</h3>
+                <span class="display shrink-0 text-3xl leading-none text-brand/20">
+                  {String(i + 1).padStart(2, '0')}
                 </span>
-                {d}
-              </li>
-            ))}
-          </ul>
+              </div>
+              <div class="mt-2.5 flex flex-wrap items-center gap-2">
+                <span class="shrink-0 rounded-full border border-ink/15 px-2.5 py-1 text-[10px] font-bold text-ink/60">
+                  {w.durasi}
+                </span>
+                <span class="rounded-full bg-brand/12 px-2.5 py-1 text-[10px] font-black tracking-wide text-brand-dark uppercase">
+                  {w.didapat.length} benefit
+                </span>
+              </div>
+            </div>
 
-          <div class="mt-6 flex flex-wrap items-center gap-3">
-            <a
-              href={waLink({ program: w.nama, source: `workshop-${w.slug}` })}
-              target="_blank"
-              rel="noopener noreferrer"
-              data-wa-cta={`workshop-${w.slug}`}
-              class="inline-flex items-center justify-center gap-2 rounded-2xl border border-gold px-5 py-3.5 text-sm font-bold text-brand-dark transition hover:bg-gold hover:text-ink focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none active:scale-95"
-            >
-              Booking via WhatsApp ↗
-            </a>
-            <a
-              href={`/workshop/${w.slug}`}
-              class="rounded-xl px-2 py-3 text-xs font-bold text-brand-dark transition hover:underline focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
-            >
-              Detail →
-            </a>
+            <div class="mt-4 border-t border-ink/10 pt-4">
+              <div class="min-h-[3.4rem]">
+                {w.harga > 0 ? (
+                  <p class="display text-3xl leading-none text-brand-dark">Rp{formatIdr(w.harga)}</p>
+                ) : (
+                  <p class="display text-3xl leading-none text-brand-dark">Custom</p>
+                )}
+                <p class="mt-1.5 text-[11px] text-ink/50">per sesi · {w.target}</p>
+              </div>
+              <p class="mt-1.5 min-h-[1rem] text-[11px] font-black text-brand-dark">{w.catatan ?? ''}</p>
+            </div>
+
+            <p class="mt-4 min-h-[4.5rem] text-sm leading-relaxed text-ink/70">{w.ringkasan}</p>
+
+            <ul class="mt-4 flex-1 space-y-2 text-[13px] text-ink/75">
+              {w.didapat.map((d) => (
+                <li class="flex gap-2">
+                  <span class="text-brand-dark" aria-hidden="true">
+                    ✓
+                  </span>
+                  {d}
+                </li>
+              ))}
+            </ul>
+
+            <div class="mt-6 flex flex-wrap items-center gap-3">
+              <a
+                href={waLink({ program: w.nama, source: `workshop-${w.slug}` })}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-wa-cta={`workshop-${w.slug}`}
+                class="inline-flex items-center justify-center gap-2 rounded-2xl border border-gold px-5 py-3.5 text-sm font-bold text-brand-dark transition hover:bg-gold hover:text-ink focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none active:scale-95"
+              >
+                Booking via WhatsApp ↗
+              </a>
+              <a
+                href={`/workshop/${w.slug}`}
+                class="rounded-xl px-2 py-3 text-xs font-bold text-brand-dark transition hover:underline focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
+              >
+                Detail →
+              </a>
+            </div>
           </div>
         </article>
       ))

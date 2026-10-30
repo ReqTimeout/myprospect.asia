@@ -19,7 +19,7 @@ const doubled = posts.length ? [...posts, ...posts] : [];
   <div class="mb-8 flex items-end justify-between gap-4">
     <div>
       <p class="eyebrow text-xs font-bold tracking-[0.2em] text-brand-dark uppercase">Berita Atlet Modern</p>
-      <h2 class="display mt-2 text-5xl leading-[0.9] sm:text-6xl">Kabar terbaru</h2>
+      <h2 class="display mt-2 text-5xl leading-[0.9] sm:text-6xl lg:text-7xl">Kabar terbaru</h2>
     </div>
     <a href="/berita" class="shrink-0 py-1.5 text-sm font-bold text-brand-dark transition hover:underline focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none">
       Lihat semua →
@@ -49,6 +49,7 @@ const doubled = posts.length ? [...posts, ...posts] : [];
                   class="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
                 />
                 <div class="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/10 to-transparent"></div>
+                <div class="absolute inset-0 bg-brand/22 mix-blend-multiply"></div>
                 <span class="absolute top-3 left-3 rounded-full bg-paper/85 px-2.5 py-1 text-[10px] font-black tracking-wider text-brand-dark uppercase backdrop-blur">
                   {post.data.kategori}
                 </span>

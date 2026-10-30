@@ -1,0 +1,30 @@
+---
+interface Props {
+  items: string[];
+  speed?: number;
+  tone?: 'ink' | 'brand' | 'none';
+  class?: string;
+}
+
+const { items, speed = 38, tone = 'ink', class: cls = '' } = Astro.props;
+const loop = [...items, ...items];
+---
+
+<div
+  class:list={[
+    'rail-wrap ticker-fade overflow-hidden',
+    tone === 'ink' ? 'bg-ink text-white' : tone === 'brand' ? 'bg-brand text-ink' : '',
+    cls,
+  ]}
+  aria-hidden="true"
+>
+  <div class="ribbon items-center gap-4 px-2 py-2.5" style={`--rail-speed:${speed}s`}>
+    {
+      loop.map((t) => (
+        <span class="ribbon-pill text-[11px] font-bold tracking-[0.18em] uppercase sm:text-xs">
+          {t}
+        </span>
+      ))
+    }
+  </div>
+</div>

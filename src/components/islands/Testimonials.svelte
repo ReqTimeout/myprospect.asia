@@ -85,8 +85,8 @@
   <div class="embla__viewport overflow-hidden">
     <div class="embla__container flex gap-4">
       {#each list as t, i (t.nama)}
-        <figure class="embla__slide card-soft card-lift w-[88%] shrink-0 overflow-hidden rounded-3xl sm:w-[62%] lg:w-[46%]">
-          <div class="grid sm:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
+        <figure data-spot class="spot embla__slide card-soft card-lift w-[88%] shrink-0 overflow-hidden rounded-3xl sm:w-[62%] lg:w-[46%]">
+          <div class="relative z-10 grid sm:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
             <div class="relative aspect-16/10 overflow-hidden bg-paper-deep sm:aspect-auto">
               <img
                 src={photos[i % photos.length].src}
@@ -103,6 +103,13 @@
               </span>
             </div>
             <div class="flex flex-col justify-center p-6">
+              <p class="mb-3 flex items-center gap-1 text-gold" aria-label="Rating 5 dari 5">
+                {#each Array(5) as _, s (s)}
+                  <svg viewBox="0 0 20 20" class="h-3.5 w-3.5 fill-current" aria-hidden="true">
+                    <path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8L10 1.6z"></path>
+                  </svg>
+                {/each}
+              </p>
               <blockquote class="text-sm leading-relaxed text-ink/85 sm:text-base">
                 “{t.kutipan}”
               </blockquote>

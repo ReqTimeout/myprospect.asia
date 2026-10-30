@@ -1,14 +1,14 @@
 # HANDOVER — Website Prospect Asia (myprospect.asia)
 
 > Dokumen serah-terima untuk **agent/session berikutnya**. Tulis untuk dibaca cepat tapi lengkap.
-> Dibuat: 29 Okt 2026 · Commit terakhir: `a4a3df2` · Deploy produksi: `myprospect-7uk.pages.dev`
+> Dibuat: 29 Okt 2026 · Commit terakhir: `48bf1a0` · Deploy produksi: `myprospect-7uk.pages.dev`
 > Semua fakta di bawah diverifikasi dari repo & live site (bukan dari ingatan).
 
 ---
 
 ## 1. Ringkasan satu paragraf
 
-Website **WA-first** untuk **Prospect Asia (PT Kita Berani Bicara)** — program *Sports Communication* (public speaking + bahasa Inggris khusus atlet). Semua konversi via **WhatsApp 0859-2404-1004** (deep-link pesan pre-filled), plus lead form yang disimpan ke D1. Stack: **Astro 7 static + Svelte 5 islands + Tailwind v4**, hosting **Cloudflare Pages** (Functions + D1). Admin password-protected (HMAC cookie) untuk leads, konten (CRUD live tanpa deploy), pengaturan. Tema saat ini: **light warm-white + oranye `#ff7a1a` dominan** + aksen merah `#c8232b` + **background sport** (garis lapangan, bola, k-court, jaring gawang) + sistem animasi (GSAP SplitText/ScrollTrigger, Lenis smooth scroll, magnetic button, reveal on-scroll, curtain wipe, mouse spotlight, progress bar, toggle animasi).
+Website **WA-first** untuk **Prospect Asia (PT Kita Berani Bicara)** — program *Sports Communication* (public speaking + bahasa Inggris khusus atlet). Semua konversi via **WhatsApp 0859-2404-1004** (deep-link pesan pre-filled), plus lead form yang disimpan ke D1. Stack: **Astro 7 static + Svelte 5 islands + Tailwind v4**, hosting **Cloudflare Pages** (Functions + D1). Admin password-protected (HMAC cookie) untuk leads, konten (CRUD live tanpa deploy), pengaturan. Tema saat ini: **light warm-white + oranye `#ff7a1a` dominan** + aksen merah `#c8232b` + **background sport** (garis lapangan, bola, k-court, jaring gawang) + sistem animasi (GSAP SplitText/ScrollTrigger, Lenis smooth scroll, magnetic button, reveal on-scroll, curtain wipe, mouse spotlight, progress bar). Arah desain sejak Okt 2026: **"Broadcast / Scoreboard"** (pita ticker, papan skor, tiket sobek, kartu pemain ala jersey).
 
 ---
 
@@ -110,7 +110,11 @@ Token di `src/styles/global.css` (`@theme`):
 - **Logo**: materi `Website Material/Images/Logo Black.png` = 2539×591, **hitam polos 100%** (chip "ASIA" TIDAK ada di materi — jangan karang lagi). Dipakai `public/media/logo-prospect-black.png` di header terang. Logo putih (`logo-prospect-white.png`) masih ada untuk usage gelap.
 - Utilitas: `card-soft` (kartu putih + shadow), `card-lift` (hover lift), `btn-pop`, `eyebrow` (titik merah via ::before), `ghost-word` (kata besar transparan), `art-dots`, `art-blob`, `art-pitch`, `art-pitch-orange`, `art-court`, `art-balls`, `art-balls-orange`, `art-net`, `art-track`, `art-stripes`, `sport-ball` (bola CSS), `art-ring`, `art-diamond`.
 - Utilitas premium baru (Okt 2026): `.gallery` + `.gallery img` (crossfade autoplay murni CSS, durasi via `--gallery-step`), `.ken-burns` (zoom 20s untuk background foto), `.rail-wrap` + `.rail` (rail horizontal autoplay, `translateX(-50%)`, pause saat hover/focus, `--rail-speed`), `.art-panel` (radial glow premium).
+- Utilitas arah desain **"Broadcast / Scoreboard"** (Okt 2026): `.split-word` (kata tetap utuh saat GSAP SplitText), `.spot` + `.spot::before` (sorotan kartu ikut kursor, butuh atribut `data-spot`), `.ticket` + `.ticket::before/::after` + `.ticket-perf` (notch sobek ala tiket), `.score-digits` (angka tabular ala papan skor), `.jersey` (art kartu pemain: gradasi oranye + garis diagonal + highlight), `.ribbon` + `.ribbon-pill` (pita berjalan), `.ticker-fade` (mask tepi yang memudar untuk ticker).
+- Mask rail/ticker: `.rail-wrap` memakai `mask-image` linear-gradient 9%/91%; `.ticker-fade` 12%/88% (mobile 26%/74%). `.ticker-fade` **wajib ditulis setelah** `.rail-wrap` agar menang by source order (seleksi specificity sama).
+- **Jebakan Tailwind v4 (penting)**: CSS kustom yang tidak diberi `@layer` **mengalahkan** utility Tailwind (utility ada di `@layer utilities`). Contoh nyata: `position: relative` di `.jersey` menimpa utility `absolute inset-0` → tinggi elemen jadi 0 → banner coach tampak hitam. Kalau utility yang harus menang, bungkus CSS kustom dengan `@layer components`.
 - Komponen reusable baru: `src/components/SportArt.astro` (SVG inline varian `stadium|court|net`, prop `stroke` + `opacity`) dan `src/components/AutoGallery.astro` (galeri foto autoplay props `images`, `step`, `class`, `imgClass`). Dipakai di Level & Journey, Program, Testimonials, Coaches, Berita, Workshop, dan CTA.
+- Komponen baru: `src/components/TickerRibbon.astro` — pita ticker berjalan (props `items`, `speed`, `tone` = `ink|brand|none`, `class`). Root = `.rail-wrap ticker-fade overflow-hidden`. Dipakai di StatsBar (scoreboard) dan section lain.
 - Admin **tetap dark** (pakai `bg-ink`/`text-bone`) — jangan di-sweep saat ganti tema.
 
 ---
@@ -121,11 +125,12 @@ Token di `src/styles/global.css` (`@theme`):
 |---|---|
 | Curtain wipe | `.page-curtain` CSS, gradient oranye→kuning + wordmark "PROSPECT", 0.85s, auto selesai walau JS mati |
 | Hero intro | CSS `@keyframes hero-up/hero-title/hero-photo` pada `[data-hero="badge|title|sub|photo|cta"]` (delay 0.12→0.9s) |
-| Judul section | GSAP **SplitText** (`mask: 'chars'`) + ScrollTrigger `once` — hanya heading `.display` yang **tidak** punya `data-reveal`/`data-hero` dan bukan di dalam `astro-island` |
+| Judul section | GSAP **SplitText** (`type: 'chars,words'`, `mask: 'chars'`, `wordsClass: 'split-word'`, `autoSplit: true`) + ScrollTrigger `once` — hanya heading `.display` yang **tidak** punya `data-reveal`/`data-hero` dan bukan di dalam `astro-island`. `words` itu wajib: tanpa itu kata patah di tengah ("KABAR TERBA/RU") |
 | Reveal on-scroll | IntersectionObserver → `.rd-in`; stagger otomatis per `[data-reveal-group]` (90ms/EL, max 540ms) |
 | Smooth scroll | **Lenis** (lerp 0.1) + anchor scroll offset −76px |
 | Magnetic button | `motion` (spring) + pointermove pada `[data-magnetic]` |
 | Mouse spotlight | `.hero-glow` radial gradient mengikuti kursor (`--mx/--my`, lerp 0.08) |
+| Spotlight kartu | `initCardSpotlight()` — pointermove pada `[data-spot]` mengisi `--mx`/`--my` (persen), dipakai kelas `.spot`; hanya di pointer halus (desktop) |
 | Scroll progress | `.scroll-progress` `scaleX` di atas (lerp 0.12) |
 | Gerak kontinu | Semua motif sport bergerak: `stripe-move`, `motif-drift`, `pitch-drift`, `track-drift`, `float` pada bola, ring dashed berputar, plus rail autoplay (`rail-slide`), galeri crossfade (`gallery-fade`), dan ken-burns (`ken-burns`) |
 | Toggle animasi | **Dihapus (Okt 2026)** — tombol "Animasi" di kiri bawah sudah dihapus dari `Base.astro` + `fx.ts` + CSS. User: "ko malah aneh ada nyalakan animasi gimana sih" |
@@ -219,12 +224,26 @@ Jebakan penting:
 6. Astro build = **static**; perubahan di `src/data/*.ts` butuh deploy (konten D1 tidak).
 7. Svelte 5: props read-only (salin ke `$state` lokal untuk override live-fetch), `oninit` bukan `on:init`, tidak boleh `class:foo/bar` (pakai array class), island di `src/components/islands/` → import `../../lib/...`.
 8. Tailwind v4: token via `@theme` di CSS (tanpa `tailwind.config`), utility arbitrary opacity perlu `!` bila mau mengalahkan class unlayered (mis. `!text-crimson/[0.08]`).
-9. **Tanpa komentar di file kode** (kebijakan repo).
+9. Komentar di kode **hanya untuk pitfall non-obvious** (mis. konflik layer Tailwind v4, alasan `position: relative` dilarang di `.jersey`). Jangan menambah komentar naratif.
 10. Semua copy situs berbahasa Indonesia.
 
 ---
 
-## 13. Verifikasi (tools ada di luar repo)
+## 13. Verifikasi
+
+### 13.1 Tool in-repo (WAJIB setiap perubahan visual)
+
+| Tool | Lokasi | Cara |
+|---|---|---|
+| Audit frame + overflow + reveal | `scripts/audit-frames.mjs` | `node scripts/audit-frames.mjs <base-url> <tag>` → screenshot per viewport-slice ke `/tmp/f-<tag>-<view>-<NN>.png` (desktop 1440×900 + mobile 390×844), plus laporan `horizontalOverflow`, elemen meluber, `revealNotIn`, dan error console. **Frame-nya lalu dibaca lewat vision** — wajib, angka saja tidak menangkap "kepotong"/"ga rapih" |
+| Deteksi kepotong / tumpang tindih | `scripts/audit-clip.mjs` | `node scripts/audit-clip.mjs <base-url>` → 10 halaman × 2 viewport; cek (1) teks terpotong di elemen `overflow:hidden`, (2) elemen keluar viewport tanpa mask ancestor, (3) elemen `fixed` menutupi elemen interaktif >30%. Target **0 overflow & 0 covered** |
+| Chromium headless | `/Users/maabook/Library/Caches/ms-playwright/chromium_headless_shell-1243/chrome-headless-shell-mac-arm64/chrome-headless-shell` | dipakai kedua script di atas (`playwright-core` di `node_modules`, gitignored) |
+
+Alur wajib: `npm run build` → serve `dist/` → `audit-frames.mjs` → **baca frame via vision** → perbaiki → ulangi → `audit-clip.mjs` → deploy → audit live → commit+push.
+
+> Catatan: laporan "clipped" dari `audit-clip.mjs` bisa false-positive (wrapper mask per-karakter GSAP SplitText, pita ticker yang memang lebih lebar, `line-clamp-2`). Yang jadi acuan: **overflow** dan **covered**.
+
+### 13.2 Tool luar repo (opsional/lengkap)
 
 | Tool | Lokasi | Cara |
 |---|---|---|
@@ -233,9 +252,8 @@ Jebakan penting:
 | E2E admin | `.../mp-admin-e2e.mjs` | login/leads/settings |
 | E2E form | `.../mp-form-e2e.mjs` | lead → D1 → WA 302 |
 | Bukti visual animasi | `docs/preview/desktop-intro.gif`, `desktop-intro-filmstrip.png` | rekaman 1440×810 |
-| Chromium headless | `/Users/maabook/Library/Caches/ms-playwright/chromium_headless_shell-1243/chrome-headless-shell-mac-arm64/chrome-headless-shell` | untuk script Playwright manual (rekam video pakai `recordVideo`) |
 
-Status terakhir: **audit 22/22 · 0 bug**, e2e konten 24/24, motion probe (title opacity 0→1, curtain 794px→0, progress bar 0→0.33, spotlight `--mx` 50%→25%, 2.268 piksel berubah dalam 2 detik = gerak kontinu).
+Status terakhir: **audit 22/22 · 0 bug**, e2e konten 24/24, motion probe (title opacity 0→1, curtain 794px→0, progress bar 0→0.33, spotlight `--mx` 50%→25%, 2.268 piksel berubah dalam 2 detik = gerak kontinu). Okt 2026 (revisi Broadcast/Scoreboard): `audit-clip.mjs` → **0 overflow & 0 covered** di 10 halaman × 2 viewport (local & live); `audit-frames.mjs` di live → `horizontalOverflow:false`, `revealNotIn 0/12`, console error `[]`.
 
 ---
 
@@ -263,6 +281,8 @@ Status terakhir: **audit 22/22 · 0 bug**, e2e konten 24/24, motion probe (title
 
 ## 16. Sisa pekerjaan yang disarankan (urut prioritas)
 
+> Arah desain aktif sejak Okt 2026 = **"Broadcast / Scoreboard"**: pita ticker, papan skor, tiket sobek, kartu pemain ala jersey, spotlight kursor. Artwork coach saat ini **CSS/SVG art** (bukan foto) karena ImageGen kehabisan kredit dan `Website Material/Coaches Picture/` masih kosong.
+
 1. Regenerasi OG image + aset generated ke nuansa terang (MiniMax image-01) — `src/assets/generated/a2-og-bg.jpg` dst.
 2. Pasang custom domain + A-record/CNAME di DNS Hostinger; set domain di Pages; add `myprospect.asia` ke `SITE.url` & canonical.
 3. Aktifkan R2 → implementasikan upload media di tab Media (proxy `/media/*`).
@@ -270,6 +290,7 @@ Status terakhir: **audit 22/22 · 0 bug**, e2e konten 24/24, motion probe (title
 5. Selesaikan klaim "SPEAK LOUD!"-style copy atau formalkan bahasa (copy sekarang playful; klien mungkin mau lebih formal).
 6. Tambah halaman artikel berita dari MDX lama ke D1 (agar bisa diedit admin) — `scripts/gen-posts-seed.mjs` sudah disiapkan.
 7. Checklist a11y: kontras teks oranye di atas putih (`brand-dark` untuk teks kecil), target sentuh ≥44px (audit terakhir 0 masalah). `prefers-reduced-motion` **tidak** lagi dipakai sebagai gate animasi (user minta animasi selalu jalan).
+8. Ganti artwork `.jersey` kartu coach dengan foto asli begitu `Website Material/Coaches Picture/` terisi (struktur kartu sudah siap: banner `aspect-16/11`, inisial, badge posisi, skill bar, footer booking WA).
 
 ---
 
@@ -291,3 +312,6 @@ Status terakhir: **audit 22/22 · 0 bug**, e2e konten 24/24, motion probe (title
 5. Verifikasi selalu: `npm run build` → `wrangler pages deploy` → `myprospect-audit.mjs` (harus 0 bug) → screenshot → commit+push.
 6. Kalau user bilang "animasi ga jalan": cek (a) hard refresh, (b) aset JS/CSS lama di cache. Toggle animasi **sudah dihapus** — jangan cari lagi.
 7. Kalau menambah heading baru: jangan pakai kelas `.hl-brand` (gradient `background-clip:text`) di dalam elemen yang kena GSAP SplitText — SplitText memecah karakter dan gradient pecah → teks jadi tak terlihat. Pakai `text-brand-dark`.
+8. Kalau menambah utility CSS kustom: beware **Tailwind v4 layering** — CSS tanpa `@layer` mengalahkan utility Tailwind. Bungkus dengan `@layer components` bila memang mau utility yang menang (contoh kasus `.jersey` + `absolute inset-0`).
+9. Setiap perubahan visual **wajib** diverifikasi dua viewport (desktop 1440×900 & mobile 390×844) lewat `scripts/audit-frames.mjs` → **baca frame via vision** → lalu `scripts/audit-clip.mjs` (target 0 overflow & 0 covered). Cek khusus mobile: bubble WhatsApp **tidak boleh muncul** (Dock mobile sudah punya tombol Chat) supaya tidak menutupi CTA/judul.
+10. Popup WA desktop auto-muncul lalu **menyempit sendiri** ke bubble setelah 6,5 detik (`collapse()` di `WaPopup.svelte`) supaya tidak terus menutupi isi kartu. Kalau user sudah klik CTA, timer dibatalkan dan kartu tetap terbuka. Di mobile kartu **tidak pernah** muncul otomatis — bubble kecil + tombol Chat di Dock saja.
