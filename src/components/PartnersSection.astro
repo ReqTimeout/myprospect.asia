@@ -36,24 +36,24 @@ const grup = [
                 <span class="text-[11px] font-bold tracking-widest text-ink/40 uppercase">{items.length} mitra</span>
                 <span class="chapter-rule" aria-hidden="true" />
               </div>
-              <ul class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3" data-reveal-group>
+              <ul class="mt-4 grid grid-cols-2 gap-2.5 sm:gap-3 lg:grid-cols-3" data-reveal-group>
                 {items.map((p, i) => (
                   <li
                     data-reveal="pop"
-                    class="group flex items-center gap-3.5 rounded-2xl border border-ink/10 bg-white/85 px-4 py-3.5 shadow-soft transition duration-300 hover:-translate-y-1 hover:border-brand/45 hover:bg-white"
+                    class="group flex flex-col items-center justify-center gap-2 rounded-2xl border border-ink/10 bg-white/85 p-3 text-center shadow-soft transition duration-300 hover:-translate-y-1 hover:border-brand/45 hover:bg-white sm:flex-row sm:items-center sm:gap-3.5 sm:p-3.5 sm:text-left"
                     style={`transition-delay:${Math.min(i * 50, 300)}ms`}
                   >
-                    <span class="relative flex h-14 w-14 shrink-0 items-center justify-center">
+                    <span class="relative flex h-12 w-12 shrink-0 items-center justify-center sm:h-14 sm:w-14">
                       <span class="absolute inset-0 rounded-2xl bg-ink/8 transition duration-300 group-hover:bg-brand/12" />
                       <span class="relative h-full w-full transition duration-300 group-hover:scale-105">
                         <PartnerLogo slug={p.slug} nama={p.nama} crest={p.crest} />
                       </span>
                     </span>
                     <span class="min-w-0">
-                      <span class="block text-sm leading-tight font-bold text-ink transition group-hover:text-brand-dark">
+                      <span class="block text-[13px] leading-tight font-bold text-ink transition group-hover:text-brand-dark sm:text-sm">
                         {p.nama}
                       </span>
-                      <span class="mt-1 block text-[10px] font-black tracking-widest text-brand-dark uppercase">
+                      <span class="mt-0.5 block text-[9px] font-black tracking-widest text-brand-dark uppercase sm:mt-1 sm:text-[10px]">
                         {p.jenis === 'akademi' ? 'Akademi' : 'Mitra'}
                       </span>
                     </span>

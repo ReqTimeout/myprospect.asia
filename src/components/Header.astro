@@ -6,14 +6,15 @@ import { waLink } from '../lib/wa';
 <header
   class="fixed inset-x-0 top-0 z-50 border-b border-ink/8 bg-paper/80 backdrop-blur-xl"
 >
-  <div class="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:px-6">
+  {/* Mobile: logo di tengah (hanya logo yang tampil sebelum lg), dari sm ke atas logo kembali ke kiri & menu/CTA resumed. */}
+  <div class="mx-auto flex h-14 max-w-6xl items-center justify-center px-4 sm:justify-between sm:px-6">
     <a href="/" class="group flex items-center gap-2 py-2 focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none">
       <img
         src="/media/logo-prospect-black.png"
         alt="Prospect"
         width="1000"
         height="233"
-        class="h-5 w-auto transition group-hover:-translate-y-0.5 sm:h-6"
+        class="h-6 w-auto transition group-hover:-translate-y-0.5"
       />
     </a>
 

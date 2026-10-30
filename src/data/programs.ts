@@ -14,7 +14,43 @@ export type Program = {
   online: boolean;
 };
 
+// Urutan array = urutan tampil di seluruh situs.
+// Diurut dari harga paling murah ke termahal (Small Group 299k → Elite 1,299k → Premium 2,499k)
+// supaya nomor urut (01/02/03) di kartu program = urutan termurah, bukan urutan premium.
 export const programs: Program[] = [
+  {
+    slug: 'small-group',
+    nama: 'Small Group',
+    sub: 'Belajar bareng atlet lintas daerah & cabor (6–10 atlet)',
+    hargaCoret: 750_000,
+    harga: 299_000,
+    satuan: '/ 6 sesi / bulan',
+    badge: 'KELOMPOK',
+    badgeTone: 'red',
+    ringkasan: 'Cocok untuk rekan setim atau atlet lintas cabang — belajar bareng, harga lebih ringan.',
+    dikuasai: [
+      'Percaya diri memperkenalkan diri',
+      'Mengenal gaya komunikasi atlet',
+      'Menghadapi interview pertandingan',
+      'Public speaking & body language',
+      'Storytelling sebagai atlet',
+    ],
+    didapat: [
+      '6 sesi live coaching (60 menit/sesi)',
+      'E-book Public Speaking & English',
+      '2 masterclass video learning',
+      'Berkenalan & belajar bareng atlet lain',
+      'Belajar dengan Sports Communication Coach',
+      'Classroom group report',
+    ],
+    journey: [
+      { bulan: 'Bulan 1', teks: 'Atlet bisa berkomunikasi' },
+      { bulan: 'Bulan 2', teks: 'Atlet bisa mengekspresikan diri' },
+      { bulan: 'Bulan 3', teks: 'Atlet bisa mewakili diri & tim' },
+      { bulan: 'Bulan 4', teks: 'Atlet bisa membangun identitas diri' },
+    ],
+    online: true,
+  },
   {
     slug: 'elite-1on1',
     nama: 'Elite 1-on-1',
@@ -75,39 +111,6 @@ export const programs: Program[] = [
       'E-certificate',
       'Individual report',
       'Pemberitaan di portal berita nasional',
-    ],
-    journey: [
-      { bulan: 'Bulan 1', teks: 'Atlet bisa berkomunikasi' },
-      { bulan: 'Bulan 2', teks: 'Atlet bisa mengekspresikan diri' },
-      { bulan: 'Bulan 3', teks: 'Atlet bisa mewakili diri & tim' },
-      { bulan: 'Bulan 4', teks: 'Atlet bisa membangun identitas diri' },
-    ],
-    online: true,
-  },
-  {
-    slug: 'small-group',
-    nama: 'Small Group',
-    sub: 'Belajar bareng atlet lintas daerah & cabor (6–10 atlet)',
-    hargaCoret: 750_000,
-    harga: 299_000,
-    satuan: '/ 6 sesi / bulan',
-    badge: 'KELOMPOK',
-    badgeTone: 'red',
-    ringkasan: 'Cocok untuk rekan setim atau atlet lintas cabang — belajar bareng, harga lebih ringan.',
-    dikuasai: [
-      'Percaya diri memperkenalkan diri',
-      'Mengenal gaya komunikasi atlet',
-      'Menghadapi interview pertandingan',
-      'Public speaking & body language',
-      'Storytelling sebagai atlet',
-    ],
-    didapat: [
-      '6 sesi live coaching (60 menit/sesi)',
-      'E-book Public Speaking & English',
-      '2 masterclass video learning',
-      'Berkenalan & belajar bareng atlet lain',
-      'Belajar dengan Sports Communication Coach',
-      'Classroom group report',
     ],
     journey: [
       { bulan: 'Bulan 1', teks: 'Atlet bisa berkomunikasi' },
