@@ -78,10 +78,14 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href;
       });
       function beacon(path, data) {
         try {
-          if (navigator.sendBeacon) {
-            navigator.sendBeacon(path, new Blob([JSON.stringify(data)], { type: 'application/json' }));
-          }
+          var body = new Blob([JSON.stringify(data)], { type: 'application/json' });
+          if (navigator.sendBeacon) navigator.sendBeacon(path, body);
+          else fetch(path, { method: 'POST', body: body, keepalive: true }).catch(function () {});
         } catch (e) {}
+      }
+      // Pageview dicatat sekali per muat halaman; /api/pv menyaring /admin dan /api.
+      if (location.pathname.indexOf('/admin') !== 0) {
+        beacon('/api/pv', { p: location.pathname });
       }
       document.addEventListener('click', function (e) {
         var el = e.target && e.target.closest ? e.target.closest('[data-wa-cta]') : null;

@@ -348,6 +348,24 @@ footer nav{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-bot
     <a class="dock-wa" href="${esc(waUrl)}" target="_blank" rel="noopener noreferrer" data-wa-cta="berita-dock" aria-label="Chat WhatsApp admin"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.9-.9L3 21l1.9-4.6A8.4 8.4 0 0 1 12 3.1a8.4 8.4 0 0 1 9 8.4z"/></svg><span>Chat</span></a>
   </div>
 </nav>
+
+<script>
+(function () {
+  function send(path, data) {
+    try {
+      var body = new Blob([JSON.stringify(data)], { type: 'application/json' });
+      if (navigator.sendBeacon) navigator.sendBeacon(path, body);
+      else fetch(path, { method: 'POST', body: body, keepalive: true }).catch(function () {});
+    } catch (e) {}
+  }
+  send('/api/pv', { p: location.pathname });
+  document.addEventListener('click', function (e) {
+    var el = e.target && e.target.closest ? e.target.closest('[data-wa-cta]') : null;
+    if (!el) return;
+    send('/api/click', { slug: el.getAttribute('data-wa-cta') || 'unknown' });
+  });
+})();
+</script>
 </body>
 </html>`;
 };
