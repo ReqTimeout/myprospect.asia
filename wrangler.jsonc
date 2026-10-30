@@ -13,7 +13,11 @@
       "database_id": "cf06163c-557d-4625-aedb-d4b9dd1b4514",
       "migrations_dir": "./migrations"
     }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "MEDIA_BUCKET",
+      "bucket_name": "prospect-media"
+    }
   ]
-  // R2 aktifkan lagi setelah bucket dibuat (dashboard → R2 → Enable):
-  // "r2_buckets": [{ "binding": "MEDIA", "bucket_name": "prospect-media" }]
 }
