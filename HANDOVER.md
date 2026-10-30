@@ -1,7 +1,7 @@
 # HANDOVER — Website Prospect Asia (myprospect.asia)
 
 > Dokumen serah-terima untuk **agent/session berikutnya**. Tulis untuk dibaca cepat tapi lengkap.
-> Dibuat: 29 Okt 2026 · Commit terakhir: `48bf1a0` · Deploy produksi: `myprospect-7uk.pages.dev`
+> Dibuat: 29 Okt 2026 · Revisi visual terakhir: `0197853` (Broadcast/Scoreboard) · Deploy produksi: `myprospect-7uk.pages.dev`
 > Semua fakta di bawah diverifikasi dari repo & live site (bukan dari ingatan).
 
 ---
