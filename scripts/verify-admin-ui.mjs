@@ -162,18 +162,33 @@ for (const vp of VIEWPORTS) {
   check('3b balik ke 14 hari', (await page.locator('main svg rect.kolom').count()) === 14);
 
   // 3c) hover kolom grafik memunculkan tooltip harian
-  await page.locator('main svg rect.kolom').nth(10).hover().catch(() => {});
-  const tooltip = await page
-    .waitForFunction(
-      () => {
-        const m = document.querySelector('main');
-        return !!m && /\d+ klik WA · \d+ lead/.test(m.innerText);
-      },
-      { timeout: 8000 },
-    )
-    .then(() => true)
-    .catch(() => false);
-  check('3c hover grafik memunculkan tooltip hari', tooltip);
+  // Tooltip cuma digambar untuk hari yang PUNYA data. Kalau periode ini kosong
+  // (mis. data uji baru dibersihkan), tidak ada yang bisa di-hover — itu
+  // perilaku yang benar, jadi yang diperiksa jadi pesan keadaan kosong.
+  const deret = await page.evaluate(async () => {
+    const r = await fetch('/api/admin/stats?hari=14');
+    return r.ok ? (await r.json()).deret ?? [] : [];
+  });
+  const adaHariBerdata = deret.some((d) => (d.pv ?? 0) > 0 || (d.klik ?? 0) > 0 || (d.lead ?? 0) > 0);
+  if (adaHariBerdata) {
+    await page.locator('main svg rect.kolom').nth(10).hover().catch(() => {});
+    const tooltip = await page
+      .waitForFunction(
+        () => {
+          const m = document.querySelector('main');
+          return !!m && /\d+ klik WA · \d+ lead/.test(m.innerText);
+        },
+        { timeout: 8000 },
+      )
+      .then(() => true)
+      .catch(() => false);
+    check('3c hover grafik memunculkan tooltip hari', tooltip);
+  } else {
+    const pesanKosong = await page.evaluate(() =>
+      /Belum ada trafik/i.test(document.querySelector('main')?.innerText ?? ''),
+    );
+    check('3c grafik tanpa data -> pesan keadaan kosong tampil', pesanKosong);
+  }
   if (vp.name === 'desktop') await shot('02c-tooltip');
 
   // 4) tiap tab: nav harus menyorot tab yang benar DAN kontennya benar-benar selesai dimuat.

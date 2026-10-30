@@ -190,6 +190,13 @@ for (const vp of VIEWPORTS) {
     for (const a of p.areas) {
       const el = page.locator(a.sel).first();
       if (!(await el.count())) { r.shots.push({ area: a.name, ok: false, note: 'not found: ' + a.sel }); continue; }
+      // Elemen yang sengaja disembunyikan di viewport ini (mis. .dock display:none
+      // di >=1024px) TIDAK bisa di-scroll -> screenshot-nya akan timeout. Tandai
+      // sebagai dilewati, bukan gagal, supaya laporan tidak memunculkan alarm palsu.
+      if (!(await el.isVisible())) {
+        r.shots.push({ area: a.name, ok: true, skip: true, note: 'tersembunyi di viewport ini' });
+        continue;
+      }
       try {
         await el.scrollIntoViewIfNeeded();
         await page.waitForTimeout(700);
