@@ -187,7 +187,11 @@ npx wrangler d1 execute prospect-db --remote --command "SELECT count(*) FROM pos
 
 ## 10. API surface
 
-**Publik**: `GET /api/posts` · `GET /api/content/{testimonials|faq|stats}` · `GET /api/settings` · `POST /api/leads` (302 → wa.me) · `POST /api/click`.
+**Publik**: `GET /api/posts` · `GET /api/content/{testimonials|faq|stats}` · `GET /api/settings` · `POST /api/leads` (dual-mode) · `POST /api/click`.
+`POST /api/leads` dual-mode:
+- `content-type: application/json` → balas `{ ok: true, waUrl }` (dipakai popup pendaftaran, tidak pindah halaman).
+- form-encoded (classic) → 302 redirect ke `wa.me` (dipakai `LeadForm.astro` di `/tentang`).
+Isi JSON: `{ nama, wa, program, catatan, sumber }`. Insert ke D1 `leads` + balas link `wa.me` bernomor admin. Kegagalan DB/settings **tidak** menggagalkan handoff ke WhatsApp (di-`try/catch`).
 **Admin** (butuh cookie `pa_admin`): `POST /api/admin/login` · `POST /api/admin/logout` · `GET /api/admin/stats` · `GET/PATCH /api/admin/leads` · `GET/PUT /api/admin/settings` · `GET/POST /api/admin/posts` · `PUT/DELETE /api/admin/posts/{slug}` · `GET/POST /api/admin/content/{kind}` · `PUT/DELETE /api/admin/content/{kind}/{id}`.
 Validator bersama: `functions/_lib/content.ts` (KINDS, FAQ_GRUP, KATEGORI, POST_STATUS, parsePost/parseContent).
 
@@ -315,3 +319,33 @@ Status terakhir: **audit 22/22 · 0 bug**, e2e konten 24/24, motion probe (title
 8. Kalau menambah utility CSS kustom: beware **Tailwind v4 layering** — CSS tanpa `@layer` mengalahkan utility Tailwind. Bungkus dengan `@layer components` bila memang mau utility yang menang (contoh kasus `.jersey` + `absolute inset-0`).
 9. Setiap perubahan visual **wajib** diverifikasi dua viewport (desktop 1440×900 & mobile 390×844) lewat `scripts/audit-frames.mjs` → **baca frame via vision** → lalu `scripts/audit-clip.mjs` (target 0 overflow & 0 covered). Cek khusus mobile: bubble WhatsApp **tidak boleh muncul** (Dock mobile sudah punya tombol Chat) supaya tidak menutupi CTA/judul.
 10. Popup WA desktop auto-muncul lalu **menyempit sendiri** ke bubble setelah 6,5 detik (`collapse()` di `WaPopup.svelte`) supaya tidak terus menutupi isi kartu. Kalau user sudah klik CTA, timer dibatalkan dan kartu tetap terbuka. Di mobile kartu **tidak pernah** muncul otomatis — bubble kecil + tombol Chat di Dock saja.
+
+---
+
+## 19. Pendaftaran pop-up + sistem section (Okt 2026)
+
+### 19.1 Popup pendaftaran (`src/components/islands/RegisterModal.svelte`)
+
+- Island Svelte 5, dipasang **satu kali** di `src/layouts/Base.astro` → otomatis aktif di semua halaman.
+- CTA mendaftarkan diri cukup diberi atribut:
+  ```html
+  <a href={waLink(...)} data-register data-program="Elite 1-on-1" data-source="program-elite-1on1">…</a>
+  ```
+  `href` tetap `wa.me` sebagai fallback kalau JS mati; island Delegate click `document` → `closest('[data-register]')` → `preventDefault()` → buka modal.
+- `data-program` yang nilainya di luar daftar program tetap **masuk** sebagai opsi select (state `programTambahan`).
+- Submit → `POST /api/leads` (JSON) → state sukses menampilkan tombol **Buka WhatsApp** (`href` = `waUrl` dari API). Tidak pakai `window.open` karena kena popup-blocker.
+- Modal: bottom sheet di mobile (`items-end`, `rounded-t-3xl`, `animate-slide-up`), dialog centered di `sm:`. `ESC` tutup, klik backdrop tutup, `body` overflow dikunci saat terbuka.
+- **Jebakan Svelte**: atribut HTML berisi kurung kurawal (`pattern="[0-9\s+()-]{10,18}"`) diparse sebagai **ekspresi** sehingga atributnya dibuang diam-diam → validasi format WA dilakukan manual di JS (`wa.replace(/\D/g,'')`).
+- **Jebakan Svelte**: tanpa `bind:value`, isi `<input>` tidak masuk ke state → payload kosong. Semua field wajib `bind:value`.
+
+### 19.2 Latar per-section + penanda chapter
+
+- `src/styles/global.css` → kelas `.surface-warm` (paper-deep), `.surface-ink` (hitam = **highlight utama**), `.surface-hair` (garis rambut atas/bawah), `.surface-ink-hair`.
+- Section dibungkus `<div class="surface-*">` penuh lebar di `src/pages/index.astro` (tanpa mengubah isi komponen).
+- `src/components/Chapter.astro` → penanda `01`–`10` (nomor + label + garis). Props: `num`, `label`, `tone` (`ink`/`light`), `class`. Pakai `tone="light"` di atas latar gelap.
+
+### 19.3 Ikon cabang olahraga
+
+- `src/components/SportIcon.astro` → 9 SVG inline (sepak-bola, futsal, basket, voli, bulu-tangkis, renang, atletik, tinju, piala) dengan animasi per cabang.
+- `src/data/sports.ts` → tipe `Sport` + data `cabangOlahraga`. **Wajib**: komponen Astro tidak bisa export type dari frontmatter → taruh di modul `src/data/*` lalu import.
+- Kelas animasi CSS: `.si-roll .si-bounce .si-float .si-swing .si-wave .si-run .si-punch .si-shine` (keyframes dengan nama sama di `global.css`).

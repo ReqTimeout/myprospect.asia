@@ -1,4 +1,6 @@
 ---
+import Chapter from './Chapter.astro';
+
 const chips = ['Fun Communication for Active Kids', 'Sports Communication for Young Athletes', 'Digital Literacy & Personal Branding'];
 ---
 
@@ -8,6 +10,9 @@ const chips = ['Fun Communication for Active Kids', 'Sports Communication for Yo
   <div class="sport-ball sport-ball--orange right-5 bottom-16 h-14 w-14 rotate-12 opacity-90" aria-hidden="true"></div>
   <div class="sport-ball top-10 right-[42%] hidden h-10 w-10 -rotate-12 opacity-80 lg:block" aria-hidden="true"></div>
   <p class="ghost-word -top-2 right-2 hidden text-[5.5rem] lg:block" aria-hidden="true">Speak</p>
+
+  <Chapter num="03" label="Tentang Program" class="mb-6" />
+
   <div class="grid items-center gap-8 md:grid-cols-2 md:gap-12">
     <div class="relative order-2 md:order-1">
       <div data-reveal="fade" class="grain relative rotate-[-1.5deg] overflow-hidden rounded-3xl border-4 border-white bg-white shadow-[0_24px_50px_-20px_rgba(36,26,18,0.3)] transition-transform duration-500 hover:rotate-0 aspect-4/3">

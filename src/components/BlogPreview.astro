@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import { waLink } from '../lib/wa';
 import SportArt from './SportArt.astro';
+import Chapter from './Chapter.astro';
 
 const posts = (await getCollection('berita', (p) => p.data.status === 'published'))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
@@ -18,8 +19,8 @@ const doubled = posts.length ? [...posts, ...posts] : [];
   <div class="art-ring top-10 right-10 hidden h-12 w-12 border-gold/50 sm:block" aria-hidden="true"></div>
   <div class="mb-8 flex items-end justify-between gap-4">
     <div>
-      <p class="eyebrow text-xs font-bold tracking-[0.2em] text-brand-dark uppercase">Berita Atlet Modern</p>
-      <h2 class="display mt-2 text-5xl leading-[0.9] sm:text-6xl lg:text-7xl">Kabar terbaru</h2>
+      <Chapter num="09" label="Berita" class="mb-6" />
+      <h2 class="display text-5xl leading-[0.9] sm:text-6xl lg:text-7xl">Kabar terbaru</h2>
     </div>
     <a href="/berita" class="shrink-0 py-1.5 text-sm font-bold text-brand-dark transition hover:underline focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none">
       Lihat semua →

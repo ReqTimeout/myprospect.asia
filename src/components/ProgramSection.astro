@@ -2,6 +2,7 @@
 import { waLink } from '../lib/wa';
 import { programs, formatIdr } from '../data/programs';
 import SportArt from './SportArt.astro';
+import Chapter from './Chapter.astro';
 
 const programPhoto: Record<string, string> = {
   'elite-1on1': '/media/session-elite.jpg',
@@ -25,16 +26,16 @@ const hemat = (coret: number | undefined, harga: number) =>
   <div class="art-ring right-4 top-8 hidden h-20 w-20 border-crimson/20 sm:block" aria-hidden="true"></div>
   <div class="art-balls-orange absolute -top-6 right-0 h-40 w-40 opacity-60 [mask-image:linear-gradient(to_bottom_left,black,transparent)]" aria-hidden="true"></div>
   <div class="sport-ball sport-ball--orange left-[46%] top-24 hidden h-9 w-9 -rotate-12 lg:block" aria-hidden="true"></div>
-  <p class="ghost-word bottom-2 right-0 hidden text-[5rem] lg:block" aria-hidden="true">1-on-1</p>
+  <p class="ghost-word ghost-word--light bottom-2 right-0 hidden text-[5rem] lg:block" aria-hidden="true">1-on-1</p>
   <div class="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
     <div>
-      <p class="eyebrow text-xs font-bold tracking-[0.2em] text-brand-dark uppercase">Program Unggulan</p>
-      <h2 class="display mt-2 text-5xl leading-[0.9] sm:text-6xl lg:text-7xl">
+      <Chapter num="05" label="Program Unggulan" tone="light" class="mb-6" />
+      <h2 class="display text-5xl leading-[0.9] sm:text-6xl lg:text-7xl text-white">
         Private 1-on-1<br />
-        <span class="text-brand-dark">buat naik level</span>
+        <span class="text-brand">buat naik level</span>
       </h2>
     </div>
-    <p class="max-w-xs text-sm text-ink/60">
+    <p class="max-w-xs text-sm leading-relaxed text-white/70">
       Semua online, jadwal fleksibel, didampingi coach. Mulai dari tes penempatan dulu.
     </p>
   </div>
@@ -126,9 +127,12 @@ const hemat = (coret: number | undefined, harga: number) =>
                 target="_blank"
                 rel="noopener noreferrer"
                 data-wa-cta={`program-${p.slug}`}
+                data-register
+                data-program={p.nama}
+                data-source={`program-${p.slug}`}
                 class="inline-flex items-center justify-center gap-2 rounded-2xl bg-brand px-5 py-3.5 text-sm font-bold text-ink transition hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none active:scale-95"
               >
-                Daftar via WhatsApp ↗
+                Daftar Sekarang ↗
               </a>
               <a
                 href={`/program/${p.slug}`}
@@ -143,7 +147,7 @@ const hemat = (coret: number | undefined, harga: number) =>
     }
   </div>
 
-  <div class="relative mt-6 overflow-hidden rounded-3xl bg-ink shadow-[0_28px_60px_-24px_rgba(36,26,18,0.65)]">
+  <div class="relative mt-6 overflow-hidden rounded-3xl bg-[#1c1208] shadow-[0_28px_60px_-24px_rgba(0,0,0,0.6)] ring-1 ring-white/12">
     <img
       src="/media/program-elite.jpg"
       alt=""
@@ -186,9 +190,12 @@ const hemat = (coret: number | undefined, harga: number) =>
             target="_blank"
             rel="noopener noreferrer"
             data-wa-cta="membership"
+            data-register
+            data-program="Membership (early access)"
+            data-source="membership"
             class="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-white px-5 py-3.5 text-sm font-bold text-ink transition hover:bg-gold focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none active:scale-95"
           >
-            Info Early Access ↗
+            Daftar Early Access ↗
           </a>
         </div>
       </div>

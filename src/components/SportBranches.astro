@@ -1,0 +1,50 @@
+---
+import SportIcon from './SportIcon.astro';
+import Chapter from './Chapter.astro';
+import SportArt from './SportArt.astro';
+import { cabangOlahraga } from '../data/sports';
+
+const cabang = cabangOlahraga;
+---
+
+<section class="relative mx-auto max-w-6xl overflow-hidden px-4 py-14 sm:px-6">
+  <SportArt
+    variant="net"
+    stroke="#e05e00"
+    opacity={0.1}
+    class="absolute inset-0 h-full w-full [mask-image:linear-gradient(to_bottom_right,black,transparent_72%)]"
+  />
+  <div class="art-dots absolute inset-0 opacity-60 [mask-image:linear-gradient(to_bottom,black,transparent_60%)]" aria-hidden="true"></div>
+
+  <div class="relative">
+    <Chapter num="01" label="Cabang Olahraga" />
+
+    <div class="mt-4 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+      <h2 class="display max-w-lg text-4xl leading-[0.95] sm:text-5xl lg:text-6xl">
+        Satu program,<br />
+        <span class="text-brand-dark">semua cabang</span>
+      </h2>
+      <p class="max-w-sm text-sm leading-relaxed text-ink/60">
+        Metodologi komunikasi yang sama untuk sport kamu — public speaking, wawancara media, dan bahasa Inggris
+        yang tetap terasa natural ala atlet.
+      </p>
+    </div>
+
+    <ul class="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-8" data-reveal-group>
+      {
+        cabang.map((c, i) => (
+          <li
+            data-reveal="pop"
+            class="group flex flex-col items-center gap-2.5 rounded-3xl border border-ink/10 bg-white/80 px-2 py-5 text-center shadow-soft transition duration-300 hover:-translate-y-1 hover:border-brand/40 hover:bg-white"
+            style={`transition-delay:${Math.min(i * 45, 320)}ms`}
+          >
+            <span class="flex h-14 w-14 items-center justify-center rounded-2xl bg-ink text-brand transition duration-300 group-hover:bg-brand group-hover:text-ink">
+              <SportIcon sport={c.sport} size={30} />
+            </span>
+            <span class="text-[11px] leading-tight font-bold tracking-wide text-ink/70 sm:text-xs">{c.nama}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

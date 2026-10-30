@@ -192,6 +192,10 @@ body {
   color: rgba(36, 26, 18, 0.07);
 }
 
+.ghost-word--light {
+  color: rgba(255, 255, 255, 0.09);
+}
+
 .art-ring {
   position: absolute;
   border-radius: 9999px;
@@ -721,5 +725,200 @@ body {
   border-radius: 9999px;
   background: var(--color-gold);
   transform: rotate(45deg);
+}
+
+/* ── Ikon cabang olahraga: tiap cabor punya gerak sendiri ─────── */
+.si-roll {
+  animation: si-roll 9s linear infinite;
+  transform-origin: 50% 50%;
+}
+
+.si-bounce {
+  animation: si-bounce 1.5s cubic-bezier(0.4, 0, 0.3, 1) infinite;
+}
+
+.si-bounce-late {
+  animation-delay: -0.75s;
+}
+
+.si-float {
+  animation: si-float 3.4s ease-in-out infinite;
+}
+
+.si-swing {
+  animation: si-swing 2.6s ease-in-out infinite;
+  transform-origin: 60% 90%;
+}
+
+.si-wave {
+  animation: si-wave 2.8s ease-in-out infinite;
+}
+
+.si-run {
+  animation: si-run 1.25s ease-in-out infinite;
+}
+
+.si-punch {
+  animation: si-punch 1.15s cubic-bezier(0.4, 0, 0.3, 1) infinite;
+}
+
+.si-shine {
+  animation: si-shine 3s ease-in-out infinite;
+  transform-origin: 50% 100%;
+}
+
+@keyframes si-roll {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes si-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+@keyframes si-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(3deg);
+  }
+}
+
+@keyframes si-swing {
+  0%,
+  100% {
+    transform: rotate(-13deg);
+  }
+  50% {
+    transform: rotate(11deg);
+  }
+}
+
+@keyframes si-wave {
+  0%,
+  100% {
+    transform: translateX(-4px);
+  }
+  50% {
+    transform: translateX(4px);
+  }
+}
+
+@keyframes si-run {
+  0%,
+  100% {
+    transform: translateX(-5px) rotate(-2deg);
+  }
+  50% {
+    transform: translateX(5px) rotate(2deg);
+  }
+}
+
+@keyframes si-punch {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  45% {
+    transform: translateX(-7px);
+  }
+  70% {
+    transform: translateX(2px);
+  }
+}
+
+@keyframes si-shine {
+  0%,
+  100% {
+    transform: rotate(-5deg) translateY(0);
+    opacity: 0.85;
+  }
+  50% {
+    transform: rotate(5deg) translateY(-4px);
+    opacity: 1;
+  }
+}
+
+/* ── Chapter mark: penanda awal tiap section ──────────────────── */
+.chapter {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.chapter-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.1rem;
+  height: 1.6rem;
+  padding: 0 0.4rem;
+  border-radius: 0.5rem;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  line-height: 1;
+  letter-spacing: 0.06em;
+}
+
+.chapter-label {
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-brand-dark);
+  white-space: nowrap;
+}
+
+.chapter-rule {
+  flex: 1 1 auto;
+  height: 1px;
+  min-width: 1rem;
+  background: currentColor;
+  opacity: 0.16;
+}
+
+.chapter[data-tone='light'] .chapter-num {
+  background: var(--color-brand);
+  color: var(--color-ink);
+}
+
+.chapter[data-tone='light'] .chapter-label {
+  color: var(--color-gold);
+}
+
+.chapter[data-tone='light'] .chapter-rule {
+  color: #fff;
+  opacity: 0.28;
+}
+
+/* ── Permukaan section: tiap section punya warna latar sendiri ── */
+.surface-warm {
+  background: var(--color-paper-deep);
+}
+
+.surface-ink {
+  background: var(--color-ink);
+  color: #fff;
+}
+
+.surface-hair {
+  border-top: 1px solid rgba(36, 26, 18, 0.08);
+  border-bottom: 1px solid rgba(36, 26, 18, 0.08);
+}
+
+.surface-ink-hair {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 

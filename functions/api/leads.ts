@@ -11,30 +11,57 @@ function normWa(raw: string): string {
 
 export const onRequestPost = async (context: { request: Request; env: Env }): Promise<Response> => {
   const { request, env } = context;
-  const form = await request.formData();
+  const isJson = (request.headers.get('content-type') || '').includes('application/json');
 
-  const nama = String(form.get('nama') ?? '').trim().slice(0, 80);
-  const waRaw = String(form.get('wa') ?? '').trim().slice(0, 30);
-  const program = String(form.get('program') ?? '').trim().slice(0, 120) || 'Tidak disebutkan';
-  const sumber = String(form.get('sumber') ?? '').trim().slice(0, 80) || 'web';
-  const catatan = String(form.get('catatan') ?? '').trim().slice(0, 200);
-  const honeypot = String(form.get('website') ?? '');
+  let nama = '';
+  let waRaw = '';
+  let program = '';
+  let sumber = '';
+  let catatan = '';
+  let honeypot = '';
+
+  if (isJson) {
+    const body = (await request.json().catch(() => ({}))) as Record<string, unknown>;
+    nama = String(body.nama ?? '').trim().slice(0, 80);
+    waRaw = String(body.wa ?? '').trim().slice(0, 30);
+    program = String(body.program ?? '').trim().slice(0, 120) || 'Tidak disebutkan';
+    sumber = String(body.sumber ?? '').trim().slice(0, 80) || 'web';
+    catatan = String(body.catatan ?? '').trim().slice(0, 200);
+  } else {
+    const form = await request.formData();
+    nama = String(form.get('nama') ?? '').trim().slice(0, 80);
+    waRaw = String(form.get('wa') ?? '').trim().slice(0, 30);
+    program = String(form.get('program') ?? '').trim().slice(0, 120) || 'Tidak disebutkan';
+    sumber = String(form.get('sumber') ?? '').trim().slice(0, 80) || 'web';
+    catatan = String(form.get('catatan') ?? '').trim().slice(0, 200);
+    honeypot = String(form.get('website') ?? '');
+  }
+
+  const fail = (message: string, status: number) =>
+    isJson
+      ? Response.json({ ok: false, message }, { status })
+      : new Response(message, { status });
 
   if (!nama || !waRaw) {
-    return new Response('Data belum lengkap — mohon isi nama dan nomor WhatsApp.', { status: 400 });
+    return fail('Data belum lengkap — mohon isi nama dan nomor WhatsApp.', 400);
   }
 
   const wa = normWa(waRaw);
   if (wa.length < 10) {
-    return new Response('Nomor WhatsApp belum valid. Contoh: 081234567890.', { status: 400 });
+    return fail('Nomor WhatsApp belum valid. Contoh: 081234567890.', 400);
   }
 
   if (!honeypot) {
-    await env.DB.prepare(
-      'INSERT INTO leads (nama, wa, program, sumber, status, catatan) VALUES (?, ?, ?, ?, ?, ?)',
-    )
-      .bind(nama, wa, program, sumber, 'baru', catatan || null)
-      .run();
+    // simpan lead tidak boleh menggagalkan handoff ke WhatsApp
+    try {
+      await env.DB.prepare(
+        'INSERT INTO leads (nama, wa, program, sumber, status, catatan) VALUES (?, ?, ?, ?, ?, ?)',
+      )
+        .bind(nama, wa, program, sumber, 'baru', catatan || null)
+        .run();
+    } catch {
+      // abaikan: user tetap dapat link WhatsApp
+    }
   }
 
   const text =
@@ -42,8 +69,18 @@ export const onRequestPost = async (context: { request: Request; env: Env }): Pr
     (catatan ? ` Catatan: ${catatan}.` : '') +
     ` Sumber: ${sumber}. Boleh info jadwal & detailnya?`;
 
-  const settings = await getSettings(env);
-  const waNumber = settings.wa_number || '6285924041004';
+  let waNumber = '6285924041004';
+  try {
+    const settings = await getSettings(env);
+    waNumber = settings.wa_number || waNumber;
+  } catch {
+    // fallback ke nomor default
+  }
+  const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(text)}`;
 
-  return Response.redirect(`https://wa.me/${waNumber}?text=${encodeURIComponent(text)}`, 302);
+  if (isJson) {
+    return Response.json({ ok: true, waUrl });
+  }
+
+  return Response.redirect(waUrl, 302);
 };

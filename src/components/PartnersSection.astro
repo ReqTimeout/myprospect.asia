@@ -1,0 +1,71 @@
+---
+import Chapter from './Chapter.astro';
+import { partners } from '../data/partners';
+
+const mono = (nama: string) =>
+  nama
+    .split(/\s+/)
+    .filter((w) => /^[A-Za-z]/.test(w))
+    .slice(0, 2)
+    .map((w) => w[0]?.toUpperCase() ?? '')
+    .join('');
+
+const grup = [
+  { key: 'akademi', judul: 'Akademi & klub' },
+  { key: 'mitra', judul: 'Mitra pendukung' },
+];
+---
+
+<section class="relative mx-auto max-w-6xl overflow-hidden px-4 py-14 sm:px-6">
+  <div class="art-track absolute inset-x-0 bottom-0 h-24 opacity-40 [mask-image:linear-gradient(to_top,black,transparent)]" aria-hidden="true"></div>
+
+  <div class="relative">
+    <Chapter num="02" label="Mitra & Akademi" />
+
+    <div class="mt-4 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+      <h2 class="display max-w-lg text-4xl leading-[0.95] sm:text-5xl lg:text-6xl">
+        Bekerja sama dengan<br />
+        <span class="text-brand-dark">akademi & mitra</span>
+      </h2>
+      <p class="max-w-sm text-sm leading-relaxed text-ink/60">
+        Klub olahraga, akademi, dan mitra pendukung yang sudah dilatih bareng tim Prospect Asia.
+      </p>
+    </div>
+
+    <div class="mt-8 space-y-8">
+      {
+        grup.map((g) => {
+          const items = partners.filter((p) => p.jenis === g.key);
+          return (
+            <div>
+              <div class="flex items-baseline gap-3">
+                <h3 class="display text-lg tracking-tight sm:text-xl">{g.judul}</h3>
+                <span class="text-[11px] font-bold tracking-widest text-ink/40 uppercase">{items.length} mitra</span>
+                <span class="chapter-rule" aria-hidden="true" />
+              </div>
+              <ul class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3" data-reveal-group>
+                {items.map((p, i) => (
+                  <li
+                    data-reveal="pop"
+                    class="group flex items-center gap-3 rounded-2xl border border-ink/10 bg-white/85 px-4 py-3.5 shadow-soft transition duration-300 hover:-translate-y-1 hover:border-brand/45 hover:bg-white"
+                    style={`transition-delay:${Math.min(i * 50, 300)}ms`}
+                  >
+                    <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-ink text-sm font-black text-brand transition duration-300 group-hover:bg-brand group-hover:text-ink">
+                      {mono(p.nama)}
+                    </span>
+                    <span class="min-w-0">
+                      <span class="block text-sm leading-tight font-bold text-ink">{p.nama}</span>
+                      <span class="mt-1 block text-[10px] font-black tracking-widest text-brand-dark uppercase">
+                        {p.jenis === 'akademi' ? 'Akademi' : 'Mitra'}
+                      </span>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          );
+        })
+      }
+    </div>
+  </div>
+</section>

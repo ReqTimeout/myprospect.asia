@@ -3,6 +3,7 @@ import { waLink } from '../lib/wa';
 import { workshops, formatIdr } from '../data/workshops';
 import AutoGallery from './AutoGallery.astro';
 import SportArt from './SportArt.astro';
+import Chapter from './Chapter.astro';
 
 const gallery = [
   {
@@ -32,8 +33,8 @@ const gallery = [
 
   <div class="mb-8 grid items-center gap-8 md:grid-cols-[1.1fr_1fr]">
     <div class="max-w-2xl">
-      <p class="eyebrow text-xs font-bold tracking-[0.2em] text-brand-dark uppercase">Kolaborasi Akademi / Klub</p>
-      <h2 class="display mt-2 text-5xl leading-[0.9] sm:text-6xl lg:text-7xl">
+      <Chapter num="06" label="Workshop" class="mb-6" />
+      <h2 class="display text-5xl leading-[0.9] sm:text-6xl lg:text-7xl">
         Workshop buat<br />
         <span class="text-brand-dark">atlet binaanmu</span>
       </h2>
@@ -124,9 +125,12 @@ const gallery = [
                 target="_blank"
                 rel="noopener noreferrer"
                 data-wa-cta={`workshop-${w.slug}`}
+                data-register
+                data-program={w.nama}
+                data-source={`workshop-${w.slug}`}
                 class="inline-flex items-center justify-center gap-2 rounded-2xl border border-gold px-5 py-3.5 text-sm font-bold text-brand-dark transition hover:bg-gold hover:text-ink focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none active:scale-95"
               >
-                Booking via WhatsApp ↗
+                Booking Sekarang ↗
               </a>
               <a
                 href={`/workshop/${w.slug}`}

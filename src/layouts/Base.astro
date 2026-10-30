@@ -5,6 +5,12 @@ import '../styles/global.css';
 import { getImage } from 'astro:assets';
 import ogBg from '../assets/generated/a2-og-bg.jpg';
 import { jsonLd } from '../lib/seo';
+import RegisterModal from '../components/islands/RegisterModal.svelte';
+import { programs } from '../data/programs';
+import { workshops } from '../data/workshops';
+
+const programNames = programs.map((p) => p.nama);
+const workshopNames = workshops.map((w) => w.nama);
 
 interface Props {
   title: string;
@@ -55,6 +61,7 @@ const ogImageUrl = new URL(ogImage.src, Astro.site).href;
     <div class="page-curtain" aria-hidden="true"></div>
     <div class="scroll-progress" aria-hidden="true"></div>
     <slot />
+    <RegisterModal client:load programs={programNames} workshops={workshopNames} />
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
       window.gtag = function () {

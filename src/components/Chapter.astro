@@ -1,0 +1,16 @@
+---
+interface Props {
+  num: string;
+  label: string;
+  tone?: 'ink' | 'light';
+  class?: string;
+}
+
+const { num, label, tone = 'ink', class: cls = '' } = Astro.props;
+---
+
+<p class:list={['chapter', cls]} data-tone={tone}>
+  <span class="chapter-num">{num}</span>
+  <span class="chapter-label">{label}</span>
+  <span class="chapter-rule" aria-hidden="true"></span>
+</p>

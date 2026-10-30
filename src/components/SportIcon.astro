@@ -1,0 +1,211 @@
+---
+import type { Sport } from '../data/sports';
+
+interface Props {
+  sport: Sport;
+  size?: number;
+  class?: string;
+  stroke?: string;
+  animate?: boolean;
+}
+
+const { sport, size = 44, class: cls = '', stroke = 'currentColor', animate = true } = Astro.props;
+
+const animClass: Record<Sport, string> = {
+  'sepak-bola': 'si-roll',
+  futsal: 'si-bounce',
+  basket: 'si-bounce si-bounce-late',
+  voli: 'si-float',
+  'bulu-tangkis': 'si-swing',
+  renang: 'si-wave',
+  atletik: 'si-run',
+  tinju: 'si-punch',
+  piala: 'si-shine',
+};
+---
+
+{
+  sport === 'sepak-bola' ? (
+    <svg
+      class:list={[cls, animate && animClass['sepak-bola']]}
+      width={size}
+      height={size}
+      viewBox="0 0 48 48"
+      fill="none"
+      stroke={stroke}
+      stroke-width="2.2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <circle cx="24" cy="24" r="18" />
+      <path d="M24 16 L31.6 21.5 L28.7 30.5 L19.3 30.5 L16.4 21.5 Z" />
+      <path d="M24 16V6" />
+      <path d="M31.6 21.5L40 17.5" />
+      <path d="M28.7 30.5L33.5 39" />
+      <path d="M19.3 30.5L14.5 39" />
+      <path d="M16.4 21.5L8 17.5" />
+    </svg>
+  ) : sport === 'futsal' ? (
+    <svg
+      class:list={[cls, animate && animClass.futsal]}
+      width={size}
+      height={size}
+      viewBox="0 0 48 48"
+      fill="none"
+      stroke={stroke}
+      stroke-width="2.2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <rect x="7" y="12" width="34" height="24" rx="3" />
+      <path d="M24 12V36" />
+      <path d="M7 19h7v10H7" />
+      <path d="M41 19h-7v10h7" />
+      <circle cx="24" cy="24" r="4.2" />
+    </svg>
+  ) : sport === 'basket' ? (
+    <svg
+      class:list={[cls, animate && animClass.basket]}
+      width={size}
+      height={size}
+      viewBox="0 0 48 48"
+      fill="none"
+      stroke={stroke}
+      stroke-width="2.2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <circle cx="24" cy="24" r="18" />
+      <path d="M6 24h36" />
+      <path d="M24 6v36" />
+      <path d="M11 9.5c7 5 7 24 0 29" />
+      <path d="M37 9.5c-7 5-7 24 0 29" />
+    </svg>
+  ) : sport === 'voli' ? (
+    <svg
+      class:list={[cls, animate && animClass.voli]}
+      width={size}
+      height={size}
+      viewBox="0 0 48 48"
+      fill="none"
+      stroke={stroke}
+      stroke-width="2.2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <circle cx="24" cy="24" r="18" />
+      <path d="M11 15c6 3 9 8 11 15" />
+      <path d="M37 15c-6 3-9 8-11 15" />
+      <path d="M7 29c5 4 10 4 14 0 4-4 9-4 14 0 3 2.5 5 3 6 2.5" />
+    </svg>
+  ) : sport === 'bulu-tangkis' ? (
+    <svg
+      class:list={[cls, animate && animClass['bulu-tangkis']]}
+      width={size}
+      height={size}
+      viewBox="0 0 48 48"
+      fill="none"
+      stroke={stroke}
+      stroke-width="2.2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <ellipse cx="16" cy="16" rx="9.5" ry="11.5" />
+      <path d="M16 27.5v8" />
+      <path d="M13 40h6" />
+      <path d="M33 9l5 5-3 3-5-5z" />
+      <path d="M30 14l3.5 6" />
+      <path d="M37 16l-3.5 6" />
+    </svg>
+  ) : sport === 'renang' ? (
+    <svg
+      class:list={[cls, animate && animClass.renang]}
+      width={size}
+      height={size}
+      viewBox="0 0 48 48"
+      fill="none"
+      stroke={stroke}
+      stroke-width="2.2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <circle cx="15" cy="14" r="4" />
+      <path d="M19 18l8 4 7-3" />
+      <path d="M27 22l-2 7" />
+      <path d="M6 34c3.5-3 7-3 10.5 0s7 3 10.5 0 7-3 10.5 0 3.5 3 4.5 2" />
+      <path d="M6 41c3.5-3 7-3 10.5 0s7 3 10.5 0 7-3 10.5 0 3.5 3 4.5 2" />
+    </svg>
+  ) : sport === 'atletik' ? (
+    <svg
+      class:list={[cls, animate && animClass.atletik]}
+      width={size}
+      height={size}
+      viewBox="0 0 48 48"
+      fill="none"
+      stroke={stroke}
+      stroke-width="2.2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <circle cx="31" cy="12" r="4" />
+      <path d="M27 18l-6 7 6 4-3 9" />
+      <path d="M27 18l7 5" />
+      <path d="M21 25l-9 2" />
+      <path d="M21 29l9 2" />
+      <path d="M4 39h40" />
+    </svg>
+  ) : sport === 'tinju' ? (
+    <svg
+      class:list={[cls, animate && animClass.tinju]}
+      width={size}
+      height={size}
+      viewBox="0 0 48 48"
+      fill="none"
+      stroke={stroke}
+      stroke-width="2.2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <path d="M14 30V19a10 10 0 0 1 20 0v11a9 9 0 0 1-9 9h-2a9 9 0 0 1-9-9z" />
+      <path d="M34 22h4.5a5.5 5.5 0 0 1 0 11H34" />
+      <path d="M19 20h10" />
+      <path d="M12 38h24" />
+    </svg>
+  ) : (
+    <svg
+      class:list={[cls, animate && animClass.piala]}
+      width={size}
+      height={size}
+      viewBox="0 0 48 48"
+      fill="none"
+      stroke={stroke}
+      stroke-width="2.2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <path d="M16 9h16v11a8 8 0 0 1-16 0z" />
+      <path d="M16 12h-5.5a6 6 0 0 0 6 7" />
+      <path d="M32 12h5.5a6 6 0 0 1-6 7" />
+      <path d="M24 28v9" />
+      <path d="M17 39h14" />
+    </svg>
+  )
+}

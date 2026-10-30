@@ -3,8 +3,10 @@ import Base from '../layouts/Base.astro';
 import Header from '../components/Header.astro';
 import Dock from '../components/islands/Dock.svelte';
 import WaPopup from '../components/islands/WaPopup.svelte';
-import Marquee from '../components/Marquee.astro';
 import TickerRibbon from '../components/TickerRibbon.astro';
+import Chapter from '../components/Chapter.astro';
+import SportBranches from '../components/SportBranches.astro';
+import PartnersSection from '../components/PartnersSection.astro';
 import SportArt from '../components/SportArt.astro';
 import StatsBar from '../components/StatsBar.astro';
 import AboutSection from '../components/AboutSection.astro';
@@ -18,12 +20,10 @@ import FaqSection from '../components/FaqSection.astro';
 import CtaBand from '../components/CtaBand.astro';
 import Footer from '../components/Footer.astro';
 import { waLink } from '../lib/wa';
-import { partners } from '../data/partners';
 import { testimonials } from '../data/testimonials';
 import { faqs } from '../data/faq';
 import { organizationSchema, faqSchema } from '../lib/seo';
 
-const partnerNames = partners.map((p) => p.nama);
 const schema = [organizationSchema, faqSchema(faqs)];
 ---
 
@@ -91,14 +91,16 @@ const schema = [organizationSchema, faqSchema(faqs)];
         target="_blank"
         rel="noopener noreferrer"
         data-wa-cta="hero"
+        data-register
+        data-source="hero"
         data-magnetic
         data-hero="cta"
         class="btn-pop relative z-10 mt-7 inline-flex items-center gap-2 rounded-2xl bg-brand px-8 py-4 text-sm font-bold tracking-wide text-ink uppercase shadow-[0_18px_40px_-14px_rgba(255,122,26,0.65)] hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
       >
-        Daftar via WhatsApp
+        Daftar Sekarang
         <span aria-hidden="true">↗</span>
       </a>
-      <p class="relative z-10 mt-3 text-xs text-ink/50">Konsultasi gratis · jawab cepat di jam kerja</p>
+      <p class="relative z-10 mt-3 text-xs text-ink/50">Isi formulir 30 detik · admin balas di jam kerja</p>
       <div class="relative z-10 mt-10 flex flex-col items-center gap-1.5 text-ink/40" aria-hidden="true">
         <span class="text-[10px] font-bold tracking-[0.25em] uppercase">Scroll</span>
         <span class="scroll-hint block h-9 w-5 rounded-full border-2 border-ink/25 pt-1.5">
@@ -120,55 +122,77 @@ const schema = [organizationSchema, faqSchema(faqs)];
       tone="ink"
     />
 
-    <Marquee items={partnerNames} />
+    <div class="surface-warm">
+      <SportBranches />
+    </div>
 
-    <StatsBar />
+    <div class="surface-hair">
+      <PartnersSection />
+    </div>
+
+    <div class="surface-ink">
+      <StatsBar />
+    </div>
 
     <AboutSection />
 
-    <section class="relative mx-auto max-w-6xl overflow-hidden px-4 py-14 sm:px-6">
-      <SportArt variant="net" stroke="#ff7a1a" opacity={0.1} class="absolute inset-0 h-full w-full [mask-image:linear-gradient(to_bottom_right,black,transparent_70%)]" />
-      <div class="art-ring left-6 top-14 hidden h-16 w-16 border-gold/40 sm:block" aria-hidden="true"></div>
-      <div class="art-diamond top-10 right-10 h-3 w-3 bg-crimson/50 hidden sm:block" aria-hidden="true"></div>
-      <div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-        <div>
-          <p class="eyebrow text-xs font-bold tracking-[0.2em] text-brand-dark uppercase">Level &amp; Journey</p>
-          <h2 class="display mt-2 text-5xl leading-[0.9] sm:text-6xl lg:text-7xl">
-            Dari nol sampai<br />
-            <span class="relative inline-block">
-              <span class="text-brand-dark">siap panggung</span>
-              <span class="absolute -bottom-1 left-0 h-2.5 w-full rounded-full bg-gold/55" aria-hidden="true"></span>
-            </span>
-          </h2>
-        </div>
-        <p class="max-w-xs pt-6 text-sm leading-relaxed text-ink/60 sm:pt-8">
-          Tiga level, satu jalur: dasar, berkembang, lalu tampil di depan publik.
-        </p>
-      </div>
-      <div class="card-soft relative overflow-hidden rounded-3xl p-6 sm:p-8">
-        <SportArt variant="court" stroke="#241a12" opacity={0.08} class="absolute inset-0 h-full w-full [mask-image:linear-gradient(to_bottom_right,black,transparent_60%)]" />
-        <div class="relative">
-          <LevelJourney client:visible />
-        </div>
-      </div>
-    </section>
+    <div class="surface-warm">
+      <section class="relative mx-auto max-w-6xl overflow-hidden px-4 py-14 sm:px-6">
+        <SportArt variant="net" stroke="#ff7a1a" opacity={0.1} class="absolute inset-0 h-full w-full [mask-image:linear-gradient(to_bottom_right,black,transparent_70%)]" />
+        <div class="art-ring left-6 top-14 hidden h-16 w-16 border-gold/40 sm:block" aria-hidden="true"></div>
+        <div class="art-diamond top-10 right-10 h-3 w-3 bg-crimson/50 hidden sm:block" aria-hidden="true"></div>
 
-    <ProgramSection />
+        <Chapter num="04" label="Level & Journey" class="mb-6" />
+
+        <div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+          <div>
+            <h2 class="display text-5xl leading-[0.9] sm:text-6xl lg:text-7xl">
+              Dari nol sampai<br />
+              <span class="relative inline-block">
+                <span class="text-brand-dark">siap panggung</span>
+                <span class="absolute -bottom-1 left-0 h-2.5 w-full rounded-full bg-gold/55" aria-hidden="true"></span>
+              </span>
+            </h2>
+          </div>
+          <p class="max-w-xs pt-6 text-sm leading-relaxed text-ink/60 sm:pt-8">
+            Tiga level, satu jalur: dasar, berkembang, lalu tampil di depan publik.
+          </p>
+        </div>
+        <div class="card-soft relative overflow-hidden rounded-3xl p-6 sm:p-8">
+          <SportArt variant="court" stroke="#241a12" opacity={0.08} class="absolute inset-0 h-full w-full [mask-image:linear-gradient(to_bottom_right,black,transparent_60%)]" />
+          <div class="relative">
+            <LevelJourney client:visible />
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="surface-ink">
+      <ProgramSection />
+    </div>
 
     <WorkshopSection />
 
-    <section class="relative mx-auto max-w-6xl overflow-hidden px-4 py-14 sm:px-6">
-      <div class="art-blob -top-20 right-[-6rem] h-64 w-64" style="background: radial-gradient(circle, rgba(255,195,46,0.16), transparent 68%);" aria-hidden="true"></div>
-      <div class="mb-8">
-        <p class="eyebrow text-xs font-bold tracking-[0.2em] text-brand-dark uppercase">Kata Mereka</p>
-        <h2 class="display mt-2 text-5xl sm:text-6xl lg:text-7xl">Testimoni atlet</h2>
-      </div>
-      <Testimonials client:visible items={testimonials} />
-    </section>
+    <div class="surface-warm">
+      <section class="relative mx-auto max-w-6xl overflow-hidden px-4 py-14 sm:px-6">
+        <div class="art-blob -top-20 right-[-6rem] h-64 w-64" style="background: radial-gradient(circle, rgba(255,195,46,0.16), transparent 68%);" aria-hidden="true"></div>
+
+        <Chapter num="07" label="Testimoni" class="mb-6" />
+
+        <div class="mb-8">
+          <h2 class="display text-5xl sm:text-6xl lg:text-7xl">
+            Kata <span class="text-brand-dark">mereka</span>
+          </h2>
+        </div>
+        <Testimonials client:visible items={testimonials} />
+      </section>
+    </div>
 
     <CoachesSection />
 
-    <BlogPreview />
+    <div class="surface-warm">
+      <BlogPreview />
+    </div>
 
     <FaqSection />
 

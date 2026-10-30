@@ -1,6 +1,7 @@
 ---
 import { faqs } from '../data/faq';
 import FaqAccordion from './islands/FaqAccordion.svelte';
+import Chapter from './Chapter.astro';
 import { waLink } from '../lib/wa';
 ---
 
@@ -10,8 +11,8 @@ import { waLink } from '../lib/wa';
 
   <div class="relative grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-14">
     <div class="relative lg:sticky lg:top-24">
-      <p class="eyebrow text-xs font-bold tracking-[0.2em] text-brand-dark uppercase">FAQ</p>
-      <h2 class="display mt-2 text-4xl leading-[0.95] sm:text-5xl lg:text-6xl">
+      <Chapter num="10" label="FAQ" class="mb-6" />
+      <h2 class="display text-4xl leading-[0.95] sm:text-5xl lg:text-6xl">
         Pertanyaan yang<br />sering muncul
       </h2>
       <p class="mt-4 max-w-sm text-sm leading-relaxed text-ink/65">
