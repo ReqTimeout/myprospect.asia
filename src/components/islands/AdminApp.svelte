@@ -4,17 +4,20 @@
     Activity,
     AreaChart,
     BarChart3,
+    Check,
     ChevronUp,
     ChevronDown,
+    Copy,
     FileText,
+    HardDrive,
     Image as ImageIcon,
     LayoutDashboard,
     LogOut,
     ExternalLink,
     RefreshCw,
     Settings,
-    Smartphone,
     Users,
+    Video,
   } from '@lucide/svelte';
   import AdminKonten from './AdminKonten.svelte';
 
@@ -63,6 +66,8 @@
 
   type StatusMedia = { siap: boolean; bucket: string | null; langkah: string[] };
   type Berkas = { key: string; ukuran: number; waktu: string };
+
+  let tersalin = $state('');
 
   const tabs = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -209,6 +214,36 @@
 
   function ukuran(v: number): string {
     return v > 1024 * 1024 ? `${(v / 1024 / 1024).toFixed(1)} MB` : `${Math.round(v / 1024)} KB`;
+  }
+
+  // Kunci R2 = "media/<nama>" dan route publiknya /media/<nama>, jadi path
+  // yang disalin bisa langsung ditempel ke kolom "Gambar utama" tab Konten.
+  function namaBerkas(key: string): string {
+    return key.split('/').pop() ?? key;
+  }
+
+  function gambar(key: string): boolean {
+    return /\.(jpg|jpeg|png|webp|gif|avif)$/i.test(key);
+  }
+
+  function tanggal(iso: string): string {
+    try {
+      return new Date(iso).toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' });
+    } catch {
+      return iso;
+    }
+  }
+
+  async function salin(teks: string) {
+    try {
+      await navigator.clipboard.writeText(teks);
+      tersalin = teks;
+      setTimeout(() => {
+        if (tersalin === teks) tersalin = '';
+      }, 1800);
+    } catch {
+      salahMedia = 'Browser menolak akses clipboard — salin manual dari teksnya.';
+    }
   }
 
   $effect(() => {
@@ -1084,11 +1119,11 @@
           ]}
         >
           <div class="flex items-center gap-2.5">
-            <Smartphone size={16} class={media?.siap ? 'text-emerald-400' : 'text-gold'} />
+            <HardDrive size={16} class={media?.siap ? 'text-emerald-400' : 'text-gold'} />
             <p class="text-sm font-black tracking-wide uppercase">
               {media?.siap ? 'R2 aktif — siap unggah' : 'R2 belum aktif'}
             </p>
-            <span class="ml-auto rounded-full bg-ink/50 px-2.5 py-1 font-mono text-[10px] font-bold text-bone/60">
+            <span class="ml-auto shrink-0 rounded-full bg-ink/50 px-2.5 py-1 font-mono text-[10px] font-bold whitespace-nowrap text-bone/60">
               {media?.bucket ?? 'prospect-media'}
             </span>
           </div>
@@ -1135,14 +1170,55 @@
             {#if salahMedia}<p class="mt-2 text-xs text-brand">{salahMedia}</p>{/if}
 
             {#if berkas.length > 0}
-              <ul class="mt-4 divide-y divide-white/8">
+              <p class="mt-4 mb-2 text-[11px] text-bone/45">
+                Salin path-nya lalu tempel ke kolom &ldquo;Gambar utama&rdquo; di tab Konten.
+              </p>
+              <ul class="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
                 {#each berkas as b (b.key)}
-                  <li class="flex items-center justify-between gap-3 py-2 font-mono text-[11px]">
-                    <span class="min-w-0 truncate text-bone/80">{b.key}</span>
-                    <span class="shrink-0 text-bone/40">{ukuran(b.ukuran)}</span>
+                  <li class="overflow-hidden rounded-2xl border border-white/10 bg-white/3">
+                    <div class="h-36 bg-black/40 sm:h-40">
+                      {#if gambar(b.key)}
+                        <img
+                          src={'/' + b.key}
+                          alt={namaBerkas(b.key)}
+                          loading="lazy"
+                          class="h-full w-full object-contain p-2"
+                        />
+                      {:else}
+                        <span class="grid h-full place-items-center text-bone/35"><Video size={22} /></span>
+                      {/if}
+                    </div>
+                    <div class="p-3">
+                      <p class="truncate font-mono text-[11px] font-bold text-bone/85">{namaBerkas(b.key)}</p>
+                      <p class="mt-0.5 text-[10px] text-bone/40">
+                        {ukuran(b.ukuran)} &middot; {tanggal(b.waktu)}
+                      </p>
+                      <div class="mt-2.5 flex flex-wrap gap-1.5">
+                        <button
+                          type="button"
+                          onclick={() => salin('/' + b.key)}
+                          class="flex items-center gap-1.5 rounded-lg border border-white/12 px-2 py-1 text-[10px] font-bold text-bone/70 transition hover:border-gold/50 hover:text-gold focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none active:scale-95"
+                        >
+                          {#if tersalin === '/' + b.key}<Check size={11} /> Tersalin{:else}<Copy size={11} /> Salin path{/if}
+                        </button>
+                        <a
+                          href={'/' + b.key}
+                          target="_blank"
+                          rel="noreferrer"
+                          class="flex items-center gap-1.5 rounded-lg border border-white/12 px-2 py-1 text-[10px] font-bold text-bone/70 transition hover:border-gold/50 hover:text-gold focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none"
+                        >
+                          <ExternalLink size={11} /> Buka
+                        </a>
+                      </div>
+                    </div>
                   </li>
                 {/each}
               </ul>
+            {:else}
+              <p class="mt-4 flex items-center gap-2 rounded-2xl border border-dashed border-white/12 px-4 py-3 text-[11px] text-bone/45">
+                <HardDrive size={13} class="shrink-0" />
+                Bucket masih kosong. Unggah berkas pertama di atas, lalu salin path-nya ke kolom &ldquo;Gambar utama&rdquo;.
+              </p>
             {/if}
           </div>
         {/if}
