@@ -96,6 +96,9 @@ const page = (opts: {
     ? `<script>window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments)};window.gtag('js',new Date());window.gtag('config','${ga4}');</script><script async src="https://www.googletagmanager.com/gtag/js?id=${ga4}"></script>`
     : '';
 
+  // Di runtime Workers, Date.now() = 0 di module scope -> tahun harus dihitung saat request.
+  const year = new Date().getFullYear();
+
   const navHtml = NAV.map(
     (n) =>
       `<a href="${n.href}"${n.label === 'Berita' ? ' aria-current="page"' : ''}>${n.label}</a>`,
@@ -152,6 +155,8 @@ const page = (opts: {
 <meta property="article:published_time" content="${esc(post.pub_date)}">
 <meta property="article:section" content="${esc(post.kategori)}">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${esc(post.title)}">
+<meta name="twitter:description" content="${esc(post.desc)}">
 <meta name="twitter:image" content="${esc(coverAbs)}">
 <link rel="icon" href="/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -332,7 +337,7 @@ footer nav{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-bot
   <nav aria-label="Navigasi footer">
     <a href="/">Beranda</a><a href="/#program">Program</a><a href="/#workshop">Workshop</a><a href="/berita/">Berita</a><a href="/tentang/">Tentang</a><a href="/faq/">FAQ</a>
   </nav>
-  © 2026 ${SITE_CFG.legal} — PT Kita Berani Bicara
+  © ${year} ${SITE_CFG.legal}. All rights reserved.
 </footer>
 
 <nav class="dock" aria-label="Navigasi utama">
