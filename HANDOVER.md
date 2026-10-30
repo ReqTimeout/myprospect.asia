@@ -264,6 +264,7 @@ Jebakan penting:
 | Screenshot + audit kontras | `scripts/verify-home.mjs` | `node scripts/verify-home.mjs <base-url>` → screenshot per area (partners/badge/vip/level/program + full page) ke `~/Downloads/vc-*.png` untuk desktop 1440×900 + mobile 390×844, sekaligus audit kontras WCAG (kirim `oklab()` + compositing alpha + sampling gradient). **Screenshot wajib dibaca via vision** — angka kontras tidak menangkap "kepotong"/"tidak premium" |
 | Screenshot + kontras (home + detail berita) | `scripts/verify-revisi.mjs` | `node scripts/verify-revisi.mjs <base-url>` → **2 halaman** (home & `/berita/bintang-gohan`) × 2 viewport; screenshot per area ke `~/Downloads/rv-*.png`, audit kontras WCAG dengan selector per halaman, plus cek overflow (`docScrollW` vs viewport). Untuk revisi yang menyentuh header/footer/program/mitra **dan** halaman detail berita |
 | E2E domain + admin guard | `scripts/verify-domain.mjs` | `set -a && . ./.env.admin && set +a && node scripts/verify-domain.mjs [base-url]` → **39 cek**: guard admin (401 + 302 `/admin/`→login), login benar/salah + atribut cookie (`HttpOnly`/`Secure`/`SameSite=Lax`), semua endpoint admin 200+JSON, logout, API publik, canonical/`og:url` pakai domain kustom, **www → apex 301**, sitemap + robots, plus alur lead (302 → `wa.me` + validasi 400). **Wajib tiap kali domain/SEO/admin/alur lead diubah** |
+| E2E UI panel admin (browser sungguhan) | `scripts/verify-admin-ui.mjs` | `set -a && . ./.env.admin && set +a && node scripts/verify-admin-ui.mjs [base-url]` → **38 cek** di desktop 1440×900 + mobile 390×844: `/admin/` tanpa login terlempar ke login, password salah memunculkan "Password salah.", password benar masuk, **tiap tab menegaskan nav menyorot tab yang benar + kontennya benar-benar termuat**, tulis beneran (klik Simpan pengaturan lalu bandingkan API sebelum/sesudah — idempoten karena PUT settings per-key upsert), Keluar balik ke login, console error + request gagal. Password dibaca dari env dan **tidak pernah dicetak**. Screenshot `ad-*.png` **wajib dibaca via vision** |
 
 Alur wajib: `npm run build` → serve `dist/` → `audit-frames.mjs` → **baca frame via vision** → perbaiki → ulangi → `audit-clip.mjs` → deploy → audit live → commit+push.
 
@@ -527,8 +528,26 @@ Penting: blok ini **di atas** cek admin, supaya `www.../admin/` ikut dipindah (3
 
 > **Honeypot**: field `website` di form native **mencegah** penyimpanan ke D1, tapi redirect ke WhatsApp tetap jalan → dipakai `scripts/verify-domain.mjs` supaya tes lead **tidak mengotori** D1. Jalur JSON **tidak** membaca honeypot (selalu simpan) — itu jalur `RegisterModal.svelte` untuk pengguna sungguhan.
 
-### 22.5 Status verifikasi 30 Okt 2026 (domain kustom, produksi)
+### 22.5 UI panel admin diuji di browser (bukan cuma API)
 
+`scripts/verify-admin-ui.mjs` → **SEMUA PASS (38/38)** di desktop + mobile. Yang terverifikasi:
+
+| Area | Hasil |
+|---|---|
+| Login | `/admin/` tanpa sesi → `/admin/login/`; password salah → "Password salah." dan tetap di login; password benar → masuk dashboard |
+| Dashboard | 4 kartu statistik terisi (Lead hari ini 0, Belum dikontak 0, Total lead 0, Klik WA 7 hari 7) |
+| Leads | Filter status tampil + empty state "Belum ada lead dengan filter ini." |
+| Konten | 3 berita tampil lengkap dengan chip kategori berwarna, badge PUBLISHED, tanggal, slug, tombol sunting/hapus |
+| Media | State benar: instruksi mengaktifkan bucket `prospect-media` (R2 memang belum aktif — blocker #1) |
+| Pengaturan | Form terisi dari API; **klik Simpan benar-benar mengirim PUT dan berhasil**, nilai sebelum = sesudah (round-trip idempoten) |
+| Keluar | Balik ke `/admin/login/` |
+| Runtime | 0 console error, 0 request gagal |
+
+> **Pelajaran penting soal assertion.** Versi pertama tes ini **lulus palsu**: cek "panjang teks `main` > 10 karakter" membuat tab Konten dan Leads dianggap ter-render padahal isinya masih `Memuat…`. Ketahuan **hanya** karena screenshot-nya dibaca lewat vision. Perbaikannya: (1) sinyal siap = nav sudah menyorot tab yang diklik **dan** teks `main` tidak lagi mengandung kata `Memuat`; (2) regex awal salah karena panel leads menulis **`Memuat leads…`**, bukan `Memuat…`; (3) tiap tab punya `EXPECT` kontennya sendiri. Angka PASS tanpa melihat gambar **tidak** cukup untuk UI.
+
+### 22.6 Status verifikasi 30 Okt 2026 (domain kustom, produksi)
+
+- `scripts/verify-admin-ui.mjs https://myprospect.asia` → **SEMUA PASS (38/38)** — lihat §22.5.
 - `scripts/verify-domain.mjs https://myprospect.asia` → **SEMUA PASS (39/39)**, termasuk `www → apex 301` dan `www /admin -> 301`.
 - `scripts/verify-revisi.mjs https://myprospect.asia` → 4 kombinasi (home + `/berita/bintang-gohan` × 1440×900 + 390×844), `docW == vw`, **0 error, 0 request gagal, 0 pelanggaran kontras**.
 - `https://www.myprospect.asia/` → **301 → `https://myprospect.asia/`** (1 redirect, lalu 200 — tidak ada loop).
