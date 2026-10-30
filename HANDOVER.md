@@ -60,6 +60,7 @@ Astro static (dist) ──► Cloudflare Pages
 ```
 
 - **Pages Functions menang atas static asset** untuk path yang sama. Detail berita dilayani `functions/berita/[slug].ts` (file `src/pages/berita/[slug].astro` **sudah dihapus**). `env.ASSETS.fetch()` dipakai sebagai fallback saat slug kosong.
+- **Detail berita = halaman HTML mandiri, BUKAN halaman Astro.** Tidak memakai `Base.astro`, Tailwind, `Header.astro`, `Footer.astro`, atau island Svelte — semua CSS ditulis inline di dalam template function. Konsekuensi: **header, footer, dock, dan token warna harus dibuat manual di sana**. Kalau desain header situs berubah, halaman ini TIDAK ikut berubah otomatis. Lihat §21.
 - Admin HTML-nya page statis `src/pages/admin/index.astro` + island `AdminApp.svelte` (tab Dashboard/Leads/Konten/Media/Pengaturan).
 - Konten publik **live-hydrate**: island ambil JSON dari `/api/posts` & `/api/content/[kind]` lewat `src/lib/live.ts` (cache per page-load, dedupe). Edit di admin → tampil tanpa deploy.
 - Auth admin: password → `ADMIN_PASSWORD`; cookie `pa_admin` = `exp.HMAC-SHA256(exp)`, HttpOnly/Secure/SameSite=Lax, 7 hari (`functions/_lib/auth.ts`).
@@ -101,7 +102,7 @@ Token di `src/styles/global.css` (`@theme`):
 | `--color-ink-2` | `#17110b` | **khusus admin panel** (tetap dark) |
 | `--color-bone` | `#f7f5f2` | **khusus admin panel** (teks di admin) |
 | `--color-brand` | `#ff7a1a` | **oranye utama** (CTA, harga, band, aksen) |
-| `--color-brand-dark` | `#c04f00` | teks oranye (kontras), hover — Okt 2026 digelapkan dari `#e05e00` supaya teks kecil oranye di atas putih lolos 4.5:1 |
+| `--color-brand-dark` | `#bc4c00` | teks oranye (kontras), hover — Okt 2026 digelapkan 2× dari `#e05e00` → `#c04f00` → `#bc4c00` supaya teks kecil oranye lolos 4.5:1 di atas putih **dan** di atas `paper-deep` (footer) |
 | `--color-brand-soft` | `#ffe3c4` | chip, badge, tint |
 | `--color-gold` | `#ffc32e` | badge tier, aksen kuning |
 | `--color-crimson` | `#c8232b` | **aksen merah** (titik eyebrow, ring, diamond, stiker) |
@@ -116,6 +117,7 @@ Token di `src/styles/global.css` (`@theme`):
 - Komponen reusable baru: `src/components/SportArt.astro` (SVG inline varian `stadium|court|net`, prop `stroke` + `opacity`) dan `src/components/AutoGallery.astro` (galeri foto autoplay props `images`, `step`, `class`, `imgClass`). Dipakai di Level & Journey, Program, Testimonials, Coaches, Berita, Workshop, dan CTA.
 - Komponen baru: `src/components/TickerRibbon.astro` — pita ticker berjalan (props `items`, `speed`, `tone` = `ink|brand|none`, `class`). Root = `.rail-wrap ticker-fade overflow-hidden`. Dipakai di StatsBar (scoreboard) dan section lain.
 - Utilitas & komponen homepage (Okt 2026, revisi "Mitra + Program"): `.crest*` (lencana mitra SVG), `.live-badge` + `.live-dot` (badge "Online" hijau berdenyut), `.prog-bg*` + `.prog-card` (kartu program yang menyatu dengan latar), `.vip-card*` + `.vip-rule` + `.vip-cta` (kartu Membership premium). Komponen: `src/components/PartnerLogo.astro`, `src/components/ProgramBackdrop.astro`, tipe `CrestShape` di `src/data/crest.ts`.
+- **Warna kategori berita** (Okt 2026): `src/data/categories.ts` → `categoryStyle(kategori)` mengembalikan `{ tone, text, border, dot, wash }`. Tiga tone: `Bintang` = emas, `Kolaborasi` = oranye, `Berita` = merah; kategori lain otomatis jatuh ke tone default (tidak error). Dipakai bareng di `functions/berita/[slug].ts` (HTML mandiri) dan `src/components/islands/BeritaList.svelte` — **satu sumber kebenaran** untuk warna label. Kontras chip sudah diuji: bintang 7.4:1, kolaborasi 5.2:1, berita 6.1:1.
 - **Jebakan kontras kartu di section gelap**: `.surface-ink` memberi `color:#fff` ke seluruh turunannya. Kartu terang (`.card-soft`, `.prog-card`) **wajib** mendeklarasikan `color` sendiri — kalau tidak, judul kartu ikut putih dan hilang di atas gradient krem. `.prog-card` sudah mengaturnya (`color: var(--color-ink)`).
 - Admin **tetap dark** (pakai `bg-ink`/`text-bone`) — jangan di-sweep saat ganti tema.
 
@@ -260,6 +262,7 @@ Jebakan penting:
 | Deteksi kepotong / tumpang tindih | `scripts/audit-clip.mjs` | `node scripts/audit-clip.mjs <base-url>` → 10 halaman × 2 viewport; cek (1) teks terpotong di elemen `overflow:hidden`, (2) elemen keluar viewport tanpa mask ancestor, (3) elemen `fixed` menutupi elemen interaktif >30%. Target **0 overflow & 0 covered** |
 | Chromium headless | `/Users/maabook/Library/Caches/ms-playwright/chromium_headless_shell-1243/chrome-headless-shell-mac-arm64/chrome-headless-shell` | dipakai kedua script di atas (`playwright-core` di `node_modules`, gitignored) |
 | Screenshot + audit kontras | `scripts/verify-home.mjs` | `node scripts/verify-home.mjs <base-url>` → screenshot per area (partners/badge/vip/level/program + full page) ke `~/Downloads/vc-*.png` untuk desktop 1440×900 + mobile 390×844, sekaligus audit kontras WCAG (kirim `oklab()` + compositing alpha + sampling gradient). **Screenshot wajib dibaca via vision** — angka kontras tidak menangkap "kepotong"/"tidak premium" |
+| Screenshot + kontras (home + detail berita) | `scripts/verify-revisi.mjs` | `node scripts/verify-revisi.mjs <base-url>` → **2 halaman** (home & `/berita/bintang-gohan`) × 2 viewport; screenshot per area ke `~/Downloads/rv-*.png`, audit kontras WCAG dengan selector per halaman, plus cek overflow (`docScrollW` vs viewport). Untuk revisi yang menyentuh header/footer/program/mitra **dan** halaman detail berita |
 
 Alur wajib: `npm run build` → serve `dist/` → `audit-frames.mjs` → **baca frame via vision** → perbaiki → ulangi → `audit-clip.mjs` → deploy → audit live → commit+push.
 
@@ -298,7 +301,7 @@ Status terakhir: **audit 22/22 · 0 bug**, e2e konten 24/24, motion probe (title
 5. **Folder kosong** di `Website Material/`: `Coaches Picture/`, `Copywriting/`, `Testimonials/` — menunggu file klien.
 6. **Handle IG/TikTok** resmi belum ada (teks di program menyebut "Konten atlet di Instagram Prospect Asia").
 7. Foto klien final untuk program/coaches (yang dipakai sekarang mix foto workshop + stock session).
-8. **Logo resmi mitra** (Djanur Football Academy, Dream Baller ID, PB Jaya Raya Ragunan, Akademi Futsal Margahayu Raya, MFC Marunda, SSBRBC, Little Pep, Pep Sports, Exortive, RS Limijati) — belum ada di materi mana pun. Saat ini pakai lencana SVG. Taruh file asli di `public/media/partners/<slug>.png|svg|jpg|webp` → otomatis terpakai tanpa ubah kode.
+8. **Logo resmi mitra** (Djanur Football Academy, Dream Baller ID, PB Jaya Raya Ragunan, Akademi Futsal Margahayu Raya, MFC Marunda, SSBRBC, Little Pep, Pep Sports, Exortive, RS Limijati) — **sudah dicek ulang di Okt 2026**: nol file logo di repo, `public/media/`, `Website Material/`, ZIP klien, dan PDF klien (PDF-nya **0 objek gambar** — 0 `/Subtype /Image`). Poster `Website Material/Program - Product/1-3.png` juga sudah dibuka satu per satu: hanya berisi logo Prospect Asia, bukan logo mitra. Jadi lencana SVG tetap dipakai. Taruh file asli di `public/media/partners/<slug>.png|svg|jpg|webp` → otomatis terpakai tanpa ubah kode.
 
 ---
 
@@ -403,6 +406,41 @@ Enam permintaan klien via anotasi browser, semuanya sudah di-deploy & diverifika
 ### 20.6 Perbaikan kontras (harus dibaca!)
 
 - **Judul kartu program sebelumnya putih di atas kartu krem → tidak terbaca sama sekali.** Penyebab: `.surface-ink` memberi `color:#fff` ke semua turunan, dan `.prog-card` tidak mendeklarasikan `color` sendiri. Fix: `.prog-card { color: var(--color-ink); }` + `text-ink` eksplisit di `<h3>`.
-- `--color-brand-dark` digelapkan `#e05e00` → `#c04f00` (teks kecil oranye di atas putih kini 4.8:1, sebelumnya 3.6:1 gagal). Ini memengaruhi ~117 pemakaian `brand-dark` di seluruh situs.
+- `--color-brand-dark` digelapkan `#e05e00` → `#c04f00` (teks kecil oranye di atas putih kini 4.8:1, sebelumnya 3.6:1 gagal), lalu `#c04f00` → `#bc4c00` di revisi berikutnya karena label footer di atas `paper-deep` mentok di 4.49:1. Ini memengaruhi ~117 pemakaian `brand-dark` di seluruh situs.
 - Harga utama `text-brand` → `text-brand-dark` (2.4:1 → 3.4:1), chip "Hemat" jadi `bg-brand text-ink`, angka indeks `01/02/03` → `text-brand-dark`, harga coret & "/6 sesi/bulan" → `text-ink/65`.
 - Verifikasi: `scripts/verify-home.mjs` → audit kontras WCAG (harus 0 pelanggaran nyata; yang tersisa hanya false-positive teks di atas foto).
+
+---
+
+## 21. Revisi Okt 2026: 4 anotasi homepage + redesign detail berita
+
+Menutup 4 anotasi browser di homepage + permintaan redesign halaman `/berita/<slug>`. Semua ter-deploy & terverifikasi di desktop 1440×900 + mobile 390×844: audit kontras bersih, 0 overflow, 0 console error, 0 request gagal.
+
+### 21.1 Empat anotasi homepage
+
+| Anotasi | Solusi | File |
+|---|---|---|
+| Mitra di mobile jangan terlalu panjang untuk di-scroll | Grid **2 kolom** di mobile (kartu vertikal: logo atas, nama bawah), 3 kolom di `lg`. Tinggi section mitra turun ~50% | `src/components/PartnersSection.astro` |
+| "yang paling murah di atas" | Array `programs` diurutkan **murah → mahal** (Small Group 299k → Elite 1.299k → Premium 2.499k). Nomor 01/02/03 ikut berubah otomatis karena dihitung dari index array | `src/data/programs.ts` |
+| Footer 2 kolom di mobile | `grid-cols-2` + blok brand `col-span-2`; `md:grid-cols-3` seperti sebelumnya. Nomor WA turun ke `text-xl` di mobile | `src/components/Footer.astro` |
+| Logo header di tengah di mobile | Container header `justify-center sm:justify-between` (sebelum `lg` cuma logo yang tampil, jadi otomatis tengah) | `src/components/Header.astro` |
+
+> **Konsekuensi urutan program**: `src/pages/program/[slug].astro` memetakan `programs[idx]` ke testimonial (`testimonials[idx % testimonials.length]`). Testimonial bersifat generik jadi pergantian pasangan tidak masalah.
+
+### 21.2 Kenapa header detail berita berubah
+
+Halaman `/berita/<slug>` dilayani `functions/berita/[slug].ts` — **HTML template mandiri**, bukan halaman Astro. `Header.astro`, `Footer.astro`, Tailwind, dan island Svelte **tidak** ikut; header lamanya cuma logo teks + link "Semua berita →". Itulah sebabnya klien bertanya "kenapa ga ada menu".
+
+### 21.3 Tampilan baru detail berita
+
+- **Header situs yang sama**: logo PNG, nav (Program / Workshop / Berita / Tentang / FAQ) dengan `aria-current` di Berita, tombol "Chat WA", plus **baris menu pill yang bisa di-scroll** untuk mobile (logo tetap di tengah) dan **dock bawah** (Home / Program / Berita / Chat) yang meniru `Dock.svelte`.
+- **Sidebar paket program** (desktop kolom kanan, `position:sticky`): 3 kartu dari `src/data/programs.ts` — **harga asli, tidak dikarang** — lengkap dengan badge, titik "Online" hijau berdenyut, harga coret, dan CTA WhatsApp per paket. Paket termurah dapat pita **"Paling hemat"**.
+- **Mobile**: paket jadi **rail horizontal scroll-snap** di atas artikel (bukan 3 kartu menumpuk) supaya tetap ringkas. Blok `.post-side` mendahului `.post-main` di DOM, lalu di desktop dipindah ke kolom kanan lewat `grid-column`/`grid-row` eksplisit.
+- **Label kategori berwarna** per kategori (emas / oranye / merah) memakai `src/data/categories.ts`; chip yang sama dipakai di kartu halaman daftar berita.
+- **"Baca juga"** dipindah ke bawah (full width), plus footer dan dock mobile.
+
+### 21.4 Jebakan baru yang sempat terlewat
+
+- **Grid 2 kolom tanpa placement eksplisit** → sidebar otomatis menempati kolom 1 dan artikel kolom 2 (terbalik). Fix: `.post-main{grid-column:1}` + `.post-side{grid-column:2}` di `min-width:1024px`. **Wajib cek screenshot desktop** — audit DOM dan audit overflow tidak menangkap urutan kolom.
+- **Footer di atas `paper-deep`** menyisakan margin tipis: teks oranye kecil (`brand-dark` 4.49:1) dan abu-abu `text-ink/40`–`/45` (2.4–2.8:1, gagal WCAG). Semua dinaikkan ke `/65`–`/70` dan `brand-dark` digelapkan ke `#bc4c00`.
+- `safeCover` dipindah ke atas `page()` supaya urutan deklarasinya jelas (menghindari TDZ).
