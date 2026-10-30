@@ -192,7 +192,7 @@ npx wrangler d1 execute prospect-db --remote --command "SELECT count(*) FROM pos
 
 ## 10. API surface
 
-**Publik**: `GET /api/posts` · `GET /api/content/{testimonials|faq|stats}` · `GET /api/settings` · `POST /api/leads` (dual-mode) · `POST /api/click` · `POST /api/pv` (beacon trafik, tanpa cookie).
+**Publik**: `GET /api/posts` · `GET /api/content/{testimonials|faq|stats}` · `GET /api/settings` · `POST /api/leads` (dual-mode) · `POST /api/click` · `POST /api/pv` (beacon trafik, tanpa cookie) · `GET /media/{file}` (pengiriman objek R2, lihat §24.2).
 `POST /api/leads` dual-mode:
 - `content-type: application/json` → balas `{ ok: true, waUrl }` (dipakai popup pendaftaran, tidak pindah halaman).
 - form-encoded (classic) → 302 redirect ke `wa.me` (dipakai `LeadForm.astro` di `/tentang`).
@@ -224,7 +224,7 @@ Alur data cover:
 - **Analitik** — sumber trafik (referrer), perangkat pengunjung (stacked bar), tabel semua halaman (PV/UV), ranking tombol WhatsApp paling diklik, 4 mini-stat.
 - **Leads** — filter status, ubah status, catatan, tombol buka WA.
 - **Konten** (`AdminKonten.svelte`) — sub-tab Berita / Testimoni / FAQ / Statistik; slug otomatis dari judul, body markdown, delete dengan konfirmasi, simpan ke D1 (tanpa deploy).
-- **Media** — status R2 live via `/api/admin/media` (mengandung `siap`). Selama R2 belum aktif, tab menampilkan pesan blocker + langkah aktivasi jujur; begitu bucket di-bind, UI unggah (`/api/admin/upload`) langsung aktif tanpa ubah kode.
+- **Media** — status R2 live via `/api/admin/media` (`siap` + nama bucket). Selama R2 belum aktif, tab menampilkan pesan blocker + langkah aktivasi jujur; begitu bucket ter-bind, UI unggah (`/api/admin/upload`) + daftar berkas (grid kartu: thumbnail, ukuran, tanggal, tombol "Salin path" yang berubah jadi "Tersalin", dan "Buka") langsung aktif tanpa ubah kode.
 - **Pengaturan** — nomor WA, aktif/nonaktif popup, GA4 ID (validasi `/^G-[A-Z0-9]{6,20}$/`).
 
 ---
@@ -264,10 +264,11 @@ Jebakan penting:
 | Deteksi kepotong / tumpang tindih | `scripts/audit-clip.mjs` | `node scripts/audit-clip.mjs <base-url>` → 10 halaman × 2 viewport; cek (1) teks terpotong di elemen `overflow:hidden`, (2) elemen keluar viewport tanpa mask ancestor, (3) elemen `fixed` menutupi elemen interaktif >30%. Target **0 overflow & 0 covered** |
 | Chromium headless | `/Users/maabook/Library/Caches/ms-playwright/chromium_headless_shell-1243/chrome-headless-shell-mac-arm64/chrome-headless-shell` | dipakai kedua script di atas (`playwright-core` di `node_modules`, gitignored) |
 | Screenshot + audit kontras | `scripts/verify-home.mjs` | `node scripts/verify-home.mjs <base-url>` → screenshot per area (partners/badge/vip/level/program + full page) ke `~/Downloads/vc-*.png` untuk desktop 1440×900 + mobile 390×844, sekaligus audit kontras WCAG (kirim `oklab()` + compositing alpha + sampling gradient). **Screenshot wajib dibaca via vision** — angka kontras tidak menangkap "kepotong"/"tidak premium" |
-| Screenshot + kontras (home + detail berita) | `scripts/verify-revisi.mjs` | `node scripts/verify-revisi.mjs <base-url>` → **2 halaman** (home & `/berita/bintang-gohan`) × 2 viewport; screenshot per area ke `~/Downloads/rv-*.png`, audit kontras WCAG dengan selector per halaman, plus cek overflow (`docScrollW` vs viewport). Untuk revisi yang menyentuh header/footer/program/mitra **dan** halaman detail berita |
+| Screenshot + kontras (home + detail berita) | `scripts/verify-revisi.mjs` | `node scripts/verify-revisi.mjs <base-url>` → **2 halaman** (home & `/berita/bintang-gohan`) × 2 viewport; screenshot per area ke `~/Downloads/rv-*.png`, audit kontras WCAG dengan selector per halaman, plus cek overflow (`docScrollW` vs viewport). Elemen yang **sengaja disembunyikan** di viewport itu (mis. `.dock` yang `display:none` di ≥1024px) otomatis ditandai *skip*, bukan gagal — kalau tidak, screenshot-nya timeout dan muncul alarm palsu. Untuk revisi yang menyentuh header/footer/program/mitra **dan** halaman detail berita |
 | E2E domain + admin guard | `scripts/verify-domain.mjs` | `set -a && . ./.env.admin && set +a && node scripts/verify-domain.mjs [base-url]` → **39 cek**: guard admin (401 + 302 `/admin/`→login), login benar/salah + atribut cookie (`HttpOnly`/`Secure`/`SameSite=Lax`), semua endpoint admin 200+JSON, logout, API publik, canonical/`og:url` pakai domain kustom, **www → apex 301**, sitemap + robots, plus alur lead (302 → `wa.me` + validasi 400). **Wajib tiap kali domain/SEO/admin/alur lead diubah** |
-| E2E UI panel admin (browser sungguhan) | `scripts/verify-admin-ui.mjs` | `set -a && . ./.env.admin && set +a && node scripts/verify-admin-ui.mjs [base-url]` → **64 cek** di desktop 1440×900 + mobile 390×844: `/admin/` tanpa login terlempar ke login, password salah memunculkan "Password salah.", password benar masuk, **tiap tab menegaskan nav menyorot tab yang benar + kontennya benar-benar termuat**, dashboard (KPI/corong/halaman/lead benar-benar ter-render, 6 jalur SVG chart, 14 kolom grafik, ganti periode 30 hari, hover tooltip), tulis beneran (klik Simpan pengaturan lalu bandingkan API sebelum/sesudah — idempoten karena PUT settings per-key upsert), Keluar balik ke login, console error + request gagal. Password dibaca dari env dan **tidak pernah dicetak**. Screenshot `ad-*.png` **wajib dibaca via vision** |
+| E2E UI panel admin (browser sungguhan) | `scripts/verify-admin-ui.mjs` | `set -a && . ./.env.admin && set +a && node scripts/verify-admin-ui.mjs [base-url]` → **64 cek** di desktop 1440×900 + mobile 390×844: `/admin/` tanpa login terlempar ke login, password salah memunculkan "Password salah.", password benar masuk, **tiap tab menegaskan nav menyorot tab yang benar + kontennya benar-benar termuat**, dashboard (KPI/corong/halaman/lead benar-benar ter-render, 6 jalur SVG chart, 14 kolom grafik, ganti periode 30 hari, hover tooltip), tulis beneran (klik Simpan pengaturan lalu bandingkan API sebelum/sesudah — idempoten karena PUT settings per-key upsert), Keluar balik ke login, console error + request gagal. Assertion hover tooltip **kondisional**: kalau periode ini ada hari berp-data → tooltip wajib muncul; kalau kosong → yang diperiksa pesan keadaan kosong ("Belum ada trafik"), bukan tooltip. Password dibaca dari env dan **tidak pernah dicetak**. Screenshot `ad-*.png` **wajib dibaca via vision** |
 | E2E analitik + CRUD berita | `scripts/verify-analitik.mjs` | `set -a && . ./.env.admin && set +a && node scripts/verify-analitik.mjs [base-url]` → **46 cek**: beacon `/api/pv` (204, body rusak ditoleransi, path non-relatif ditolak), angka stats (pv/uv, deret 7 hari terisi per hari), `/admin` tersaring, trafik bot/CLI **tidak** dihitung, perangkat desktop/mobile/tablet terklasifikasi, referrer `google.com`/`instagram.com` terparse, referrer internal tidak dihitung, `hari` asing → fallback 14, 401 tanpa login, klik WA masuk KPI + daftar CTA, plus **CRUD berita penuh** (POST 201 → halaman publik 200 + cover + canonical + `og:url` + beacon → PUT edit → status draft → publik 404 → ganti slug ditolak 400 → DELETE → 404 → 3 berita asli tetap utuh → POST tanpa auth 401). Skrip menulis baris uji ke D1 → **wajib bersihkan** (perintah ada di footer keluarannya) |
+| E2E R2 (unggah → URL publik) | `scripts/verify-media.mjs` | `set -a && . ./.env.admin && set +a && node scripts/verify-media.mjs [base-url]` → **18 cek**: login → `/api/admin/media` (siap + nama bucket + tidak ada langkah aktivasi lagi) → daftar berkas → **unggah nyata** (PNG asli dari repo via multipart `FormData` + `Blob`) → format kunci `media/YYYYMMDD-<slug>-<8hex>.<ext>` → nama asli di-slug-kan → ukuran dikembalikan → **URL publik `/media/<file>` 200 + content-type + magic bytes PNG + cache-control jangka panjang** → 3 gambar bawaan `public/media/` tetap 200 → media tak dikenal 404 → berkas uji muncul di daftar admin. Berkas uji diunggah ke bucket **sungguhan** → **wajib dihapus** (perintah ada di footer keluarannya) |
 
 Alur wajib: `npm run build` → serve `dist/` → `audit-frames.mjs` → **baca frame via vision** → perbaiki → ulangi → `audit-clip.mjs` → deploy → audit live → commit+push.
 
@@ -311,12 +312,7 @@ GA4 butuh ID klien yang belum ada, jadi trafik diukur sendiri lewat beacon milik
 
 ## 15. Blocker (butuh klien)
 
-1. **R2 belum aktif** (error `10042` — *"Please enable R2 through the Cloudflare Dashboard"*) → upload media masih kosong. **Tidak ada endpoint API yang bisa mengaktifkannya** (ToS R2 harus diklik manusia di dashboard), jadi satu-satunya jalan adalah klik manual:
-   1. Dashboard Cloudflare → **R2** → **Explore R2** → **Activate** (sekali klik, tanpa API).
-   2. Setelah aktif: `npx wrangler r2 bucket create prospect-media` → uncomment blok `r2_buckets` di `wrangler.jsonc` → deploy ulang.
-   3. Tab **Media** di panel admin otomatis berubah jadi "R2 aktif — siap unggah" (status dibaca live dari `/api/admin/media`), **tanpa ubah kode**.
-   Selama langkah 1 belum dilakukan, tab Media menampilkan pesan blocker + daftar langkah ini (bukan layar kosong).
-   > Bukti attempt otomatis: `npx wrangler r2 bucket create prospect-media` → `[code: 10042] Please enable R2 through the Cloudflare Dashboard.`
+1. ~~**R2 belum aktif**~~ → **SELESAI (30 Okt 2026)**: klien sudah klik **Activate** di dashboard Cloudflare. Bucket `prospect-media` dibuat, di-bind lewat blok `r2_buckets` di `wrangler.jsonc` (binding `MEDIA_BUCKET`), route pengiriman publik `/media/*` ditambahkan, dan tab Media kini menampilkan banner hijau "R2 AKTIF — SIAP UNGGAH". Detail, bukti, dan jebakannya di **§24**.
 2. **ID GA4** belum ada (loader sudah siap).
 3. ~~**Domain kustom**~~ → **SELESAI (Okt 2026)**: `myprospect.asia` + `www.myprospect.asia` sudah ter-attach ke Pages project dan `verification_data.status = active`. Lihat §22.1 untuk langkah & jebakan DNS-nya.
 4. **Harga Workshop Pro** belum ada (tampil "Custom").
@@ -333,7 +329,7 @@ GA4 butuh ID klien yang belum ada, jadi trafik diukur sendiri lewat beacon milik
 
 1. Regenerasi OG image + aset generated ke nuansa terang (MiniMax image-01) — `src/assets/generated/a2-og-bg.jpg` dst.
 2. ~~Pasang custom domain~~ → **SELESAI (Okt 2026)**, lihat §22.1. `SITE.url` & canonical sudah `https://myprospect.asia` sejak awal.
-3. Aktifkan R2 (satu klik di dashboard — lihat §15 blocker #1) → bucket dibuat & di-bind → upload media di tab Media **langsung aktif** (jalur unggah sudah ditulis: `/api/admin/upload`, maks 5 MB, jpg/png/webp/gif/avif/mp4, key `media/YYYYMMDD-<slug>-<8hex>.<ext>`).
+3. ~~Aktifkan R2~~ → **SELESAI (30 Okt 2026)**, lihat **§24**. Jalur unggah **dan** pengiriman publiknya sudah jalan teruji end-to-end (18 cek): unggah di tab Media → objek R2 → `/media/<file>` 200 → siap ditempel ke kolom "Gambar utama".
 4. Masukkan GA4 ID via admin Pengaturan (tanpa deploy).
 5. Selesaikan klaim "SPEAK LOUD!"-style copy atau formalkan bahasa (copy sekarang playful; klien mungkin mau lebih formal).
 6. Tambah halaman artikel berita dari MDX lama ke D1 (agar bisa diedit admin) — `scripts/gen-posts-seed.mjs` sudah disiapkan.
@@ -585,7 +581,7 @@ Permintaan: *"dashboardnya ko jelek ya ? ga kaya dashboard pro ? tolong dong dan
 | Permintaan | Status | Bukti |
 |---|---|---|
 | Dashboard dibikin "pro" | **SELESAI** | `AdminApp.svelte` dibangun ulang jadi konsol analitik gelap: hero ringkasan, 4 kartu KPI + sparkline + chip delta, grafik SVG interaktif, corong konversi, top halaman, lead terbaru, tab **Analitik** baru. Dibaca via vision di desktop 1440×900 + mobile 390×844 |
-| R2 diaktifkan sendiri | **TERBATAS** (butuh 1 klik klien) | API ditolak `10042`; tidak ada endpoint untuk menerima ToS R2. Jalur unggah **sudah ditulis** & status R2 **dibaca live** — begitu bucket di-bind, tab Media langsung siap tanpa ubah kode |
+| R2 diaktifkan sendiri | **SELESAI (30 Okt 2026)** | Klien klik **Activate** → bucket `prospect-media` dibuat & di-bind (`MEDIA_BUCKET`), route publik `/media/*` ditambahkan, unggah nyata → URL publik 200 (18 cek). Detail di **§24** |
 | Tes buat berita | **SELESAI** | CRUD penuh diuji ke produksi: POST → halaman publik 200 → edit → draft (publik 404) → ganti slug ditolak → DELETE → 404. 3 berita asli tetap utuh |
 | Analitik trafik | **SELESAI** | Beacon sendiri → D1 `pageviews` → `/api/admin/stats` → dashboard + tab Analitik. **Tanpa GA4** (ID-nya belum ada) dan tanpa cookie |
 | Lead test masuk ga? | **YA, terbukti** | `POST /api/leads` → HTTP 200 → baris nyata di D1: `id 10`, `wa` ternormalisasi `6281234567890`, `status baru`, `created_at 2026-10-30 13:31:11`. Baris uji lalu dibersihkan |
@@ -600,7 +596,7 @@ Permintaan: *"dashboardnya ko jelek ya ? ga kaya dashboard pro ? tolong dong dan
 - **Corong konversi** — kunjungan → klik WA → lead, lengkap dengan persentase lanjut.
 - **Kartu "Sedang aktif"** di sidebar (pengunjung 30 menit terakhir + jumlah halaman dilihat).
 - **Tab Analitik** — sumber trafik (referrer), perangkat pengunjung (stacked bar + legenda), tabel semua halaman (PV/UV), ranking tombol WhatsApp paling diklik, 4 mini-stat.
-- **Tab Media** — status R2 live dari `/api/admin/media`; menampilkan pesan blocker + langkah aktivasi selama R2 belum aktif, dan form unggah otomatis aktif setelah bucket ter-bind.
+- **Tab Media** — status R2 live dari `/api/admin/media`; menampilkan pesan blocker + langkah aktivasi selama R2 belum aktif, dan form unggah otomatis aktif setelah bucket ter-bind. Naik kelas di Okt 2026 → grid kartu berkas + tombol "Salin path"/"Buka" (lihat §24).
 - Refresh tanpa kedip skeleton (state `menyegarkan` terpisah dari `loading`), animasi masuk (`naik`, `muncul`, `putar`, `detak`).
 
 ### 23.3 Uji CRUD berita (produksi, data asli aman)
@@ -623,3 +619,51 @@ Permintaan: *"dashboardnya ko jelek ya ? ga kaya dashboard pro ? tolong dong dan
 ### 23.5 Kebersihan data uji
 
 Semua baris uji dihapus dari D1 produksi setelah pembuktian: lead `sumber='verify-answer'` (id 10), `wa_clicks` slug `zz-uji-cta`, berita `zz-uji-berita-api`, serta probe `pageviews` sintetis. Tabel `leads` produksi kembali **0 baris** (hanya lead sungguhan yang akan muncul). Assertion verifikasi **tidak** bergantung pada keberadaan lead uji — bentuk array yang diuji, bukan jumlahnya.
+
+---
+
+## 24. R2 aktif: bucket, route publik, dan panel Media (30 Okt 2026)
+
+### 24.1 Kronologi
+
+1. Klien klik **Activate** di dashboard Cloudflare (ToS R2 hanya bisa diterima manusia — API tetap balas `10042`).
+2. `npx wrangler r2 bucket create prospect-media` → bucket dibuat.
+3. `wrangler.jsonc` dapat blok `r2_buckets`: `{ "binding": "MEDIA_BUCKET", "bucket_name": "prospect-media" }`.
+4. Deploy → binding hidup di runtime → `/api/admin/media` membalas `siap: true` → tab Media berubah dari pesan blocker jadi banner hijau "R2 AKTIF — SIAP UNGGAH" **tanpa ubah kode**.
+5. Route pengiriman publik `functions/media/[[path]].ts` ditambahkan — sebelumnya **tidak ada**, jadi objek R2 tidak bisa diambil lewat `/media/...`.
+6. Tab Media naik kelas: grid kartu berkas (thumbnail `object-contain`, ukuran, tanggal, "Salin path" → "Tersalin", "Buka"), ikon `HardDrive` (sebelumnya `Smartphone` — tidak nyambung dengan penyimpanan objek), dan state kosong yang jujur saat bucket kosong.
+
+### 24.2 Kenapa route `/media/*` wajib ada, dan bagaimana caranya aman
+
+- `coverPath()` di `functions/_lib/content.ts` **hanya menerima** path `/media/<nama>` → objek R2 harus bisa diakses persis di URL itu, kalau tidak kolom "Gambar utama" tidak bisa dipakai.
+- **Pages Functions jalan SEBELUM aset statis** (dokumentasi Cloudflare: *"static assets are the fallback"*). Jadi route `/media/*` **membayangi** 22 gambar bawaan di `public/media/`. Karena itu route mencoba **R2 dulu**, lalu fallenya ke `env.ASSETS.fetch(request)` supaya gambar bawaan tetap hidup.
+- Tanpa `dist/404.html`, Pages membalas `index.html` (HTML) untuk path tak dikenal → route mengembalikan **404 jujur** (`text/plain`) kalau respons ASSETS berupa HTML.
+- Parameter `params.path` pada route catch-all **sudah memotong segmen `/media/`**, sedangkan kunci R2 berawalan `media/` → awalan harus ditambahkan kembali (`const kunci = \`media/${nama}\``).
+- `httpMetadata` pada `R2Object` itu **properti**, bukan method (method-nya `writeHttpMetadata()`).
+
+### 24.3 Verifikasi & bukti
+
+- `scripts/verify-media.mjs` → **18/18 SEMUA PASS** di produksi: unggah nyata → URL publik 200 + magic bytes PNG + `cache-control: public, max-age=31536000, immutable` → 3 gambar bawaan tetap 200 → media tak dikenal 404.
+- **Regresi gambar dibantah**: 17 URL gambar unik di 6 halaman → semuanya 200 dengan byte & content-type benar. 5 gambar dengan `naturalWidth === 0` adalah **lazy-load** (belum masuk viewport), dibuktikan lewat **A/B test dua deployment** (`a1dc6520` tanpa route vs `c61c58b6` dengan route) → hasil identik, jadi **bukan** regresi.
+- **Vision**: tab Media dibaca di desktop 1440×900 + mobile 390×844 — banner hijau, nama bucket satu baris (tidak lagi wrap di tanda hubung), thumbnail logo **tidak terpotong** (`object-contain`; sebelumnya `object-cover` memotong jadi "OSPE"), tombol "Salin path"/"Buka" tidak tertutup nav bawah fixed (tombol y=176–201, nav mulai y=783).
+- **Kebersihan**: berkas uji dihapus dari bucket (`npx wrangler r2 object delete prospect-media/<key> --remote`) → bucket **0 berkas**. Salinan edge ikut dibersihkan lewat purge cache zone (`POST /zones/{zone}/purge_cache`) karena header `immutable` membuat berkas yang dihapus tetap dilayani edge sampai TTL habis.
+
+### 24.4 Jebakan yang muncul saat mengaktifkan R2
+
+1. **Fungsi membayangi aset statis** — route catch-all `/media/*` tanpa fallback ASSETS mematikan semua gambar bawaan. Utamakan uji lokal `npx wrangler pages dev dist --port 8788` **sebelum** deploy.
+2. **Kunci R2 vs parameter route** — key `media/x.png`, param route `x.png` → objek tidak ketemu; gejala drawback-nya objek R2 terkirim sebagai **HTML** karena jatuh ke fallback index.
+3. **`httpMetadata` bukan method** — `objek.httpMetadata()` melempar TypeError.
+4. **Debug header pada respons ASSETS** — header respons immutable → `headers.set()` melempar *"Can't modify immutable headers"*. Pakai respons JSON debug, jangan modifikasi header.
+5. **Ikon `Smartphone` untuk status R2** — tidak nyambung dengan penyimpanan objek; diganti `HardDrive`.
+6. **Teks `prospect-media` wrap di tanda hubung** — flex shrink memecah kata di hyphen; perbaiki dengan `whitespace-nowrap` + `shrink-0`.
+7. **Klik tab sebelum island ter-hidrasi** — klik pertama hilang (belum ada handler). Tunggu dashboard selesai memuat (`/pengunjung unik/` && bukan "Memuat") sebelum mengklik tab.
+8. **Verifier visual salah alarm pada elemen tersembunyi** — `.dock` `display:none` di ≥1024px → `scrollIntoViewIfNeeded` timeout → `verify-revisi.mjs` kini menandai elemen tak terlihat sebagai *skip*, bukan gagal.
+9. **Assertion yang bergantung pada isi data** — hover tooltip grafik **hanya** muncul untuk hari yang punya data. Kalau panel dibersihkan dari data uji, assertion tooltip gagal padahal tidak ada bug. Pola yang benar (dipakai juga untuk `leadsTerbaru`): **bentuk/kondisi datanya yang diuji**, bukan datanya.
+
+### 24.5 Kebersihan data produksi (penting untuk kejujuran dashboard)
+
+Seluruh trafik yang tercatat sampai 30 Okt 2026 **100% berasal dari pengujian otomatis** — dibuktikan dari isi D1: referrer palsu `google.com` / `instagram.com` / `example.com` (probe parser referrer), path palsu `/zz-uji-tidak-ada`, dan sisanya UA/IP browser pengujian. Situs belum punya pengunjung nyata. Supaya klien tidak salah melihat "9 pengunjung unik" sebagai trafik nyata, tabel `pageviews` (101 baris) dan `wa_clicks` (11 baris) **dikosongkan** — dashboard kini menampilkan **nol yang jujur** + pesan keadaan kosong yang rapi ("Belum ada trafik tercatat pada periode ini…", "Belum ada data halaman.", "Belum ada lead…"). Angka nol itu **memang** kondisi produksi saat ini, bukan kegagalan.
+
+> Pembersihan manual: `npx wrangler d1 execute prospect-db --remote --command "DELETE FROM pageviews"` (dan `wa_clicks`). Perintah ini **menghapus semua** baris, jadi jalankan hanya kalau memang tidak ada trafik asli yang harus dijaga.
+
+State produksi saat ini: `pageviews` 0 · `wa_clicks` 0 · `leads` 0 · `posts` 3 (berita asli) · bucket R2 0 berkas (semua berkas uji dihapus + edge di-purge).
