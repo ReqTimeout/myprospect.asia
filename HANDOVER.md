@@ -731,3 +731,92 @@ Semua state (`pustaka`, `coverBusy`, `coverMsg`, `coverErr`) di `AdminKonten.sve
 - **Kebersihan**: berkas uji dihapus dari R2 (`npx wrangler r2 object delete prospect-media/media/20261030-kt-unggah-uji-78d2f850.jpg --remote`) → bucket **0 berkas**; edge di-purge untuk URL tersebut → link lama **404**. Tidak ada berita uji yang disimpan (skrip sengaja tidak pernah menyentuh D1).
 
 > Catatan: build Astro sempat memunculkan galat IDE *"Cannot find native binding … npm has a bug related to optional dependencies"* pada file `.svelte` — itu masalah lingkungan esbuild/svelte, **bukan** galat sintaks; `npm run build` tetap sukses.
+
+---
+
+## 26. Sistem pattern FORGE — oranye jadi aksen, hitam jadi bidang (30 Okt 2026)
+
+Permintaan klien: *"oke di home page masih dominan orang kamu cari warna pattern yang detailing yang blend dengan orange hitam tolong vision semuanya pake skill design yan g benar rapih di mobile dan desktop"*.
+
+### 26.1 Prinsip: membalik peran oranye
+
+Sebelum perubahan, oranye berperan sebagai **bidang luas** — kartu StatsBar penuh oranye, pita CTA seluruh oranye, 3 jersey coach gradasi oranye, harga & badge oranye. Sesudahnya oranye jadi **aksen dan penanda**, hitam jadi **bidang**.
+
+| Section | Sebelum | Sesudah |
+|---|---|---|
+| StatsBar | kartu gradasi oranye penuh | **scoreboard hitam** (`bg-ink-2` + `ring-brand/30`) + angka oranye |
+| Pita CTA | band gradasi oranye penuh | **band hitam** + grid/halftone + satu kata oranye ("Bicara?") |
+| Jersey coach | gradasi oranye | **kit hitam** + jahitan diagonal oranye + halftone + cahaya sudut |
+| Hero "MODERN" | oranye → emas | gradien **hitam → oranye → emas** (`.hl-brand`) |
+| Harga program/workshop | `text-brand-dark` | `text-ink` (hitam) |
+| Badge "Hemat" | `bg-brand` | `bg-ink` + teks oranye |
+| Heading About/Workshop | oranye pekat | **ink + sapuan marker oranye** (`.hl-swash`) |
+| Heading Program | oranye pekat | putih + `.hl-swash--dark` (marker oranye diredupkan) |
+| Band Membership | emas (gold) | oranye penuh (emas dibuang dari palet) |
+
+### 26.2 Pustaka pattern FORGE (`src/styles/global.css`)
+
+Semua pattern murni CSS/SVG — tanpa aset gambar baru, tanpa ImageGen.
+
+| Kelas | Efek | Dipakai di |
+|---|---|---|
+| `.pat-halftone` | titik-titik oranye (halftone) | sudut scoreboard, hero, pita CTA, Testimoni |
+| `.pat-halftone-ink` | halftone gelap | field terang |
+| `.pat-grid` / `.pat-grid-light` | grid blueprint | About, Program, scoreboard, pita CTA |
+| `.pat-hatch` / `.pat-hatch-ink` | arsir 45° | detail teknis |
+| `.pat-noise` / `.pat-noise-light` | butiran film (feTurbulence SVG) | hero, scoreboard, pita CTA |
+| `.pat-fade-tr` / `.pat-fade-bl` | mask untuk memudarkan pattern ke arah sudut | semua layer pattern |
+| `.pat-dash` | garis oranye putus-putus | garis teknis kartu |
+| `.hl-swash` | **sapuan marker oranye di belakang teks** | Coach, About, Workshop, Program |
+| `.hl-swash--dark` | varian diredupkan untuk latar gelap | heading Program |
+
+Ukuran pattern diatur inline lewat `style="--pat-gap: 9px"` (jarak titik default 7px).
+
+### 26.3 Kenapa `.hl-swash` (teknik penanda oranye)
+
+```
+.hl-swash { position: relative; display: inline-block; isolation: isolate; }
+.hl-swash::before { content:""; position:absolute; left:-0.05em; right:-0.05em;
+                    bottom:0.12em; height:0.28em; border-radius:999px;
+                    background: linear-gradient(90deg, rgba(255,122,26,.45), rgba(255,195,46,.55));
+                    z-index:-1; }
+```
+
+`isolation: isolate` + `z-index:-1` membuat sapuan tetap **di belakang teks** tapi **di atas background parent** — tanpa perlu elemen tambahan.
+
+### 26.4 Kontras yang dijaga (angka, bukan perkiraan)
+
+| Pasangan | Rasio | Status |
+|---|---|---|
+| `text-brand` (#ff7a1a) di atas paper | 2.55:1 | ❌ gagal → ganti `text-brand-dark` (4.98:1) |
+| `text-brand` di atas `bg-ink` | 5.67:1 | ✅ |
+| ink di atas sapuan `.hl-swash` (terang) | ~10.6:1 | ✅ |
+| putih di atas `.hl-swash--dark` (gelap) | ~6:1 | ✅ (swash diredupkan dari 0.78 → 0.58 supaya tetap lolos) |
+| `bg-brand` + `text-ink` (tombol) | tinggi | ✅ |
+
+### 26.5 Jebakan yang ditemukan lewat vision (bukan lewat angka)
+
+1. **Mask `.rail-wrap` terlalu lebar (9%)** membuat kartu coach di ujung rail ter-wash putih — nama jadi pucat dan tidak terbaca, dan jersey gelap berubah jadi gradien putih. Diperbaiki ke **2%**. Baru terlihat setelah baca screenshot, bukan lewat audit angka.
+2. **Foto warms di pita CTA** terlihat cokel muddy di atas overlay ink → diberi `grayscale` supaya field benar-benar hitam; oranye dikembalikan lewat halftone + satu kata aksen.
+3. **Grid pattern menembus angka scoreboard** karena tile stats semi-transparan (`bg-white/6`) → tile dibuat opak (`bg-ink`).
+4. **`.hl-swash` terbaca sebagai garis bawah** saat `bottom: 0.06em; height: 0.24em` → dinaikkan ke `bottom: 0.12em; height: 0.28em` supaya jadi sapuan, bukan garis bawah.
+5. **CSS kustom tanpa `@layer` mengalahkan utility Tailwind.** Aturan `.jersey` **tidak boleh** diberi `position: relative`; kalau diberi, `absolute inset-0` ikut tertimpa dan tinggi elemen jadi 0. Peringatan ini ditulis sebagai komentar di `global.css`.
+6. **`/api/settings` & `/api/pv` balas 404 di `astro preview`** — itu normal, keduanya Cloudflare Pages Function yang tidak jalan di preview statis. Di produksi keduanya 200.
+
+### 26.6 Skill yang dipakai
+
+`design` **tidak bisa dipakai** — symlink `~/.config/opencode/skills/design` → `~/.opencode/skills/design/` target-nya hilang (dead symlink; `ui-styling` & `ui-ux-pro-max` juga mati). Yang dipakai yang resolve:
+
+- **`pw-vision`** — audit visual lokal pakai Playwright, screenshot tidak keluar dari mesin; semua pengukuran lewat JS.
+- **`looks-expensive`** — Less is More, maksimal 2–3 warna, white space = kemewahan, detail mattered, grid 8px, transisi 200–300ms.
+- **`design-system`** — konsistensi, atoms → molecules → organisms, dokumentasi tiap keputusan, aksesibilitas.
+
+### 26.7 Status verifikasi
+
+- `npm run build` → **12 halaman**, bersih.
+- `scripts/audit-frames.mjs` (desktop 1440×900 + mobile 390×844) → `horizontalOverflow: false`, `over: []`, `revealNotIn: 0 / 30`. 404 lokal hanya `/api/settings` + `/api/pv` (fungsi Cloudflare, normal di preview).
+- `scripts/audit-clip.mjs` → **0 overflow, 0 covered** di 10 halaman × 2 viewport. Total issue 1670 (build baru) **lebih sedikit** dari produksi lama 1695; 280 sisanya `clipped` dari `line-clamp` yang memang disengaja (identik dengan produksi lama).
+- **Vision** (desktop 1440×900 + mobile 390×844, lokal lalu produksi): hero "MODERN" gradasi hitam→oranye→emas; scoreboard hitam + angka oranye + grid + hairline oranye; pita CTA hitam dengan grid & halftone oranye di sudut; kit coach hitam dengan jahitan oranye; heading Coach/About/Workshop memakai sapuan marker; heading Program putih dengan marker diredupkan; harga & badge "Hemat" hitam; band Membership hitam + foto grayscale + aksen oranye penuh.
+- Deploy: `npx wrangler pages deploy dist --project-name myprospect --commit-dirty=true --branch=main` (butuh `set -a && . ./.env.cf` — token OAuth bawaan wrangler menunjuk akun lain, jadi harus pakai `CLOUDFLARE_API_TOKEN` + `CLOUDFLARE_ACCOUNT_ID` dari `.env.cf`).
+- Produksi `https://myprospect.asia` → `/api/settings` 200, `/api/pv` 200, screenshot identik dengan build lokal.
+

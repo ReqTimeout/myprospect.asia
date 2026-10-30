@@ -37,15 +37,17 @@ const schema = [organizationSchema, faqSchema(faqs)];
     <section class="relative flex min-h-dvh flex-col items-center justify-center overflow-hidden px-4 pt-14 pb-24 text-center sm:px-6">
       <div
         class="art-blob -top-32 -right-24 h-96 w-96"
-        style="background: radial-gradient(circle, rgba(255,122,26,0.3), transparent 68%);"
+        style="background: radial-gradient(circle, rgba(255,122,26,0.22), transparent 68%);"
         aria-hidden="true"
       ></div>
       <div
         class="art-blob top-1/3 -left-32 h-80 w-80"
-        style="background: radial-gradient(circle, rgba(255,195,46,0.32), transparent 68%); animation-delay: -8s;"
+        style="background: radial-gradient(circle, rgba(255,195,46,0.28), transparent 68%); animation-delay: -8s;"
         aria-hidden="true"
       ></div>
       <div class="art-dots absolute inset-0 [mask-image:linear-gradient(to_bottom,transparent,black_55%,transparent)]" aria-hidden="true"></div>
+      <div class="pat-halftone absolute -top-28 -left-28 h-96 w-96 opacity-55 pat-fade-tr" style="--pat-gap: 8px" aria-hidden="true"></div>
+      <div class="pat-noise absolute inset-0" aria-hidden="true"></div>
       <div class="hero-glow absolute inset-0" aria-hidden="true"></div>
       <div class="art-pitch absolute inset-x-0 bottom-0 h-[70%] opacity-60 [mask-image:linear-gradient(to_top,black,transparent)]" aria-hidden="true"></div>
       <div class="sport-ball sport-ball--orange -left-6 top-[38%] hidden h-12 w-12 animate-float lg:block" aria-hidden="true"></div>
@@ -139,6 +141,7 @@ const schema = [organizationSchema, faqSchema(faqs)];
     <div class="surface-warm">
       <section class="relative mx-auto max-w-6xl overflow-hidden px-4 py-14 sm:px-6">
         <SportArt variant="net" stroke="#ff7a1a" opacity={0.1} class="absolute inset-0 h-full w-full [mask-image:linear-gradient(to_bottom_right,black,transparent_70%)]" />
+        <div class="pat-grid absolute inset-0 opacity-55 [mask-image:linear-gradient(to_top_left,transparent,black_60%)]" aria-hidden="true"></div>
         <div class="art-ring left-6 top-14 hidden h-16 w-16 border-gold/40 sm:block" aria-hidden="true"></div>
         <div class="art-diamond top-10 right-10 h-3 w-3 bg-crimson/50 hidden sm:block" aria-hidden="true"></div>
 
@@ -149,8 +152,7 @@ const schema = [organizationSchema, faqSchema(faqs)];
             <h2 class="display text-5xl leading-[0.9] sm:text-6xl lg:text-7xl">
               Dari nol sampai<br />
               <span class="relative inline-block">
-                <span class="text-brand-dark">siap panggung</span>
-                <span class="absolute -bottom-1 left-0 h-2.5 w-full rounded-full bg-gold/55" aria-hidden="true"></span>
+                <span class="hl-swash text-brand-dark">siap panggung</span>
               </span>
             </h2>
           </div>
@@ -176,6 +178,7 @@ const schema = [organizationSchema, faqSchema(faqs)];
     <div class="surface-warm">
       <section class="relative mx-auto max-w-6xl overflow-hidden px-4 py-14 sm:px-6">
         <div class="art-blob -top-20 right-[-6rem] h-64 w-64" style="background: radial-gradient(circle, rgba(255,195,46,0.16), transparent 68%);" aria-hidden="true"></div>
+        <div class="pat-halftone absolute -bottom-24 -left-24 h-72 w-72 opacity-45 pat-fade-tr" style="--pat-gap: 8px" aria-hidden="true"></div>
 
         <Chapter num="07" label="Testimoni" class="mb-6" />
 

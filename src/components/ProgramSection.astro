@@ -34,7 +34,7 @@ const hemat = (coret: number | undefined, harga: number) =>
       <Chapter num="05" label="Program Unggulan" tone="light" class="mb-6" />
       <h2 class="display text-5xl leading-[0.9] sm:text-6xl lg:text-7xl text-white">
         Private 1-on-1<br />
-        <span class="text-brand">buat naik level</span>
+        <span class="hl-swash hl-swash--dark text-white">buat naik level</span>
       </h2>
     </div>
     <p class="max-w-xs text-sm leading-relaxed text-white/70">
@@ -87,7 +87,7 @@ const hemat = (coret: number | undefined, harga: number) =>
           <div class="relative z-10 flex flex-1 flex-col p-6">
             <div class="flex items-start justify-between gap-3">
               <h3 class="display text-2xl text-ink">{p.nama}</h3>
-              <span class="display shrink-0 text-4xl leading-none text-brand-dark">
+              <span class="display shrink-0 text-4xl leading-none text-ink/25">
                 {String(i + 1).padStart(2, '0')}
               </span>
             </div>
@@ -98,12 +98,12 @@ const hemat = (coret: number | undefined, harga: number) =>
               ) : null}
               <div class="mt-0.5 flex flex-wrap items-center gap-2">
                 {p.harga > 0 ? (
-                  <p class="display text-3xl leading-none text-brand-dark">Rp{formatIdr(p.harga)}</p>
+                  <p class="display text-3xl leading-none text-ink">{`Rp${formatIdr(p.harga)}`}</p>
                 ) : (
-                  <p class="display text-2xl leading-none text-brand-dark">Info via WA</p>
+                  <p class="display text-2xl leading-none text-ink">Info via WA</p>
                 )}
                 {hemat(p.hargaCoret, p.harga) > 0 && (
-                  <span class="rounded-full bg-brand px-2 py-0.5 text-[10px] font-black tracking-wide text-ink uppercase">
+                  <span class="rounded-full bg-ink px-2 py-0.5 text-[10px] font-black tracking-wide text-brand uppercase">
                     Hemat {hemat(p.hargaCoret, p.harga)}%
                   </span>
                 )}
@@ -155,13 +155,13 @@ const hemat = (coret: number | undefined, harga: number) =>
       src="/media/program-elite.jpg"
       alt=""
       loading="lazy"
-      class="ken-burns absolute inset-0 h-full w-full object-cover opacity-70"
+      class="ken-burns absolute inset-0 h-full w-full object-cover opacity-70 grayscale"
     />
     <div class="absolute inset-0 bg-gradient-to-r from-ink via-ink/80 to-ink/20" aria-hidden="true"></div>
     <SportArt variant="stadium" stroke="#ffffff" opacity={0.18} class="absolute inset-0 h-full w-full" />
     <div class="relative grid gap-6 p-6 sm:p-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
       <div>
-        <span class="inline-flex items-center gap-2 rounded-full bg-gold px-3 py-1 text-[10px] font-black tracking-widest text-ink uppercase">
+        <span class="inline-flex items-center gap-2 rounded-full bg-brand px-3 py-1 text-[10px] font-black tracking-widest text-ink uppercase">
           <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-ink"></span>
           Coming Soon
         </span>
@@ -172,7 +172,7 @@ const hemat = (coret: number | undefined, harga: number) =>
         <ul class="mt-5 grid gap-2 sm:grid-cols-2">
           {membershipBenefits.map((b) => (
             <li class="flex items-start gap-2 text-[13px] text-white/90">
-              <span class="mt-0.5 text-gold" aria-hidden="true">
+              <span class="mt-0.5 text-brand" aria-hidden="true">
                 ✓
               </span>
               {b}
@@ -189,13 +189,13 @@ const hemat = (coret: number | undefined, harga: number) =>
           <span class="vip-card__corner bottom-3 left-3 border-b border-l" aria-hidden="true"></span>
           <span class="vip-card__corner right-3 bottom-3 border-r border-b" aria-hidden="true"></span>
 
-          <p class="text-[10px] font-black tracking-[0.24em] text-gold uppercase">Early Access</p>
+          <p class="text-[10px] font-black tracking-[0.24em] text-brand uppercase">Early Access</p>
           <p class="display mt-2 text-3xl text-white">Slot terbatas</p>
           <div class="vip-rule my-3.5"></div>
           <p class="text-[12px] leading-relaxed text-white/78">
             Daftar sekarang, dapat prioritas tempat di batch pertama.
           </p>
-          <p class="mt-3 inline-flex items-center gap-2 rounded-full border border-gold/45 bg-gold/12 px-3 py-1 text-[10px] font-black tracking-[0.18em] text-gold uppercase">
+          <p class="mt-3 inline-flex items-center gap-2 rounded-full border border-brand/45 bg-brand/12 px-3 py-1 text-[10px] font-black tracking-[0.18em] text-brand uppercase">
             Batch 01 · Kuota awal
           </p>
           <a

@@ -13,41 +13,45 @@ const ticker = [
 ];
 ---
 
-<section class="relative overflow-hidden bg-gradient-to-br from-brand via-brand to-brand-dark">
+<!-- Pita CTA: hitam pekat sebagai bidang, oranye hanya satu kata aksen. -->
+<section class="relative overflow-hidden bg-ink">
   <div class="absolute inset-0" aria-hidden="true">
-    <img src="/media/workshop-crowd.jpg" alt="" loading="lazy" class="ken-burns h-full w-full object-cover opacity-70" />
+    <img src="/media/workshop-crowd.jpg" alt="" loading="lazy" class="ken-burns h-full w-full object-cover opacity-50 grayscale" />
   </div>
   <div
-    class="absolute inset-0 bg-gradient-to-br from-brand/88 via-brand/70 to-brand-dark/92"
+    class="absolute inset-0 bg-gradient-to-br from-ink/95 via-ink/88 to-ink/96"
     aria-hidden="true"
   >
   </div>
-  <SportArt variant="stadium" stroke="#ffffff" opacity={0.24} class="absolute inset-0 h-full w-full" />
+  <SportArt variant="stadium" stroke="#ffffff" opacity={0.2} class="absolute inset-0 h-full w-full" />
+  <div class="pat-grid-light absolute inset-0 opacity-70" aria-hidden="true"></div>
   <div
-    class="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.35)_1.4px,transparent_1.4px)] bg-[length:20px_20px] opacity-40 [mask-image:linear-gradient(to_bottom,black,transparent_70%)]"
+    class="pat-halftone absolute inset-0 opacity-55 pat-fade-tr"
+    style="--pat-gap: 8px"
     aria-hidden="true"
   >
   </div>
+  <div class="pat-noise-light absolute inset-0" aria-hidden="true"></div>
   <div
     class="art-blob -top-24 -left-16 h-72 w-72"
-    style="background: radial-gradient(circle, rgba(255,195,46,0.75), transparent 70%);"
+    style="background: radial-gradient(circle, rgba(255,122,26,0.34), transparent 70%);"
     aria-hidden="true"
   >
   </div>
   <div
     class="art-blob -right-20 -bottom-28 h-80 w-80"
-    style="background: radial-gradient(circle, rgba(255,255,255,0.55), transparent 70%); animation-delay: -6s;"
+    style="background: radial-gradient(circle, rgba(255,255,255,0.26), transparent 70%); animation-delay: -6s;"
     aria-hidden="true"
   >
   </div>
-  <div class="art-blob left-1/4 top-1/2 h-56 w-56" style="background: radial-gradient(circle, rgba(200,35,43,0.55), transparent 70%); animation-delay: -3s;" aria-hidden="true"></div>
+  <div class="art-blob left-1/4 top-1/2 h-56 w-56" style="background: radial-gradient(circle, rgba(200,35,43,0.3), transparent 70%); animation-delay: -3s;" aria-hidden="true"></div>
   <div class="sport-ball left-6 top-16 hidden h-14 w-14 -rotate-12 opacity-95 lg:block" aria-hidden="true"></div>
   <div class="sport-ball right-[6%] bottom-16 hidden h-12 w-12 rotate-12 opacity-90 lg:block" aria-hidden="true"></div>
   <div class="pointer-events-none absolute top-8 right-10 hidden rotate-12 rounded-2xl border-4 border-white/25 p-5 sm:block" aria-hidden="true">
     <span class="display block text-3xl text-white/60">#MODERN</span>
   </div>
-  <div class="pointer-events-none absolute bottom-10 left-8 hidden -rotate-6 rounded-2xl border-4 border-ink/15 p-4 lg:block" aria-hidden="true">
-    <span class="display block text-2xl text-ink/40">BICARA ?!</span>
+  <div class="pointer-events-none absolute bottom-10 left-8 hidden -rotate-6 rounded-2xl border-4 border-white/30 p-4 lg:block" aria-hidden="true">
+    <span class="display block text-2xl text-white/45">BICARA ?!</span>
   </div>
 
   <div class="relative">
@@ -57,7 +61,7 @@ const ticker = [
       <p data-reveal="fade" class="inline-block rounded-full border border-white/40 px-4 py-1.5 text-xs font-bold tracking-[0.25em] text-white uppercase">#JadiAtletModern</p>
       <h2 data-reveal class="display mt-4 text-5xl leading-[0.92] text-white sm:text-7xl lg:text-8xl">
         Berani<br />
-        <span class="text-ink [text-shadow:_2px_2px_0_rgba(255,255,255,0.6)]">Bicara?</span>
+        <span class="text-brand">Bicara?</span>
       </h2>
       <p data-reveal class="mx-auto mt-5 max-w-md text-sm leading-relaxed font-medium text-white/85 sm:text-base">
         Mulai dari chat singkat. Ceritakan atlet &amp; akademimu — kami bantu susun programnya.
@@ -71,7 +75,7 @@ const ticker = [
         data-source="cta-band"
         data-magnetic
         data-reveal="pop"
-        class="btn-pop mt-8 inline-flex items-center gap-2 rounded-2xl bg-white px-8 py-4 text-sm font-bold tracking-wide text-ink uppercase shadow-[0_16px_36px_-12px_rgba(0,0,0,0.35)] hover:bg-gold focus-visible:ring-2 focus-visible:ring-ink focus-visible:outline-none"
+        class="btn-pop mt-8 inline-flex items-center gap-2 rounded-2xl bg-white px-8 py-4 text-sm font-bold tracking-wide text-ink uppercase shadow-[0_16px_36px_-12px_rgba(0,0,0,0.35)] hover:bg-brand focus-visible:ring-2 focus-visible:ring-ink focus-visible:outline-none"
       >
         Isi Formulir Pendaftaran ↗
       </a>

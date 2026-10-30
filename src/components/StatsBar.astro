@@ -18,12 +18,16 @@ const ticker = [
 ];
 ---
 
+<!-- Scoreboard: hitam sebagai bidang, oranye hanya sebagai detail/aksen. -->
 <section class="relative mx-auto max-w-6xl px-4 py-10 sm:px-6" aria-label="Stats Prospect Asia">
-  <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand via-brand to-brand-dark shadow-[0_24px_50px_-20px_rgba(255,122,26,0.75)]">
-    <div class="art-stripes-light absolute inset-0 opacity-45" aria-hidden="true"></div>
-    <div class="art-track absolute inset-0 opacity-60" aria-hidden="true"></div>
+  <div class="relative overflow-hidden rounded-3xl bg-ink-2 shadow-[0_24px_50px_-24px_rgba(36,26,18,0.55)] ring-1 ring-brand/30">
+    <div class="pat-grid-light absolute inset-0 opacity-80" aria-hidden="true"></div>
+    <div class="pat-halftone absolute -top-24 -right-16 h-80 w-80 opacity-70 pat-fade-tr" style="--pat-gap: 9px" aria-hidden="true"></div>
+    <div class="pat-noise-light absolute inset-0" aria-hidden="true"></div>
+    <div class="art-track absolute inset-0 opacity-80" aria-hidden="true"></div>
+    <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand to-transparent" aria-hidden="true"></div>
 
-    <div class="relative flex flex-col gap-2 border-b border-white/25 bg-ink/85 px-3 py-2 text-white sm:flex-row sm:items-center sm:gap-3">
+    <div class="relative flex flex-col gap-2 border-b border-white/12 bg-ink-2/85 px-3 py-2 text-white sm:flex-row sm:items-center sm:gap-3">
       <span class="flex shrink-0 items-center gap-1.5">
         <span class="h-2 w-2 animate-pulse rounded-full bg-brand"></span>
         <span class="text-[10px] font-black tracking-[0.2em] text-white uppercase">Scoreboard</span>

@@ -36,7 +36,7 @@ const gallery = [
       <Chapter num="06" label="Workshop" class="mb-6" />
       <h2 class="display text-5xl leading-[0.9] sm:text-6xl lg:text-7xl">
         Workshop buat<br />
-        <span class="text-brand-dark">atlet binaanmu</span>
+        <span class="hl-swash text-ink">atlet binaanmu</span>
       </h2>
       <p class="mt-4 text-sm leading-relaxed text-ink/65 sm:text-base">
         Sesi 90–120 menit, interaktif, praktik langsung. Minimal 10 peserta — didampingi coach Sports Communication.
@@ -97,9 +97,9 @@ const gallery = [
             <div class="mt-4 border-t border-ink/10 pt-4">
               <div class="min-h-[3.4rem]">
                 {w.harga > 0 ? (
-                  <p class="display text-3xl leading-none text-brand-dark">Rp{formatIdr(w.harga)}</p>
+                  <p class="display text-3xl leading-none text-ink">Rp{formatIdr(w.harga)}</p>
                 ) : (
-                  <p class="display text-3xl leading-none text-brand-dark">Custom</p>
+                  <p class="display text-3xl leading-none text-ink">Custom</p>
                 )}
                 <p class="mt-1.5 text-[11px] text-ink/50">per sesi · {w.target}</p>
               </div>
@@ -128,7 +128,7 @@ const gallery = [
                 data-register
                 data-program={w.nama}
                 data-source={`workshop-${w.slug}`}
-                class="inline-flex items-center justify-center gap-2 rounded-2xl border border-gold px-5 py-3.5 text-sm font-bold text-brand-dark transition hover:bg-gold hover:text-ink focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none active:scale-95"
+                class="inline-flex items-center justify-center gap-2 rounded-2xl border border-brand/45 px-5 py-3.5 text-sm font-bold text-brand-dark transition hover:bg-brand hover:text-ink focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none active:scale-95"
               >
                 Booking Sekarang ↗
               </a>

@@ -158,7 +158,7 @@ body {
 }
 
 .hl-brand {
-  background: linear-gradient(92deg, var(--color-brand) 0%, var(--color-gold) 100%);
+  background: linear-gradient(92deg, #241a12 0%, #ff7a1a 46%, #ffc32e 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -296,6 +296,97 @@ body {
 .art-stripes-light {
   background-image: repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0 14px, transparent 14px 28px);
   animation: stripe-move 9s linear infinite;
+}
+
+/* ══ FORGE — sistem pattern detail (oranye × hitam) ═════════════
+   Prinsip: oranye = ACCENT, bukan bidang warna. Pola halus
+   (halftone / grid / hatch / noise) memberi "detail" tanpa menambah
+   blok oranye besar. Ukuran pola diatur lewat --pat-gap. */
+
+.pat-halftone {
+  background-image: radial-gradient(rgba(255, 122, 26, 0.55) 1.15px, transparent 1.25px);
+  background-size: var(--pat-gap, 7px) var(--pat-gap, 7px);
+}
+
+.pat-halftone-ink {
+  background-image: radial-gradient(rgba(36, 26, 18, 0.42) 1.15px, transparent 1.25px);
+  background-size: var(--pat-gap, 7px) var(--pat-gap, 7px);
+}
+
+.pat-grid {
+  background-image:
+    linear-gradient(to right, rgba(36, 26, 18, 0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(36, 26, 18, 0.1) 1px, transparent 1px);
+  background-size: var(--pat-gap, 26px) var(--pat-gap, 26px);
+}
+
+.pat-grid-light {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.09) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.09) 1px, transparent 1px);
+  background-size: var(--pat-gap, 26px) var(--pat-gap, 26px);
+}
+
+.pat-hatch {
+  background-image: repeating-linear-gradient(45deg, rgba(255, 122, 26, 0.22) 0 1px, transparent 1px 7px);
+}
+
+.pat-hatch-ink {
+  background-image: repeating-linear-gradient(45deg, rgba(36, 26, 18, 0.12) 0 1px, transparent 1px 8px);
+}
+
+/* Butiran film: bikin permukaan terasa cetak, bukan gradien datar. */
+.pat-noise {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+  opacity: 0.06;
+}
+
+.pat-noise-light {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+  opacity: 0.1;
+}
+
+/* Mask helper: pola memudar ke arah tertentu. */
+.pat-fade-tr {
+  -webkit-mask-image: linear-gradient(to bottom right, #000, transparent 72%);
+  mask-image: linear-gradient(to bottom right, #000, transparent 72%);
+}
+
+.pat-fade-bl {
+  -webkit-mask-image: linear-gradient(to top left, #000, transparent 72%);
+  mask-image: linear-gradient(to top left, #000, transparent 72%);
+}
+
+/* Highlight "swash" oranye di belakang teks — seperti spidol. */
+.hl-swash {
+  position: relative;
+  display: inline-block;
+  isolation: isolate;
+}
+
+.hl-swash::before {
+  content: "";
+  position: absolute;
+  left: -0.05em;
+  right: -0.05em;
+  bottom: 0.12em;
+  height: 0.28em;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(255, 122, 26, 0.45), rgba(255, 195, 46, 0.55));
+  z-index: -1;
+}
+
+/* Varian untuk latar gelap: sapuan marker diredupkan supaya teks putih
+   di atasnya tetap memenuhi rasio kontras (putih/oranye gelap >= 4.5:1). */
+.hl-swash--dark::before {
+  background: linear-gradient(90deg, rgba(255, 122, 26, 0.58), rgba(255, 160, 60, 0.5));
+}
+
+/* Garis teknis putus-putus (oranye) — detail kecil untuk kartu/panel. */
+.pat-dash {
+  background-image: repeating-linear-gradient(90deg, rgba(255, 122, 26, 0.55) 0 6px, transparent 6px 12px);
 }
 
 .sport-ball {
@@ -567,8 +658,10 @@ body {
 
 .rail-wrap {
   overflow: hidden;
-  -webkit-mask-image: linear-gradient(to right, transparent, black 9%, black 91%, transparent);
-  mask-image: linear-gradient(to right, transparent, black 9%, black 91%, transparent);
+  /* Fade tepi dibuat pendek (2%) supaya kartu di ujung tetap terbaca —
+     mask yang lebar membuat jersey gelap tereduksi jadiwash putih. */
+  -webkit-mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
 }
 
 .rail {
@@ -666,26 +759,37 @@ body {
 }
 
 /* ── Jersey: visual pengganti foto coach ────────────────────── */
-/* Catatan: jangan pakai `position: relative` di sini.
+/* Hitam sebagai bidang, oranye sebagai detail teknik: jahitan
+   diagonal + halftone + cahaya oranye di satu sudut.
+   Catatan: jangan pakai `position: relative` di sini.
    CSS kustom tanpa layer mengalahkan utility Tailwind (yang ada di @layer utilities),
    sehingga `absolute inset-0` pada elemen ini ikut tertimpa dan tinggi elemen jadi 0. */
 .jersey {
   overflow: hidden;
-  background: linear-gradient(150deg, var(--color-brand) 0%, var(--color-brand-dark) 46%, #1b1209 100%);
+  background:
+    radial-gradient(118% 92% at 82% 4%, rgba(255, 122, 26, 0.32), transparent 56%),
+    linear-gradient(152deg, #3b2a1d 0%, #1d150e 48%, #0f0a06 100%);
 }
 
 .jersey::before {
   content: "";
   position: absolute;
   inset: -30%;
-  background: repeating-linear-gradient(118deg, rgba(255, 255, 255, 0.1) 0 6px, transparent 6px 34px);
+  background:
+    repeating-linear-gradient(118deg, rgba(255, 122, 26, 0.26) 0 1px, transparent 1px 30px),
+    radial-gradient(rgba(255, 122, 26, 0.22) 1.05px, transparent 1.15px);
+  background-size: 100% 100%, 7px 7px;
+  -webkit-mask-image: linear-gradient(to bottom right, #000 0%, rgba(0, 0, 0, 0.28) 55%, transparent 82%);
+  mask-image: linear-gradient(to bottom right, #000 0%, rgba(0, 0, 0, 0.28) 55%, transparent 82%);
 }
 
 .jersey::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(72% 62% at 28% 16%, rgba(255, 255, 255, 0.22), transparent 64%);
+  background:
+    radial-gradient(58% 46% at 78% 10%, rgba(255, 122, 26, 0.34), transparent 70%),
+    radial-gradient(66% 54% at 20% 12%, rgba(255, 255, 255, 0.09), transparent 64%);
 }
 
 /* ── Ribbon / ticker berjalan ──────────────────────────────── */
@@ -1117,18 +1221,35 @@ body {
     0 0 42px -12px rgba(255, 122, 26, 0.45);
 }
 
+/* Detail halftone di sudut kanan atas kartu — makin "detail" tanpa
+   menambah bidang oranye besar. */
+.prog-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 0;
+  width: 8rem;
+  height: 8rem;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(255, 122, 26, 0.42) 1.1px, transparent 1.2px);
+  background-size: 6px 6px;
+  -webkit-mask-image: linear-gradient(to bottom left, #000, transparent 72%);
+  mask-image: linear-gradient(to bottom left, #000, transparent 72%);
+}
+
 /* ── Kartu VIP Membership ───────────────────────────────── */
 .vip-card {
   position: relative;
   overflow: hidden;
   border-radius: 1.5rem;
-  border: 1px solid rgba(255, 195, 46, 0.45);
+  border: 1px solid rgba(255, 122, 26, 0.5);
   background:
-    linear-gradient(158deg, rgba(255, 195, 46, 0.16), rgba(255, 122, 26, 0.05) 38%, rgba(23, 17, 11, 0.55)),
+    linear-gradient(158deg, rgba(255, 122, 26, 0.18), rgba(255, 122, 26, 0.05) 38%, rgba(23, 17, 11, 0.55)),
     rgba(23, 17, 11, 0.55);
   box-shadow:
     0 30px 70px -30px rgba(0, 0, 0, 0.85),
-    inset 0 1px 0 rgba(255, 220, 140, 0.35);
+    inset 0 1px 0 rgba(255, 214, 178, 0.28);
   backdrop-filter: blur(10px);
 }
 
@@ -1138,7 +1259,7 @@ body {
   inset: 0;
   border-radius: inherit;
   padding: 1px;
-  background: linear-gradient(145deg, rgba(255, 220, 140, 0.85), rgba(255, 122, 26, 0.15) 45%, transparent 70%);
+  background: linear-gradient(145deg, rgba(255, 178, 58, 0.85), rgba(255, 122, 26, 0.18) 45%, transparent 70%);
   -webkit-mask:
     linear-gradient(#000 0 0) content-box,
     linear-gradient(#000 0 0);
@@ -1154,7 +1275,7 @@ body {
   width: 45%;
   height: 220%;
   transform: rotate(18deg);
-  background: linear-gradient(90deg, transparent, rgba(255, 236, 180, 0.28), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 226, 194, 0.26), transparent);
   animation: vip-shine 5.5s ease-in-out infinite;
   pointer-events: none;
 }
@@ -1163,14 +1284,14 @@ body {
   position: absolute;
   width: 16px;
   height: 16px;
-  border-color: rgba(255, 195, 46, 0.75);
+  border-color: rgba(255, 122, 26, 0.8);
   border-style: solid;
   pointer-events: none;
 }
 
 .vip-rule {
   height: 1px;
-  background: linear-gradient(90deg, rgba(255, 195, 46, 0.75), rgba(255, 195, 46, 0.08));
+  background: linear-gradient(90deg, rgba(255, 122, 26, 0.8), rgba(255, 122, 26, 0.08));
 }
 
 @keyframes vip-shine {
@@ -1181,11 +1302,11 @@ body {
 }
 
 .vip-cta {
-  background: linear-gradient(100deg, var(--color-gold), #ffb02e 55%, var(--color-brand));
-  box-shadow: 0 14px 30px -14px rgba(255, 195, 46, 0.75);
+  background: linear-gradient(100deg, #ff8f3d, var(--color-brand) 48%, var(--color-brand-dark));
+  box-shadow: 0 14px 30px -14px rgba(255, 122, 26, 0.55);
 }
 
 .vip-cta:hover {
-  background: linear-gradient(100deg, #ffd45e, var(--color-gold) 55%, #ff8f3d);
+  background: linear-gradient(100deg, var(--color-brand), #ff9445 48%, #d15600);
 }
 
