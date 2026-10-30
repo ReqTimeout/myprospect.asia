@@ -1,29 +1,27 @@
 import Lenis from 'lenis';
 import { animate } from 'motion';
 
-const osReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const stored = localStorage.getItem('pa-motion');
-const forcedOn = stored === 'on';
 const forcedOff = stored === 'off';
-const reduced = !forcedOn && (osReduced || forcedOff);
+const reduced = forcedOff;
 
-if (forcedOn) document.documentElement.classList.add('motion-on');
+if (!forcedOff) document.documentElement.classList.add('motion-on');
 if (forcedOff) document.documentElement.classList.add('motion-off');
 
 function initMotionToggle() {
   const btn = document.querySelector<HTMLButtonElement>('[data-motion-toggle]');
   if (!btn) return;
   const label = btn.querySelector<HTMLElement>('[data-motion-label]');
-  const state = () => (forcedOff ? 'off' : forcedOn ? 'on' : 'auto');
+  const state = (): 'on' | 'off' => (forcedOff ? 'off' : 'on');
   const paint = () => {
     const s = state();
-    if (label) label.textContent = s === 'off' ? 'Animasi mati' : s === 'on' ? 'Animasi on' : 'Animasi';
+    if (label) label.textContent = s === 'on' ? 'Animasi: ON' : 'Animasi: OFF';
+    btn.dataset.state = s;
     btn.setAttribute('aria-pressed', s === 'off' ? 'true' : 'false');
   };
   paint();
   btn.addEventListener('click', () => {
-    const next = state() === 'off' ? 'on' : 'off';
-    localStorage.setItem('pa-motion', next);
+    localStorage.setItem('pa-motion', state() === 'on' ? 'off' : 'on');
     location.reload();
   });
 }

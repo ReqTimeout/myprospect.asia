@@ -126,8 +126,8 @@ Token di `src/styles/global.css` (`@theme`):
 | Mouse spotlight | `.hero-glow` radial gradient mengikuti kursor (`--mx/--my`, lerp 0.08) |
 | Scroll progress | `.scroll-progress` `scaleX` di atas (lerp 0.12) |
 | Gerak kontinu | Semua motif sport bergerak: `stripe-move`, `motif-drift`, `pitch-drift`, `track-drift`, `float` pada bola, ring dashed berputar |
-| Toggle animasi | Tombol kiri bawah: siklus **auto → ON → OFF** (`localStorage 'pa-motion'`). Label jujur: "Animasi: auto" / "mati (sistem)" / "ON" / "OFF" |
-| Reduced motion | `prefers-reduced-motion` → animasi jadi fade pendek (0.24–0.3s), `transform: none`. Bisa ditimpa penuh dengan kelas `html.motion-on` (toggle ON) |
+| Toggle animasi | Tombol kiri bawah: siklus **ON ⇄ OFF** (`localStorage 'pa-motion'`). **Default ON** — setting OS tidak lagi mematikan. Label: "Animasi: ON" / "Animasi: OFF" |
+| Reduced motion | `prefers-reduced-motion` **diabaikan** sejak Okt 2026 (user mengeluh "animasi ga jalan di desktop" — ternyata macOS Reduce Motion ON). Animasi mati hanya bila toggle di-OFF-kan (`html.motion-off`) |
 
 **Catatan penting untuk agent berikutnya:** user sempatyskali melaporkan "animasi ga jalan" → 3 penyebab nyata: (1) cache browser → hard refresh, (2) toggle diklik ke OFF, (3) OS Reduce Motion ON. Karena itu motion intro dipindah dari GSAP ke **CSS murni** (tidak bergantung JS) dan status toggle selalu ditulis di label.
 
@@ -283,7 +283,7 @@ Status terakhir: **audit 22/22 · 0 bug**, e2e konten 24/24, motion probe (title
 
 1. Baca §4 (routing) & §6 (tokens) sebelum menyentuh kode.
 2. Kalau ganti tema: ubah `@theme` di `src/styles/global.css`, **kecuali** `ink-2`/`bone` (admin), dan **kecuali** `functions/berita/[slug].ts` (CSS inline).
-3. Kalau menambah motion: taruh di `src/scripts/fx.ts` (JS) atau keyframes CSS; hormati `prefers-reduced-motion` + kelas `html.motion-on`.
+3. Kalau menambah motion: taruh di `src/scripts/fx.ts` (JS) atau keyframes CSS; hormati kelas `html.motion-off` (satu-satunya cara mematikan animasi sekarang).
 4. Kalau menambah konten: pakai API admin + D1 (tanpa deploy) — jangan tambah file MDX kecuali seed.
 5. Verifikasi selalu: `npm run build` → `wrangler pages deploy` → `myprospect-audit.mjs` (harus 0 bug) → screenshot → commit+push.
-6. Kalau user bilang "animasi ga jalan": cek (a) hard refresh, (b) label tombol "Animasi: …" di kiri bawah, (c) `prefers-reduced-motion` OS, (d) aset JS/CSS lama di cache.
+6. Kalau user bilang "animasi ga jalan": cek (a) hard refresh, (b) label tombol "Animasi: ON/OFF" di kiri bawah (default ON; nilai lama `auto` di localStorage dianggap ON), (c) aset JS/CSS lama di cache.

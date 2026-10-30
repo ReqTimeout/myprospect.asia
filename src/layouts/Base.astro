@@ -45,7 +45,7 @@ const ogImageUrl = new URL(ogImage.src, Astro.site).href;
   </head>
   <body class="min-h-dvh antialiased">
     <div class="page-curtain" aria-hidden="true"></div>
-    <button type="button" class="motion-toggle hidden lg:inline-flex" data-motion-toggle aria-pressed="false">
+    <button type="button" class="motion-toggle" data-motion-toggle data-state="auto" aria-pressed="false">
       <span class="dot" aria-hidden="true"></span>
       <span data-motion-label>Animasi</span>
     </button>
