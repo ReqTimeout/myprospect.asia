@@ -99,8 +99,8 @@ Token di `src/styles/global.css` (`@theme`):
 | `--color-paper` | `#fffcf7` | background halaman |
 | `--color-paper-deep` | `#fff3e4` | section alt / kartu hangat |
 | `--color-ink` | `#241a12` | teks utama (hangat, bukan hitam pekat) |
-| `--color-ink-2` | `#17110b` | **khusus admin panel** (tetap dark) |
-| `--color-bone` | `#f7f5f2` | **khusus admin panel** (teks di admin) |
+| `--color-ink-2` | `#17110b` | teks di permukaan gelap (footer, banner) — **bukan** lagi panel admin (panel admin sudah putih, Okt 2026) |
+| `--color-bone` | `#f7f5f2` | teks di atas permukaan gelap — **bukan** lagi panel admin (panel admin sudah putih, Okt 2026) |
 | `--color-brand` | `#ff7a1a` | **oranye utama** (CTA, harga, band, aksen) |
 | `--color-brand-dark` | `#bc4c00` | teks oranye (kontras), hover — Okt 2026 digelapkan 2× dari `#e05e00` → `#c04f00` → `#bc4c00` supaya teks kecil oranye lolos 4.5:1 di atas putih **dan** di atas `paper-deep` (footer) |
 | `--color-brand-soft` | `#ffe3c4` | chip, badge, tint |
@@ -119,7 +119,7 @@ Token di `src/styles/global.css` (`@theme`):
 - Utilitas & komponen homepage (Okt 2026, revisi "Mitra + Program"): `.crest*` (lencana mitra SVG), `.live-badge` + `.live-dot` (badge "Online" hijau berdenyut), `.prog-bg*` + `.prog-card` (kartu program yang menyatu dengan latar), `.vip-card*` + `.vip-rule` + `.vip-cta` (kartu Membership premium). Komponen: `src/components/PartnerLogo.astro`, `src/components/ProgramBackdrop.astro`, tipe `CrestShape` di `src/data/crest.ts`.
 - **Warna kategori berita** (Okt 2026): `src/data/categories.ts` → `categoryStyle(kategori)` mengembalikan `{ tone, text, border, dot, wash }`. Tiga tone: `Bintang` = emas, `Kolaborasi` = oranye, `Berita` = merah; kategori lain otomatis jatuh ke tone default (tidak error). Dipakai bareng di `functions/berita/[slug].ts` (HTML mandiri) dan `src/components/islands/BeritaList.svelte` — **satu sumber kebenaran** untuk warna label. Kontras chip sudah diuji: bintang 7.4:1, kolaborasi 5.2:1, berita 6.1:1.
 - **Jebakan kontras kartu di section gelap**: `.surface-ink` memberi `color:#fff` ke seluruh turunannya. Kartu terang (`.card-soft`, `.prog-card`) **wajib** mendeklarasikan `color` sendiri — kalau tidak, judul kartu ikut putih dan hilang di atas gradient krem. `.prog-card` sudah mengaturnya (`color: var(--color-ink)`).
-- Admin **tetap dark** (pakai `bg-ink`/`text-bone`) — jangan di-sweep saat ganti tema.
+- ~~Admin **tetap dark** (pakai `bg-ink`/`text-bone`) — jangan di-sweep saat ganti tema.~~ **TIDAK LAGI BERLAKU (30 Okt 2026)**: permintaan klien "jangan hitam dong adminnya putih saja yang clean dan terlihat profesional saas" → panel admin sekarang **light/putih**. Lihat §25. Jangan revert ke dark.
 
 ---
 
@@ -219,11 +219,11 @@ Alur data cover:
 
 ## 11. Admin panel
 
-`/admin` → island `AdminApp.svelte` (konsol analitik gelap, 6 tab):
+`/admin` → island `AdminApp.svelte` (panel **putih/clean SaaS** sejak 30 Okt 2026 — lihat §25.1, 6 tab):
 - **Dashboard** — hero ringkasan N hari + 4 kartu KPI (sparkline + chip delta vs periode lalu), grafik SVG trafik harian interaktif (hover kolom + tooltip), corong konversi (kunjungan→klik WA→lead), halaman terpopuler, lead terbaru, plus kartu "Sedang aktif" realtime di sidebar. Rentang 7/14/30 hari.
 - **Analitik** — sumber trafik (referrer), perangkat pengunjung (stacked bar), tabel semua halaman (PV/UV), ranking tombol WhatsApp paling diklik, 4 mini-stat.
 - **Leads** — filter status, ubah status, catatan, tombol buka WA.
-- **Konten** (`AdminKonten.svelte`) — sub-tab Berita / Testimoni / FAQ / Statistik; slug otomatis dari judul, body markdown, delete dengan konfirmasi, simpan ke D1 (tanpa deploy).
+- **Konten** (`AdminKonten.svelte`) — sub-tab Berita / Testimoni / FAQ / Statistik; slug otomatis dari judul, body markdown, delete dengan konfirmasi, simpan ke D1 (tanpa deploy). Kolom **"Gambar utama"** di form Berita bukan lagi kolom path manual: ada **drop-zone unggah** (file → R2 → path terisi otomatis), pratinjau 16:9, dan **"Pustaka media"** untuk memilih berkas yang sudah ada. Detail di §25.2.
 - **Media** — status R2 live via `/api/admin/media` (`siap` + nama bucket). Selama R2 belum aktif, tab menampilkan pesan blocker + langkah aktivasi jujur; begitu bucket ter-bind, UI unggah (`/api/admin/upload`) + daftar berkas (grid kartu: thumbnail, ukuran, tanggal, tombol "Salin path" yang berubah jadi "Tersalin", dan "Buka") langsung aktif tanpa ubah kode.
 - **Pengaturan** — nomor WA, aktif/nonaktif popup, GA4 ID (validasi `/^G-[A-Z0-9]{6,20}$/`).
 
@@ -269,6 +269,7 @@ Jebakan penting:
 | E2E UI panel admin (browser sungguhan) | `scripts/verify-admin-ui.mjs` | `set -a && . ./.env.admin && set +a && node scripts/verify-admin-ui.mjs [base-url]` → **64 cek** di desktop 1440×900 + mobile 390×844: `/admin/` tanpa login terlempar ke login, password salah memunculkan "Password salah.", password benar masuk, **tiap tab menegaskan nav menyorot tab yang benar + kontennya benar-benar termuat**, dashboard (KPI/corong/halaman/lead benar-benar ter-render, 6 jalur SVG chart, 14 kolom grafik, ganti periode 30 hari, hover tooltip), tulis beneran (klik Simpan pengaturan lalu bandingkan API sebelum/sesudah — idempoten karena PUT settings per-key upsert), Keluar balik ke login, console error + request gagal. Assertion hover tooltip **kondisional**: kalau periode ini ada hari berp-data → tooltip wajib muncul; kalau kosong → yang diperiksa pesan keadaan kosong ("Belum ada trafik"), bukan tooltip. Password dibaca dari env dan **tidak pernah dicetak**. Screenshot `ad-*.png` **wajib dibaca via vision** |
 | E2E analitik + CRUD berita | `scripts/verify-analitik.mjs` | `set -a && . ./.env.admin && set +a && node scripts/verify-analitik.mjs [base-url]` → **46 cek**: beacon `/api/pv` (204, body rusak ditoleransi, path non-relatif ditolak), angka stats (pv/uv, deret 7 hari terisi per hari), `/admin` tersaring, trafik bot/CLI **tidak** dihitung, perangkat desktop/mobile/tablet terklasifikasi, referrer `google.com`/`instagram.com` terparse, referrer internal tidak dihitung, `hari` asing → fallback 14, 401 tanpa login, klik WA masuk KPI + daftar CTA, plus **CRUD berita penuh** (POST 201 → halaman publik 200 + cover + canonical + `og:url` + beacon → PUT edit → status draft → publik 404 → ganti slug ditolak 400 → DELETE → 404 → 3 berita asli tetap utuh → POST tanpa auth 401). Skrip menulis baris uji ke D1 → **wajib bersihkan** (perintah ada di footer keluarannya) |
 | E2E R2 (unggah → URL publik) | `scripts/verify-media.mjs` | `set -a && . ./.env.admin && set +a && node scripts/verify-media.mjs [base-url]` → **18 cek**: login → `/api/admin/media` (siap + nama bucket + tidak ada langkah aktivasi lagi) → daftar berkas → **unggah nyata** (PNG asli dari repo via multipart `FormData` + `Blob`) → format kunci `media/YYYYMMDD-<slug>-<8hex>.<ext>` → nama asli di-slug-kan → ukuran dikembalikan → **URL publik `/media/<file>` 200 + content-type + magic bytes PNG + cache-control jangka panjang** → 3 gambar bawaan `public/media/` tetap 200 → media tak dikenal 404 → berkas uji muncul di daftar admin. Berkas uji diunggah ke bucket **sungguhan** → **wajib dihapus** (perintah ada di footer keluarannya) |
+| E2E kontrol unggah gambar utama | `scripts/verify-konten.mjs` | `set -a && . ./.env.admin && set +a && node scripts/verify-konten.mjs [base-url]` → **13 cek**: form berita terbuka → kolom "Gambar utama" **berupa kontrol unggah** (bukan kolom path manual) → path manual tetap ada sebagai fallback → label lama "Gambar utama (path …)" sudah hilang → **unggah berkas nyata** → path `/media/YYYYMMDD-<slug>-<hex>.<ext>` terisi otomatis → pesan sukses tampil → **pratinjau benar-benar termuat** (`naturalWidth > 0`, bukan cuma `src` terpasang) → **pustaka media** menampilkan berkas dan bisa dipilih untuk mengganti gambar → layout mobile: zona unggah & tombol "Terbitkan" **tidak tertutup nav fixed** → tanpa console error & tanpa request gagal. Sengaja **tidak menyimpan berita** → tidak ada data uji di D1; yang tertinggal hanya satu berkas di R2 → **wajib dihapus** (perintah ada di footer keluarannya) + purge edge |
 
 Alur wajib: `npm run build` → serve `dist/` → `audit-frames.mjs` → **baca frame via vision** → perbaiki → ulangi → `audit-clip.mjs` → deploy → audit live → commit+push.
 
@@ -350,7 +351,7 @@ GA4 butuh ID klien yang belum ada, jadi trafik diukur sendiri lewat beacon milik
 ## 18. Ringkasan untuk agent yang lanjut
 
 1. Baca §4 (routing) & §6 (tokens) sebelum menyentuh kode.
-2. Kalau ganti tema: ubah `@theme` di `src/styles/global.css`, **kecuali** `ink-2`/`bone` (admin), dan **kecuali** `functions/berita/[slug].ts` (CSS inline).
+2. Kalau ganti tema: ubah `@theme` di `src/styles/global.css`, **kecuali** `ink-2`/`bone` (hanya teks di permukaan gelap), dan **kecuali** `functions/berita/[slug].ts` (CSS inline). Panel admin **tidak** lagi memakai `ink-2`/`bone` — sekarang putih (lihat §25.1).
 3. Kalau menambah motion: taruh di `src/scripts/fx.ts` (JS) atau keyframes CSS. **Jangan** reintroduce gate `prefers-reduced-motion` — user minta animasi selalu hidup.
 4. Kalau menambah konten: pakai API admin + D1 (tanpa deploy) — jangan tambah file MDX kecuali seed.
 5. Verifikasi selalu: `npm run build` → `wrangler pages deploy` → `myprospect-audit.mjs` (harus 0 bug) → screenshot → commit+push.
@@ -359,6 +360,7 @@ GA4 butuh ID klien yang belum ada, jadi trafik diukur sendiri lewat beacon milik
 8. Kalau menambah utility CSS kustom: beware **Tailwind v4 layering** — CSS tanpa `@layer` mengalahkan utility Tailwind. Bungkus dengan `@layer components` bila memang mau utility yang menang (contoh kasus `.jersey` + `absolute inset-0`).
 9. Setiap perubahan visual **wajib** diverifikasi dua viewport (desktop 1440×900 & mobile 390×844) lewat `scripts/audit-frames.mjs` → **baca frame via vision** → lalu `scripts/audit-clip.mjs` (target 0 overflow & 0 covered). Cek khusus mobile: bubble WhatsApp **tidak boleh muncul** (Dock mobile sudah punya tombol Chat) supaya tidak menutupi CTA/judul.
 10. Popup WA desktop auto-muncul lalu **menyempit sendiri** ke bubble setelah 6,5 detik (`collapse()` di `WaPopup.svelte`) supaya tidak terus menutupi isi kartu. Kalau user sudah klik CTA, timer dibatalkan dan kartu tetap terbuka. Di mobile kartu **tidak pernah** muncul otomatis — bubble kecil + tombol Chat di Dock saja.
+11. Kalau menambah field gambar/berkas di admin: **jangan** minta admin mengetik path. Pakai `POST /api/admin/upload` → isi field dengan `'/' + key` + tampilkan pustaka berkas yang ada (pola yang sudah dipakai di kolom "Gambar utama", §25.2).
 
 ---
 
@@ -580,7 +582,7 @@ Permintaan: *"dashboardnya ko jelek ya ? ga kaya dashboard pro ? tolong dong dan
 
 | Permintaan | Status | Bukti |
 |---|---|---|
-| Dashboard dibikin "pro" | **SELESAI** | `AdminApp.svelte` dibangun ulang jadi konsol analitik gelap: hero ringkasan, 4 kartu KPI + sparkline + chip delta, grafik SVG interaktif, corong konversi, top halaman, lead terbaru, tab **Analitik** baru. Dibaca via vision di desktop 1440×900 + mobile 390×844 |
+| Dashboard dibikin "pro" | **SELESAI** | `AdminApp.svelte` dibangun ulang jadi konsol analitik lengkap: hero ringkasan, 4 kartu KPI + sparkline + chip delta, grafik SVG interaktif, corong konversi, top halaman, lead terbaru, tab **Analitik** baru. Dibaca via vision di desktop 1440×900 + mobile 390×844. *(Versi awalnya gelap; 30 Okt 2026 dipivot ke **putih/clean SaaS** — lihat §25.1)* |
 | R2 diaktifkan sendiri | **SELESAI (30 Okt 2026)** | Klien klik **Activate** → bucket `prospect-media` dibuat & di-bind (`MEDIA_BUCKET`), route publik `/media/*` ditambahkan, unggah nyata → URL publik 200 (18 cek). Detail di **§24** |
 | Tes buat berita | **SELESAI** | CRUD penuh diuji ke produksi: POST → halaman publik 200 → edit → draft (publik 404) → ganti slug ditolak → DELETE → 404. 3 berita asli tetap utuh |
 | Analitik trafik | **SELESAI** | Beacon sendiri → D1 `pageviews` → `/api/admin/stats` → dashboard + tab Analitik. **Tanpa GA4** (ID-nya belum ada) dan tanpa cookie |
@@ -667,3 +669,65 @@ Seluruh trafik yang tercatat sampai 30 Okt 2026 **100% berasal dari pengujian ot
 > Pembersihan manual: `npx wrangler d1 execute prospect-db --remote --command "DELETE FROM pageviews"` (dan `wa_clicks`). Perintah ini **menghapus semua** baris, jadi jalankan hanya kalau memang tidak ada trafik asli yang harus dijaga.
 
 State produksi saat ini: `pageviews` 0 · `wa_clicks` 0 · `leads` 0 · `posts` 3 (berita asli) · bucket R2 0 berkas (semua berkas uji dihapus + edge di-purge).
+
+---
+
+## 25. Panel admin jadi putih + kontrol unggah gambar utama (30 Okt 2026)
+
+Permintaan klien: *"Gambar utama di artikel kenapa path bukan upload ? dan jangan hitam dong adminnya putih saja yang clean dan terlihat profesional saas"*.
+
+### 25.1 Admin: dark → putih / clean SaaS
+
+Semua token gelap di dua island admin (`AdminApp.svelte`, `AdminKonten.svelte`) dipetakan ke palet terang:
+
+| Lama (dark) | Baru (light) |
+|---|---|
+| `bg-ink` / `bg-ink-85` / `bg-ink-95` | `bg-white` / `bg-white/90` / `bg-white/95` |
+| `bg-white/5` / `bg-white/10` / `bg-white/15` | `bg-white` / `bg-slate-100` / `bg-slate-200` |
+| `text-bone` | `text-slate-900` |
+| `text-bone/35…40` | `text-slate-400` |
+| `text-bone/45…70` | `text-slate-500` |
+| `text-bone/75…80` | `text-slate-600` |
+| `text-bone/85…90` | `text-slate-700` |
+| `border-white/10…15` | `border-slate-200` |
+| `border-white/30` | `border-slate-300` |
+| `text-gold` | `text-amber-700` |
+| `text-brand` (teks) | `text-brand-dark` (oranye kontras) |
+| `bg-gold/10…15` | `bg-amber-50` |
+| `bg-gold/20` | `bg-amber-100` |
+| `border-gold*` | `border-amber-300` |
+| `focus:border-gold` / `ring-gold` | `focus:border-brand` / `ring-brand/40` |
+
+Latar halaman `bg-slate-50`, kartu `bg-white` + `border-slate-200`. Nilai CSS/SVG yang dibalik: `.kartu` (border + shadow), `.hero-band` (gradient), `.kolom`/`.sumbu` (sumbu chart), `.skel` (skeleton), `box-shadow` `.detak`, dan literal `stroke` chart → `rgba(15,23,42,.08)` / `#ffffff` (halo titik).
+
+**Verifikasi**: bundle JS admin di `dist/` searched → **nol** token gelap tersisa; CSS hasil build memuat semua utilitas baru (`bg-slate-50`, `text-brand-dark`, `focus-visible:ring-brand/40`, `focus:ring-brand/20`, `hover:bg-brand/5`, `border-crimson`, `text-crimson`). Vision: dashboard, tab Konten, tab Media (desktop 1440×900) + dashboard & form (mobile 390×844) — semua putih, rapi, kontras terbaca.
+
+### 25.2 "Gambar utama" jadi kontrol unggah sungguhan
+
+`src/components/islands/AdminKonten.svelte`:
+
+- **Drop-zone** (`<label>` + `input[type=file]` `sr-only`, `accept="image/*"`) → `POST /api/admin/upload` (multipart) → `postForm.cover` terisi otomatis dengan `'/' + key`.
+- **Pratinjau 16:9** di kiri (fallback ikon `Image` saat kosong), **pesan sukses/error**, tombol state "Mengunggah…".
+- **Pustaka media** — grid thumbnail berkas gambar yang sudah ada di R2 (diambil dari `GET /api/admin/upload`); klik → ganti gambar utama; berkas terpilih diberi ring oranye.
+- **Path manual** tetap ada tapi diturunkan jadi **"Path manual (opsional)"** — jadi fallback, bukan cara utama.
+- Daftar berita di bawah kini menampilkan **thumbnail cover**.
+
+Semua state (`pustaka`, `coverBusy`, `coverMsg`, `coverErr`) di `AdminKonten.svelte`; `muatPustaka()` dipanggil saat `onMount`, `newPost()`, `editPost()`.
+
+### 25.3 Jebakan yang muncul di sesi ini
+
+1. **Remap token Tailwind v4 = prefix bertabrakan.** `bg-white/4` adalah prefix dari `bg-white/4.5`; `border-gold` dari `border-gold/50`; `focus:border-gold` dari `border-gold`; `text-brand` dari `text-brand-dark`. Kalau pakai `replace_all`, token **lebih panjang/spesifik harus diganti lebih dulu**, atau string sudah benar jadi rusak.
+2. **Efek berantai** — aturan `text-brand` → `text-brand-dark` ikut mengenai string yang **baru saja** ditulis `text-brand-dark` → muncul `text-brand-dark-dark` (3 tempat). Perbaikan: ganti targeted.
+3. **Urutan `await` menentukan apa yang terlihat.** `coverMsg` di-set **sebelum** `await muatPustaka()` → `waitForFunction` berbasis pesan sukses resolve **sebelum** pustaka selesai dimuat. Verifier harus menunggu **dua sinyal terpisah** (pesan sukses **dan** `button[title]` > 0).
+4. **`naturalWidth === 0` bukan berarti gambar rusak.** Gambar bisa masih downloading. `curl` ke URL publik mengembalikan 200 `image/jpeg` → tunggu `img.complete && naturalWidth > 0`.
+5. **`scrollIntoViewIfNeeded` scroll-nya minimal** — tidak cukup untuk membuktikan elemen bisa melewati nav fixed. Pakai `scrollIntoView({ block: 'center' })`, lalu bandingkan `getBoundingClientRect().bottom` vs `navTop`.
+6. **Selector `main label` bisa mengenai wrapper**, bukan drop-zone yang dimaksud — pakai `.filter({ hasText: 'Unggah gambar' }).first()`.
+
+### 25.4 Status verifikasi & kebersihan
+
+- `scripts/verify-konten.mjs` → **13/13 PASS** di produksi `https://myprospect.asia` (path terisi `/media/20261030-kt-unggah-uji-78d2f850.jpg`, pratinjau 1600×1066 termuat, pustaka 1 berkas, zona unggah & tombol Terbitan bebas nav di mobile, nol console error & nol request gagal).
+- `scripts/verify-admin-ui.mjs` → **64/64 PASS** di produksi setelah perubahan tema.
+- `npm run build` → 12 halaman, bersih.
+- **Kebersihan**: berkas uji dihapus dari R2 (`npx wrangler r2 object delete prospect-media/media/20261030-kt-unggah-uji-78d2f850.jpg --remote`) → bucket **0 berkas**; edge di-purge untuk URL tersebut → link lama **404**. Tidak ada berita uji yang disimpan (skrip sengaja tidak pernah menyentuh D1).
+
+> Catatan: build Astro sempat memunculkan galat IDE *"Cannot find native binding … npm has a bug related to optional dependencies"* pada file `.svelte` — itu masalah lingkungan esbuild/svelte, **bukan** galat sintaks; `npm run build` tetap sukses.

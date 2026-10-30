@@ -87,11 +87,11 @@
     gagal: 'Gagal',
   };
   const statusClass: Record<Status, string> = {
-    baru: 'bg-brand text-white',
-    dikontak: 'bg-gold text-ink',
-    terjadwal: 'bg-sky-500 text-white',
-    daftar: 'bg-emerald-500 text-white',
-    gagal: 'bg-white/15 text-bone/60',
+    baru: 'bg-brand/10 text-brand-dark',
+    dikontak: 'bg-amber-100 text-amber-700',
+    terjadwal: 'bg-sky-100 text-sky-700',
+    daftar: 'bg-emerald-100 text-emerald-700',
+    gagal: 'bg-slate-100 text-slate-500',
   };
 
   let tab = $state<(typeof tabs)[number]['id']>('dashboard');
@@ -451,16 +451,16 @@
   const deltaUv = $derived(arah(stats?.kpi.uv ?? { kini: 0, sebelum: 0 }));
 </script>
 
-<div class="flex min-h-dvh flex-col bg-ink text-bone">
-  <header class="sticky top-0 z-30 border-b border-white/10 bg-ink/85 backdrop-blur-xl">
+<div class="flex min-h-dvh flex-col bg-slate-50 text-slate-900">
+  <header class="sticky top-0 z-30 border-b border-slate-200 bg-white/90 backdrop-blur-xl">
     <div class="mx-auto flex w-full max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
       <div class="flex items-center gap-3">
-        <span class="grid h-9 w-9 place-items-center rounded-xl bg-brand text-white shadow-[0_8px_24px_-10px_rgba(200,35,43,.9)]">
+        <span class="grid h-9 w-9 place-items-center rounded-xl bg-brand text-ink shadow-[0_8px_22px_-10px_rgba(255,122,26,.8)]">
           <Activity size={17} />
         </span>
         <div class="leading-tight">
           <p class="display skew-mark text-lg">Prospect</p>
-          <p class="text-[9px] font-black tracking-[0.22em] text-gold uppercase">Admin Console</p>
+          <p class="text-[9px] font-black tracking-[0.22em] text-amber-700 uppercase">Admin Console</p>
         </div>
       </div>
 
@@ -469,7 +469,7 @@
           type="button"
           onclick={() => refresh()}
           disabled={menyegarkan || loading}
-          class="hidden items-center gap-1.5 rounded-xl border border-white/12 px-3 py-2 text-[11px] font-bold text-bone/60 transition hover:border-gold/45 hover:text-bone focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none disabled:opacity-50 sm:flex"
+          class="hidden items-center gap-1.5 rounded-xl border border-slate-200 px-3 py-2 text-[11px] font-bold text-slate-500 transition hover:border-amber-300 hover:text-slate-900 focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:outline-none disabled:opacity-50 sm:flex"
         >
           <span class={menyegarkan || loading ? 'putar' : ''}><RefreshCw size={13} /></span>
           {jam ? `Diperbarui ${jam}` : 'Muat ulang'}
@@ -477,7 +477,7 @@
         <button
           type="button"
           onclick={logout}
-          class="flex items-center gap-1.5 rounded-xl border border-white/15 px-3 py-2 text-xs font-bold text-bone/70 transition hover:border-brand hover:text-brand focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none active:scale-95"
+          class="flex items-center gap-1.5 rounded-xl border border-slate-200 px-3 py-2 text-xs font-bold text-slate-500 transition hover:border-brand hover:text-brand-dark focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:outline-none active:scale-95"
         >
           <LogOut size={14} />
           Keluar
@@ -488,7 +488,7 @@
 
   <div class="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-6 px-4 pt-6 pb-28 sm:px-6 lg:flex-row lg:gap-8 lg:pb-8">
     <nav class="hidden w-56 shrink-0 lg:block" aria-label="Menu admin">
-      <p class="mb-3 px-3 text-[10px] font-black tracking-[0.2em] text-bone/35 uppercase">Navigasi</p>
+      <p class="mb-3 px-3 text-[10px] font-black tracking-[0.2em] text-slate-400 uppercase">Navigasi</p>
       <ul class="space-y-1">
         {#each tabs as t (t.id)}
           {@const badge =
@@ -498,10 +498,10 @@
               type="button"
               onclick={() => (tab = t.id)}
               class={[
-                'flex w-full items-center gap-2.5 rounded-2xl px-3.5 py-2.5 text-sm font-bold transition focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none active:scale-[0.98]',
+                'flex w-full items-center gap-2.5 rounded-2xl px-3.5 py-2.5 text-sm font-bold transition focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:outline-none active:scale-[0.98]',
                 tab === t.id
-                  ? 'bg-brand text-white shadow-[0_14px_30px_-16px_rgba(200,35,43,.95)]'
-                  : 'text-bone/55 hover:bg-white/5 hover:text-bone',
+                  ? 'bg-brand text-ink shadow-[0_14px_28px_-16px_rgba(255,122,26,.85)]'
+                  : 'text-slate-500 hover:bg-white hover:text-slate-900',
               ]}
             >
               <t.icon size={16} />
@@ -511,8 +511,8 @@
               <span
                 class="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 rounded-full px-2 py-0.5 text-[10px] font-black {tab ===
                   t.id
-                  ? 'bg-white/25 text-white'
-                  : 'bg-gold/20 text-gold'}"
+                  ? 'bg-white text-ink'
+                  : 'bg-amber-100 text-amber-700'}"
               >
                 {badge}
               </span>
@@ -522,11 +522,11 @@
       </ul>
 
       {#if stats}
-        <div class="mt-6 rounded-3xl border border-white/10 bg-white/4 p-4">
-          <p class="text-[10px] font-black tracking-[0.2em] text-bone/40 uppercase">Sedang aktif</p>
+        <div class="mt-6 rounded-3xl border border-slate-200 bg-white p-4">
+          <p class="text-[10px] font-black tracking-[0.2em] text-slate-400 uppercase">Sedang aktif</p>
           <p class="display mt-1 text-3xl leading-none">{stats.realtime.uv30Menit}</p>
-          <p class="mt-1 text-[11px] font-bold text-bone/50">pengunjung · 30 menit terakhir</p>
-          <p class="mt-2 flex items-center gap-1.5 text-[11px] font-bold text-emerald-400">
+          <p class="mt-1 text-[11px] font-bold text-slate-500">pengunjung · 30 menit terakhir</p>
+          <p class="mt-2 flex items-center gap-1.5 text-[11px] font-bold text-emerald-600">
             <span class="detak h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
             {stats.realtime.pv30Menit} halaman dilihat
           </p>
@@ -536,7 +536,7 @@
 
     <main class="min-w-0 flex-1">
       {#if error}
-        <p class="mb-4 rounded-2xl border border-brand/40 bg-brand/10 px-4 py-3 text-sm text-bone/90">{error}</p>
+        <p class="mb-4 rounded-2xl border border-brand/40 bg-brand/10 px-4 py-3 text-sm text-slate-700">{error}</p>
       {/if}
 
       {#if tab === 'dashboard'}
@@ -553,24 +553,24 @@
         {:else if stats}
           {@const n = stats.deret.length}
 
-          <section class="hero-band rise relative overflow-hidden rounded-[28px] border border-white/10 p-5 sm:p-6">
+          <section class="hero-band rise relative overflow-hidden rounded-[28px] border border-slate-200 p-5 sm:p-6">
             <div class="relative flex flex-wrap items-start justify-between gap-5">
               <div class="min-w-0">
-                <p class="text-[10px] font-black tracking-[0.22em] text-gold uppercase">
+                <p class="text-[10px] font-black tracking-[0.22em] text-amber-700 uppercase">
                   Ringkasan {range} hari
                 </p>
                 <div class="mt-2 flex flex-wrap items-end gap-x-4 gap-y-1">
                   <p class="display text-5xl leading-none sm:text-6xl">{stats.kpi.uv.kini}</p>
                   <div class="pb-1">
-                    <p class="text-sm font-bold text-bone/85">pengunjung unik</p>
+                    <p class="text-sm font-bold text-slate-700">pengunjung unik</p>
                     <span
                       class={[
                         'mt-1 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-black',
                         deltaUv.naik
-                          ? 'bg-emerald-500/15 text-emerald-400'
+                          ? 'bg-emerald-500/15 text-emerald-600'
                           : deltaUv.turun
-                            ? 'bg-brand/15 text-brand'
-                            : 'bg-white/10 text-bone/55',
+                            ? 'bg-brand/15 text-brand-dark'
+                            : 'bg-slate-100 text-slate-500',
                       ]}
                     >
                       {#if deltaUv.naik}<ChevronUp size={12} />{:else if deltaUv.turun}<ChevronDown size={12} />{/if}
@@ -579,21 +579,21 @@
                     </span>
                   </div>
                 </div>
-                <p class="mt-3 text-xs text-bone/50">
+                <p class="mt-3 text-xs text-slate-500">
                   {stats.kpi.pv.kini} halaman dilihat · {stats.realtime.uv30Menit} orang aktif 30 menit terakhir ·
                   konversi kunjungan&nbsp;&rarr;&nbsp;lead {stats.konversi.pvKeLead}%
                 </p>
               </div>
 
-              <div class="flex shrink-0 items-center gap-1 rounded-2xl border border-white/10 bg-ink/40 p-1" role="group" aria-label="Periode analitik">
+              <div class="flex shrink-0 items-center gap-1 rounded-2xl border border-slate-200 bg-slate-100 p-1" role="group" aria-label="Periode analitik">
                 {#each [7, 14, 30] as r (r)}
                   <button
                     type="button"
                     aria-pressed={range === r}
                     onclick={() => (range = r)}
                     class={[
-                      'rounded-xl px-3 py-2 text-xs font-bold transition focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none active:scale-95',
-                      range === r ? 'bg-gold text-ink' : 'text-bone/55 hover:text-bone',
+                      'rounded-xl px-3 py-2 text-xs font-bold transition focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:outline-none active:scale-95',
+                      range === r ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-900',
                     ]}
                   >
                     {r}h
@@ -611,17 +611,17 @@
               { key: 'lead', label: 'Lead masuk', nilai: stats.kpi.lead, deret: titikLead, warna: '#8b5cf6', ikon: Activity },
             ] as k (k.key)}
               {@const d = arah(k.nilai)}
-              <article class="rise kartu bg-white/4.5 p-4 sm:p-5">
+              <article class="rise kartu bg-white p-4 sm:p-5">
                 <div class="flex items-start justify-between gap-2">
-                  <p class="text-[10px] font-black tracking-[0.16em] text-bone/45 uppercase">{k.label}</p>
-                  <k.ikon size={15} class="text-bone/35" />
+                  <p class="text-[10px] font-black tracking-[0.16em] text-slate-500 uppercase">{k.label}</p>
+                  <k.ikon size={15} class="text-slate-400" />
                 </div>
                 <p class="display mt-2 text-4xl leading-none">{k.nilai.kini}</p>
                 <div class="mt-3 flex items-end justify-between gap-3">
                   <span
                     class={[
                       'inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-black',
-                      d.naik ? 'bg-emerald-500/15 text-emerald-400' : d.turun ? 'bg-brand/15 text-brand' : 'bg-white/10 text-bone/50',
+                      d.naik ? 'bg-emerald-500/15 text-emerald-600' : d.turun ? 'bg-brand/15 text-brand-dark' : 'bg-slate-100 text-slate-500',
                     ]}
                   >
                     {#if d.naik}<ChevronUp size={11} />{:else if d.turun}<ChevronDown size={11} />{/if}
@@ -631,21 +631,21 @@
                     <path d={spark(k.deret)} fill="none" stroke={k.warna} stroke-width="2" stroke-linecap="round" pathLength={1} class="jejak" />
                   </svg>
                 </div>
-                <p class="mt-2 text-[10px] font-bold text-bone/35">periode lalu {k.nilai.sebelum}</p>
+                <p class="mt-2 text-[10px] font-bold text-slate-400">periode lalu {k.nilai.sebelum}</p>
               </article>
             {/each}
           </div>
 
           <div class="mt-4 grid gap-4 xl:grid-cols-3">
-            <section class="rise kartu bg-white/4.5 p-4 sm:p-5 xl:col-span-2">
+            <section class="rise kartu bg-white p-4 sm:p-5 xl:col-span-2">
               <div class="flex flex-wrap items-center justify-between gap-3">
                 <div>
                   <h2 class="display text-xl">Trafik harian</h2>
-                  <p class="mt-0.5 text-[11px] text-bone/45">{labelHari(stats.sejak)} &rarr; hari ini (WIB)</p>
+                  <p class="mt-0.5 text-[11px] text-slate-500">{labelHari(stats.sejak)} &rarr; hari ini (WIB)</p>
                 </div>
                 <div class="flex items-center gap-3 text-[11px] font-bold">
-                  <span class="flex items-center gap-1.5 text-bone/70"><i class="h-2 w-4 rounded-full bg-brand"></i>Halaman</span>
-                  <span class="flex items-center gap-1.5 text-bone/70"><i class="h-2 w-4 rounded-full bg-gold"></i>Pengunjung</span>
+                  <span class="flex items-center gap-1.5 text-slate-500"><i class="h-2 w-4 rounded-full bg-brand"></i>Halaman</span>
+                  <span class="flex items-center gap-1.5 text-slate-500"><i class="h-2 w-4 rounded-full bg-gold"></i>Pengunjung</span>
                 </div>
               </div>
 
@@ -660,10 +660,10 @@
 
                   {#each [0, 0.5, 1] as p (p)}
                     {@const y = GB - p * (GB - GT)}
-                    <line x1="0" y1={y} x2={GW} y2={y} stroke="rgba(255,255,255,.09)" stroke-width="1" stroke-dasharray="3 5" />
+                    <line x1="0" y1={y} x2={GW} y2={y} stroke="rgba(15,23,42,.08)" stroke-width="1" stroke-dasharray="3 5" />
                     <text x="4" y={y - 4} class="sumbu">{Math.round(atap * p)}</text>
                   {/each}
-                  <line x1="0" y1={GB} x2={GW} y2={GB} stroke="rgba(255,255,255,.18)" stroke-width="1" />
+                  <line x1="0" y1={GB} x2={GW} y2={GB} stroke="rgba(100,116,139,.35)" stroke-width="1" />
 
                   <path d={wilayah(titikPv, atap)} fill="url(#pvWash)" class="wash" />
                   <path d={garis(titikPv, atap)} fill="none" stroke="#c8232b" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" pathLength={1} class="jejak" />
@@ -673,16 +673,16 @@
                     <!-- titik per hari: tanpa ini hari tunggal dengan trafik cuma terlihat
                          sebagai garis datar di dasar grafik -->
                     {#if d.pv > 0}
-                      <circle cx={xKe(i, n)} cy={yKe(d.pv, atap)} r="3.6" fill="#c8232b" stroke="rgb(255 252 247 / .85)" stroke-width="1.4" />
+                      <circle cx={xKe(i, n)} cy={yKe(d.pv, atap)} r="3.6" fill="#c8232b" stroke="#ffffff" stroke-width="1.4" />
                     {/if}
                     {#if d.uv > 0}
-                      <circle cx={xKe(i, n)} cy={yKe(d.uv, atap)} r="3" fill="#f6b93b" stroke="rgb(255 252 247 / .85)" stroke-width="1.4" />
+                      <circle cx={xKe(i, n)} cy={yKe(d.uv, atap)} r="3" fill="#f6b93b" stroke="#ffffff" stroke-width="1.4" />
                     {/if}
                   {/each}
 
                   {#if titikAktif}
-                    <circle cx={xKe(hover, n)} cy={yKe(titikAktif.pv, atap)} r="5" fill="#c8232b" stroke="#fffcf7" stroke-width="2" />
-                    <circle cx={xKe(hover, n)} cy={yKe(titikAktif.uv, atap)} r="4" fill="#f6b93b" stroke="#fffcf7" stroke-width="2" />
+                    <circle cx={xKe(hover, n)} cy={yKe(titikAktif.pv, atap)} r="5" fill="#c8232b" stroke="#ffffff" stroke-width="2" />
+                    <circle cx={xKe(hover, n)} cy={yKe(titikAktif.uv, atap)} r="4" fill="#f6b93b" stroke="#ffffff" stroke-width="2" />
                   {/if}
 
                   {#each stats.deret as d, i (d.day)}
@@ -701,40 +701,40 @@
 
                 {#if titikAktif}
                   <div
-                    class="pointer-events-none absolute -top-1 z-10 -translate-x-1/2 rounded-2xl border border-white/15 bg-ink/95 px-3 py-2 text-[11px] font-bold shadow-2xl backdrop-blur"
+                    class="pointer-events-none absolute -top-1 z-10 -translate-x-1/2 rounded-2xl border border-slate-200 bg-white/95 px-3 py-2 text-[11px] font-bold shadow-[0_18px_40px_-18px_rgba(15,23,42,.38)] backdrop-blur"
                     style="left: {Math.min(88, Math.max(12, (hover / Math.max(1, n - 1)) * 100))}%"
                   >
-                    <p class="text-bone/60">{labelHari(titikAktif.day)}</p>
-                    <p class="mt-0.5 text-brand">{titikAktif.pv} halaman</p>
-                    <p class="text-gold">{titikAktif.uv} pengunjung</p>
-                    <p class="text-bone/70">{titikAktif.klik} klik WA · {titikAktif.lead} lead</p>
+                    <p class="text-slate-500">{labelHari(titikAktif.day)}</p>
+                    <p class="mt-0.5 text-brand-dark">{titikAktif.pv} halaman</p>
+                    <p class="text-amber-700">{titikAktif.uv} pengunjung</p>
+                    <p class="text-slate-500">{titikAktif.klik} klik WA · {titikAktif.lead} lead</p>
                   </div>
                 {:else if !adaTrafik}
-                  <p class="absolute inset-0 grid place-items-center text-center text-xs text-bone/45">
+                  <p class="absolute inset-0 grid place-items-center text-center text-xs text-slate-500">
                     Belum ada trafik tercatat pada periode ini.<br />Bagikan tautan / cek halaman situs lalu muat ulang panel ini.
                   </p>
                 {/if}
               </div>
 
-              <div class="mt-2 flex justify-between text-[10px] font-bold text-bone/35">
+              <div class="mt-2 flex justify-between text-[10px] font-bold text-slate-400">
                 {#each stats.deret.filter((_, i) => i % Math.ceil(n / 5) === 0 || i === n - 1) as d (d.day)}
                   <span>{labelHari(d.day)}</span>
                 {/each}
               </div>
             </section>
 
-            <section class="rise kartu bg-white/4.5 p-4 sm:p-5">
+            <section class="rise kartu bg-white p-4 sm:p-5">
               <h2 class="display text-xl">Corong konversi</h2>
-              <p class="mt-0.5 text-[11px] text-bone/45">{range} hari terakhir</p>
+              <p class="mt-0.5 text-[11px] text-slate-500">{range} hari terakhir</p>
 
               <ul class="mt-4 space-y-3.5">
                 {#each corong as c, i (c.label)}
                   <li>
                     <div class="flex items-baseline justify-between gap-2">
-                      <span class="text-xs font-bold text-bone/75">{i + 1}. {c.label}</span>
+                      <span class="text-xs font-bold text-slate-600">{i + 1}. {c.label}</span>
                       <span class="display text-xl">{c.nilai}</span>
                     </div>
-                    <div class="mt-1.5 h-2.5 overflow-hidden rounded-full bg-white/8">
+                    <div class="mt-1.5 h-2.5 overflow-hidden rounded-full bg-slate-200">
                       <div
                         class="muluk h-full rounded-full"
                         style="width: {persen(c.nilai, puncakCorong)}%; background: {c.warna === 'bone'
@@ -745,7 +745,7 @@
                       ></div>
                     </div>
                     {#if i < corong.length - 1}
-                      <p class="mt-1 text-[10px] font-bold text-bone/40">
+                      <p class="mt-1 text-[10px] font-bold text-slate-400">
                         {persen(corong[i + 1].nilai, Math.max(1, c.nilai))}% lanjut ke langkah berikutnya
                       </p>
                     {/if}
@@ -753,33 +753,33 @@
                 {/each}
               </ul>
 
-              <div class="mt-4 grid grid-cols-2 gap-2 border-t border-white/10 pt-4 text-center">
+              <div class="mt-4 grid grid-cols-2 gap-2 border-t border-slate-200 pt-4 text-center">
                 <div>
-                  <p class="display text-2xl text-gold">{stats.konversi.pvKeKlik}%</p>
-                  <p class="text-[10px] font-bold text-bone/45">kunjungan &rarr; klik WA</p>
+                  <p class="display text-2xl text-amber-700">{stats.konversi.pvKeKlik}%</p>
+                  <p class="text-[10px] font-bold text-slate-500">kunjungan &rarr; klik WA</p>
                 </div>
                 <div>
-                  <p class="display text-2xl text-brand">{stats.konversi.klikKeLead}%</p>
-                  <p class="text-[10px] font-bold text-bone/45">klik WA &rarr; lead</p>
+                  <p class="display text-2xl text-brand-dark">{stats.konversi.klikKeLead}%</p>
+                  <p class="text-[10px] font-bold text-slate-500">klik WA &rarr; lead</p>
                 </div>
               </div>
             </section>
           </div>
 
           <div class="mt-4 grid gap-4 lg:grid-cols-2">
-            <section class="rise kartu bg-white/4.5 p-4 sm:p-5">
+            <section class="rise kartu bg-white p-4 sm:p-5">
               <div class="flex items-center justify-between gap-3">
                 <h2 class="display text-xl">Halaman terpopuler</h2>
                 <button
                   type="button"
                   onclick={() => (tab = 'analitik')}
-                  class="rounded-xl border border-white/15 px-3 py-1.5 text-[11px] font-bold text-gold transition hover:border-gold/50 focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none"
+                  class="rounded-xl border border-slate-200 px-3 py-1.5 text-[11px] font-bold text-amber-700 transition hover:border-amber-300 focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:outline-none"
                 >
                   Detail analitik
                 </button>
               </div>
               {#if stats.halaman.length === 0}
-                <p class="mt-4 rounded-2xl border border-dashed border-white/15 p-6 text-center text-xs text-bone/45">
+                <p class="mt-4 rounded-2xl border border-dashed border-slate-200 p-6 text-center text-xs text-slate-500">
                   Belum ada data halaman.
                 </p>
               {:else}
@@ -787,10 +787,10 @@
                   {#each stats.halaman.slice(0, 5) as h (h.path)}
                     <li>
                       <div class="flex items-baseline justify-between gap-3">
-                        <p class="min-w-0 truncate text-xs font-bold text-bone/85">{labelPath(h.path)}</p>
-                        <p class="shrink-0 text-[11px] font-black text-gold">{h.pv}<span class="text-bone/40"> pv</span></p>
+                        <p class="min-w-0 truncate text-xs font-bold text-slate-700">{labelPath(h.path)}</p>
+                        <p class="shrink-0 text-[11px] font-black text-amber-700">{h.pv}<span class="text-slate-400"> pv</span></p>
                       </div>
-                      <div class="mt-1 h-1.5 overflow-hidden rounded-full bg-white/8">
+                      <div class="mt-1 h-1.5 overflow-hidden rounded-full bg-slate-200">
                         <div class="muluk h-full rounded-full bg-brand/80" style="width: {persen(h.pv, stats.halaman[0].pv)}%"></div>
                       </div>
                     </li>
@@ -799,28 +799,28 @@
               {/if}
             </section>
 
-            <section class="rise kartu bg-white/4.5 p-4 sm:p-5">
+            <section class="rise kartu bg-white p-4 sm:p-5">
               <div class="flex items-center justify-between gap-3">
                 <h2 class="display text-xl">Lead terbaru</h2>
                 <button
                   type="button"
                   onclick={() => (tab = 'leads')}
-                  class="rounded-xl border border-white/15 px-3 py-1.5 text-[11px] font-bold text-gold transition hover:border-gold/50 focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none"
+                  class="rounded-xl border border-slate-200 px-3 py-1.5 text-[11px] font-bold text-amber-700 transition hover:border-amber-300 focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:outline-none"
                 >
                   Kelola leads
                 </button>
               </div>
               {#if stats.leadsTerbaru.length === 0}
-                <p class="mt-4 rounded-2xl border border-dashed border-white/15 p-6 text-center text-xs text-bone/45">
+                <p class="mt-4 rounded-2xl border border-dashed border-slate-200 p-6 text-center text-xs text-slate-500">
                   Belum ada lead. Lead masuk lewat formulir halaman program/workshop.
                 </p>
               {:else}
-                <ul class="mt-3 divide-y divide-white/8">
+                <ul class="mt-3 divide-y divide-slate-200">
                   {#each stats.leadsTerbaru as l (l.id)}
                     <li class="flex items-center justify-between gap-3 py-2.5">
                       <div class="min-w-0">
                         <p class="truncate text-sm font-bold">{l.nama}</p>
-                        <p class="truncate text-[11px] text-bone/45">{l.program ?? '—'} · {shortDate(l.created_at)}</p>
+                        <p class="truncate text-[11px] text-slate-500">{l.program ?? '—'} · {shortDate(l.created_at)}</p>
                       </div>
                       <span class:list={['shrink-0 rounded-full px-2.5 py-1 text-[9px] font-black tracking-wider uppercase', statusClass[l.status]]}>
                         {statusLabel[l.status]}
@@ -832,7 +832,7 @@
             </section>
           </div>
 
-          <p class="mt-5 text-[11px] text-bone/40">
+          <p class="mt-5 text-[11px] text-slate-400">
             Trafik dihitung dari beacon halaman milik sendiri (penyimpanan di D1), tanpa IP mentah & tanpa cookie
             pihak ketiga. Angka dapat sedikit berbeda dari GA4.
           </p>
@@ -849,17 +849,17 @@
           <div class="flex flex-wrap items-end justify-between gap-4">
             <div>
               <h1 class="display text-3xl sm:text-4xl">Analitik trafik</h1>
-              <p class="mt-1 text-sm text-bone/55">Sumber pengunjung, halaman, perangkat, dan CTA WhatsApp.</p>
+              <p class="mt-1 text-sm text-slate-500">Sumber pengunjung, halaman, perangkat, dan CTA WhatsApp.</p>
             </div>
-            <div class="flex items-center gap-1 rounded-2xl border border-white/10 bg-ink/40 p-1" role="group" aria-label="Periode analitik">
+            <div class="flex items-center gap-1 rounded-2xl border border-slate-200 bg-slate-100 p-1" role="group" aria-label="Periode analitik">
               {#each [7, 14, 30] as r (r)}
                 <button
                   type="button"
                   aria-pressed={range === r}
                   onclick={() => (range = r)}
                   class={[
-                    'rounded-xl px-3 py-2 text-xs font-bold transition focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none active:scale-95',
-                    range === r ? 'bg-gold text-ink' : 'text-bone/55 hover:text-bone',
+                    'rounded-xl px-3 py-2 text-xs font-bold transition focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:outline-none active:scale-95',
+                    range === r ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-900',
                   ]}
                 >
                   {r} hari
@@ -869,26 +869,26 @@
           </div>
 
           <div class="mt-5 grid gap-4 lg:grid-cols-2">
-            <section class="rise kartu bg-white/4.5 p-4 sm:p-5">
+            <section class="rise kartu bg-white p-4 sm:p-5">
               <h2 class="display text-xl">Sumber trafik</h2>
-              <p class="mt-0.5 text-[11px] text-bone/45">Domain yang mengarahkan pengunjung ke situs</p>
+              <p class="mt-0.5 text-[11px] text-slate-500">Domain yang mengarahkan pengunjung ke situs</p>
               {#if stats.sumber.length === 0}
-                <p class="mt-4 rounded-2xl border border-dashed border-white/15 p-6 text-center text-xs text-bone/45">
+                <p class="mt-4 rounded-2xl border border-dashed border-slate-200 p-6 text-center text-xs text-slate-500">
                   Semua kunjungan datang langsung (tanpa referrer) — biasanya dari link bio / share chat.
                 </p>
               {:else}
                 <ul class="mt-3 space-y-2.5">
                   {#each stats.sumber as s (s.domain)}
                     <li class="flex items-center gap-3">
-                      <span class="grid h-8 w-8 shrink-0 place-items-center rounded-xl bg-white/6 text-[11px] font-black text-gold uppercase">
+                      <span class="grid h-8 w-8 shrink-0 place-items-center rounded-xl bg-slate-100 text-[11px] font-black text-amber-700 uppercase">
                         {s.domain.slice(0, 2)}
                       </span>
                       <div class="min-w-0 flex-1">
                         <div class="flex items-baseline justify-between gap-2">
                           <p class="truncate text-xs font-bold">{s.domain}</p>
-                          <p class="shrink-0 text-[11px] font-black text-bone/60">{s.pv} pv · {s.uv} uv</p>
+                          <p class="shrink-0 text-[11px] font-black text-slate-500">{s.pv} pv · {s.uv} uv</p>
                         </div>
-                        <div class="mt-1 h-1.5 overflow-hidden rounded-full bg-white/8">
+                        <div class="mt-1 h-1.5 overflow-hidden rounded-full bg-slate-200">
                           <div class="muluk h-full rounded-full bg-gold/85" style="width: {persen(s.pv, stats.sumber[0].pv)}%"></div>
                         </div>
                       </div>
@@ -898,13 +898,13 @@
               {/if}
             </section>
 
-            <section class="rise kartu bg-white/4.5 p-4 sm:p-5">
+            <section class="rise kartu bg-white p-4 sm:p-5">
               <h2 class="display text-xl">Perangkat pengunjung</h2>
-              <p class="mt-0.5 text-[11px] text-bone/45">Dipakai untuk memutuskan tata letak mana yang lebih dulu</p>
+              <p class="mt-0.5 text-[11px] text-slate-500">Dipakai untuk memutuskan tata letak mana yang lebih dulu</p>
               {#if stats.perangkat.length === 0}
-                <p class="mt-4 rounded-2xl border border-dashed border-white/15 p-6 text-center text-xs text-bone/45">Belum ada data.</p>
+                <p class="mt-4 rounded-2xl border border-dashed border-slate-200 p-6 text-center text-xs text-slate-500">Belum ada data.</p>
               {:else}
-                <div class="mt-4 flex h-3 overflow-hidden rounded-full bg-white/8">
+                <div class="mt-4 flex h-3 overflow-hidden rounded-full bg-slate-200">
                   {#each stats.perangkat as p, i (p.device)}
                     <div
                       class="muluk h-full"
@@ -915,37 +915,37 @@
                 <ul class="mt-4 space-y-2">
                   {#each stats.perangkat as p, i (p.device)}
                     <li class="flex items-center justify-between gap-3 text-xs font-bold">
-                      <span class="flex items-center gap-2 text-bone/80">
+                      <span class="flex items-center gap-2 text-slate-600">
                         <i class="h-2.5 w-2.5 rounded-full" style="background: {['#c8232b', '#f6b93b', '#25d366', '#8b5cf6', '#38bdf8'][i % 5]}"></i>
                         {deviceLabel[p.device] ?? p.device}
                       </span>
-                      <span class="text-bone/55">{p.pv} pv · {persen(p.pv, stats.kpi.pv.kini)}%</span>
+                      <span class="text-slate-500">{p.pv} pv · {persen(p.pv, stats.kpi.pv.kini)}%</span>
                     </li>
                   {/each}
                 </ul>
               {/if}
             </section>
 
-            <section class="rise kartu bg-white/4.5 p-4 sm:p-5">
+            <section class="rise kartu bg-white p-4 sm:p-5">
               <h2 class="display text-xl">Semua halaman</h2>
-              <p class="mt-0.5 text-[11px] text-bone/45">{range} hari terakhir</p>
+              <p class="mt-0.5 text-[11px] text-slate-500">{range} hari terakhir</p>
               {#if stats.halaman.length === 0}
-                <p class="mt-4 rounded-2xl border border-dashed border-white/15 p-6 text-center text-xs text-bone/45">Belum ada data.</p>
+                <p class="mt-4 rounded-2xl border border-dashed border-slate-200 p-6 text-center text-xs text-slate-500">Belum ada data.</p>
               {:else}
                 <table class="mt-3 w-full text-left text-xs">
                   <thead>
-                    <tr class="text-[10px] font-black tracking-wider text-bone/40 uppercase">
+                    <tr class="text-[10px] font-black tracking-wider text-slate-400 uppercase">
                       <th class="pb-2">Halaman</th>
                       <th class="pb-2 text-right">PV</th>
                       <th class="pb-2 text-right">UV</th>
                     </tr>
                   </thead>
-                  <tbody class="divide-y divide-white/8">
+                  <tbody class="divide-y divide-slate-200">
                     {#each stats.halaman as h (h.path)}
                       <tr>
-                        <td class="max-w-0 truncate py-2.5 font-bold text-bone/85">{labelPath(h.path)}</td>
-                        <td class="py-2.5 text-right font-black text-gold">{h.pv}</td>
-                        <td class="py-2.5 text-right text-bone/55">{h.uv}</td>
+                        <td class="max-w-0 truncate py-2.5 font-bold text-slate-700">{labelPath(h.path)}</td>
+                        <td class="py-2.5 text-right font-black text-amber-700">{h.pv}</td>
+                        <td class="py-2.5 text-right text-slate-500">{h.uv}</td>
                       </tr>
                     {/each}
                   </tbody>
@@ -953,18 +953,18 @@
               {/if}
             </section>
 
-            <section class="rise kartu bg-white/4.5 p-4 sm:p-5">
+            <section class="rise kartu bg-white p-4 sm:p-5">
               <h2 class="display text-xl">Tombol WhatsApp paling diklik</h2>
-              <p class="mt-0.5 text-[11px] text-bone/45">Slug CTA dari tabel wa_clicks</p>
+              <p class="mt-0.5 text-[11px] text-slate-500">Slug CTA dari tabel wa_clicks</p>
               {#if stats.cta.length === 0}
-                <p class="mt-4 rounded-2xl border border-dashed border-white/15 p-6 text-center text-xs text-bone/45">Belum ada klik.</p>
+                <p class="mt-4 rounded-2xl border border-dashed border-slate-200 p-6 text-center text-xs text-slate-500">Belum ada klik.</p>
               {:else}
                 <ul class="mt-3 space-y-2.5">
                   {#each stats.cta as c (c.slug)}
                     <li class="flex items-center justify-between gap-3">
-                      <p class="min-w-0 truncate font-mono text-[11px] font-bold text-bone/80">{c.slug}</p>
+                      <p class="min-w-0 truncate font-mono text-[11px] font-bold text-slate-600">{c.slug}</p>
                       <div class="flex shrink-0 items-center gap-2">
-                        <div class="h-1.5 w-20 overflow-hidden rounded-full bg-white/8">
+                        <div class="h-1.5 w-20 overflow-hidden rounded-full bg-slate-200">
                           <div class="muluk h-full rounded-full bg-[#25d366]" style="width: {persen(c.n, stats.cta[0].n)}%"></div>
                         </div>
                         <span class="w-6 text-right text-xs font-black">{c.n}</span>
@@ -983,9 +983,9 @@
               { l: 'Klik WhatsApp', v: stats.kpi.klik.kini, s: 'klik' },
               { l: 'Lead masuk', v: stats.kpi.lead.kini, s: 'lead' },
             ] as x (x.s)}
-              <div class="rounded-2xl border border-white/10 bg-white/3 px-4 py-3">
-                <p class="text-[10px] font-black tracking-widest text-bone/40 uppercase">{x.l}</p>
-                <p class="display mt-1 text-2xl">{x.v}<span class="ml-1.5 font-sans text-[10px] font-bold text-bone/35">{x.s}</span></p>
+              <div class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">
+                <p class="text-[10px] font-black tracking-widest text-slate-400 uppercase">{x.l}</p>
+                <p class="display mt-1 text-2xl">{x.v}<span class="ml-1.5 font-sans text-[10px] font-bold text-slate-400">{x.s}</span></p>
               </div>
             {/each}
           </div>
@@ -995,7 +995,7 @@
         <div class="mb-4 flex flex-wrap items-end justify-between gap-3">
           <div>
             <h1 class="display text-3xl sm:text-4xl">Leads</h1>
-            <p class="mt-1 text-sm text-bone/55">
+            <p class="mt-1 text-sm text-slate-500">
               {stats ? `${stats.leadsTotal} total · ${stats.leadsBaru} belum dikontak · ${stats.leadsHariIni} hari ini` : 'Prospek yang masuk dari formulir situs.'}
             </p>
           </div>
@@ -1006,8 +1006,8 @@
               type="button"
               onclick={() => setFilter(f as typeof filter)}
               class={[
-                'rounded-full px-3.5 py-2 text-xs font-bold transition focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none',
-                filter === f ? 'bg-gold text-ink' : 'border border-white/15 text-bone/60 hover:border-gold/40',
+                'rounded-full px-3.5 py-2 text-xs font-bold transition focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:outline-none',
+                filter === f ? 'bg-brand text-ink' : 'border border-slate-200 bg-white text-slate-500 hover:border-brand/50 hover:text-brand-dark',
               ]}
             >
               {f === 'semua' ? 'Semua' : statusLabel[f as Status]}
@@ -1016,19 +1016,19 @@
         </div>
 
         {#if loading && leads.length === 0}
-          <p class="text-sm text-bone/50">Memuat leads…</p>
+          <p class="text-sm text-slate-500">Memuat leads…</p>
         {:else if leads.length === 0}
-          <p class="rounded-3xl border border-dashed border-white/15 p-10 text-center text-sm text-bone/50">
+          <p class="rounded-3xl border border-dashed border-slate-200 p-10 text-center text-sm text-slate-500">
             Belum ada lead dengan filter ini.
           </p>
         {:else}
           <ul class="space-y-3">
             {#each leads as l (l.id)}
-              <li class="rounded-3xl border border-white/10 bg-white/5 p-4 sm:p-5">
+              <li class="rounded-3xl border border-slate-200 bg-white p-4 sm:p-5">
                 <div class="flex flex-wrap items-center justify-between gap-3">
                   <div class="min-w-0">
                     <p class="truncate text-base font-bold">{l.nama}</p>
-                    <p class="mt-0.5 truncate text-xs text-bone/55">
+                    <p class="mt-0.5 truncate text-xs text-slate-500">
                       {l.program ?? '—'} · {l.sumber} · {shortDate(l.created_at)}
                     </p>
                   </div>
@@ -1043,7 +1043,7 @@
                     target="_blank"
                     rel="noopener noreferrer"
                     data-wa-cta="admin-lead-wa"
-                    class="inline-flex items-center gap-1.5 rounded-xl bg-brand px-3.5 py-2 text-xs font-bold text-white transition hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none active:scale-95"
+                    class="inline-flex items-center gap-1.5 rounded-xl bg-brand px-3.5 py-2 text-xs font-bold text-ink transition hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:outline-none active:scale-95"
                   >
                     <ExternalLink size={13} />
                     WA · {l.wa}
@@ -1053,7 +1053,7 @@
                     aria-label={`Ubah status ${l.nama}`}
                     value={l.status}
                     onchange={(e) => setStatus(l.id, (e.currentTarget as HTMLSelectElement).value as Status)}
-                    class="rounded-xl border border-white/15 bg-ink px-3 py-2 text-xs font-semibold text-bone/80 focus:border-gold focus:outline-none"
+                    class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-600 focus:border-brand focus:outline-none"
                   >
                     {#each statusList as s (s)}
                       <option value={s}>{statusLabel[s]}</option>
@@ -1063,7 +1063,7 @@
                   <button
                     type="button"
                     onclick={() => startCatatan(l)}
-                    class="rounded-xl border border-white/15 px-3 py-2 text-xs font-bold text-gold transition hover:border-gold/50 focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none"
+                    class="rounded-xl border border-slate-200 px-3 py-2 text-xs font-bold text-amber-700 transition hover:border-amber-300 focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:outline-none"
                   >
                     Catatan
                   </button>
@@ -1074,19 +1074,19 @@
                     <input
                       bind:value={catatanDraft}
                       placeholder="Catatan internal…"
-                      class="min-w-0 flex-1 rounded-xl border border-white/15 bg-ink px-3 py-2.5 text-sm text-bone placeholder:text-bone/35 focus:border-gold focus:outline-none"
+                      class="min-w-0 flex-1 rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-brand focus:outline-none"
                     />
                     <button
                       type="button"
                       disabled={saving}
                       onclick={() => saveCatatan(l.id)}
-                      class="rounded-xl bg-gold px-4 py-2.5 text-xs font-bold text-ink transition hover:opacity-90 focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none disabled:opacity-50"
+                      class="rounded-xl bg-brand px-4 py-2.5 text-xs font-bold text-ink transition hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:outline-none disabled:opacity-50"
                     >
                       {saving ? '…' : 'Simpan'}
                     </button>
                   </div>
                 {:else if l.catatan}
-                  <p class="mt-3 rounded-xl bg-ink/60 px-3 py-2 text-xs text-bone/60">{l.catatan}</p>
+                  <p class="mt-3 rounded-xl bg-slate-100 px-3 py-2 text-xs text-slate-500">{l.catatan}</p>
                 {/if}
               </li>
             {/each}
@@ -1099,13 +1099,13 @@
         <div class="flex flex-wrap items-end justify-between gap-4">
           <div>
             <h1 class="display text-3xl sm:text-4xl">Media</h1>
-            <p class="mt-1 text-sm text-bone/55">Gambar &amp; klip untuk berita dan halaman program — disimpan di R2.</p>
+            <p class="mt-1 text-sm text-slate-500">Gambar &amp; klip untuk berita dan halaman program — disimpan di R2.</p>
           </div>
           <button
             type="button"
             onclick={() => loadMedia()}
             disabled={mediaSedangCek}
-            class="flex items-center gap-1.5 rounded-xl border border-white/15 px-3 py-2 text-xs font-bold text-bone/70 transition hover:border-gold/50 hover:text-bone focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none disabled:opacity-50"
+            class="flex items-center gap-1.5 rounded-xl border border-slate-200 px-3 py-2 text-xs font-bold text-slate-500 transition hover:border-amber-300 hover:text-slate-900 focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:outline-none disabled:opacity-50"
           >
             <span class={mediaSedangCek ? 'putar' : ''}><RefreshCw size={13} /></span>
             Cek status R2
@@ -1115,34 +1115,34 @@
         <div
           class={[
             'mt-4 rounded-3xl border p-4 sm:p-5',
-            media?.siap ? 'border-emerald-500/35 bg-emerald-500/10' : 'border-gold/35 bg-gold/10',
+            media?.siap ? 'border-emerald-500/35 bg-emerald-500/10' : 'border-amber-300 bg-amber-50',
           ]}
         >
           <div class="flex items-center gap-2.5">
-            <HardDrive size={16} class={media?.siap ? 'text-emerald-400' : 'text-gold'} />
+            <HardDrive size={16} class={media?.siap ? 'text-emerald-600' : 'text-amber-700'} />
             <p class="text-sm font-black tracking-wide uppercase">
               {media?.siap ? 'R2 aktif — siap unggah' : 'R2 belum aktif'}
             </p>
-            <span class="ml-auto shrink-0 rounded-full bg-ink/50 px-2.5 py-1 font-mono text-[10px] font-bold whitespace-nowrap text-bone/60">
+            <span class="ml-auto shrink-0 rounded-full bg-slate-100 px-2.5 py-1 font-mono text-[10px] font-bold whitespace-nowrap text-slate-500">
               {media?.bucket ?? 'prospect-media'}
             </span>
           </div>
 
           {#if mediaError}
-            <p class="mt-2 text-xs text-brand">{mediaError}</p>
+            <p class="mt-2 text-xs text-brand-dark">{mediaError}</p>
           {:else if media?.siap}
-            <p class="mt-2 text-xs text-bone/70">Bucket sudah ter-binding. Unggah di bawah, key-nya dipakai di form konten.</p>
+            <p class="mt-2 text-xs text-slate-500">Bucket sudah ter-binding. Unggah di bawah, key-nya dipakai di form konten.</p>
           {:else}
-            <p class="mt-2 text-xs text-bone/70">
-              Bucket <code class="text-gold">prospect-media</code> belum bisa dibuat: API Cloudflare menolak dengan
+            <p class="mt-2 text-xs text-slate-500">
+              Bucket <code class="text-amber-700">prospect-media</code> belum bisa dibuat: API Cloudflare menolak dengan
               <code>10042</code> — R2 harus diaktifkan sekali lewat dashboard (tidak ada endpoint API untuk
               menyetujui ToS). Setelah kamu klik aktif, tombol “Cek status R2” di atas berubah jadi siap dan
               unggah berkas langsung jalan.
             </p>
-            <ol class="mt-3 space-y-1.5 text-xs text-bone/65">
+            <ol class="mt-3 space-y-1.5 text-xs text-slate-500">
               {#each (media?.langkah ?? []) as s, i (i)}
                 <li class="flex gap-2.5">
-                  <span class="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-gold/20 text-[10px] font-black text-gold">
+                  <span class="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-amber-100 text-[10px] font-black text-amber-700">
                     {i + 1}
                   </span>
                   {s}
@@ -1153,30 +1153,30 @@
         </div>
 
         {#if media?.siap}
-          <div class="mt-4 rounded-3xl border border-white/10 bg-white/4.5 p-4 sm:p-5">
+          <div class="mt-4 rounded-3xl border border-slate-200 bg-white p-4 sm:p-5">
             <label class="block cursor-pointer">
-              <span class="text-[10px] font-black tracking-widest text-gold uppercase">Unggah berkas</span>
+              <span class="text-[10px] font-black tracking-widest text-amber-700 uppercase">Unggah berkas</span>
               <span
-                class="mt-2 flex flex-col items-center justify-center gap-1 rounded-2xl border-2 border-dashed border-white/15 px-4 py-8 text-center transition hover:border-gold/50"
+                class="mt-2 flex flex-col items-center justify-center gap-1 rounded-2xl border-2 border-dashed border-slate-200 px-4 py-8 text-center transition hover:border-amber-300"
               >
-                <ImageIcon size={22} class="text-bone/40" />
-                <span class="text-xs font-bold text-bone/70">
+                <ImageIcon size={22} class="text-slate-400" />
+                <span class="text-xs font-bold text-slate-500">
                   {sedangKirim ? 'Mengirim berkas…' : 'Pilih gambar (jpg/png/webp/avif) atau mp4 · maks 5 MB'}
                 </span>
               </span>
               <input type="file" class="sr-only" accept="image/*,video/mp4" disabled={sedangKirim} onchange={kirimBerkas} />
             </label>
-            {#if pesanMedia}<p class="mt-2 text-xs text-emerald-400">{pesanMedia}</p>{/if}
-            {#if salahMedia}<p class="mt-2 text-xs text-brand">{salahMedia}</p>{/if}
+            {#if pesanMedia}<p class="mt-2 text-xs text-emerald-600">{pesanMedia}</p>{/if}
+            {#if salahMedia}<p class="mt-2 text-xs text-brand-dark">{salahMedia}</p>{/if}
 
             {#if berkas.length > 0}
-              <p class="mt-4 mb-2 text-[11px] text-bone/45">
-                Salin path-nya lalu tempel ke kolom &ldquo;Gambar utama&rdquo; di tab Konten.
+              <p class="mt-4 mb-2 text-[11px] text-slate-500">
+                Salin path-nya, atau langsung pilih gambarnya di tab Konten lewat &ldquo;Pustaka media&rdquo;.
               </p>
               <ul class="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
                 {#each berkas as b (b.key)}
-                  <li class="overflow-hidden rounded-2xl border border-white/10 bg-white/3">
-                    <div class="h-36 bg-black/40 sm:h-40">
+                  <li class="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
+                    <div class="h-36 bg-slate-100 sm:h-40">
                       {#if gambar(b.key)}
                         <img
                           src={'/' + b.key}
@@ -1185,19 +1185,19 @@
                           class="h-full w-full object-contain p-2"
                         />
                       {:else}
-                        <span class="grid h-full place-items-center text-bone/35"><Video size={22} /></span>
+                        <span class="grid h-full place-items-center text-slate-400"><Video size={22} /></span>
                       {/if}
                     </div>
                     <div class="p-3">
-                      <p class="truncate font-mono text-[11px] font-bold text-bone/85">{namaBerkas(b.key)}</p>
-                      <p class="mt-0.5 text-[10px] text-bone/40">
+                      <p class="truncate font-mono text-[11px] font-bold text-slate-700">{namaBerkas(b.key)}</p>
+                      <p class="mt-0.5 text-[10px] text-slate-400">
                         {ukuran(b.ukuran)} &middot; {tanggal(b.waktu)}
                       </p>
                       <div class="mt-2.5 flex flex-wrap gap-1.5">
                         <button
                           type="button"
                           onclick={() => salin('/' + b.key)}
-                          class="flex items-center gap-1.5 rounded-lg border border-white/12 px-2 py-1 text-[10px] font-bold text-bone/70 transition hover:border-gold/50 hover:text-gold focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none active:scale-95"
+                          class="flex items-center gap-1.5 rounded-lg border border-slate-200 px-2 py-1 text-[10px] font-bold text-slate-500 transition hover:border-amber-300 hover:text-amber-700 focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:outline-none active:scale-95"
                         >
                           {#if tersalin === '/' + b.key}<Check size={11} /> Tersalin{:else}<Copy size={11} /> Salin path{/if}
                         </button>
@@ -1205,7 +1205,7 @@
                           href={'/' + b.key}
                           target="_blank"
                           rel="noreferrer"
-                          class="flex items-center gap-1.5 rounded-lg border border-white/12 px-2 py-1 text-[10px] font-bold text-bone/70 transition hover:border-gold/50 hover:text-gold focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none"
+                          class="flex items-center gap-1.5 rounded-lg border border-slate-200 px-2 py-1 text-[10px] font-bold text-slate-500 transition hover:border-amber-300 hover:text-amber-700 focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:outline-none"
                         >
                           <ExternalLink size={11} /> Buka
                         </a>
@@ -1215,9 +1215,9 @@
                 {/each}
               </ul>
             {:else}
-              <p class="mt-4 flex items-center gap-2 rounded-2xl border border-dashed border-white/12 px-4 py-3 text-[11px] text-bone/45">
+              <p class="mt-4 flex items-center gap-2 rounded-2xl border border-dashed border-slate-200 px-4 py-3 text-[11px] text-slate-500">
                 <HardDrive size={13} class="shrink-0" />
-                Bucket masih kosong. Unggah berkas pertama di atas, lalu salin path-nya ke kolom &ldquo;Gambar utama&rdquo;.
+                Bucket masih kosong. Unggah berkas pertama di atas, lalu pilih gambarnya di tab Konten lewat &ldquo;Pustaka media&rdquo;.
               </p>
             {/if}
           </div>
@@ -1226,45 +1226,45 @@
         <div class="max-w-xl space-y-5">
           <div>
             <h2 class="display text-3xl">Pengaturan</h2>
-            <p class="mt-1 text-sm text-bone/55">Perubahan popup &amp; nomor WA langsung aktif.</p>
+            <p class="mt-1 text-sm text-slate-500">Perubahan popup &amp; nomor WA langsung aktif.</p>
           </div>
 
           {#if !settingsLoaded}
-            <p class="text-sm text-bone/50">{settingsErr || 'Memuat…'}</p>
+            <p class="text-sm text-slate-500">{settingsErr || 'Memuat…'}</p>
           {:else}
-            <div class="space-y-4 rounded-3xl border border-white/10 bg-white/5 p-5">
+            <div class="space-y-4 rounded-3xl border border-slate-200 bg-white p-5">
               <div>
-                <label for="set-wa" class="block text-xs font-black tracking-widest text-gold uppercase">Nomor WhatsApp</label>
+                <label for="set-wa" class="block text-xs font-black tracking-widest text-amber-700 uppercase">Nomor WhatsApp</label>
                 <input
                   id="set-wa"
                   bind:value={settingsForm.wa_number}
                   inputmode="numeric"
-                  class="mt-2 w-full rounded-xl border border-white/15 bg-ink px-3.5 py-3 text-sm focus:border-gold focus:outline-none"
+                  class="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3.5 py-3 text-sm focus:border-brand focus:outline-none"
                   placeholder="6285924041004"
                 />
               </div>
 
               <div>
-                <label for="set-text" class="block text-xs font-black tracking-widest text-gold uppercase">Teks popup</label>
+                <label for="set-text" class="block text-xs font-black tracking-widest text-amber-700 uppercase">Teks popup</label>
                 <input
                   id="set-text"
                   bind:value={settingsForm.popup_text}
                   maxlength="200"
-                  class="mt-2 w-full rounded-xl border border-white/15 bg-ink px-3.5 py-3 text-sm focus:border-gold focus:outline-none"
+                  class="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3.5 py-3 text-sm focus:border-brand focus:outline-none"
                 />
               </div>
 
               <div class="flex flex-wrap items-end gap-4">
                 <div>
-                  <label for="set-delay" class="block text-xs font-black tracking-widest text-gold uppercase">Delay popup (detik)</label>
+                  <label for="set-delay" class="block text-xs font-black tracking-widest text-amber-700 uppercase">Delay popup (detik)</label>
                   <input
                     id="set-delay"
                     bind:value={settingsForm.popup_delay_sec}
                     inputmode="numeric"
-                    class="mt-2 w-28 rounded-xl border border-white/15 bg-ink px-3.5 py-3 text-sm focus:border-gold focus:outline-none"
+                    class="mt-2 w-28 rounded-xl border border-slate-200 bg-white px-3.5 py-3 text-sm focus:border-brand focus:outline-none"
                   />
                 </div>
-                <label class="flex items-center gap-2 pb-3 text-sm font-semibold text-bone/80">
+                <label class="flex items-center gap-2 pb-3 text-sm font-semibold text-slate-600">
                   <input
                     type="checkbox"
                     checked={settingsForm.popup_enabled === '1'}
@@ -1277,12 +1277,12 @@
               </div>
 
               <div>
-                <label for="set-ga" class="block text-xs font-black tracking-widest text-gold uppercase">GA4 Measurement ID</label>
+                <label for="set-ga" class="block text-xs font-black tracking-widest text-amber-700 uppercase">GA4 Measurement ID</label>
                 <input
                   id="set-ga"
                   bind:value={settingsForm.ga4_id}
                   placeholder="G-XXXXXXXXXX (opsional)"
-                  class="mt-2 w-full rounded-xl border border-white/15 bg-ink px-3.5 py-3 text-sm focus:border-gold focus:outline-none"
+                  class="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3.5 py-3 text-sm focus:border-brand focus:outline-none"
                 />
               </div>
 
@@ -1290,16 +1290,16 @@
                 type="button"
                 disabled={settingsSaving}
                 onclick={saveSettings}
-                class="w-full rounded-2xl bg-brand px-6 py-3.5 text-sm font-bold text-white transition hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none active:scale-95 disabled:opacity-50"
+                class="w-full rounded-2xl bg-brand px-6 py-3.5 text-sm font-bold text-ink transition hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:outline-none active:scale-95 disabled:opacity-50"
               >
                 {settingsSaving ? 'Menyimpan…' : 'Simpan pengaturan'}
               </button>
 
               {#if settingsMsg}
-                <p class="text-xs text-gold">{settingsMsg}</p>
+                <p class="text-xs text-amber-700">{settingsMsg}</p>
               {/if}
               {#if settingsErr}
-                <p class="text-xs text-brand">{settingsErr}</p>
+                <p class="text-xs text-brand-dark">{settingsErr}</p>
               {/if}
             </div>
           {/if}
@@ -1308,15 +1308,15 @@
     </main>
   </div>
 
-  <nav class="fixed inset-x-0 bottom-0 z-30 border-t border-white/10 bg-ink/95 backdrop-blur-xl lg:hidden" aria-label="Menu admin mobile">
+  <nav class="fixed inset-x-0 bottom-0 z-30 border-t border-slate-200 bg-white/95 shadow-[0_-10px_30px_-24px_rgba(15,23,42,.45)] backdrop-blur-xl lg:hidden" aria-label="Menu admin mobile">
     <div class="mx-auto flex max-w-md items-stretch justify-around gap-0.5 px-1.5 py-1.5">
       {#each tabs as t (t.id)}
         <button
           type="button"
           onclick={() => (tab = t.id)}
           class={[
-            'flex min-w-0 flex-1 flex-col items-center gap-0.5 rounded-xl px-1 py-2 transition focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none active:scale-95',
-            tab === t.id ? 'bg-white/6 text-gold' : 'text-bone/50',
+            'flex min-w-0 flex-1 flex-col items-center gap-0.5 rounded-xl px-1 py-2 transition focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:outline-none active:scale-95',
+            tab === t.id ? 'bg-brand/10 text-brand-dark' : 'text-slate-500',
           ]}
         >
           <t.icon size={17} />
@@ -1329,19 +1329,20 @@
 
 <style>
   .kartu {
-    border: 1px solid rgb(255 255 255 / 0.09);
+    border: 1px solid rgb(15 23 42 / 0.08);
     border-radius: 26px;
-    backdrop-filter: blur(6px);
-    transition: border-color 0.25s ease, transform 0.25s ease;
+    box-shadow: 0 18px 44px -30px rgb(15 23 42 / 0.3);
+    transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
   }
   .kartu:hover {
-    border-color: rgb(246 185 59 / 0.28);
+    border-color: rgb(255 122 26 / 0.45);
   }
 
   .hero-band {
     background:
-      radial-gradient(120% 140% at 8% 0%, rgb(200 35 43 / 0.34) 0%, rgb(200 35 43 / 0) 58%),
-      linear-gradient(120deg, rgb(255 255 255 / 0.06) 0%, rgb(255 255 255 / 0.015) 60%, rgb(246 185 59 / 0.09) 100%);
+      radial-gradient(120% 140% at 6% 0%, rgb(255 122 26 / 0.16) 0%, rgb(255 122 26 / 0) 58%),
+      radial-gradient(110% 130% at 100% 0%, rgb(255 195 46 / 0.18) 0%, rgb(255 195 46 / 0) 62%),
+      linear-gradient(180deg, rgb(255 255 255 / 0) 0%, rgb(255 247 240 / 0.9) 100%);
   }
 
   .rise {
@@ -1393,17 +1394,17 @@
   }
 
   .kolom {
-    fill: rgb(255 255 255 / 0);
+    fill: rgb(15 23 42 / 0);
     pointer-events: all;
     cursor: crosshair;
     transition: fill 0.2s ease;
   }
   .kolom:hover {
-    fill: rgb(255 255 255 / 0.06);
+    fill: rgb(15 23 42 / 0.05);
   }
 
   .sumbu {
-    fill: rgb(255 255 255 / 0.28);
+    fill: rgb(100 116 139 / 0.85);
     font-size: 9px;
     font-weight: 700;
   }
@@ -1427,16 +1428,16 @@
     0%,
     100% {
       opacity: 1;
-      box-shadow: 0 0 0 0 rgb(52 211 153 / 0.55);
+      box-shadow: 0 0 0 0 rgb(16 185 129 / 0.45);
     }
     50% {
       opacity: 0.55;
-      box-shadow: 0 0 0 5px rgb(52 211 153 / 0);
+      box-shadow: 0 0 0 5px rgb(16 185 129 / 0);
     }
   }
 
   .skel {
-    background: linear-gradient(90deg, rgb(255 255 255 / 0.05) 0%, rgb(255 255 255 / 0.12) 45%, rgb(255 255 255 / 0.05) 90%);
+    background: linear-gradient(90deg, rgb(15 23 42 / 0.04) 0%, rgb(15 23 42 / 0.09) 45%, rgb(15 23 42 / 0.04) 90%);
     background-size: 220% 100%;
     animation: geser 1.25s ease-in-out infinite;
   }
