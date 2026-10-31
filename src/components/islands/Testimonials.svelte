@@ -35,6 +35,23 @@
     timer = null;
   };
 
+  // Jari menahan slide -> hentikan auto-play supaya tidak merebut gestur swipe.
+  let resumeTimer: ReturnType<typeof setTimeout> | null = null;
+
+  const holdAuto = () => {
+    if (resumeTimer) clearTimeout(resumeTimer);
+    paused = true;
+    stopAuto();
+  };
+
+  const releaseAuto = () => {
+    if (resumeTimer) clearTimeout(resumeTimer);
+    resumeTimer = setTimeout(() => {
+      paused = false;
+      startAuto();
+    }, 4000);
+  };
+
   onMount(async () => {
     const data = await liveJson<{ title: string; body: string; meta: { asal?: string; olahraga?: string } }[]>(
       '/api/content/testimonials',
@@ -49,22 +66,27 @@
       embla?.reInit?.();
     }
     startAuto();
-    return () => stopAuto();
+    return () => {
+      stopAuto();
+      if (resumeTimer) clearTimeout(resumeTimer);
+    };
   });
 
   const onInit = (event: CustomEvent) => {
-    embla = event.detail;
+    embla = (event as CustomEvent).detail;
     embla.on('select', () => (selected = embla.selectedScrollSnap()));
     startAuto();
   };
 
-  const scrollTo = (i: number) => embla?.scrollTo(i);
+  const scrollTo = (i: number) => {
+    holdAuto();
+    embla?.scrollTo(i);
+    releaseAuto();
+  };
 </script>
 
 <div
   class="embla"
-  use:emblaCarouselSvelte={{ options: { loop: true, align: 'start' }, plugins: [] }}
-  oninit={onInit}
   onmouseenter={() => {
     paused = true;
     stopAuto();
@@ -81,8 +103,19 @@
     paused = false;
     startAuto();
   }}
+  onpointerdown={holdAuto}
+  onpointerup={releaseAuto}
+  onpointercancel={releaseAuto}
 >
-  <div class="embla__viewport overflow-hidden">
+  <!-- Aksi Embla WAJIB menempel di node viewport, bukan pembungkus terluar:
+       Embla memakai root.children[0] sebagai container dan container.children sebagai
+       slide. Dulu aksi dipasang di .embla sehingga "container" = .embla__viewport dan
+       "slide" = .embla__container — cuma 1 slide, jadi tidak ada posisi untuk digeser. -->
+  <div
+    class="embla__viewport touch-pan-y overflow-hidden"
+    use:emblaCarouselSvelte={{ options: { loop: true, align: 'start' }, plugins: [] }}
+    onemblaInit={onInit}
+  >
     <div class="embla__container flex gap-4">
       {#each list as t, i (t.nama)}
         <figure data-spot class="spot embla__slide card-soft card-lift w-[88%] shrink-0 overflow-hidden rounded-3xl sm:w-[62%] lg:w-[46%]">

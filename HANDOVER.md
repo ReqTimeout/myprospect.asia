@@ -912,3 +912,44 @@ Dua skrip baru, keduanya jalan di desktop 1440×900 **dan** mobile 390×844:
 - `scripts/verify-wa-green.mjs` → **SEMUA PASS**: header, bubble, tombol popup, footer (desktop + mobile), dan `hdr-wa` single post semuanya `rgb(37, 211, 102)` dengan 1 `<path>`.
 - Regresi: `verify-home.mjs` (0 console error, 0 request gagal, semua kontras `ok:true`) dan `verify-admin-ui.mjs` (**SEMUA PASS**, termasuk langkah 4b dari §27) tidak terganggu.
 - Vision 390×844 per halaman: `dock-home`, `dock-berita`, `dock-program-elite-1on1`, `dock-workshop-pro`, `dock-tentang`, `dock-faq`, `dock-berita-2175-atlet-berani-bicara` + `wa-desktop-{header,bubble,popup,footer}`, `wa-mobile-footer`, `wa-post-header`. Dock single post kini tidak bisa dibedakan dari dock halaman lain.
+
+---
+
+## 29. Testimoni tidak bisa digeser jari di mobile (31 Okt 2026)
+
+Permintaan: *"bagian terstimoni gabisa di geser di mobile pake tangan touch"*. Ciri khasnya penting: **di desktop mouse drag tetap jalan**, jadi kerusakan ada di jalur sentuhan, bukan di logika carousel.
+
+### 29.1 Empat akar masalah
+
+| # | Sebab | Efek |
+|---|---|---|
+| 1 | `use:emblaCarouselSvelte` ditempel di **`.embla`** (pembungkus terluar), bukan `.embla__viewport`. Embla memakai `root.children[0]` sebagai *container* dan `container.children` sebagai *slide* — sehingga "container" = `.embla__viewport` dan "slide" = `.embla__container`: **1 slide saja**. | Tidak ada posisi snap kedua, jadi tidak ada yang bisa digeser. Terukur: sapuan jari hanya menggeser viewport **−0,02px**. |
+| 2 | Tidak ada `touch-action` di viewport. Embla **tidak** memasangnya sendiri; itu tanggung jawab CSS. | Di perangkat sentuh browser mengklaim gestur horizontal lebih dulu (dianggap scroll/zoom), pointer Embla tidak pernah sempat mengejar. `pan-y` memulihkan hak carousel untuk sumbu X dan tetap menyerahkan sumbu Y ke halaman. |
+| 3 | Kelas pola `.pat-*` **tidak punya `pointer-events: none`**, tidak seperti `.art-blob` / `.art-ribbon` / `.sport-ball` yang sudah. `src/pages/index.astro` menaruh cakram `pat-halftone` 288px di `-bottom-24 -left-24` dalam `<section>` testimoni yang sama — persis di titik ibu jari mulai menggeser. | Elemen dekoratif menelan sentuhan sebelum sampai ke slide. Terbukti dari Playwright: *"`<div class="pat-halftone …">` intercepts pointer events"*. |
+| 4 | `oninit={onInit}` (sintaks lama) **tidak pernah dipanggil** di Svelte 5, jadi pegangan `embla` selalu `null`. | Auto-play, klik titik, dan `reInit()` setelah data live semuanya mati diam-diam — tanpa error di konsol, hanya diam. |
+
+### 29.2 Perbaikan
+
+- Aksi pindah ke node viewport, plus `touch-pan-y`: `<div class="embla__viewport touch-pan-y overflow-hidden" use:emblaCarouselSvelte={{…}} onemblaInit={onInit}>`.
+- Sintaks event: `on:emblaInit` **ditolak** compiler (*"Mixing old and new syntaxes for event handling is not allowed"*), jadi ditulis `onemblaInit={onInit}`. Urutan hasil kompilasi diverifikasi: `u('emblaInit', …)` muncul **sebelum** aksi dipasang (`c(n, z)`), jadi penangkap API sempat terdaftar.
+- `pointer-events: none` diberikan **sekaligus** ke 9 kelas pola (`.pat-halftone`, `.pat-halftone-ink`, `.pat-grid`, `.pat-grid-light`, `.pat-hatch`, `.pat-hatch-ink`, `.pat-noise`, `.pat-noise-light`, `.pat-dash`). Semua pemakaian `pat-*` di proyek ini adalah `div` dekoratif `aria-hidden`, jadi aturan global aman dan sekaligus menutup lubang yang sama di seksi lain.
+- Auto-play kini sadar sentuh: `holdAuto` pada `pointerdown` (jari menahan = jangan rebut gestur) dan `releaseAuto` pada `pointerup`/`pointercancel` dengan jatah lanjut **4 detik**; `scrollTo()` dari klik titik juga memakai jalur yang sama.
+
+### 29.3 Verifikasi — `scripts/verify-testimoni.mjs`, 17 pemeriksaan **SEMUA PASS**
+
+Mobile 390×844 (`isMobile` + `hasTouch`, gestur dikirim lewat CDP `Input.dispatchTouchEvent` — bukan mouse event) dan desktop 1440×900 sebagai kontrol:
+
+- Struktur: transform Embla sekarang di `.embla__container` (bukan `.embla__viewport`), **3 slide** anak langsung, `touch-action: pan-y`, `overflow-x: hidden`, track **977px > viewport 358px**.
+- Grid 4×3 `document.elementFromPoint` di atas carousel: **tidak ada** elemen di luar `.embla` yang ikut tertunjuk.
+- Sapuan jari kiri **Δ=−331px**, kanan **+331px**, titik indikator ikut berpindah (`aktif=1`), gestur vertikal tetap menggulir halaman (10813 → 10978) — `pan-y` tidak merampas sumbu Y.
+- Auto-play hidup lagi (**Δ=−331px**) dan klik titik memindahkan slide.
+- Desktop: drag mouse **Δ=−452px**, slide melebar 508px dari viewport 1104px, 0 error JS, 0 overflow horizontal.
+- Regresi **tidak** terganggu oleh perubahan CSS global: `verify-home` (0 error, semua kontras `ok:true`), `verify-dock`, `verify-wa-green`, `verify-admin-ui` (SEMUA PASS), `audit-modal` (field form tetap bisa diklik di kedua viewport).
+
+### 29.4 Jebakan alat uji (bukan bug produksi)
+
+Dua kali verifier melaporkan angka palsu sebelum penyebabnya ada di sisi tes:
+
+- **`Δ=NaNpx`**: fungsi pengukur ditulis sebagai *template literal string* lalu dioper ke `page.evaluate`. Playwright mengevaluasi string sebagai **ekspresi**, tidak bisa menyerialisasi fungsi, dan mengembalikan `undefined` tanpa error — arithmetic di atasnya jadi `NaN`. Harus fungsi sungguhan (`(sel) => page.evaluate(…)`).
+- **`Δ=0px` palsu pada auto-play dan klik titik**: jeda 6,5 detik lebih pendek daripada `resumeAuto` 4s + interval 5s, dan klik "Slide 1" saat slide 1 memang sedang aktif. Tes dibuat deterministik: tunggu 11 detik, dan klik titik yang **bukan** sedang aktif.
+- Chrome melaporkan `translate3d` Embla sebagai **`matrix()` 2D** (tx di indeks 4), bukan selalu `matrix3d()` (indeks 12) — parser harus menangani keduanya.

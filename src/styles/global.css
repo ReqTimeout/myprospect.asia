@@ -309,6 +309,24 @@ body {
    (halftone / grid / hatch / noise) memberi "detail" tanpa menambah
    blok oranye besar. Ukuran pola diatur lewat --pat-gap. */
 
+/* Semua kelas pola hanyalah latar dekoratif (selalu dipakai pada div
+   `aria-hidden` yang dipasang `absolute inset-0` atau lingkaran kecil).
+   Tanpa pointer-events:none, bulatan pola yang menjuntai ke area interaktif
+   ikut menelan sentuhan — inilah yang membuat carousel Testimoni tidak bisa
+   digeser jari di mobile. `.art-blob`, `.art-ribbon`, dan `.sport-ball`
+   sudah lebih dulu memakai aturan yang sama. */
+.pat-halftone,
+.pat-halftone-ink,
+.pat-grid,
+.pat-grid-light,
+.pat-hatch,
+.pat-hatch-ink,
+.pat-noise,
+.pat-noise-light,
+.pat-dash {
+  pointer-events: none;
+}
+
 .pat-halftone {
   background-image: radial-gradient(rgba(255, 122, 26, 0.55) 1.15px, transparent 1.25px);
   background-size: var(--pat-gap, 7px) var(--pat-gap, 7px);
