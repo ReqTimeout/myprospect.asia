@@ -820,3 +820,50 @@ Ukuran pattern diatur inline lewat `style="--pat-gap: 9px"` (jarak titik default
 - Deploy: `npx wrangler pages deploy dist --project-name myprospect --commit-dirty=true --branch=main` (butuh `set -a && . ./.env.cf` — token OAuth bawaan wrangler menunjuk akun lain, jadi harus pakai `CLOUDFLARE_API_TOKEN` + `CLOUDFLARE_ACCOUNT_ID` dari `.env.cf`).
 - Produksi `https://myprospect.asia` → `/api/settings` 200, `/api/pv` 200, screenshot identik dengan build lokal.
 
+---
+
+## 27. Menu "Media" disembunyikan di panel admin, upload Berita tetap hidup (31 Okt 2026)
+
+Permintaan klien: *"tolong media di hide dulu di menu admin tapi fungsi upload gambar di berita tetap bisa, bisa kan ? cuma hide menu saja media nya"*.
+
+### 27.1 Yang diubah (satu filter)
+
+`src/components/islands/AdminApp.svelte`:
+
+```js
+// Tab "Media" sementara disembunyikan dari menu (desktop + mobile).
+// Halaman dan endpoint-nya tetap utuh — hanya tidak tampil di navigasi.
+const menuTabs = tabs.filter((t) => t.id !== 'media');
+```
+
+Array `tabs` (6 entri) **tidak diubah** — hanya `menuTabs` (5 entri) yang dipakai untuk merender dua navigasi:
+
+- sidebar desktop → `nav[aria-label="Menu admin"]`
+- bar bawah mobile → `nav[aria-label="Menu admin mobile"]`
+
+Halaman tab Media sendiri (kode, state, `loadMedia()`, blok `{:else if tab === 'media'}`) **tidak dihapus**, jadi mengembalikannya nanti cukup menghapus satu baris filter.
+
+### 27.2 Kenapa upload Berita tidak terganggu
+
+Upload gambar di Berita tidak pernah lewat tab Media — keduanya memang memakai endpoint yang sama:
+
+| Kebutuhan | Dipanggil dari | Endpoint |
+|---|---|---|
+| Unggah gambar utama | `AdminKonten.svelte` (tab Konten → Berita) | `POST /api/admin/upload` |
+| Pustaka media (pilih berkas lama) | `AdminKonten.svelte` | `GET /api/admin/upload` |
+| Unggah dari tab Media | `AdminApp.svelte` (tab Media) | `POST /api/admin/upload` |
+
+Menyembunyikan menu hanya menyentuh lapisan navigasi — endpoint dan state R2 tidak berubah.
+
+### 27.3 Verifikasi
+
+`scripts/verify-admin-ui.mjs` diperbarui: `Media` dikeluarkan dari daftar tab yang dites, ditambah langkah baru **4b** yang menguji dua hal sekaligus — menu `Media` **tidak ada** di nav (desktop + mobile) dan zona unggah gambar utama di tab Konten **masih ada** dengan `/api/admin/upload` balas 200.
+
+Hasil di produksi `https://myprospect.asia`:
+
+- `verify-admin-ui.mjs` → **SEMUA PASS** (desktop 1440×900 + mobile 390×844), termasuk `4b menu Media tidak tampil di nav` → 0 tombol, `4b Konten: zona unggah gambar utama tetap ada` → 1 zona, `4b endpoint pustaka media /api/admin/upload hidup`.
+- `verify-konten.mjs` → **SEMUA PASS**: unggah gambar sungguhan ke R2 (`/media/20261031-kt-unggah-uji-5cf39177.jpg`), kolom gambar utama terisi otomatis, pratinjau termuat (`1600×1066`), pustaka media menampilkan berkas, zona unggah & tombol Terbitkan tidak tertutup nav fixed di mobile.
+- Berkas uji R2 **dihapus** setelah verifikasi (`wrangler r2 object delete … --remote`).
+- **Jebakan cache edge Cloudflare:** setelah objek R2 dihapus, `GET /media/<nama>.jpg` **masih balas 200** — responsnya masih dilayani cache edge karena `cache-control: public, max-age=31536000, immutable`. Originya sudah hilang (`/api/admin/upload` → `{"berkas":[]}`), tapi URL publiknya masih hidup. Baru bersih setelah purge: `POST https://api.cloudflare.com/client/v4/zones/{zone_id}/purge_cache` dengan `{"files":[...]}`. Setelah purge → **404**, sedangkan aset asli (`/media/workshop-hero.jpg`, `/media/hero-athletes.jpg`) tetap **200**.
+- Vision desktop + mobile: sidebar dan bar bawah sudah 5 menu tanpa "Media", form Berita tetap punya drop-zone "Unggah gambar (jpg/png/webp/avif) · maks 5 MB" + "atau pilih dari pustaka media di bawah".
+

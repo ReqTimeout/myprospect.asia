@@ -78,6 +78,13 @@
     { id: 'pengaturan', label: 'Pengaturan', icon: Settings },
   ] as const;
 
+  // Tab "Media" sementara disembunyikan dari menu (desktop + mobile).
+  // Halaman dan endpoint-nya tetap utuh — hanya tidak tampil di navigasi.
+  // Fungsi upload gambar di tab Konten (Berita) tidak bergantung pada menu ini:
+  // "Unggah gambar utama" dan "Pustaka media" memanggil /api/admin/upload
+  // secara langsung, jadi upload berita tetap berjalan normal.
+  const menuTabs = tabs.filter((t) => t.id !== 'media');
+
   const statusList: Status[] = ['baru', 'dikontak', 'terjadwal', 'daftar', 'gagal'];
   const statusLabel: Record<Status, string> = {
     baru: 'Baru',
@@ -490,7 +497,7 @@
     <nav class="hidden w-56 shrink-0 lg:block" aria-label="Menu admin">
       <p class="mb-3 px-3 text-[10px] font-black tracking-[0.2em] text-slate-400 uppercase">Navigasi</p>
       <ul class="space-y-1">
-        {#each tabs as t (t.id)}
+        {#each menuTabs as t (t.id)}
           {@const badge =
             t.id === 'leads' ? (stats?.leadsBaru ?? 0) : t.id === 'konten' ? (stats?.konten.beritaTerbit ?? 0) : 0}
           <li class="relative">
@@ -1310,7 +1317,7 @@
 
   <nav class="fixed inset-x-0 bottom-0 z-30 border-t border-slate-200 bg-white/95 shadow-[0_-10px_30px_-24px_rgba(15,23,42,.45)] backdrop-blur-xl lg:hidden" aria-label="Menu admin mobile">
     <div class="mx-auto flex max-w-md items-stretch justify-around gap-0.5 px-1.5 py-1.5">
-      {#each tabs as t (t.id)}
+      {#each menuTabs as t (t.id)}
         <button
           type="button"
           onclick={() => (tab = t.id)}

@@ -45,7 +45,9 @@ const VIEWPORTS = [
   { name: 'mobile', width: 390, height: 844 },
 ];
 
-const TABS = ['Analitik', 'Leads', 'Konten', 'Media', 'Pengaturan'];
+// Tab "Media" sengaja disembunyikan dari menu admin — jangan diuji lewat nav lagi.
+// Fungsinya tetap hidup di tab Konten (Berita); upload nyata diuji di verify-konten.mjs.
+const TABS = ['Analitik', 'Leads', 'Konten', 'Pengaturan'];
 
 let fails = 0;
 const shots = [];
@@ -198,7 +200,6 @@ for (const vp of VIEWPORTS) {
     Analitik: /Analitik trafik|Sumber trafik|Perangkat pengunjung|Tombol WhatsApp/i,
     Leads: /Belum ada lead|WA ·|belum dikontak|Filter status/i,
     Konten: /Tulis berita|BERITA|PUBLISHED|Testimoni/i,
-    Media: /prospect-media|R2/i,
     Pengaturan: /Nomor WhatsApp|Simpan pengaturan/i,
   };
   for (const t of TABS) {
@@ -235,6 +236,29 @@ for (const vp of VIEWPORTS) {
     check(`4 tab ${t} -> kontennya termuat`, EXPECT[t].test(txt), `${txt.trim().length} char`);
     await shot(`tab-${t.toLowerCase()}`);
   }
+
+  // 4b) menu "Media" disembunyikan, tapi upload gambar di Berita harus tetap ada
+  const jmlMedia = await page.locator(`${navSel} button:has-text("Media")`).count();
+  check('4b menu Media tidak tampil di nav', jmlMedia === 0, `${jmlMedia} tombol ditemukan`);
+  await shot('04-nav-tanpa-media');
+
+  await page.locator(`${navSel} button:has-text("Konten")`).first().click();
+  await page.waitForTimeout(800);
+  const btnTulis = page.getByRole('button', { name: 'Tulis berita' });
+  if ((await btnTulis.count()) > 0) {
+    await btnTulis.click();
+    await page.waitForTimeout(800);
+  }
+  const zonaUnggah = await page.locator('main label').filter({ hasText: 'Unggah gambar' }).count();
+  check('4b Konten: zona unggah gambar utama tetap ada', zonaUnggah > 0, `${zonaUnggah} zona`);
+  const pustakaHidup = await page.evaluate(async () => {
+    const r = await fetch('/api/admin/upload', { credentials: 'same-origin' });
+    if (!r.ok) return false;
+    const j = await r.json();
+    return Array.isArray(j.berkas);
+  });
+  check('4b endpoint pustaka media /api/admin/upload hidup', pustakaHidup);
+  await shot('05-konten-unggah');
 
   // 5) tulis beneran: simpan pengaturan dengan nilai yang sudah ada
   await page.locator(`${navSel} button:has-text("Pengaturan")`).first().click();
