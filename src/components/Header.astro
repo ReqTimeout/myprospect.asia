@@ -1,6 +1,7 @@
 ---
 import { SITE } from '../data/site';
 import { waLink } from '../lib/wa';
+import { WA_ICON } from '../lib/whatsapp';
 ---
 
 <header
@@ -41,8 +42,9 @@ import { waLink } from '../lib/wa';
       rel="noopener noreferrer"
       data-wa-cta="header"
       data-magnetic
-      class="btn-pop hidden rounded-xl bg-brand px-4 py-2.5 text-xs font-bold tracking-wide text-ink uppercase shadow-[0_10px_24px_-10px_rgba(255,122,26,0.55)] hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none sm:inline-block"
+      class="btn-pop hidden items-center gap-2 rounded-xl bg-wa px-4 py-2.5 text-xs font-bold tracking-wide text-ink uppercase shadow-[0_10px_24px_-10px_rgba(37,211,102,0.55)] hover:bg-wa-deep focus-visible:ring-2 focus-visible:ring-wa focus-visible:outline-none sm:inline-flex"
     >
+      <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true" set:html={WA_ICON} />
       Chat WA · {SITE.waDisplay}
     </a>
   </div>

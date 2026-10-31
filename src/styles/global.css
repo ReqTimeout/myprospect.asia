@@ -13,6 +13,12 @@
   --color-gold-soft: #ffe58a;
   --color-crimson: #c8232b;
 
+  /* Hijau khusus WhatsApp. Putih di atas #25d366 hanya 1.98:1 (gagal WCAG),
+     jadi teks/glif di atas petak hijau selalu memakai --color-ink (8.6:1). */
+  --color-wa: #25d366;
+  --color-wa-deep: #1fbf59;
+  --color-wa-ink: #0b3d2e;
+
   --font-display: "Anton", ui-sans-serif, system-ui, sans-serif;
   --font-sans: "Plus Jakarta Sans Variable", ui-sans-serif, system-ui, sans-serif;
 

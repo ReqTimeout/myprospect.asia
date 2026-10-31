@@ -867,3 +867,48 @@ Hasil di produksi `https://myprospect.asia`:
 - **Jebakan cache edge Cloudflare:** setelah objek R2 dihapus, `GET /media/<nama>.jpg` **masih balas 200** — responsnya masih dilayani cache edge karena `cache-control: public, max-age=31536000, immutable`. Originya sudah hilang (`/api/admin/upload` → `{"berkas":[]}`), tapi URL publiknya masih hidup. Baru bersih setelah purge: `POST https://api.cloudflare.com/client/v4/zones/{zone_id}/purge_cache` dengan `{"files":[...]}`. Setelah purge → **404**, sedangkan aset asli (`/media/workshop-hero.jpg`, `/media/hero-athletes.jpg`) tetap **200**.
 - Vision desktop + mobile: sidebar dan bar bawah sudah 5 menu tanpa "Media", form Berita tetap punya drop-zone "Unggah gambar (jpg/png/webp/avif) · maks 5 MB" + "atau pilih dari pustaka media di bawah".
 
+---
+
+## 28. Dock mobile: label selalu tampil, seragam di semua halaman + single post, WhatsApp hijau (31 Okt 2026)
+
+Permintaan: *"di mobile menu dock yang iphone ko ga ada text menu nya… tolong seragamkan di semua halaman dan single post, tolong icon whatsapp dan juga hijau khusus whatsapp"*.
+
+### 28.1 Tiga akar masalah
+
+| # | Temuan | Sebab |
+|---|---|---|
+| 1 | Teks menu tidak muncul di iPhone | `Dock.svelte` memberi `class:opacity-0={!isActive}` pada label — hanya item **aktif** yang teksnya terlihat, sisanya transparan. |
+| 2 | Dock single post beda sendiri | `functions/berita/[slug].ts` menyimpan salinan markup dock sendiri: cuma **4 item** (Workshop hilang), geometri SVG berbeda, tanpa scroll-hide, dan tanpa titik state aktif. |
+| 3 | State aktif salah di hampir semua halaman | Deteksi hanya lewat `location.hash`, jadi `/berita`, `/faq`, `/tentang`, `/program/x`, `/workshop/x` semuanya menyorot **Home**. |
+
+### 28.2 Satu sumber kebenaran: `src/lib/dock.ts`
+
+Dock hidup di dua teknologi berbeda (island Svelte untuk halaman Astro, dan template HTML mandiri di Pages Function). Selama markup ditulis dua kali hasilnya pasti bergeser — itu persis yang terjadi. Sekarang `src/lib/dock.ts` memegang `DOCK_ITEMS` (5 item + urutan label), `DOCK_ICONS` (path lucide diambil apa adanya dari `node_modules/@lucide/svelte/dist/icons/*` supaya render identik), `dockMarkup()`, `DOCK_CSS`, `DOCK_JS`, dan `dockActiveFor()`.
+
+- `Dock.svelte` tinggal membaca `DOCK_ITEMS` dan menambah reaktivitas (scroll-hide, hashchange).
+- `functions/berita/[slug].ts` memanggil `${dockMarkup({ waUrl, active: 'berita' })}`, menyisipkan `${DOCK_CSS}` di `<style>` dan `${DOCK_JS}` di `<script>` — Pages Function boleh mengimpor dari `src/lib/` (sudah dilakukan `waLink` sebelumnya), dan `esbuild --bundle` mengonfirmasi function tetap ter-bundle bersih.
+- State aktif kini **prop** (`<Dock client:load active="berita" />`) sehingga sudah benar sejak SSR; hash hanya menggesernya saat user pindah seksi di homepage. `/faq` dan `/tentang` memang tidak punya item di dock → tidak ada yang disorot (dulu salah sorot Home).
+- Layout item diganti dari `min-w-15 px-2.5` (akan jebol begitu label tampil) menjadi `flex-1 min-w-0` + label `text-[9px]`. Terukur **66px per item**, item terakhir berhenti di x=369 dari 390px — "Workshop" utuh tanpa terpotong.
+
+### 28.3 Hijau khusus WhatsApp: glif asli + warna resmi
+
+Ikon chat generik (`MessageCircle` lucide) diganti **glif WhatsApp asli** dari Simple Icons (CC0-1.0), disimpan di `src/lib/whatsapp.ts`.
+
+Warna dasar: `--color-wa: #25d366` (hijau resmi WhatsApp), `--color-wa-deep: #1fbf59` (hover), `--color-wa-ink: #0b3d2e` (untuk teks hijau di dasar terang).
+
+**Teks di atas petak hijau = `ink`, bukan putih.** Putih di atas `#25d366` hanya **1.98:1** — gagal bahkan aturan 3:1 untuk objek grafis (WCAG 1.4.11), sedangkan `ink #241a12` di atasnya **8.60:1** (hover `#1fbf59` → 7.03:1). Ini mengikuti konvensi yang sudah dipakai situs: tombol `bg-brand` juga memakai `text-ink`.
+
+Yang dijadikan hijau adalah **permukaan khusus WhatsApp**: petak Chat di dock, bubble mengambang + kartu popup WhatsApp, tombol "Chat WA" di header, tombol `hdr-wa` single post, dan tautan nomor WA di footer (pil hijau kecil + glif). CTA situs yang bukan WhatsApp (Isi Formulir, section CTA, form lead, akordeon FAQ, kartu program/workshop) **tetap oranye brand** supaya palet FORGE tidak encer dan hijau langsung terbaca sebagai "ini jalur ke WhatsApp".
+
+### 28.4 Jebakan: string `d` disisipkan sebagai innerHTML
+
+`WA_GLYPH` hanya berisi atribut `d`, bukan markup. Disisipkan apa adanya lewat `{@html}` / `set:html` / template literal, hasilnya jadi **text node di dalam `<svg>`** — tidak ada yang tergambar, tapi `svg.innerHTML` tetap mengandung string `M17.472…` sehingga pemeriksaan naif "glif ada" tetap lolos. Solusinya `WA_ICON = '<path d="…"/>'` (markup siap pakai) yang kini dipakai semua konsumen. Verifier diperketat: yang dihitung adalah **jumlah elemen `<path>/<rect>`**, dan `svg.textContent` yang mengandung `M<angka>` dianggap kegagalan.
+
+### 28.5 Verifikasi
+
+Dua skrip baru, keduanya jalan di desktop 1440×900 **dan** mobile 390×844:
+
+- `scripts/verify-dock.mjs` → **SEMUA PASS** di `https://myprospect.asia`. 7 halaman (beranda, daftar berita, detail program, detail workshop, tentang, faq, **single post hasil Pages Function**) × 11 pemeriksaan: 5 item seragam, urutan label `Home,Program,Workshop,Berita,Chat`, semua label terbaca (opacity 1 + lebar ≥ 8px), item aktif sesuai harapan tiap halaman, petak Chat `rgb(37, 211, 102)`, glif = 1 path utuh, tiap ikon tergambar sebagai bentuk SVG, dock tidak keluar layar, tidak ada overflow horizontal, plus scroll-hide single post (`dock` → `dock is-hidden` saat turun → `dock` lagi saat naik).
+- `scripts/verify-wa-green.mjs` → **SEMUA PASS**: header, bubble, tombol popup, footer (desktop + mobile), dan `hdr-wa` single post semuanya `rgb(37, 211, 102)` dengan 1 `<path>`.
+- Regresi: `verify-home.mjs` (0 console error, 0 request gagal, semua kontras `ok:true`) dan `verify-admin-ui.mjs` (**SEMUA PASS**, termasuk langkah 4b dari §27) tidak terganggu.
+- Vision 390×844 per halaman: `dock-home`, `dock-berita`, `dock-program-elite-1on1`, `dock-workshop-pro`, `dock-tentang`, `dock-faq`, `dock-berita-2175-atlet-berani-bicara` + `wa-desktop-{header,bubble,popup,footer}`, `wa-mobile-footer`, `wa-post-header`. Dock single post kini tidak bisa dibedakan dari dock halaman lain.

@@ -1,6 +1,8 @@
 import { marked } from 'marked';
 import { getSettings } from '../api/settings';
 import { waLink } from '../../src/lib/wa';
+import { DOCK_CSS, DOCK_JS, dockMarkup } from '../../src/lib/dock';
+import { WA_ICON } from '../../src/lib/whatsapp';
 import { programs, formatIdr } from '../../src/data/programs';
 import { categoryStyle } from '../../src/data/categories';
 import { SITE as SITE_CFG } from '../../src/data/site';
@@ -186,8 +188,9 @@ img{max-width:100%}
 .hdr-nav a:hover,.hdr-nav a[aria-current]{color:var(--ink)}
 .hdr-nav a:hover::after,.hdr-nav a[aria-current]::after{transform:scaleX(1)}
 .hdr-wa{display:none}
-@media(min-width:640px){.hdr-wa{display:inline-block;background:var(--brand);color:var(--ink);font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:10px 16px;border-radius:12px;box-shadow:0 10px 24px -10px rgba(255,122,26,.55);transition:background .15s,transform .2s}}
-.hdr-wa:hover{background:var(--brand-dark);transform:translateY(-1px)}
+@media(min-width:640px){.hdr-wa{display:inline-flex;align-items:center;gap:6px;background:#25d366;color:var(--ink);font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:10px 16px;border-radius:12px;box-shadow:0 10px 24px -10px rgba(37,211,102,.6);transition:background .15s,transform .2s}}
+.hdr-wa:hover{background:#1fbf59;transform:translateY(-1px)}
+.hdr-wa svg{width:15px;height:15px;flex:0 0 auto}
 .hdr-mnav{border-top:1px solid rgba(36,26,18,.06)}
 @media(min-width:1024px){.hdr-mnav{display:none}}
 .hdr-mnav ul{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;max-width:var(--container);margin:0 auto;padding:8px 16px}
@@ -278,15 +281,8 @@ footer{border-top:1px solid rgba(36,26,18,.09);margin-top:48px;padding:26px 16px
 footer a{color:var(--brand-dark);font-weight:700;display:inline-block;padding:6px 4px}
 footer nav{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-bottom:6px}
 
-/* ---- Dock mobile (paruh dengan situs utama) ---- */
-.dock{position:fixed;left:0;right:0;bottom:0;z-index:45;display:flex;justify-content:center;pointer-events:none;padding:0 16px calc(0.75rem + env(safe-area-inset-bottom))}
-@media(min-width:1024px){.dock{display:none}}
-.dock-in{display:flex;align-items:center;gap:4px;pointer-events:auto;background:rgba(255,252,247,.92);border:1px solid rgba(36,26,18,.1);border-radius:24px;padding:7px;box-shadow:0 18px 40px -12px rgba(36,26,18,.28);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
-.dock a{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:54px;padding:6px 8px;border-radius:16px;font-size:10px;font-weight:700;color:rgba(36,26,18,.6);transition:color .2s}
-.dock a:hover{color:var(--brand-dark)}
-.dock a[aria-current]{color:var(--brand-dark)}
-.dock-wa{background:var(--brand);color:var(--ink)!important;margin-left:4px;box-shadow:0 10px 22px -8px rgba(255,122,26,.7)}
-.dock-wa:hover{color:var(--ink)!important}
+/* ---- Dock mobile — dibangun dari src/lib/dock.ts supaya identik dengan Dock.svelte ---- */
+${DOCK_CSS}
 </style>
 </head>
 <body>
@@ -294,7 +290,7 @@ footer nav{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-bot
   <div class="hdr-in">
     <a class="hdr-logo" href="/" aria-label="Prospect Asia — Beranda"><img src="/media/logo-prospect-black.png" alt="Prospect" width="1000" height="233" /></a>
     <nav class="hdr-nav" aria-label="Navigasi atas">${navHtml}</nav>
-    <a class="hdr-wa" href="${esc(waUrl)}" target="_blank" rel="noopener noreferrer" data-wa-cta="berita-header">Chat WA · ${SITE_CFG.waDisplay}</a>
+    <a class="hdr-wa" href="${esc(waUrl)}" target="_blank" rel="noopener noreferrer" data-wa-cta="berita-header"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">${WA_ICON}</svg>Chat WA · ${SITE_CFG.waDisplay}</a>
   </div>
   <nav class="hdr-mnav" aria-label="Navigasi mobile"><ul>${navHtml}</ul></nav>
 </header>
@@ -340,14 +336,7 @@ footer nav{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-bot
   © ${year} ${SITE_CFG.legal}. All rights reserved.
 </footer>
 
-<nav class="dock" aria-label="Navigasi utama">
-  <div class="dock-in">
-    <a href="/" aria-label="Beranda"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg><span>Home</span></a>
-    <a href="/#program" aria-label="Program"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><rect x="3" y="3" width="7.5" height="7.5" rx="1.6"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.6"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.6"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.6"/></svg><span>Program</span></a>
-    <a href="/berita/" aria-label="Berita" aria-current="page"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h13v14H5a1 1 0 0 1-1-1V5z"/><path d="M17 9h3v9a1 1 0 0 1-1 1h-2"/><path d="M7 9h6M7 13h6M7 17h4"/></svg><span>Berita</span></a>
-    <a class="dock-wa" href="${esc(waUrl)}" target="_blank" rel="noopener noreferrer" data-wa-cta="berita-dock" aria-label="Chat WhatsApp admin"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.9-.9L3 21l1.9-4.6A8.4 8.4 0 0 1 12 3.1a8.4 8.4 0 0 1 9 8.4z"/></svg><span>Chat</span></a>
-  </div>
-</nav>
+${dockMarkup({ waUrl, active: 'berita', source: 'berita-dock' })}
 
 <script>
 (function () {
@@ -365,6 +354,7 @@ footer nav{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-bot
     send('/api/click', { slug: el.getAttribute('data-wa-cta') || 'unknown' });
   });
 })();
+${DOCK_JS}
 </script>
 </body>
 </html>`;
