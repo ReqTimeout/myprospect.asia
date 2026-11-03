@@ -121,10 +121,9 @@
   <button
     type="button"
     onclick={toggle}
-    class="fixed right-4 bottom-6 z-40 hidden h-12 w-12 items-center justify-center rounded-full bg-wa text-ink shadow-[0_14px_30px_-10px_rgba(37,211,102,0.75)] transition hover:bg-wa-deep focus-visible:ring-2 focus-visible:ring-wa focus-visible:outline-none active:scale-90 lg:flex"
+    class="fixed right-4 bottom-6 z-40 hidden h-12 w-12 items-center justify-center rounded-full bg-wa text-ink shadow-soft transition hover:bg-wa-deep focus-visible:ring-2 focus-visible:ring-wa focus-visible:outline-none active:scale-90 lg:flex"
     aria-label="Buka chat WhatsApp admin"
   >
-    <span class="pointer-events-none absolute inset-1 animate-ping rounded-full bg-wa/35" aria-hidden="true"></span>
     <svg class="relative" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">{@html WA_ICON}</svg>
   </button>
 {/if}
@@ -137,7 +136,7 @@
     role="dialog"
     aria-label="Chat admin"
   >
-    <div class="rounded-3xl border border-ink/10 bg-paper-deep/95 p-4 shadow-[0_24px_50px_-16px_rgba(36,26,18,0.3)] backdrop-blur-xl">
+    <div class="rounded-3xl border border-ink/10 bg-paper-deep p-4 shadow-[0_24px_50px_-16px_rgba(36,26,18,0.3)]">
       <div class="mb-2 flex items-start justify-between gap-2">
         <div class="flex items-center gap-2">
           <span class="flex h-8 w-8 items-center justify-center rounded-full bg-brand text-[11px] font-black text-ink italic">
@@ -145,13 +144,13 @@
           </span>
           <div class="leading-tight">
             <p class="text-xs font-bold">Admin Prospect</p>
-            <p class="text-[10px] text-ink/50">online · balas cepat</p>
+            <p class="text-[10px] text-ink/70">online · balas cepat</p>
           </div>
         </div>
         <button
           type="button"
           onclick={close}
-          class="rounded-full p-1 text-ink/50 transition hover:bg-ink/[0.06] hover:text-ink focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
+          class="rounded-full p-1 text-ink/70 transition hover:bg-ink/[0.06] hover:text-ink focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
           aria-label="Tutup"
         >
           <X size={14} />

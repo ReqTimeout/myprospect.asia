@@ -5,7 +5,7 @@ import { WA_ICON } from '../lib/whatsapp';
 ---
 
 <header
-  class="fixed inset-x-0 top-0 z-50 border-b border-ink/8 bg-paper/80 backdrop-blur-xl"
+  class="fixed inset-x-0 top-0 z-50 border-b border-ink/8 bg-paper"
 >
   {/* Mobile: logo di tengah (hanya logo yang tampil sebelum lg), dari sm ke atas logo kembali ke kiri & menu/CTA resumed. */}
   <div class="mx-auto flex h-14 max-w-6xl items-center justify-center px-4 sm:justify-between sm:px-6">
@@ -30,7 +30,7 @@ import { WA_ICON } from '../lib/whatsapp';
         ].map((n) => (
           <a href={n.href} class="group relative py-2 text-sm font-semibold text-ink/70 transition hover:text-ink focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none">
             {n.label}
-            <span class="absolute inset-x-0 bottom-1 h-0.5 origin-left scale-x-0 rounded-full bg-gradient-to-r from-brand to-gold transition-transform duration-300 group-hover:scale-x-100" aria-hidden="true" />
+            <span class="absolute inset-x-0 bottom-1 h-0.5 origin-left scale-x-0 rounded-full bg-brand transition-transform duration-300 group-hover:scale-x-100" aria-hidden="true" />
           </a>
         ))
       }
@@ -42,7 +42,7 @@ import { WA_ICON } from '../lib/whatsapp';
       rel="noopener noreferrer"
       data-wa-cta="header"
       data-magnetic
-      class="btn-pop hidden items-center gap-2 rounded-xl bg-wa px-4 py-2.5 text-xs font-bold tracking-wide text-ink uppercase shadow-[0_10px_24px_-10px_rgba(37,211,102,0.55)] hover:bg-wa-deep focus-visible:ring-2 focus-visible:ring-wa focus-visible:outline-none sm:inline-flex"
+      class="btn-pop hidden items-center gap-2 rounded-xl bg-wa px-4 py-2.5 text-xs font-bold tracking-wide text-ink uppercase shadow-soft hover:bg-wa-deep focus-visible:ring-2 focus-visible:ring-wa focus-visible:outline-none sm:inline-flex"
     >
       <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true" set:html={WA_ICON} />
       Chat WA · {SITE.waDisplay}

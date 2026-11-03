@@ -11,7 +11,7 @@ export const testimonials: Testimonial[] = [
     asal: 'Atlet Prospect Asia',
     olahraga: 'Sepak Bola',
     kutipan:
-      'Dulu pas dikasih mic langsung blank. Sekarang wawancara habis pertandingan malah seru — nanya balik ke wartawan juga berani.',
+      'Dulu pas dikasih mic langsung blank. Sekarang wawancara habis pertandingan malah seru, nanya balik ke wartawan juga berani.',
   },
   {
     nama: 'Hudzaifah',

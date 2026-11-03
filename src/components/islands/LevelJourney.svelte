@@ -6,9 +6,9 @@
   type Level = (typeof levels)[number];
 
   const levelInfo: Record<Level, string> = {
-    Basic: 'Mulai dari nol — fondasi public speaking & English atlet.',
-    Development: 'Kembangkan kemampuan — gaya komunikasi & storytelling.',
-    Impact: 'Komunikasi dengan percaya diri — siap wawancara media & panggung.',
+    Basic: 'Mulai dari nol, membangun fondasi public speaking & English atlet.',
+    Development: 'Kembangkan kemampuan lewat gaya komunikasi & storytelling.',
+    Impact: 'Komunikasi dengan percaya diri, siap wawancara media & panggung.',
   };
 
   const levelMeta: Record<
@@ -35,7 +35,7 @@
       no: '03',
       judul: 'Siak Panggung',
       fokus: ['Konferensi pers', 'On-camera presence', 'Media kit & bio', 'Sponsorship & personal branding'],
-      target: 'Siap tampil di panggung & depan wartawanan',
+      target: 'Siap tampil di panggung & depan wartawan',
       foto: '/media/interview-zone.jpg',
       fotoAlt: 'Atlet menjawab pertanyaan wartawan dengan kamera',
     },
@@ -82,7 +82,7 @@
           onclick={() => (active = level)}
           class={[
             'rounded-xl px-3.5 py-2.5 text-xs font-bold tracking-wide transition focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none sm:text-sm',
-            active === level ? 'bg-brand text-ink' : 'text-ink/60',
+            active === level ? 'bg-brand text-ink' : 'text-ink/70',
           ]}
         >
           {level}
@@ -105,7 +105,7 @@
     </div>
 
     <div class="mt-6 flex items-start gap-4">
-      <span class="display shrink-0 text-6xl leading-none text-brand/25 sm:text-7xl">{meta.no}</span>
+      <span class="display shrink-0 text-6xl leading-none text-brand sm:text-7xl" aria-hidden="true">{meta.no}</span>
       <div class="min-w-0">
         <p class="display text-2xl leading-none text-brand-dark sm:text-3xl">{meta.judul}</p>
         <p class="mt-2 text-sm leading-relaxed text-ink/70 md:text-base">{levelInfo[active]}</p>
@@ -114,8 +114,8 @@
 
     <ul class="mt-5 grid grid-cols-1 gap-2 sm:grid-cols-2">
       {#each meta.fokus as f (f)}
-        <li class="flex items-center gap-2 rounded-xl border border-ink/10 bg-white/70 px-3 py-2 text-[12px] font-semibold text-ink/75">
-          <span class="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-brand/20 text-brand-dark" aria-hidden="true">
+        <li class="flex items-center gap-2 rounded-xl border border-ink/10 bg-white px-3 py-2 text-[12px] font-semibold text-ink/75">
+          <span class="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-brand text-ink" aria-hidden="true">
             <Check size={10} strokeWidth={3.5} />
           </span>
           <span class="min-w-0 break-words">{f}</span>
@@ -124,7 +124,7 @@
     </ul>
 
     <div class="mt-5 space-y-2">
-      <p class="flex items-center gap-2 rounded-2xl border border-gold/40 bg-gold/10 px-3.5 py-2.5 text-xs font-bold text-brand-dark">
+      <p class="flex items-center gap-2 rounded-2xl border border-brand bg-brand-soft px-3.5 py-2.5 text-xs font-bold text-ink">
         <ClipboardCheck size={15} strokeWidth={2.4} class="shrink-0" aria-hidden="true" />
         Level ditentukan lewat tes penempatan
       </p>
@@ -136,17 +136,17 @@
   </div>
 
   <div class="md:w-1/2">
-    <p class="mb-4 flex items-center gap-2 text-[11px] font-black tracking-[0.2em] text-ink/45 uppercase">
+    <p class="mb-4 flex items-center gap-2 text-[11px] font-black tracking-[0.2em] text-ink/70 uppercase">
       <span class="h-px w-6 bg-ink/25"></span>
       Target 4 bulan
     </p>
     <ol class="relative">
-      <span class="absolute top-2 bottom-2 left-[11px] w-px bg-gradient-to-b from-brand via-brand/40 to-transparent" aria-hidden="true">
+      <span class="absolute top-2 bottom-2 left-[11px] w-px bg-brand-line" aria-hidden="true">
       </span>
       {#each months as m, i (m.bulan)}
         <li class="relative flex gap-4 pb-6 last:pb-0">
           <span
-            class="relative z-10 mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-gold/50 bg-paper text-brand-dark"
+            class="relative z-10 mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-gold bg-paper text-brand-dark"
           >
             {#if i < 3}
               <Check size={12} strokeWidth={3} />

@@ -113,7 +113,7 @@
 
 {#if open}
   <div
-    class="fixed inset-0 z-70 flex items-end justify-center bg-ink/65 backdrop-blur-sm sm:items-center sm:p-6"
+    class="fixed inset-0 z-70 flex items-end justify-center bg-ink/65 sm:items-center sm:p-6"
     role="presentation"
     onclick={(e) => {
       if (e.target === e.currentTarget) close();
@@ -129,13 +129,13 @@
         <div>
           <p class="text-[10px] font-black tracking-[0.24em] text-brand-dark uppercase">Formulir Daftar</p>
           <h2 class="display mt-1 text-2xl leading-tight sm:text-3xl">Ambil slot kamu</h2>
-          <p class="mt-1 text-[11px] text-ink/50">Isi 30 detik, admin balas di jam kerja.</p>
+          <p class="mt-1 text-[11px] text-ink/70">Isi 30 detik, admin balas di jam kerja.</p>
         </div>
         <button
           type="button"
           onclick={close}
           aria-label="Tutup formulir"
-          class="rounded-full p-1.5 text-ink/50 transition hover:bg-ink/6 hover:text-ink focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
+          class="rounded-full p-1.5 text-ink/70 transition hover:bg-ink/6 hover:text-ink focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
         >
           <X size={16} />
         </button>
@@ -143,11 +143,11 @@
 
       {#if done}
         <div class="flex flex-col items-center gap-3 px-6 py-12 text-center">
-          <span class="flex h-14 w-14 items-center justify-center rounded-full bg-brand/15 text-brand-dark">
+          <span class="flex h-14 w-14 items-center justify-center rounded-full bg-brand-soft text-ink">
             <Check size={26} strokeWidth={2.6} />
           </span>
           <p class="display text-xl">Data terkirim!</p>
-          <p class="text-sm text-ink/60">Lanjutkan pendaftaran lewat WhatsApp.</p>
+          <p class="text-sm text-ink/70">Lanjutkan pendaftaran lewat WhatsApp.</p>
           <a
             href={waUrl}
             target="_blank"
@@ -160,7 +160,7 @@
           <button
             type="button"
             onclick={close}
-            class="mt-1 text-xs font-bold text-ink/45 underline transition hover:text-ink focus-visible:outline-none"
+            class="mt-1 text-xs font-bold text-ink/70 underline transition hover:text-ink focus-visible:outline-none"
           >
             Tutup
           </button>
@@ -213,7 +213,7 @@
           </select>
 
           <label for="reg-catatan" class="mt-4 block text-[11px] font-black tracking-widest text-brand-dark uppercase">
-            Catatan <span class="font-semibold tracking-normal text-ink/40 normal-case">(opsional)</span>
+            Catatan <span class="font-semibold tracking-normal text-ink/70 normal-case">(opsional)</span>
           </label>
           <textarea
             id="reg-catatan"
@@ -226,7 +226,7 @@
           ></textarea>
 
           {#if error}
-            <p class="mt-3 flex items-start gap-2 rounded-2xl bg-crimson/10 px-3 py-2 text-[12px] text-crimson">
+            <p class="mt-3 flex items-start gap-2 rounded-2xl bg-[#f9e1e2] px-3 py-2 text-[12px] text-crimson">
               <CircleAlert size={15} class="mt-px shrink-0" />
               {error}
             </p>
@@ -241,7 +241,7 @@
             <Send size={16} strokeWidth={2.4} />
             {sending ? 'Mengirim…' : 'Kirim & buka WhatsApp'}
           </button>
-          <p class="mt-3 text-center text-[11px] leading-relaxed text-ink/45">
+          <p class="mt-3 text-center text-[11px] leading-relaxed text-ink/70">
             Data hanya dipakai admin untuk membalas via WhatsApp.
           </p>
         </form>

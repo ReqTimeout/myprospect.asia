@@ -56,7 +56,7 @@ export const workshops: Workshop[] = [
       'Sesi berkala & progress report',
       'Pendampingan coach khusus',
     ],
-    target: 'Akademi / klub — diskusi kebutuhan via WhatsApp',
+    target: 'Akademi / klub, diskusi kebutuhan via WhatsApp',
   },
 ];
 

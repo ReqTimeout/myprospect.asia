@@ -63,7 +63,7 @@
   ]}
 >
   <div
-    class="flex w-full max-w-md items-stretch gap-1 rounded-3xl border border-ink/10 bg-paper/85 px-2 py-2 shadow-[0_18px_40px_-12px_rgba(36,26,18,0.28)] backdrop-blur-xl"
+    class="flex w-full max-w-md items-stretch gap-1 rounded-3xl border border-ink/10 bg-paper px-2 py-2 shadow-[0_18px_40px_-12px_rgba(36,26,18,0.28)]"
   >
     {#each items as item (item.id)}
       {@const isActive = item.id === current && !item.wa}
@@ -78,16 +78,16 @@
         class={[
           'flex min-w-0 flex-1 flex-col items-center gap-1 rounded-2xl px-1 py-1.5 transition focus-visible:ring-2 focus-visible:outline-none active:scale-95',
           item.wa ? 'focus-visible:ring-wa' : 'focus-visible:ring-brand',
-          isActive ? 'text-brand-dark' : 'text-ink/55',
+          isActive ? 'text-brand-dark' : 'text-ink/70',
         ]}
       >
         <span
           class={[
             'grid h-10 w-10 place-items-center rounded-2xl transition-transform duration-300',
             item.wa
-              ? 'bg-wa text-ink shadow-[0_8px_18px_-8px_rgba(37,211,102,0.9)]'
+              ? 'bg-wa text-ink'
               : isActive
-                ? 'scale-110 -translate-y-0.5 bg-brand/10'
+                ? 'scale-110 -translate-y-0.5 bg-brand-soft'
                 : '',
           ]}
         >
@@ -112,7 +112,7 @@
         <span
           class={[
             'text-[9px] leading-none font-semibold tracking-tight whitespace-nowrap',
-            item.wa ? 'text-ink/70' : isActive ? 'text-brand-dark' : 'text-ink/55',
+            item.wa ? 'text-ink/70' : isActive ? 'text-brand-dark' : 'text-ink/70',
           ]}
         >
           {item.label}

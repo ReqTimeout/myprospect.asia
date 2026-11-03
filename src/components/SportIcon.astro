@@ -6,28 +6,19 @@ interface Props {
   size?: number;
   class?: string;
   stroke?: string;
-  animate?: boolean;
 }
 
-const { sport, size = 44, class: cls = '', stroke = 'currentColor', animate = true } = Astro.props;
-
-const animClass: Record<Sport, string> = {
-  'sepak-bola': 'si-roll',
-  futsal: 'si-bounce',
-  basket: 'si-bounce si-bounce-late',
-  voli: 'si-float',
-  'bulu-tangkis': 'si-swing',
-  renang: 'si-wave',
-  atletik: 'si-run',
-  tinju: 'si-punch',
-  piala: 'si-shine',
-};
+/* Ikon cabor kini diam. Sebelumnya tiap bola menggelinding, memantul,
+   atau berayun tanpa henti, sembilan sumber gerak sekaligus di satu
+   layar, dan itu yang membuat halaman terasa ramai. Bentuk ikonnya sudah
+   menjelaskan cabangnya tanpa perlu bergerak. */
+const { sport, size = 44, class: cls = '', stroke = 'currentColor' } = Astro.props;
 ---
 
 {
   sport === 'sepak-bola' ? (
     <svg
-      class:list={[cls, animate && animClass['sepak-bola']]}
+      class={cls}
       width={size}
       height={size}
       viewBox="0 0 48 48"
@@ -49,7 +40,7 @@ const animClass: Record<Sport, string> = {
     </svg>
   ) : sport === 'futsal' ? (
     <svg
-      class:list={[cls, animate && animClass.futsal]}
+      class={cls}
       width={size}
       height={size}
       viewBox="0 0 48 48"
@@ -69,7 +60,7 @@ const animClass: Record<Sport, string> = {
     </svg>
   ) : sport === 'basket' ? (
     <svg
-      class:list={[cls, animate && animClass.basket]}
+      class={cls}
       width={size}
       height={size}
       viewBox="0 0 48 48"
@@ -89,7 +80,7 @@ const animClass: Record<Sport, string> = {
     </svg>
   ) : sport === 'voli' ? (
     <svg
-      class:list={[cls, animate && animClass.voli]}
+      class={cls}
       width={size}
       height={size}
       viewBox="0 0 48 48"
@@ -108,7 +99,7 @@ const animClass: Record<Sport, string> = {
     </svg>
   ) : sport === 'bulu-tangkis' ? (
     <svg
-      class:list={[cls, animate && animClass['bulu-tangkis']]}
+      class={cls}
       width={size}
       height={size}
       viewBox="0 0 48 48"
@@ -129,7 +120,7 @@ const animClass: Record<Sport, string> = {
     </svg>
   ) : sport === 'renang' ? (
     <svg
-      class:list={[cls, animate && animClass.renang]}
+      class={cls}
       width={size}
       height={size}
       viewBox="0 0 48 48"
@@ -149,7 +140,7 @@ const animClass: Record<Sport, string> = {
     </svg>
   ) : sport === 'atletik' ? (
     <svg
-      class:list={[cls, animate && animClass.atletik]}
+      class={cls}
       width={size}
       height={size}
       viewBox="0 0 48 48"
@@ -170,7 +161,7 @@ const animClass: Record<Sport, string> = {
     </svg>
   ) : sport === 'tinju' ? (
     <svg
-      class:list={[cls, animate && animClass.tinju]}
+      class={cls}
       width={size}
       height={size}
       viewBox="0 0 48 48"
@@ -189,7 +180,7 @@ const animClass: Record<Sport, string> = {
     </svg>
   ) : (
     <svg
-      class:list={[cls, animate && animClass.piala]}
+      class={cls}
       width={size}
       height={size}
       viewBox="0 0 48 48"

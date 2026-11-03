@@ -58,7 +58,7 @@ const safeCover = (raw: string | undefined, kategori: string): string => {
 
 const notFound = (): Response =>
   new Response(
-    `<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Berita tidak ditemukan — Prospect Asia</title><style>body{background:#fffcf7;color:#241a12;font-family:system-ui,sans-serif;display:grid;place-items:center;min-height:100vh;margin:0;text-align:center;padding:24px}a{color:#bc4c00;font-weight:700;text-decoration:none}</style></head><body><div><p style="font-size:48px;margin:0">404</p><p>Berita ini tidak ada atau sudah dicabut.</p><a href="/berita/">← Semua berita</a></div></body></html>`,
+    `<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Berita tidak ditemukan | Prospect Asia</title><style>body{background:#fffcf7;color:#241a12;font-family:system-ui,sans-serif;display:grid;place-items:center;min-height:100vh;margin:0;text-align:center;padding:24px}a{color:#bc4c00;font-weight:700;text-decoration:none}</style></head><body><div><p style="font-size:48px;margin:0">404</p><p>Berita ini tidak ada atau sudah dicabut.</p><a href="/berita/">← Semua berita</a></div></body></html>`,
     { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8' } },
   );
 
@@ -144,7 +144,7 @@ const page = (opts: {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>${esc(post.title)} — Prospect Asia</title>
+<title>${esc(post.title)} | Prospect Asia</title>
 <meta name="description" content="${esc(post.desc)}">
 <link rel="canonical" href="${canonical}">
 <meta property="og:type" content="article">
@@ -167,35 +167,35 @@ const page = (opts: {
 <script type="application/ld+json">${schema}</script>
 ${ga}
 <style>
-:root{--ink:#241a12;--paper:#fffcf7;--paper-deep:#fff3e4;--brand:#ff7a1a;--brand-dark:#bc4c00;--gold:#ffc32e;--crimson:#c8232b;--display:"Anton",sans-serif;--sans:"Plus Jakarta Sans",system-ui,sans-serif;--container:72rem}
+:root{--ink:#241a12;--paper:#fffcf7;--paper-deep:#fff3e4;--brand:#ff6a00;--brand-dark:#bc4c00;--brand-soft:#ffe3c4;--brand-line:#ffc49a;--gold:#ffc32e;--crimson:#c8232b;--display:"Anton",sans-serif;--sans:"Plus Jakarta Sans",system-ui,sans-serif;--container:72rem}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;background-image:radial-gradient(circle at 88% -6%,rgba(255,122,26,.16),transparent 52%),radial-gradient(circle at -4% 18%,rgba(255,195,46,.14),transparent 42%)}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
 img{max-width:100%}
 .wrap{max-width:var(--container);margin:0 auto;padding:0 16px}
 @media(min-width:640px){.wrap{padding:0 24px}}
 
 /* ---- Header: sama dengan situs utama (logo + menu + CTA), plus baris menu pill untuk mobile ---- */
-.hdr{position:sticky;top:0;z-index:40;background:rgba(255,252,247,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(36,26,18,.08)}
+.hdr{position:sticky;top:0;z-index:40;background:var(--paper);border-bottom:1px solid rgba(36,26,18,.1)}
 .hdr-in{max-width:var(--container);margin:0 auto;display:flex;align-items:center;justify-content:center;gap:12px;min-height:56px;padding:8px 16px}
 @media(min-width:640px){.hdr-in{justify-content:space-between;padding:8px 24px}}
 .hdr-logo img{display:block;height:24px;width:auto}
 .hdr-nav{display:none}
 @media(min-width:1024px){.hdr-nav{display:flex;align-items:center;gap:24px}}
 .hdr-nav a{position:relative;font-size:14px;font-weight:600;color:rgba(36,26,18,.72);padding:8px 0;transition:color .2s}
-.hdr-nav a::after{content:"";position:absolute;left:0;right:0;bottom:2px;height:2px;border-radius:99px;background:linear-gradient(90deg,var(--brand),var(--gold));transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.hdr-nav a::after{content:"";position:absolute;left:0;right:0;bottom:2px;height:2px;border-radius:99px;background:var(--brand);transform:scaleX(0);transform-origin:left;transition:transform .3s}
 .hdr-nav a:hover,.hdr-nav a[aria-current]{color:var(--ink)}
 .hdr-nav a:hover::after,.hdr-nav a[aria-current]::after{transform:scaleX(1)}
 .hdr-wa{display:none}
-@media(min-width:640px){.hdr-wa{display:inline-flex;align-items:center;gap:6px;background:#25d366;color:var(--ink);font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:10px 16px;border-radius:12px;box-shadow:0 10px 24px -10px rgba(37,211,102,.6);transition:background .15s,transform .2s}}
+@media(min-width:640px){.hdr-wa{display:inline-flex;align-items:center;gap:6px;background:#25d366;color:var(--ink);font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:10px 16px;border-radius:12px;transition:background .15s,transform .2s}}
 .hdr-wa:hover{background:#1fbf59;transform:translateY(-1px)}
 .hdr-wa svg{width:15px;height:15px;flex:0 0 auto}
 .hdr-mnav{border-top:1px solid rgba(36,26,18,.06)}
 @media(min-width:1024px){.hdr-mnav{display:none}}
 .hdr-mnav ul{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;max-width:var(--container);margin:0 auto;padding:8px 16px}
 .hdr-mnav ul::-webkit-scrollbar{display:none}
-.hdr-mnav a{flex:0 0 auto;font-size:12px;font-weight:700;color:rgba(36,26,18,.66);background:rgba(36,26,18,.05);border-radius:999px;padding:6px 13px;white-space:nowrap;transition:background .2s,color .2s}
+.hdr-mnav a{flex:0 0 auto;font-size:12px;font-weight:700;color:rgba(36,26,18,.7);background:#fff3e4;border-radius:999px;padding:6px 13px;white-space:nowrap;transition:background .2s,color .2s}
 .hdr-mnav a:hover,.hdr-mnav a[aria-current]{background:var(--brand);color:var(--ink)}
 
 /* ---- Kepala artikel ---- */
@@ -204,13 +204,12 @@ img{max-width:100%}
 .back:hover{text-decoration:underline}
 .hero{position:relative;margin:8px 0 18px;border-radius:24px;overflow:hidden;background:var(--paper-deep);box-shadow:0 22px 50px -28px rgba(36,26,18,.45)}
 .hero img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover}
-.hero::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top,rgba(36,26,18,.58),rgba(36,26,18,0) 60%)}
-.hero figcaption{position:absolute;left:14px;bottom:12px;z-index:1;display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.95);text-shadow:0 2px 8px rgba(0,0,0,.55)}
-.hero figcaption i{width:8px;height:8px;border-radius:99px;display:block;box-shadow:0 0 0 3px rgba(255,255,255,.22)}
+.hero figcaption{position:absolute;left:14px;bottom:12px;z-index:1;display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:var(--ink);padding:7px 13px;border-radius:999px}
+.hero figcaption i{width:8px;height:8px;border-radius:99px;display:block;background:var(--brand)}
 .meta{display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:12px;color:rgba(36,26,18,.68)}
 .chip{display:inline-flex;align-items:center;gap:6px;border:1px solid transparent;border-radius:999px;padding:5px 12px;font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}
 .chip i{width:7px;height:7px;border-radius:99px;display:block;flex:0 0 auto}
-h1{font-family:var(--display);font-size:clamp(32px,7vw,54px);line-height:1.02;margin:14px 0 0;font-weight:400;background:linear-gradient(92deg,var(--ink) 55%,var(--brand));-webkit-background-clip:text;background-clip:text;color:transparent}
+h1{font-family:var(--display);font-size:clamp(32px,7vw,54px);line-height:1.02;margin:14px 0 0;font-weight:400;color:var(--ink)}
 .lede{font-size:16px;line-height:1.7;color:rgba(36,26,18,.72);margin:14px 0 0;max-width:46rem}
 
 /* ---- Grid: artikel + sidebar paket ---- */
@@ -228,7 +227,7 @@ h1{font-family:var(--display);font-size:clamp(32px,7vw,54px);line-height:1.02;ma
 .pkg-list::-webkit-scrollbar{height:4px}
 .pkg-list::-webkit-scrollbar-thumb{background:rgba(36,26,18,.16);border-radius:99px}
 @media(min-width:1024px){.pkg-list{display:grid;grid-template-columns:1fr;overflow:visible;padding:14px 0 0}}
-.pkg-card{flex:0 0 84%;scroll-snap-align:start;position:relative;border:1px solid rgba(36,26,18,.1);border-radius:20px;padding:14px;background:linear-gradient(168deg,#fffdfa 0%,#fff6ea 60%,#ffeeDC 100%);color:var(--ink)}
+.pkg-card{flex:0 0 84%;scroll-snap-align:start;position:relative;border:1px solid rgba(36,26,18,.12);border-radius:20px;padding:14px;background:#fff;color:var(--ink)}
 @media(min-width:1024px){.pkg-card{flex:1 1 auto;width:auto}}
 .pkg-flag{position:absolute;top:-9px;left:14px;background:var(--ink);color:var(--gold);font-size:9px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;padding:3px 9px;border-radius:999px}
 .pkg-name{font-family:var(--display);font-size:18px;line-height:1.1;margin:0}
@@ -236,8 +235,7 @@ h1{font-family:var(--display);font-size:clamp(32px,7vw,54px);line-height:1.02;ma
 .pkg-tags{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:6px 0 0}
 .pkg-badge{display:inline-block;font-size:9px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;padding:3px 8px;border-radius:999px;background:var(--ink);color:var(--paper)}
 .pkg-live{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:800;color:#1c7a3f}
-.pkg-live i{width:7px;height:7px;border-radius:99px;background:#22a35a;display:block;animation:liveRing 1.8s ease-out infinite}
-@keyframes liveRing{0%{box-shadow:0 0 0 0 rgba(34,163,90,.55)}70%{box-shadow:0 0 0 7px rgba(34,163,90,0)}100%{box-shadow:0 0 0 0 rgba(34,163,90,0)}}
+.pkg-live i{width:7px;height:7px;border-radius:99px;background:#22a35a;display:block}
 .pkg-sub{margin:8px 0 0;font-size:11.5px;line-height:1.45;color:rgba(36,26,18,.68)}
 .pkg-price{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin:10px 0 0}
 .pkg-price s{font-size:12px;color:rgba(36,26,18,.68)}
@@ -261,7 +259,7 @@ h1{font-family:var(--display);font-size:clamp(32px,7vw,54px);line-height:1.02;ma
 .prose ol li{margin-bottom:.6rem}
 .prose ol li::marker{color:var(--brand)}
 .prose blockquote{border-left:3px solid var(--brand);background:var(--paper-deep);border-radius:0 16px 16px 0;padding:16px 20px;margin:1.75rem 0;font-style:italic;color:rgba(36,26,18,.88)}
-.cta-box{margin-top:40px;border:1px solid rgba(255,122,26,.3);background:rgba(255,122,26,.06);border-radius:24px;padding:24px;text-align:center;font-size:14px;color:rgba(36,26,18,.78)}
+.cta-box{margin-top:40px;border:1px solid var(--brand-line);background:var(--brand-soft);border-radius:24px;padding:24px;text-align:center;font-size:14px;color:var(--ink)}
 .btn{display:inline-block;margin-top:12px;background:var(--brand);color:var(--ink);border-radius:16px;padding:13px 24px;font-size:14px;font-weight:800;transition:background .15s,transform .2s}
 .btn:hover{background:var(--brand-dark);transform:translateY(-2px)}
 
@@ -271,13 +269,13 @@ h1{font-family:var(--display);font-size:clamp(32px,7vw,54px);line-height:1.02;ma
 .rel-grid{display:grid;gap:14px;grid-template-columns:1fr}
 @media(min-width:640px){.rel-grid{grid-template-columns:1fr 1fr}}
 .rel-card{display:block;background:#fff;border:1px solid rgba(36,26,18,.09);border-radius:20px;padding:16px;box-shadow:0 14px 34px -22px rgba(36,26,18,.28);transition:transform .2s,border-color .2s}
-.rel-card:hover{transform:translateY(-3px);border-color:rgba(255,122,26,.45)}
+.rel-card:hover{transform:translateY(-3px);border-color:var(--brand)}
 .rel-chip{display:inline-flex;align-items:center;gap:6px;border:1px solid transparent;border-radius:999px;padding:4px 10px;font-size:9.5px;font-weight:900;letter-spacing:.1em;text-transform:uppercase}
 .rel-chip i{width:6px;height:6px;border-radius:99px;display:block;flex:0 0 auto}
 .rel-t{font-size:14px;font-weight:700;line-height:1.35;margin:8px 0 0}
 
 /* ---- Footer ---- */
-footer{border-top:1px solid rgba(36,26,18,.09);margin-top:48px;padding:26px 16px 104px;text-align:center;font-size:12px;color:rgba(36,26,18,.5)}
+footer{border-top:1px solid rgba(36,26,18,.12);margin-top:48px;padding:26px 16px 104px;text-align:center;font-size:12px;color:rgba(36,26,18,.7)}
 footer a{color:var(--brand-dark);font-weight:700;display:inline-block;padding:6px 4px}
 footer nav{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-bottom:6px}
 
@@ -288,7 +286,7 @@ ${DOCK_CSS}
 <body>
 <header class="hdr">
   <div class="hdr-in">
-    <a class="hdr-logo" href="/" aria-label="Prospect Asia — Beranda"><img src="/media/logo-prospect-black.png" alt="Prospect" width="1000" height="233" /></a>
+    <a class="hdr-logo" href="/" aria-label="Prospect Asia, kembali ke beranda"><img src="/media/logo-prospect-black.png" alt="Prospect" width="1000" height="233" /></a>
     <nav class="hdr-nav" aria-label="Navigasi atas">${navHtml}</nav>
     <a class="hdr-wa" href="${esc(waUrl)}" target="_blank" rel="noopener noreferrer" data-wa-cta="berita-header"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">${WA_ICON}</svg>Chat WA · ${SITE_CFG.waDisplay}</a>
   </div>

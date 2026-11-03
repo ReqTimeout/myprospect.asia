@@ -24,7 +24,6 @@ const gallery = [
 <section id="workshop" class="relative mx-auto max-w-6xl overflow-hidden scroll-mt-20 px-4 py-14 sm:px-6">
   <SportArt variant="stadium" stroke="#241a12" opacity={0.08} class="absolute inset-0 h-full w-full [mask-image:linear-gradient(to_top,black,transparent_75%)]" />
   <div class="art-dots absolute inset-x-0 top-0 h-40 opacity-50 [mask-image:linear-gradient(to_bottom,black,transparent)]" aria-hidden="true"></div>
-  <div class="art-blob top-24 -right-28 h-72 w-72" style="background: radial-gradient(circle, rgba(255,195,46,0.18), transparent 68%); animation-delay: -5s;" aria-hidden="true"></div>
   <div class="art-track absolute inset-x-0 bottom-0 h-56 opacity-70" aria-hidden="true"></div>
   <div class="sport-ball left-5 bottom-24 hidden h-14 w-14 -rotate-12 lg:block" aria-hidden="true"></div>
   <div class="pointer-events-none absolute right-6 top-10 hidden -rotate-6 rounded-2xl border-3 border-crimson/25 bg-white px-3.5 py-1.5 shadow-soft sm:block" aria-hidden="true">
@@ -39,7 +38,7 @@ const gallery = [
         <span class="hl-swash text-ink">atlet binaanmu</span>
       </h2>
       <p class="mt-4 text-sm leading-relaxed text-ink/65 sm:text-base">
-        Sesi 90–120 menit, interaktif, praktik langsung. Minimal 10 peserta — didampingi coach Sports Communication.
+        Sesi 90–120 menit, interaktif, praktik langsung. Minimal 10 peserta, tetap didampingi coach Sports Communication.
       </p>
       <div class="mt-5 flex flex-wrap gap-2">
         <span class="rounded-full border border-ink/12 bg-white px-3 py-1.5 text-[11px] font-bold tracking-wide text-ink/70">
@@ -61,12 +60,11 @@ const gallery = [
         class="aspect-4/3 w-full"
         imgClass="h-full w-full object-cover"
       />
-      <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent"></div>
-      <span class="pointer-events-none absolute top-3 left-3 inline-flex items-center gap-1.5 rounded-full bg-ink/70 px-3 py-1.5 text-[10px] font-black tracking-widest text-white uppercase backdrop-blur-sm">
-        <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-brand"></span>
+      <span class="pointer-events-none absolute top-3 left-3 inline-flex items-center gap-1.5 rounded-full bg-ink px-3 py-1.5 text-[10px] font-black tracking-widest text-white uppercase">
+        <span class="h-1.5 w-1.5 rounded-full bg-brand"></span>
         Live
       </span>
-      <span class="pointer-events-none absolute bottom-3 left-4 text-[11px] font-bold tracking-[0.16em] text-white/90 uppercase">
+      <span class="pointer-events-none absolute bottom-3 left-4 rounded-full bg-ink px-3 py-1.5 text-[11px] font-bold tracking-[0.16em] text-white uppercase">
         Suasana di lapangan
       </span>
     </div>
@@ -75,20 +73,20 @@ const gallery = [
   <div class="grid gap-5 md:grid-cols-3" data-reveal-group>
     {
       workshops.map((w, i) => (
-        <article data-reveal="pop" data-spot class="spot card-soft card-lift flex flex-col overflow-hidden rounded-3xl">
+        <article data-reveal="pop" class="spot card-soft card-lift flex flex-col overflow-hidden rounded-3xl">
           <div class="relative z-10 flex flex-1 flex-col p-6">
             <div class="min-h-[3.25rem] md:min-h-[5.25rem]">
               <div class="flex items-start justify-between gap-3">
                 <h3 class="display line-clamp-2 text-2xl leading-tight">{w.nama}</h3>
-                <span class="display shrink-0 text-3xl leading-none text-brand/20">
+                <span class="display shrink-0 text-3xl leading-none text-brand" aria-hidden="true">
                   {String(i + 1).padStart(2, '0')}
                 </span>
               </div>
               <div class="mt-2.5 flex flex-wrap items-center gap-2">
-                <span class="shrink-0 rounded-full border border-ink/15 px-2.5 py-1 text-[10px] font-bold text-ink/60">
+                <span class="shrink-0 rounded-full border border-ink/15 px-2.5 py-1 text-[10px] font-bold text-ink/70">
                   {w.durasi}
                 </span>
-                <span class="rounded-full bg-brand/12 px-2.5 py-1 text-[10px] font-black tracking-wide text-brand-dark uppercase">
+                <span class="rounded-full bg-brand px-2.5 py-1 text-[10px] font-black tracking-wide text-ink uppercase">
                   {w.didapat.length} benefit
                 </span>
               </div>
@@ -101,7 +99,7 @@ const gallery = [
                 ) : (
                   <p class="display text-3xl leading-none text-ink">Custom</p>
                 )}
-                <p class="mt-1.5 text-[11px] text-ink/50">per sesi · {w.target}</p>
+                <p class="mt-1.5 text-[11px] text-ink/70">per sesi · {w.target}</p>
               </div>
               <p class="mt-1.5 min-h-[1rem] text-[11px] font-black text-brand-dark">{w.catatan ?? ''}</p>
             </div>
@@ -128,7 +126,7 @@ const gallery = [
                 data-register
                 data-program={w.nama}
                 data-source={`workshop-${w.slug}`}
-                class="inline-flex items-center justify-center gap-2 rounded-2xl border border-brand/45 px-5 py-3.5 text-sm font-bold text-brand-dark transition hover:bg-brand hover:text-ink focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none active:scale-95"
+                class="inline-flex items-center justify-center gap-2 rounded-2xl border border-brand px-5 py-3.5 text-sm font-bold text-ink transition hover:bg-brand hover:text-ink focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none active:scale-95"
               >
                 Booking Sekarang ↗
               </a>

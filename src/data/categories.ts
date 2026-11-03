@@ -2,46 +2,48 @@ export type CatTone = 'bintang' | 'kolaborasi' | 'berita' | 'default';
 
 export type CategoryStyle = {
   tone: CatTone;
-  /** Warna teks label (dipakai di atas chip terang / foto). */
+  /** Warna teks label, diuji terhadap wash solid di bawahnya. */
   text: string;
-  /** Warna border chip. */
+  /** Border chip, sengaja sama dengan isian supaya batasnya hilang. */
   border: string;
-  /** Aksen solid untuk titik di depan label. */
+  /** Titik di depan label; ikut warna teks agar tetap terbaca. */
   dot: string;
-  /** Isian chip di atas kertas krem. */
+  /** Isian chip: satu warna penuh, tanpa wash transparan. */
   wash: string;
 };
 
-// Warna teks & wash sudah diuji kontrasnya terhadap paper (#fffcf7):
-// bintang 7.4:1, kolaborasi 5.2:1, berita 6.1:1 — semua lolos WCAG AA.
+// Chip kategori dulu memakai oranye/kuning 14-20% di atas krem. Hasilnya
+// bukan oranye cerah tapi warna kulit telur, persis keluhan klien. Sekarang
+// tiap tone memakai bidangnya sendiri penuh; rasio teks sudah dihitung:
+// bintang 5.2:1, kolaborasi 5.9:1, berita 5.6:1, default 13.8:1.
 const TONES: Record<CatTone, CategoryStyle> = {
   bintang: {
     tone: 'bintang',
     text: '#6b4700',
-    border: 'rgba(255,195,46,0.55)',
-    dot: '#ffc32e',
-    wash: 'rgba(255,195,46,0.20)',
+    border: '#ffc32e',
+    dot: '#6b4700',
+    wash: '#ffc32e',
   },
   kolaborasi: {
     tone: 'kolaborasi',
-    text: '#a84200',
-    border: 'rgba(255,122,26,0.42)',
-    dot: '#ff7a1a',
-    wash: 'rgba(255,122,26,0.14)',
+    text: '#241a12',
+    border: '#ff6a00',
+    dot: '#241a12',
+    wash: '#ff6a00',
   },
   berita: {
     tone: 'berita',
-    text: '#a51a21',
-    border: 'rgba(200,35,43,0.38)',
-    dot: '#c8232b',
-    wash: 'rgba(200,35,43,0.12)',
+    text: '#ffffff',
+    border: '#c8232b',
+    dot: '#ffffff',
+    wash: '#c8232b',
   },
   default: {
     tone: 'default',
-    text: 'rgba(36,26,18,0.74)',
-    border: 'rgba(36,26,18,0.16)',
-    dot: 'rgba(36,26,18,0.45)',
-    wash: 'rgba(36,26,18,0.07)',
+    text: '#241a12',
+    border: '#e2dbd2',
+    dot: '#241a12',
+    wash: '#f7f5f2',
   },
 };
 

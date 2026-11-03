@@ -32,7 +32,7 @@ const schema = courseSchema({
 });
 ---
 
-<Base title={`${w.nama} — Workshop untuk Akademi`} description={w.ringkasan} schema={schema}>
+<Base title={`${w.nama} | Workshop untuk Akademi`} description={w.ringkasan} schema={schema}>
   <Header />
 
   <main class="pt-14">
@@ -45,7 +45,6 @@ const schema = courseSchema({
         fetchpriority="high"
         class="absolute inset-0 h-full w-full object-cover opacity-30"
       />
-      <div class="absolute inset-0 bg-gradient-to-t from-paper via-paper/92 to-paper/70" aria-hidden="true"></div>
       <div class="art-ring right-10 top-24 hidden h-14 w-14 border-crimson/20 sm:block" aria-hidden="true"></div>
       <div class="art-track absolute inset-x-0 bottom-0 h-48 opacity-50" aria-hidden="true"></div>
       <div class="art-diamond right-24 top-40 h-2.5 w-2.5 bg-crimson/50 hidden sm:block" aria-hidden="true"></div>
@@ -76,13 +75,13 @@ const schema = courseSchema({
               w.harga > 0 ? (
                 <>
                   <p class="display text-5xl text-brand">Rp{formatIdr(w.harga)}</p>
-                  <p class="mt-1 text-xs text-ink/55">/ sesi · {durasiKecil}</p>
+                  <p class="mt-1 text-xs text-ink/70">/ sesi · {durasiKecil}</p>
                   {w.catatan && <p class="mt-1.5 text-xs font-black text-brand-dark">{w.catatan}</p>}
                 </>
               ) : (
                 <>
                   <p class="display text-4xl text-brand-dark">Harga custom</p>
-                  <p class="mt-1 text-xs text-ink/55">disusun sesuai kebutuhan akademi</p>
+                  <p class="mt-1 text-xs text-ink/70">disusun sesuai kebutuhan akademi</p>
                 </>
               )
             }
@@ -123,7 +122,7 @@ const schema = courseSchema({
       <div class="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
         {
           docs.map((d) => (
-            <div class="grain relative overflow-hidden rounded-2xl border border-ink/10 aspect-4/3">
+            <div class="relative overflow-hidden rounded-2xl border border-ink/10 aspect-4/3">
               <img
                 src={d}
                 alt="Dokumentasi workshop Prospect Asia"
@@ -145,7 +144,7 @@ const schema = courseSchema({
         <div class="mt-6 space-y-3">
           {
             miniFaq.map((f, i) => (
-              <details class="group rounded-2xl border border-ink/10 bg-paper-deep open:border-gold/40" open={i === 0}>
+              <details class="group rounded-2xl border border-ink/10 bg-paper-deep open:border-brand" open={i === 0}>
                 <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-sm font-bold sm:text-base focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none">
                   {f.q}
                   <span class="text-brand-dark transition-transform group-open:rotate-45" aria-hidden="true">+</span>
@@ -164,7 +163,7 @@ const schema = courseSchema({
           <p class="eyebrow text-xs font-black tracking-widest text-brand-dark uppercase">Booking workshop</p>
           <h2 class="display mt-2 text-3xl sm:text-4xl">Booking workshop<br />untuk akademi</h2>
           <p class="mt-4 text-sm leading-relaxed text-ink/65">
-            Isi data singkat, WhatsApp langsung terbuka dengan pesan siap kirim — kami bantu susun jadwal,
+            Isi data singkat, WhatsApp langsung terbuka dengan pesan siap kirim, kami bantu susun jadwal,
             jumlah peserta, dan paket yang cocok untuk akademimu.
           </p>
           <a

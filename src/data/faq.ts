@@ -4,12 +4,12 @@ export const faqs: FaqItem[] = [
   {
     grup: 'Umum',
     q: 'Apa itu Sports Communication?',
-    a: 'Keterampilan fundamental buat atlet modern: public speaking & bahasa Inggris khusus konteks atlet — biar kamu percaya diri menghadapi media, membuka peluang lebih besar, dan mewakili diri serta tim dengan baik.',
+    a: 'Keterampilan fundamental buat atlet modern: public speaking & bahasa Inggris khusus konteks atlet. Jadi kamu percaya diri menghadapi media, membuka peluang lebih besar, dan mewakili diri serta tim dengan baik.',
   },
   {
     grup: 'Umum',
     q: 'Programnya online atau offline?',
-    a: 'Saat ini semua program (1-on-1 & Small Group) dijalankan online, jadi atlet di mana saja bisa ikut. Workshop untuk akademi/klub bisa disesuaikan — diskusikan via WhatsApp.',
+    a: 'Saat ini semua program (1-on-1 & Small Group) dijalankan online, jadi atlet di mana saja bisa ikut. Workshop untuk akademi/klub bisa disesuaikan, tinggal diskusikan via WhatsApp.',
   },
   {
     grup: 'Program',
@@ -19,7 +19,7 @@ export const faqs: FaqItem[] = [
   {
     grup: 'Program',
     q: 'Kalau belum pede mulai dari mana?',
-    a: 'Tenang — ada tes penempatan dulu untuk menentukan level: Basic (mulai dari nol), Development (mengembangkan kemampuan), atau Impact (komunikasi dengan percaya diri).',
+    a: 'Tenang, ada tes penempatan dulu untuk menentukan level: Basic (mulai dari nol), Development (mengembangkan kemampuan), atau Impact (komunikasi dengan percaya diri).',
   },
   {
     grup: 'Program',
@@ -39,6 +39,6 @@ export const faqs: FaqItem[] = [
   {
     grup: 'Pembayaran',
     q: 'Bayarnya gimana?',
-    a: 'Semua transaksi & pendaftaran dibantu langsung lewat WhatsApp admin — harga, jadwal, sampai cara bayar dijelaskan di chat. Tidak perlu checkout online.',
+    a: 'Semua transaksi & pendaftaran dibantu langsung lewat WhatsApp admin. Harga, jadwal, sampai cara bayar dijelaskan di chat. Tidak perlu checkout online.',
   },
 ];

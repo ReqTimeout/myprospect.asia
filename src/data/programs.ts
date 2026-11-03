@@ -27,7 +27,7 @@ export const programs: Program[] = [
     satuan: '/ 6 sesi / bulan',
     badge: 'KELOMPOK',
     badgeTone: 'red',
-    ringkasan: 'Cocok untuk rekan setim atau atlet lintas cabang — belajar bareng, harga lebih ringan.',
+    ringkasan: 'Cocok untuk rekan setim atau atlet lintas cabang. Belajar bareng, harga lebih ringan.',
     dikuasai: [
       'Percaya diri memperkenalkan diri',
       'Mengenal gaya komunikasi atlet',

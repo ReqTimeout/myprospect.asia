@@ -34,7 +34,7 @@ const schema = courseSchema({
 });
 ---
 
-<Base title={`${p.nama} — Prospect Asia`} description={p.ringkasan} schema={schema}>
+<Base title={`${p.nama} | Prospect Asia`} description={p.ringkasan} schema={schema}>
   <Header />
 
   <main class="pt-14">
@@ -47,7 +47,6 @@ const schema = courseSchema({
         fetchpriority="high"
         class="absolute inset-0 h-full w-full object-cover object-[50%_25%] opacity-30"
       />
-      <div class="absolute inset-0 bg-gradient-to-t from-paper via-paper/92 to-paper/70" aria-hidden="true"></div>
       <div class="art-ring right-10 top-24 hidden h-14 w-14 border-crimson/20 sm:block" aria-hidden="true"></div>
       <div class="art-pitch absolute inset-0 opacity-40 [mask-image:linear-gradient(to_bottom,black,transparent_65%)]" aria-hidden="true"></div>
       <div class="art-diamond right-24 top-40 h-2.5 w-2.5 bg-crimson/50 hidden sm:block" aria-hidden="true"></div>
@@ -83,7 +82,7 @@ const schema = courseSchema({
 
         <div class="mt-8 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            {p.hargaCoret ? <p class="text-sm text-ink/45 line-through">Rp{formatIdr(p.hargaCoret)}</p> : null}
+            {p.hargaCoret ? <p class="text-sm text-ink/70 line-through">Rp{formatIdr(p.hargaCoret)}</p> : null}
             {
               p.harga > 0 ? (
                 <p class="display text-5xl text-brand">Rp{formatIdr(p.harga)}</p>
@@ -91,7 +90,7 @@ const schema = courseSchema({
                 <p class="display text-4xl text-brand-dark">Info via WhatsApp</p>
               )
             }
-            <p class="mt-1 text-xs text-ink/55">{p.satuan}</p>
+            <p class="mt-1 text-xs text-ink/70">{p.satuan}</p>
           </div>
           <a
             href={ctaWa}
@@ -135,7 +134,7 @@ const schema = courseSchema({
                 <li
                   class:list={[
                     'flex items-start gap-3 rounded-2xl px-4 py-3.5 text-sm',
-                    gold ? 'border border-gold/40 bg-gold/10 text-brand-dark' : 'border border-ink/10 bg-white text-ink/85',
+                    gold ? 'border border-brand bg-brand-soft text-ink' : 'border border-ink/10 bg-white text-ink/85',
                   ]}
                 >
                   <span aria-hidden="true">{gold ? '★' : '✓'}</span>
@@ -152,7 +151,7 @@ const schema = courseSchema({
     <section class="mx-auto max-w-4xl px-4 py-14 sm:px-6">
       <p class="eyebrow text-xs font-black tracking-widest text-brand-dark uppercase">Peningkatan bulanan</p>
       <h2 class="display mt-2 text-3xl sm:text-4xl">4 bulan, 4 lompatan</h2>
-      <ol class="relative mt-8 space-y-6 border-l-2 border-gold/40 pl-6">
+      <ol class="relative mt-8 space-y-6 border-l-2 border-brand-line pl-6">
         {
           p.journey.map((j) => (
             <li class="relative">
@@ -166,9 +165,9 @@ const schema = courseSchema({
     </section>
 
     <section class="mx-auto max-w-4xl px-4 pb-14 sm:px-6">
-      <figure class="rounded-3xl border border-ink/10 bg-gradient-to-br from-brand/15 to-transparent p-7">
+      <figure class="rounded-3xl border border-ink/10 bg-brand-soft p-7">
         <blockquote class="text-lg leading-relaxed text-ink/90 italic sm:text-xl">“{testi.kutipan}”</blockquote>
-        <figcaption class="mt-4 text-sm text-ink/60">
+        <figcaption class="mt-4 text-sm text-ink/70">
           <span class="font-bold text-ink">{testi.nama}</span> · {testi.asal} · {testi.olahraga}
         </figcaption>
       </figure>
@@ -181,7 +180,7 @@ const schema = courseSchema({
         <div class="mt-6 space-y-3">
           {
             miniFaq.map((f, i) => (
-              <details class="group rounded-2xl border border-ink/10 bg-paper-deep open:border-gold/40" open={i === 0}>
+              <details class="group rounded-2xl border border-ink/10 bg-paper-deep open:border-brand" open={i === 0}>
                 <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-sm font-bold sm:text-base focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none">
                   {f.q}
                   <span class="text-brand-dark transition-transform group-open:rotate-45" aria-hidden="true">+</span>
@@ -200,7 +199,7 @@ const schema = courseSchema({
           <p class="eyebrow text-xs font-black tracking-widest text-brand-dark uppercase">Mulai sekarang</p>
           <h2 class="display mt-2 text-3xl sm:text-4xl">Isi data,<br />admin lanjut di WA</h2>
           <p class="mt-4 text-sm leading-relaxed text-ink/65">
-            Setelah formulir dikirim, WhatsApp langsung terbuka dengan pesan yang sudah terisi — admin tinggal
+            Setelah formulir dikirim, WhatsApp langsung terbuka dengan pesan yang sudah terisi, admin tinggal
             membalas untuk jadwal, tes penempatan, dan cara bayar.
           </p>
           <a

@@ -89,15 +89,6 @@ async function initGsap() {
   const { ScrollTrigger } = await import('gsap/ScrollTrigger');
   gsap.registerPlugin(ScrollTrigger);
 
-  document.querySelectorAll<HTMLElement>('[data-parallax]').forEach((el) => {
-    const dist = parseFloat(el.dataset.parallax || '-30');
-    gsap.to(el, {
-      y: dist,
-      ease: 'none',
-      scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: 0.7 },
-    });
-  });
-
   await document.fonts.ready;
   const { SplitText } = await import('gsap/SplitText');
   document.querySelectorAll<HTMLElement>('.display').forEach((el) => {
@@ -128,21 +119,6 @@ async function initGsap() {
   });
 }
 
-function initCardSpotlight() {
-  if (reduced || !window.matchMedia('(pointer: fine)').matches) return;
-  document.querySelectorAll<HTMLElement>('[data-spot]').forEach((card) => {
-    card.addEventListener(
-      'pointermove',
-      (e) => {
-        const r = card.getBoundingClientRect();
-        card.style.setProperty('--mx', `${(((e.clientX - r.left) / r.width) * 100).toFixed(2)}%`);
-        card.style.setProperty('--my', `${(((e.clientY - r.top) / r.height) * 100).toFixed(2)}%`);
-      },
-      { passive: true }
-    );
-  });
-}
-
 function initScrollProgress() {
   const bar = document.querySelector<HTMLElement>('.scroll-progress');
   if (!bar) return;
@@ -162,38 +138,17 @@ function initScrollProgress() {
   requestAnimationFrame(loop);
 }
 
-function initSpotlight() {
-  const hero = document.querySelector<HTMLElement>('.hero-glow');
-  if (!hero || reduced || !window.matchMedia('(pointer: fine)').matches) return;
-  let tx = 50;
-  let ty = 26;
-  let cx = 50;
-  let cy = 26;
-  const loop = () => {
-    cx += (tx - cx) * 0.08;
-    cy += (ty - cy) * 0.08;
-    hero.style.setProperty('--mx', `${cx}%`);
-    hero.style.setProperty('--my', `${cy}%`);
-    requestAnimationFrame(loop);
-  };
-  window.addEventListener(
-    'pointermove',
-    (e) => {
-      tx = (e.clientX / window.innerWidth) * 100;
-      ty = (e.clientY / window.innerHeight) * 100;
-    },
-    { passive: true }
-  );
-  requestAnimationFrame(loop);
-}
+/* Dua pengikut kursor sudah dihapus: sorotan yang mengejar pointer di atas
+   kartu, dan glow hero yang ikut bergerak tiap mouse berpindah. Keduanya
+   gerak dekoratif tanpa informasi baru, dan justru menjadi lapisan paling
+   berisik di halaman. Gantinya, kartu cukup memberi garis oranye saat
+   di-hover lewat kelas `.spot`, murni CSS tanpa JavaScript. */
 
 function boot() {
   initReveal();
   initMagnetic();
   initLenis();
-  initCardSpotlight();
   initScrollProgress();
-  initSpotlight();
   initGsap().catch(() => {});
 }
 

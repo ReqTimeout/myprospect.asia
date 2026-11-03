@@ -118,7 +118,7 @@
   >
     <div class="embla__container flex gap-4">
       {#each list as t, i (t.nama)}
-        <figure data-spot class="spot embla__slide card-soft card-lift w-[88%] shrink-0 overflow-hidden rounded-3xl sm:w-[62%] lg:w-[46%]">
+        <figure class="spot embla__slide card-soft card-lift w-[88%] shrink-0 overflow-hidden rounded-3xl sm:w-[62%] lg:w-[46%]">
           <div class="relative z-10 grid sm:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
             <div class="relative aspect-16/10 overflow-hidden bg-paper-deep sm:aspect-auto">
               <img
@@ -129,9 +129,9 @@
                 height="800"
                 class="absolute inset-0 h-full w-full object-cover"
               />
-              <div class="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/20 to-transparent"></div>
+              <div class="absolute inset-0 bg-ink/70"></div>
               <Quote size={26} class="absolute bottom-3 left-4 text-white/90" aria-hidden="true" />
-              <span class="absolute top-3 right-3 rounded-full border border-white/40 bg-white/20 px-2.5 py-1 text-[10px] font-bold tracking-wide text-white uppercase backdrop-blur-sm">
+              <span class="absolute top-3 right-3 rounded-full bg-brand px-2.5 py-1 text-ink text-[10px] font-bold tracking-wide uppercase">
                 Atlet Prospect Asia
               </span>
             </div>
@@ -147,12 +147,12 @@
                 “{t.kutipan}”
               </blockquote>
               <figcaption class="mt-5 flex items-center gap-3">
-                <span class="flex h-11 w-11 items-center justify-center rounded-full bg-brand/20 text-base font-black text-brand italic">
+                <span class="flex h-11 w-11 items-center justify-center rounded-full bg-brand text-base font-black text-ink italic">
                   {t.nama[0]}
                 </span>
                 <div class="leading-tight">
                   <p class="text-sm font-bold">{t.nama}</p>
-                  <p class="text-xs text-ink/50">{t.asal}{t.olahraga ? ` · ${t.olahraga}` : ''}</p>
+                  <p class="text-xs text-ink/70">{t.asal}{t.olahraga ? ` · ${t.olahraga}` : ''}</p>
                 </div>
               </figcaption>
             </div>
@@ -178,8 +178,8 @@
         ></span>
       </button>
     {/each}
-    <span class="ml-3 hidden items-center gap-1.5 text-[11px] font-bold tracking-wide text-ink/40 uppercase sm:inline-flex">
-      <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-brand"></span>
+    <span class="ml-3 hidden items-center gap-1.5 text-[11px] font-bold tracking-wide text-ink/70 uppercase sm:inline-flex">
+      <span class="h-1.5 w-1.5 rounded-full bg-brand"></span>
       Auto
     </span>
   </div>

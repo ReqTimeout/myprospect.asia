@@ -459,7 +459,7 @@
 </script>
 
 <div class="flex min-h-dvh flex-col bg-slate-50 text-slate-900">
-  <header class="sticky top-0 z-30 border-b border-slate-200 bg-white/90 backdrop-blur-xl">
+  <header class="sticky top-0 z-30 border-b border-slate-200 bg-white">
     <div class="mx-auto flex w-full max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
       <div class="flex items-center gap-3">
         <span class="grid h-9 w-9 place-items-center rounded-xl bg-brand text-ink shadow-[0_8px_22px_-10px_rgba(255,122,26,.8)]">
@@ -708,7 +708,7 @@
 
                 {#if titikAktif}
                   <div
-                    class="pointer-events-none absolute -top-1 z-10 -translate-x-1/2 rounded-2xl border border-slate-200 bg-white/95 px-3 py-2 text-[11px] font-bold shadow-[0_18px_40px_-18px_rgba(15,23,42,.38)] backdrop-blur"
+                    class="pointer-events-none absolute -top-1 z-10 -translate-x-1/2 rounded-2xl border border-slate-200 bg-white px-3 py-2 text-[11px] font-bold shadow-[0_18px_40px_-18px_rgba(15,23,42,.38)]"
                     style="left: {Math.min(88, Math.max(12, (hover / Math.max(1, n - 1)) * 100))}%"
                   >
                     <p class="text-slate-500">{labelHari(titikAktif.day)}</p>
@@ -1315,7 +1315,7 @@
     </main>
   </div>
 
-  <nav class="fixed inset-x-0 bottom-0 z-30 border-t border-slate-200 bg-white/95 shadow-[0_-10px_30px_-24px_rgba(15,23,42,.45)] backdrop-blur-xl lg:hidden" aria-label="Menu admin mobile">
+  <nav class="fixed inset-x-0 bottom-0 z-30 border-t border-slate-200 bg-white shadow-[0_-10px_30px_-24px_rgba(15,23,42,.45)] lg:hidden" aria-label="Menu admin mobile">
     <div class="mx-auto flex max-w-md items-stretch justify-around gap-0.5 px-1.5 py-1.5">
       {#each menuTabs as t (t.id)}
         <button

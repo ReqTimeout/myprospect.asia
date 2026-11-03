@@ -13,13 +13,14 @@ const ticker = [
 ];
 ---
 
-<!-- Pita CTA: hitam pekat sebagai bidang, oranye hanya satu kata aksen. -->
+<!-- Pita CTA: hitam pekat sebagai bidang, oranye penuh pada tombol dan satu
+     kata aksen. Chip cukup garis putih tanpa isi translusen. -->
 <section class="relative overflow-hidden bg-ink">
   <div class="absolute inset-0" aria-hidden="true">
-    <img src="/media/workshop-crowd.jpg" alt="" loading="lazy" class="ken-burns h-full w-full object-cover opacity-50 grayscale" />
+    <img src="/media/workshop-crowd.jpg" alt="" loading="lazy" class="h-full w-full object-cover opacity-40" />
   </div>
   <div
-    class="absolute inset-0 bg-gradient-to-br from-ink/95 via-ink/88 to-ink/96"
+    class="absolute inset-0 bg-ink/80"
     aria-hidden="true"
   >
   </div>
@@ -31,28 +32,8 @@ const ticker = [
     aria-hidden="true"
   >
   </div>
-  <div class="pat-noise-light absolute inset-0" aria-hidden="true"></div>
-  <div
-    class="art-blob -top-24 -left-16 h-72 w-72"
-    style="background: radial-gradient(circle, rgba(255,122,26,0.34), transparent 70%);"
-    aria-hidden="true"
-  >
-  </div>
-  <div
-    class="art-blob -right-20 -bottom-28 h-80 w-80"
-    style="background: radial-gradient(circle, rgba(255,255,255,0.26), transparent 70%); animation-delay: -6s;"
-    aria-hidden="true"
-  >
-  </div>
-  <div class="art-blob left-1/4 top-1/2 h-56 w-56" style="background: radial-gradient(circle, rgba(200,35,43,0.3), transparent 70%); animation-delay: -3s;" aria-hidden="true"></div>
-  <div class="sport-ball left-6 top-16 hidden h-14 w-14 -rotate-12 opacity-95 lg:block" aria-hidden="true"></div>
-  <div class="sport-ball right-[6%] bottom-16 hidden h-12 w-12 rotate-12 opacity-90 lg:block" aria-hidden="true"></div>
-  <div class="pointer-events-none absolute top-8 right-10 hidden rotate-12 rounded-2xl border-4 border-white/25 p-5 sm:block" aria-hidden="true">
-    <span class="display block text-3xl text-white/60">#MODERN</span>
-  </div>
-  <div class="pointer-events-none absolute bottom-10 left-8 hidden -rotate-6 rounded-2xl border-4 border-white/30 p-4 lg:block" aria-hidden="true">
-    <span class="display block text-2xl text-white/45">BICARA ?!</span>
-  </div>
+  <div class="sport-ball left-6 top-16 hidden h-14 w-14 -rotate-12 lg:block" aria-hidden="true"></div>
+  <div class="sport-ball right-[6%] bottom-16 hidden h-12 w-12 rotate-12 lg:block" aria-hidden="true"></div>
 
   <div class="relative">
     <TickerRibbon items={ticker} speed={34} tone="ink" class="border-y border-white/20" />
@@ -64,7 +45,7 @@ const ticker = [
         <span class="text-brand">Bicara?</span>
       </h2>
       <p data-reveal class="mx-auto mt-5 max-w-md text-sm leading-relaxed font-medium text-white/85 sm:text-base">
-        Mulai dari chat singkat. Ceritakan atlet &amp; akademimu — kami bantu susun programnya.
+        Mulai dari chat singkat. Ceritakan atlet &amp; akademimu, kami bantu susun programnya.
       </p>
       <a
         href={waLink({ source: 'cta-band' })}
@@ -75,23 +56,23 @@ const ticker = [
         data-source="cta-band"
         data-magnetic
         data-reveal="pop"
-        class="btn-pop mt-8 inline-flex items-center gap-2 rounded-2xl bg-white px-8 py-4 text-sm font-bold tracking-wide text-ink uppercase shadow-[0_16px_36px_-12px_rgba(0,0,0,0.35)] hover:bg-brand focus-visible:ring-2 focus-visible:ring-ink focus-visible:outline-none"
+        class="btn-pop mt-8 inline-flex items-center gap-2 rounded-2xl bg-brand px-8 py-4 text-sm font-bold tracking-wide text-ink uppercase hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none"
       >
         Isi Formulir Pendaftaran ↗
       </a>
       <p class="mt-3 text-xs font-medium text-white/70">Isi formulir 30 detik · admin balas di jam kerja</p>
 
       <div class="mt-10 flex flex-wrap items-center justify-center gap-2">
-        <span class="rounded-full border border-white/35 bg-white/15 px-3.5 py-1.5 text-[11px] font-bold tracking-wide text-white uppercase backdrop-blur-sm">
+        <span class="rounded-full border border-white/40 px-3.5 py-1.5 text-[11px] font-bold tracking-wide text-white uppercase">
           Online
         </span>
-        <span class="rounded-full border border-white/35 bg-white/15 px-3.5 py-1.5 text-[11px] font-bold tracking-wide text-white uppercase backdrop-blur-sm">
+        <span class="rounded-full border border-white/40 px-3.5 py-1.5 text-[11px] font-bold tracking-wide text-white uppercase">
           Jadwal fleksibel
         </span>
-        <span class="rounded-full border border-white/35 bg-white/15 px-3.5 py-1.5 text-[11px] font-bold tracking-wide text-white uppercase backdrop-blur-sm">
+        <span class="rounded-full border border-white/40 px-3.5 py-1.5 text-[11px] font-bold tracking-wide text-white uppercase">
           1-on-1 &amp; Small Group
         </span>
-        <span class="rounded-full border border-white/35 bg-white/15 px-3.5 py-1.5 text-[11px] font-bold tracking-wide text-white uppercase backdrop-blur-sm">
+        <span class="rounded-full border border-white/40 px-3.5 py-1.5 text-[11px] font-bold tracking-wide text-white uppercase">
           Workshop akademi
         </span>
       </div>

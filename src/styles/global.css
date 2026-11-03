@@ -1,14 +1,25 @@
 @import "tailwindcss";
 
 @theme {
+  /* Kanvas: satu warna untuk semua section terang. Ritme halaman dibawa oleh
+     kartu dan pita oranye, bukan oleh latar yang berganti-ganti tiap blok —
+     itu yang membuat antar section terasa menyambung (flat + blend). */
   --color-paper: #fffcf7;
   --color-paper-deep: #fff3e4;
   --color-ink: #241a12;
   --color-ink-2: #17110b;
   --color-bone: #f7f5f2;
-  --color-brand: #ff7a1a;
+
+  /* Oranye penuh. #ff7a1a lama mengandung ~12% putih, jadi semua turunannya
+     (chip, border, swash, shadow) terlihat kusam seperti abu. */
+  --color-brand: #ff6a00;
+  /* Teks oranye di atas krem mentok di sini: lightness 37 adalah oranye paling
+     jenuh yang masih lolos AA 4.5:1. Lebih cerah dari itu rasio kontrasnya jatuh,
+     lebih gelap dari itu warnanya jadi cokelat. Karena itu oranye CERAH dipakai
+     sebagai bidang solid (chip, bar, tombol) — bukan sebagai warna teks kecil. */
   --color-brand-dark: #bc4c00;
-  --color-brand-soft: #ffe3c4;
+  --color-brand-soft: #ffe3c4; /* panel solid, pengganti wash bg-brand/10../20 */
+  --color-brand-line: #ffc49a; /* border solid, pengganti border-brand/25../50 */
   --color-gold: #ffc32e;
   --color-gold-soft: #ffe58a;
   --color-crimson: #c8232b;
@@ -24,28 +35,15 @@
 
   --radius-card: 1.25rem;
 
-  --shadow-soft: 0 18px 44px -22px rgba(36, 26, 18, 0.22);
-  --shadow-pop: 0 24px 54px -20px rgba(255, 122, 26, 0.38);
+  --shadow-soft: 0 14px 34px -22px rgba(36, 26, 18, 0.2);
+  --shadow-pop: 0 18px 38px -22px rgb(255 106 0 / 0.45);
 
-  --animate-pulse-soft: pulse-soft 2.4s ease-in-out infinite;
-  --animate-marquee: marquee 32s linear infinite;
+  /* Yang tersisa hanya gerak yang bermakna: masuk/keluar panel, dan
+     carousel konten yang berhenti saat disentuh. Gerak dekoratif
+     (float, wiggle, spin, blob, drift, shine, ken-burns) dihapus. */
   --animate-slide-up: slide-up 0.28s cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
   --animate-slide-down: slide-down 0.22s cubic-bezier(0.4, 0, 1, 1) both;
   --animate-fade-in: fade-in 0.4s ease both;
-  --animate-float: float 7s ease-in-out infinite;
-  --animate-float-slow: float 11s ease-in-out infinite;
-  --animate-spin-slow: spin 14s linear infinite;
-  --animate-wiggle: wiggle 2.6s ease-in-out infinite;
-
-  @keyframes pulse-soft {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.06); opacity: 0.85; }
-  }
-
-  @keyframes marquee {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
 
   @keyframes slide-up {
     from { opacity: 0; transform: translateY(16px) scale(0.96); }
@@ -62,20 +60,9 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
-  @keyframes float {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-14px) rotate(2deg); }
-  }
-
-  @keyframes wiggle {
-    0%, 100% { transform: rotate(-3deg); }
-    50% { transform: rotate(3deg); }
-  }
-
-  @keyframes blob-drift {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    33% { transform: translate(4%, -6%) scale(1.08); }
-    66% { transform: translate(-5%, 4%) scale(0.94); }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
   }
 }
 
@@ -116,16 +103,6 @@ body {
   transform: skewX(-8deg);
 }
 
-.grain::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.07;
-  mix-blend-mode: soft-light;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
-}
-
 .angle-cut {
   clip-path: polygon(0 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%);
 }
@@ -142,34 +119,27 @@ body {
 }
 
 .art-dots-brand {
-  background-image: radial-gradient(rgba(255, 122, 26, 0.32) 1.4px, transparent 1.4px);
+  background-image: radial-gradient(rgb(255 106 0 / 0.32) 1.4px, transparent 1.4px);
   background-size: 20px 20px;
 }
 
-.art-blob {
-  position: absolute;
-  border-radius: 9999px;
-  filter: blur(70px);
-  pointer-events: none;
-  animation: blob-drift 16s ease-in-out infinite;
-  will-change: transform;
-}
-
+/* Pita oranye: bidang solid, bukan gradasi ke kuning. */
 .art-ribbon {
   position: absolute;
   border-radius: 9999px;
   pointer-events: none;
-  background: linear-gradient(90deg, var(--color-brand), var(--color-gold));
-  opacity: 0.9;
+  background: var(--color-brand);
 }
 
+/* Sorotan judul: blok oranye penuh dengan teks ink (5.9:1), bukan teks
+   bergradien yang justru membuat oranye dan kuning saling meniadakan. */
 .hl-brand {
-  background: linear-gradient(92deg, #241a12 0%, #ff7a1a 46%, #ffc32e 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  background: var(--color-brand);
+  color: var(--color-ink);
+  padding: 0.02em 0.12em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
-
 
 .eyebrow {
   position: relative;
@@ -217,20 +187,8 @@ body {
 }
 
 
-.art-pitch {
-  animation: pitch-drift 34s ease-in-out infinite alternate;
-}
-
-@keyframes pitch-drift {
-  from { background-position: 0% 0%; }
-  to { background-position: 100% 60%; }
-}
-
-@keyframes motif-drift {
-  from { background-position: 0 0; }
-  to { background-position: 130px 130px; }
-}
-
+/* CSS art lapangan: garis cetak di atas kanvas, statis. Tidak ada lagi
+   drift/parallax — latar harus diam supaya halaman terasa flat, bukan ramai. */
 .art-pitch {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 500'%3E%3Cg fill='none' stroke='%23241a12' stroke-opacity='0.14' stroke-width='2.5'%3E%3Crect x='20' y='20' width='760' height='460' rx='4'/%3E%3Cline x1='400' y1='20' x2='400' y2='480'/%3E%3Ccircle cx='400' cy='250' r='78'/%3E%3Ccircle cx='400' cy='250' r='6'/%3E%3Crect x='20' y='150' width='150' height='200'/%3E%3Crect x='630' y='150' width='150' height='200'/%3E%3Cpath d='M170 215 a75 75 0 0 1 0 70'/%3E%3Cpath d='M630 215 a75 75 0 0 0 0 70'/%3E%3C/g%3E%3C/svg%3E");
   background-size: cover;
@@ -239,7 +197,7 @@ body {
 }
 
 .art-pitch-orange {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 500'%3E%3Cg fill='none' stroke='%23ff7a1a' stroke-opacity='0.16' stroke-width='2.5'%3E%3Crect x='20' y='20' width='760' height='460' rx='4'/%3E%3Cline x1='400' y1='20' x2='400' y2='480'/%3E%3Ccircle cx='400' cy='250' r='78'/%3E%3Crect x='20' y='150' width='150' height='200'/%3E%3Crect x='630' y='150' width='150' height='200'/%3E%3C/g%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 500'%3E%3Cg fill='none' stroke='%23ff6a00' stroke-opacity='0.2' stroke-width='2.5'%3E%3Crect x='20' y='20' width='760' height='460' rx='4'/%3E%3Cline x1='400' y1='20' x2='400' y2='480'/%3E%3Ccircle cx='400' cy='250' r='78'/%3E%3Crect x='20' y='150' width='150' height='200'/%3E%3Crect x='630' y='150' width='150' height='200'/%3E%3C/g%3E%3C/svg%3E");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -256,79 +214,60 @@ body {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 130 130'%3E%3Cg fill='none' stroke='%23241a12' stroke-opacity='0.14' stroke-width='2'%3E%3Ccircle cx='65' cy='65' r='30'/%3E%3Cpath d='M65 35 L82 50 L74 70 L56 70 L48 50 Z'/%3E%3Cpath d='M35 65 L48 50 M95 65 L82 50 M48 85 L56 70 M82 85 L74 70'/%3E%3C/g%3E%3C/svg%3E");
   background-size: 130px 130px;
   background-repeat: repeat;
-  animation: motif-drift 26s linear infinite;
 }
 
 .art-balls-orange {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 130 130'%3E%3Cg fill='none' stroke='%23ff7a1a' stroke-opacity='0.18' stroke-width='2.4'%3E%3Ccircle cx='65' cy='65' r='30'/%3E%3Cpath d='M65 35 L82 50 L74 70 L56 70 L48 50 Z'/%3E%3C/g%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 130 130'%3E%3Cg fill='none' stroke='%23ff6a00' stroke-opacity='0.24' stroke-width='2.4'%3E%3Ccircle cx='65' cy='65' r='30'/%3E%3Cpath d='M65 35 L82 50 L74 70 L56 70 L48 50 Z'/%3E%3C/g%3E%3C/svg%3E");
   background-size: 120px 120px;
   background-repeat: repeat;
-  animation: motif-drift 20s linear infinite reverse;
 }
 
 .art-net {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath d='M0 0 L48 48 M48 0 L0 48' stroke='%23241a12' stroke-opacity='0.11' stroke-width='1.6'/%3E%3C/svg%3E");
   background-size: 26px 26px;
   background-repeat: repeat;
-  animation: motif-drift 18s linear infinite;
 }
 
 .art-track {
-  animation: track-drift 28s ease-in-out infinite alternate;
-}
-
-@keyframes track-drift {
-  from { background-position: bottom center; }
-  to { background-position: bottom right; }
-}
-
-.art-track {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 320'%3E%3Cg fill='none' stroke='%23ff7a1a' stroke-opacity='0.13' stroke-width='2.4'%3E%3Ccircle cx='300' cy='320' r='290'/%3E%3Ccircle cx='300' cy='320' r='238'/%3E%3Ccircle cx='300' cy='320' r='186'/%3E%3Ccircle cx='300' cy='320' r='134'/%3E%3C/g%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 320'%3E%3Cg fill='none' stroke='%23ff6a00' stroke-opacity='0.18' stroke-width='2.4'%3E%3Ccircle cx='300' cy='320' r='290'/%3E%3Ccircle cx='300' cy='320' r='238'/%3E%3Ccircle cx='300' cy='320' r='186'/%3E%3Ccircle cx='300' cy='320' r='134'/%3E%3C/g%3E%3C/svg%3E");
   background-size: cover;
   background-position: bottom center;
   background-repeat: no-repeat;
 }
 
 .art-stripes {
-  background-image: repeating-linear-gradient(135deg, rgba(255, 122, 26, 0.14) 0 14px, transparent 14px 28px);
-  animation: stripe-move 12s linear infinite;
-}
-
-@keyframes stripe-move {
-  from { background-position: 0 0; }
-  to { background-position: 56px 0; }
+  background-image: repeating-linear-gradient(135deg, rgb(255 106 0 / 0.16) 0 14px, transparent 14px 28px);
 }
 
 .art-stripes-light {
   background-image: repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0 14px, transparent 14px 28px);
-  animation: stripe-move 9s linear infinite;
 }
 
 /* ══ FORGE — sistem pattern detail (oranye × hitam) ═════════════
    Prinsip: oranye = ACCENT, bukan bidang warna. Pola halus
-   (halftone / grid / hatch / noise) memberi "detail" tanpa menambah
-   blok oranye besar. Ukuran pola diatur lewat --pat-gap. */
+   (halftone / grid / hatch) memberi "detail" tanpa menambah blok
+   oranye besar. Ukuran pola diatur lewat --pat-gap. Butiran film
+   (feTurbulence) sudah dihapus — efek noise itulah yang membuat warna
+   terlihat berdebu, dan ia tidak bisa dibaca sebagai desain cetak. */
 
 /* Semua kelas pola hanyalah latar dekoratif (selalu dipakai pada div
    `aria-hidden` yang dipasang `absolute inset-0` atau lingkaran kecil).
    Tanpa pointer-events:none, bulatan pola yang menjuntai ke area interaktif
    ikut menelan sentuhan — inilah yang membuat carousel Testimoni tidak bisa
-   digeser jari di mobile. `.art-blob`, `.art-ribbon`, dan `.sport-ball`
-   sudah lebih dulu memakai aturan yang sama. */
+   digeser jari di mobile. `.art-ribbon` dan `.sport-ball` memakai aturan
+   yang sama. */
 .pat-halftone,
 .pat-halftone-ink,
 .pat-grid,
 .pat-grid-light,
 .pat-hatch,
 .pat-hatch-ink,
-.pat-noise,
-.pat-noise-light,
 .pat-dash {
   pointer-events: none;
 }
 
 .pat-halftone {
-  background-image: radial-gradient(rgba(255, 122, 26, 0.55) 1.15px, transparent 1.25px);
+  background-image: radial-gradient(rgb(255 106 0 / 0.55) 1.15px, transparent 1.25px);
   background-size: var(--pat-gap, 7px) var(--pat-gap, 7px);
 }
 
@@ -352,24 +291,11 @@ body {
 }
 
 .pat-hatch {
-  background-image: repeating-linear-gradient(45deg, rgba(255, 122, 26, 0.22) 0 1px, transparent 1px 7px);
+  background-image: repeating-linear-gradient(45deg, rgb(255 106 0 / 0.26) 0 1px, transparent 1px 7px);
 }
 
 .pat-hatch-ink {
   background-image: repeating-linear-gradient(45deg, rgba(36, 26, 18, 0.12) 0 1px, transparent 1px 8px);
-}
-
-/* Butiran film: bikin permukaan terasa cetak, bukan gradien datar. */
-.pat-noise {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size: 160px 160px;
-  opacity: 0.06;
-}
-
-.pat-noise-light {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size: 160px 160px;
-  opacity: 0.1;
 }
 
 /* Mask helper: pola memudar ke arah tertentu. */
@@ -383,7 +309,9 @@ body {
   mask-image: linear-gradient(to top left, #000, transparent 72%);
 }
 
-/* Highlight "swash" oranye di belakang teks — seperti spidol. */
+/* Highlight "swash" oranye di belakang teks — seperti spidol. Sapuan
+   sekarang oranye penuh dan teks di atasnya tetap ink: ink di atas
+   #ff6a00 = 5.9:1, jadi aksen bisa cerah tanpa mengorbankan keterbacaan. */
 .hl-swash {
   position: relative;
   display: inline-block;
@@ -397,48 +325,46 @@ body {
   right: -0.05em;
   bottom: 0.12em;
   height: 0.28em;
-  border-radius: 999px;
-  background: linear-gradient(90deg, rgba(255, 122, 26, 0.45), rgba(255, 195, 46, 0.55));
+  background: var(--color-brand);
   z-index: -1;
 }
 
-/* Varian untuk latar gelap: sapuan marker diredupkan supaya teks putih
-   di atasnya tetap memenuhi rasio kontras (putih/oranye gelap >= 4.5:1). */
+/* Varian untuk latar gelap: teks putih di atas oranye penuh hanya 2.9:1,
+   jadi sapuan memakai brand-dark (putih di atasnya 5.0:1). */
 .hl-swash--dark::before {
-  background: linear-gradient(90deg, rgba(255, 122, 26, 0.58), rgba(255, 160, 60, 0.5));
+  background: var(--color-brand-dark);
 }
 
 /* Garis teknis putus-putus (oranye) — detail kecil untuk kartu/panel. */
 .pat-dash {
-  background-image: repeating-linear-gradient(90deg, rgba(255, 122, 26, 0.55) 0 6px, transparent 6px 12px);
+  background-image: repeating-linear-gradient(90deg, rgb(255 106 0 / 0.55) 0 6px, transparent 6px 12px);
 }
 
+/* Bola olahraga: CSS art flat. Lingkaran satu warna + pentagon jahitan,
+   tanpa radial-gradient, inset shadow, atau animasi melayang. */
 .sport-ball {
   position: absolute;
-  animation: float 7s ease-in-out infinite;
   pointer-events: none;
   border-radius: 9999px;
-  background: radial-gradient(circle at 32% 28%, #fff, #f1e6d8 55%, #e6d5bd);
-  box-shadow: inset 0 0 0 1.5px rgba(36, 26, 18, 0.14), inset -6px -8px 14px rgba(36, 26, 18, 0.16),
-    0 14px 26px -12px rgba(36, 26, 18, 0.35);
+  background: var(--color-bone);
+  box-shadow: inset 0 0 0 2px rgba(36, 26, 18, 0.16);
 }
 
 .sport-ball::after {
   content: "";
   position: absolute;
   inset: 31%;
-  background: linear-gradient(140deg, rgba(36, 26, 18, 0.92), rgba(36, 26, 18, 0.45));
+  background: var(--color-ink);
   clip-path: polygon(50% 0%, 93% 25%, 78% 78%, 22% 78%, 7% 25%);
 }
 
 .sport-ball--orange {
-  animation-duration: 9s;
-  background: radial-gradient(circle at 32% 28%, #ffc48a, var(--color-brand) 58%, #d95f00);
+  background: var(--color-brand);
+  box-shadow: inset 0 0 0 2px var(--color-brand-dark);
 }
 
 .sport-ball--orange::after {
-  background: linear-gradient(140deg, #fff, rgba(255, 255, 255, 0.72));
-  opacity: 0.95;
+  background: var(--color-ink);
 }
 
 .card-lift {
@@ -448,7 +374,7 @@ body {
 .card-lift:hover {
   transform: translateY(-6px);
   box-shadow: var(--shadow-pop);
-  border-color: rgba(255, 122, 26, 0.35);
+  border-color: rgb(255 106 0 / 0.45);
 }
 
 .btn-pop {
@@ -492,14 +418,6 @@ body {
   transform: scale(0.92);
 }
 
-.hero-glow {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: radial-gradient(460px circle at var(--mx, 50%) var(--my, 26%), rgba(255, 122, 26, 0.18), transparent 62%);
-}
-
-
 [data-hero="badge"] { animation: hero-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both; }
 [data-hero="title"] { animation: hero-title 0.95s cubic-bezier(0.16, 1, 0.3, 1) 0.22s both; }
 [data-hero="sub"] { animation: hero-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.6s both; }
@@ -521,24 +439,21 @@ body {
   to { opacity: 1; transform: none; }
 }
 
+/* Tab "Scroll" dibiarkan diam. Titik yang turun-naik terus-menerus adalah
+   gerak dekoratif murni — petunjuk teks + panah sudah cukup. */
 .scroll-hint span {
-  animation: scroll-dot 1.8s ease-in-out infinite;
+  display: block;
 }
 
-@keyframes scroll-dot {
-  0% { transform: translateY(0); opacity: 0; }
-  30% { opacity: 1; }
-  100% { transform: translateY(14px); opacity: 0; }
-}
-
+/* Layar buka: bidang oranye rata satu warna, bukan gradasi ke kuning. */
 .page-curtain {
   position: fixed;
   inset: 0;
   z-index: 70;
   pointer-events: none;
-  background: linear-gradient(160deg, var(--color-brand), var(--color-gold));
+  background: var(--color-brand);
   transform-origin: top center;
-  animation: curtain-out 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+  animation: curtain-out 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
 }
 
 .page-curtain::after {
@@ -550,7 +465,7 @@ body {
   font-family: var(--font-display);
   font-size: clamp(2rem, 8vw, 5rem);
   letter-spacing: 0.04em;
-  color: rgba(255, 255, 255, 0.92);
+  color: var(--color-ink);
 }
 
 @keyframes curtain-out {
@@ -566,7 +481,7 @@ body {
   z-index: 60;
   transform: scaleX(0);
   transform-origin: 0 50%;
-  background: linear-gradient(90deg, var(--color-brand), var(--color-gold));
+  background: var(--color-brand);
   pointer-events: none;
 }
 
@@ -645,9 +560,11 @@ body {
 
 .art-ring--spin {
   border-style: dashed;
-  animation: spin 26s linear infinite;
 }
 
+/* Galeri foto: satu bingkai, satu foto, tanpa crossfade. Dahulu gambar
+   saling menimpa lewat opacity beranimasi — sekarang gambar pertama yang
+   tampil dan sisanya tetap ada di DOM untuk aksesibilitas/SEO. */
 .gallery {
   position: relative;
   overflow: hidden;
@@ -660,30 +577,17 @@ body {
   width: 100%;
   object-fit: cover;
   opacity: 0;
-  animation: gallery-fade var(--gallery-step, 5s) ease-in-out infinite;
 }
 
-@keyframes gallery-fade {
-  0% { opacity: 0; transform: scale(1.08); }
-  7% { opacity: 1; }
-  30% { opacity: 1; transform: scale(1); }
-  38% { opacity: 0; }
-  100% { opacity: 0; transform: scale(1.03); }
-}
-
-.ken-burns {
-  animation: ken-burns 20s ease-in-out infinite alternate;
-}
-
-@keyframes ken-burns {
-  from { transform: scale(1.04) translate3d(0, 0, 0); }
-  to { transform: scale(1.16) translate3d(-1.6%, -1.6%, 0); }
+.gallery img:first-child {
+  position: relative;
+  opacity: 1;
 }
 
 .rail-wrap {
   overflow: hidden;
   /* Fade tepi dibuat pendek (2%) supaya kartu di ujung tetap terbaca —
-     mask yang lebar membuat jersey gelap tereduksi jadiwash putih. */
+     mask yang lebar membuat jersey gelap tereduksi jadi wash putih. */
   -webkit-mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
   mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
 }
@@ -706,9 +610,7 @@ body {
 }
 
 .art-panel {
-  background-image:
-    radial-gradient(circle at 18% 22%, rgba(255, 195, 46, 0.22), transparent 42%),
-    radial-gradient(circle at 82% 78%, rgba(255, 122, 26, 0.18), transparent 46%);
+  background: var(--color-brand-soft);
 }
 
 /* ── SplitText: jaga agar kata tidak pernah terpotong ───────── */
@@ -717,7 +619,9 @@ body {
   white-space: nowrap;
 }
 
-/* ── Spotlight card: sorotan mengikuti kursor (desktop) ─────── */
+/* ── Kartu sorot: pengganti glow mengikuti kursor ────────────
+   Cahaya radial yang mengikuti mouse dihapus; hover cukup ditandai
+   garis oranye rata di dalam kartu. */
 .spot {
   position: relative;
   isolation: isolate;
@@ -731,8 +635,8 @@ body {
   border-radius: inherit;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.45s ease;
-  background: radial-gradient(320px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 195, 46, 0.18), transparent 66%);
+  transition: opacity 0.25s ease;
+  box-shadow: inset 0 0 0 2px var(--color-brand);
 }
 
 .spot:hover::before,
@@ -783,16 +687,15 @@ body {
 }
 
 /* ── Jersey: visual pengganti foto coach ────────────────────── */
-/* Hitam sebagai bidang, oranye sebagai detail teknik: jahitan
-   diagonal + halftone + cahaya oranye di satu sudut.
+/* Hitam sebagai bidang, oranye sebagai detail teknik: jahitan diagonal
+   + halftone, keduanya garis rata. Cahaya radial di sudut sudah dihapus;
+   tanpa itu jersey tetap terbaca hitam, bukan cokelat mengilap.
    Catatan: jangan pakai `position: relative` di sini.
    CSS kustom tanpa layer mengalahkan utility Tailwind (yang ada di @layer utilities),
    sehingga `absolute inset-0` pada elemen ini ikut tertimpa dan tinggi elemen jadi 0. */
 .jersey {
   overflow: hidden;
-  background:
-    radial-gradient(118% 92% at 82% 4%, rgba(255, 122, 26, 0.32), transparent 56%),
-    linear-gradient(152deg, #3b2a1d 0%, #1d150e 48%, #0f0a06 100%);
+  background: var(--color-ink-2);
 }
 
 .jersey::before {
@@ -800,20 +703,11 @@ body {
   position: absolute;
   inset: -30%;
   background:
-    repeating-linear-gradient(118deg, rgba(255, 122, 26, 0.26) 0 1px, transparent 1px 30px),
-    radial-gradient(rgba(255, 122, 26, 0.22) 1.05px, transparent 1.15px);
+    repeating-linear-gradient(118deg, rgb(255 106 0 / 0.34) 0 1px, transparent 1px 30px),
+    radial-gradient(rgb(255 106 0 / 0.28) 1.05px, transparent 1.15px);
   background-size: 100% 100%, 7px 7px;
   -webkit-mask-image: linear-gradient(to bottom right, #000 0%, rgba(0, 0, 0, 0.28) 55%, transparent 82%);
   mask-image: linear-gradient(to bottom right, #000 0%, rgba(0, 0, 0, 0.28) 55%, transparent 82%);
-}
-
-.jersey::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(58% 46% at 78% 10%, rgba(255, 122, 26, 0.34), transparent 70%),
-    radial-gradient(66% 54% at 20% 12%, rgba(255, 255, 255, 0.09), transparent 64%);
 }
 
 /* ── Ribbon / ticker berjalan ──────────────────────────────── */
@@ -853,127 +747,6 @@ body {
   border-radius: 9999px;
   background: var(--color-gold);
   transform: rotate(45deg);
-}
-
-/* ── Ikon cabang olahraga: tiap cabor punya gerak sendiri ─────── */
-.si-roll {
-  animation: si-roll 9s linear infinite;
-  transform-origin: 50% 50%;
-}
-
-.si-bounce {
-  animation: si-bounce 1.5s cubic-bezier(0.4, 0, 0.3, 1) infinite;
-}
-
-.si-bounce-late {
-  animation-delay: -0.75s;
-}
-
-.si-float {
-  animation: si-float 3.4s ease-in-out infinite;
-}
-
-.si-swing {
-  animation: si-swing 2.6s ease-in-out infinite;
-  transform-origin: 60% 90%;
-}
-
-.si-wave {
-  animation: si-wave 2.8s ease-in-out infinite;
-}
-
-.si-run {
-  animation: si-run 1.25s ease-in-out infinite;
-}
-
-.si-punch {
-  animation: si-punch 1.15s cubic-bezier(0.4, 0, 0.3, 1) infinite;
-}
-
-.si-shine {
-  animation: si-shine 3s ease-in-out infinite;
-  transform-origin: 50% 100%;
-}
-
-@keyframes si-roll {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes si-bounce {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-7px);
-  }
-}
-
-@keyframes si-float {
-  0%,
-  100% {
-    transform: translateY(0) rotate(0deg);
-  }
-  50% {
-    transform: translateY(-8px) rotate(3deg);
-  }
-}
-
-@keyframes si-swing {
-  0%,
-  100% {
-    transform: rotate(-13deg);
-  }
-  50% {
-    transform: rotate(11deg);
-  }
-}
-
-@keyframes si-wave {
-  0%,
-  100% {
-    transform: translateX(-4px);
-  }
-  50% {
-    transform: translateX(4px);
-  }
-}
-
-@keyframes si-run {
-  0%,
-  100% {
-    transform: translateX(-5px) rotate(-2deg);
-  }
-  50% {
-    transform: translateX(5px) rotate(2deg);
-  }
-}
-
-@keyframes si-punch {
-  0%,
-  100% {
-    transform: translateX(0);
-  }
-  45% {
-    transform: translateX(-7px);
-  }
-  70% {
-    transform: translateX(2px);
-  }
-}
-
-@keyframes si-shine {
-  0%,
-  100% {
-    transform: rotate(-5deg) translateY(0);
-    opacity: 0.85;
-  }
-  50% {
-    transform: rotate(5deg) translateY(-4px);
-    opacity: 1;
-  }
 }
 
 /* ── Chapter mark: penanda awal tiap section ──────────────────── */
@@ -1030,14 +803,23 @@ body {
   opacity: 0.28;
 }
 
-/* ── Permukaan section: tiap section punya warna latar sendiri ── */
+/* ── Permukaan section ────────────────────────────────────
+   Section terang tidak lagi punya warna latarnya sendiri. Semua duduk di
+   atas satu kanvas paper sehingga batas antar section hilang dan halaman
+   mengalir dari hero sampai footer. Ritme visual dipindah ke kartu
+   (.card-soft, .bg-paper-deep) dan ke blok gelap (.surface-ink). */
 .surface-warm {
-  background: var(--color-paper-deep);
+  background: var(--color-paper);
 }
 
+/* Blok gelap dijepit pita oranye rata di kedua tepinya. Ini alat "blend":
+   bukan bayangan, bukan gradasi, tapi garis yang dimiliki dua section
+   sekaligus sehingga lompatan krem ke hitam terasa direncanakan. */
 .surface-ink {
   background: var(--color-ink);
   color: #fff;
+  border-top: 4px solid var(--color-brand);
+  border-bottom: 4px solid var(--color-brand);
 }
 
 .surface-hair {
@@ -1050,21 +832,19 @@ body {
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* ── Lencana mitra (crest) ───────────────────────────────
-   Bentuk varies per mitra, palet monokrom ink + aksen brand
-   supaya terbaca sebagai satu keluarga desain, bukan logo palsu. */
+/* ── Lencana mitra (crest) ─────────────────────────────
+   Bentuk varies per mitra, palet monokrom ink + aksen brand supaya terbaca
+   sebagai satu keluarga desain, bukan logo palsu. Kedua stop gradient
+   dibuat sama warna: secara visual ini bidang satu warna, bukan logam. */
 .crest {
   display: block;
   width: 100%;
   height: 100%;
 }
 
-.crest-stop-a {
-  stop-color: #3d2b1d;
-}
-
+.crest-stop-a,
 .crest-stop-b {
-  stop-color: #221710;
+  stop-color: #2a1d14;
 }
 
 .crest-mono {
@@ -1073,75 +853,45 @@ body {
   transition: fill 0.3s ease;
 }
 
-.group:hover .crest-stop-a {
-  stop-color: #ffa257;
-}
-
+.group:hover .crest-stop-a,
 .group:hover .crest-stop-b {
-  stop-color: var(--color-brand-dark);
+  stop-color: var(--color-brand);
 }
 
 .group:hover .crest-mono {
   fill: var(--color-ink);
 }
 
-/* ── Badge "Online": hijau live ─────────────────────────── */
+/* Badge "Online": bidang hijau solid, teks muda di atasnya (7.5:1).
+   Tidak ada blur, tidak ada glow, tidak ada ring berdenyut. */
 .live-badge {
   display: inline-flex;
   align-items: center;
   gap: 0.375rem;
-  border: 1px solid rgba(52, 211, 153, 0.55);
+  border: 1px solid #34d399;
   border-radius: 9999px;
-  /* 0.92 (bukan 0.55) supaya tulisan #6ee7b7 tetap lolos kontras AA saat
-     badge duduk di atas foto kartu yang terangnya bervariasi */
-  background: rgba(4, 47, 36, 0.92);
+  background: #042f24;
   padding: 0.2rem 0.55rem;
   font-size: 10px;
   font-weight: 800;
   letter-spacing: 0.08em;
   color: #6ee7b7;
   text-transform: uppercase;
-  backdrop-filter: blur(6px);
-  box-shadow: 0 0 0 1px rgba(52, 211, 153, 0.12), 0 6px 18px -8px rgba(16, 185, 129, 0.7);
 }
 
 .live-dot {
-  position: relative;
   display: block;
   width: 6px;
   height: 6px;
   border-radius: 9999px;
   background: #34d399;
-  box-shadow: 0 0 8px 1px rgba(52, 211, 153, 0.9);
 }
 
-.live-dot::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 9999px;
-  background: #34d399;
-  animation: live-ring 2s ease-out infinite;
-}
-
-@keyframes live-pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.55; }
-}
-
-@keyframes live-ring {
-  0% { transform: scale(1); opacity: 0.8; }
-  70% { transform: scale(3.4); opacity: 0; }
-  100% { transform: scale(3.4); opacity: 0; }
-}
-
-.live-badge:hover {
-  background: rgba(4, 47, 36, 0.98);
-  border-color: rgba(52, 211, 153, 0.85);
-}
-
-/* ── Latar sporty section Program ─────────────────────────
-   Energi di tepi, tengah tetap gelap → fokus tetap di kartu. */
+/* ── Latar sporty section Program ───────────────────────
+   Semua lapisan latar di sini kini rata dan diam: garis lapangan statis,
+   scrim foto satu warna, bola lingkaran satu warna. Beam sapuan cahaya dan
+   vignette radial dihapus karena keduanya yang membuat blok gelap terlihat
+   seperti render AI, bukan cetakan. */
 .prog-bg {
   position: absolute;
   inset: 0;
@@ -1153,96 +903,41 @@ body {
   position: absolute;
   inset: -12% -25%;
   opacity: 0.5;
-  animation: pitch-scroll 26s linear infinite;
-}
-
-.prog-bg__beam {
-  position: absolute;
-  top: -30%;
-  left: -40%;
-  width: 42%;
-  height: 160%;
-  transform: rotate(16deg);
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 122, 26, 0.14),
-    rgba(255, 195, 46, 0.07),
-    transparent
-  );
-  animation: beam-sweep 11s ease-in-out infinite;
 }
 
 .prog-bg__vignette {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(115% 85% at 50% 48%, transparent 22%, rgba(23, 17, 11, 0.82) 100%),
-    linear-gradient(to bottom, rgba(23, 17, 11, 0.55), transparent 22%, transparent 70%, rgba(23, 17, 11, 0.6));
+  background: rgb(23 17 11 / 0.72);
 }
 
 .prog-bg__ball {
   position: absolute;
   border-radius: 9999px;
-  background:
-    radial-gradient(circle at 32% 30%, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0) 42%),
-    linear-gradient(140deg, #ffb066, var(--color-brand) 45%, #b34700);
-  box-shadow: 0 10px 26px -10px rgba(255, 122, 26, 0.85);
-  animation: ball-drift 17s ease-in-out infinite;
+  background: var(--color-brand);
 }
 
 .prog-bg__ball--b {
-  background:
-    radial-gradient(circle at 32% 30%, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0) 42%),
-    linear-gradient(140deg, #ffe08a, var(--color-gold) 45%, #a97400);
-  animation-duration: 23s;
-  animation-delay: -6s;
+  background: var(--color-gold);
 }
 
 .prog-bg__ball--c {
-  background:
-    radial-gradient(circle at 32% 30%, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0) 42%),
-    linear-gradient(140deg, #f0837f, var(--color-crimson) 45%, #7d1216);
-  animation-duration: 29s;
-  animation-delay: -12s;
+  background: var(--color-crimson);
 }
 
-@keyframes pitch-scroll {
-  from { transform: translate3d(0, 0, 0); }
-  to { transform: translate3d(-6%, 2.5%, 0); }
-}
-
-@keyframes beam-sweep {
-  0% { transform: translateX(0) rotate(16deg); opacity: 0; }
-  12% { opacity: 1; }
-  88% { opacity: 1; }
-  100% { transform: translateX(320%) rotate(16deg); opacity: 0; }
-}
-
-@keyframes ball-drift {
-  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
-  33% { transform: translate3d(28px, -34px, 0) rotate(140deg); }
-  66% { transform: translate3d(-20px, 26px, 0) rotate(280deg); }
-}
-
-/* Kartu "melebur" dengan latar: tepi lebih terang + blur tipis.
-   color: var(--color-ink) wajib — kartu ini berada di section gelap
-   (.surface-ink memberi color:#fff), tanpa itu judul kartu ikut putih
-   dan tidak terbaca di atas gradient krem. */
+/* Kartu program: kertas rata di atas blok gelap. Tanpa backdrop-blur dan
+   tanpa glow oranye, hover cukup naik sedikit + garis oranye penuh. */
 .prog-card {
   color: var(--color-ink);
-  background: linear-gradient(168deg, #fffdfa 0%, #fff6ea 58%, #ffeeDC 100%);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  box-shadow: 0 26px 60px -30px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 122, 26, 0.08);
-  backdrop-filter: blur(6px);
-  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  background: var(--color-paper);
+  border: 1px solid rgba(36, 26, 18, 0.1);
+  box-shadow: 0 20px 44px -30px rgba(0, 0, 0, 0.7);
+  transition: transform 0.2s ease, border-color 0.2s ease;
 }
 
 .prog-card:hover {
   transform: translateY(-4px);
-  border-color: rgba(255, 122, 26, 0.55);
-  box-shadow: 0 30px 70px -28px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 122, 26, 0.32),
-    0 0 42px -12px rgba(255, 122, 26, 0.45);
+  border-color: var(--color-brand);
 }
 
 /* Detail halftone di sudut kanan atas kartu — makin "detail" tanpa
@@ -1256,81 +951,42 @@ body {
   width: 8rem;
   height: 8rem;
   pointer-events: none;
-  background-image: radial-gradient(rgba(255, 122, 26, 0.42) 1.1px, transparent 1.2px);
+  background-image: radial-gradient(rgb(255 106 0 / 0.45) 1.1px, transparent 1.2px);
   background-size: 6px 6px;
   -webkit-mask-image: linear-gradient(to bottom left, #000, transparent 72%);
   mask-image: linear-gradient(to bottom left, #000, transparent 72%);
 }
 
-/* ── Kartu VIP Membership ───────────────────────────────── */
+/* Kartu VIP: satu bidang gelap rata dengan garis oranye penuh. Kilap,
+   border gradien, inset highlight, dan backdrop-blur dihapus karena
+   kombinasi itulah yang membuat kartu terlihat seperti mockup render. */
 .vip-card {
   position: relative;
   overflow: hidden;
   border-radius: 1.5rem;
-  border: 1px solid rgba(255, 122, 26, 0.5);
-  background:
-    linear-gradient(158deg, rgba(255, 122, 26, 0.18), rgba(255, 122, 26, 0.05) 38%, rgba(23, 17, 11, 0.55)),
-    rgba(23, 17, 11, 0.55);
-  box-shadow:
-    0 30px 70px -30px rgba(0, 0, 0, 0.85),
-    inset 0 1px 0 rgba(255, 214, 178, 0.28);
-  backdrop-filter: blur(10px);
-}
-
-.vip-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(145deg, rgba(255, 178, 58, 0.85), rgba(255, 122, 26, 0.18) 45%, transparent 70%);
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-}
-
-.vip-card__shine {
-  position: absolute;
-  top: -60%;
-  left: -35%;
-  width: 45%;
-  height: 220%;
-  transform: rotate(18deg);
-  background: linear-gradient(90deg, transparent, rgba(255, 226, 194, 0.26), transparent);
-  animation: vip-shine 5.5s ease-in-out infinite;
-  pointer-events: none;
+  border: 1px solid var(--color-brand);
+  background: #17110b;
 }
 
 .vip-card__corner {
   position: absolute;
   width: 16px;
   height: 16px;
-  border-color: rgba(255, 122, 26, 0.8);
+  border-color: var(--color-brand);
   border-style: solid;
   pointer-events: none;
 }
 
 .vip-rule {
   height: 1px;
-  background: linear-gradient(90deg, rgba(255, 122, 26, 0.8), rgba(255, 122, 26, 0.08));
-}
-
-@keyframes vip-shine {
-  0% { transform: translateX(-40%) rotate(18deg); opacity: 0; }
-  18% { opacity: 1; }
-  55% { transform: translateX(340%) rotate(18deg); opacity: 0; }
-  100% { transform: translateX(340%) rotate(18deg); opacity: 0; }
+  background: var(--color-brand);
 }
 
 .vip-cta {
-  background: linear-gradient(100deg, #ff8f3d, var(--color-brand) 48%, var(--color-brand-dark));
-  box-shadow: 0 14px 30px -14px rgba(255, 122, 26, 0.55);
+  background: var(--color-brand);
 }
 
 .vip-cta:hover {
-  background: linear-gradient(100deg, var(--color-brand), #ff9445 48%, #d15600);
+  background: var(--color-brand-dark);
 }
 

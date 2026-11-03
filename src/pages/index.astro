@@ -28,40 +28,28 @@ const schema = [organizationSchema, faqSchema(faqs)];
 ---
 
 <Base
-  title="Prospect Asia — Jadi Atlet Modern | Sports Communication Program"
+  title="Jadi Atlet Modern | Sports Communication Program Prospect Asia"
   schema={schema}
 >
   <Header />
 
   <main>
     <section class="relative flex min-h-dvh flex-col items-center justify-center overflow-hidden px-4 pt-14 pb-24 text-center sm:px-6">
-      <div
-        class="art-blob -top-32 -right-24 h-96 w-96"
-        style="background: radial-gradient(circle, rgba(255,122,26,0.22), transparent 68%);"
-        aria-hidden="true"
-      ></div>
-      <div
-        class="art-blob top-1/3 -left-32 h-80 w-80"
-        style="background: radial-gradient(circle, rgba(255,195,46,0.28), transparent 68%); animation-delay: -8s;"
-        aria-hidden="true"
-      ></div>
       <div class="art-dots absolute inset-0 [mask-image:linear-gradient(to_bottom,transparent,black_55%,transparent)]" aria-hidden="true"></div>
       <div class="pat-halftone absolute -top-28 -left-28 h-96 w-96 opacity-55 pat-fade-tr" style="--pat-gap: 8px" aria-hidden="true"></div>
-      <div class="pat-noise absolute inset-0" aria-hidden="true"></div>
-      <div class="hero-glow absolute inset-0" aria-hidden="true"></div>
       <div class="art-pitch absolute inset-x-0 bottom-0 h-[70%] opacity-60 [mask-image:linear-gradient(to_top,black,transparent)]" aria-hidden="true"></div>
-      <div class="sport-ball sport-ball--orange -left-6 top-[38%] hidden h-12 w-12 animate-float lg:block" aria-hidden="true"></div>
-      <div class="sport-ball right-[4%] top-[22%] hidden h-8 w-8 animate-float-slow xl:block" aria-hidden="true"></div>
-      <div data-parallax="-30" class="pointer-events-none absolute top-24 left-[8%] hidden animate-float -rotate-12 rounded-2xl border-3 border-ink/10 bg-white px-4 py-2 shadow-soft sm:block" aria-hidden="true">
+      <div class="sport-ball sport-ball--orange -left-6 top-[38%] hidden h-12 w-12 lg:block" aria-hidden="true"></div>
+      <div class="sport-ball right-[4%] top-[22%] hidden h-8 w-8 xl:block" aria-hidden="true"></div>
+      <div class="pointer-events-none absolute top-24 left-[8%] hidden -rotate-12 rounded-2xl border-3 border-ink/10 bg-white px-4 py-2 shadow-soft sm:block" aria-hidden="true">
         <span class="display text-lg text-ink">SPEAK LOUD!</span>
       </div>
-      <div data-parallax="24" class="pointer-events-none absolute right-[7%] bottom-40 hidden animate-float-slow rotate-6 rounded-full border-3 border-brand/25 bg-brand-soft px-5 py-2 sm:block" aria-hidden="true">
-        <span class="text-sm font-black text-brand-dark">2.175+ atlet</span>
+      <div class="pointer-events-none absolute right-[7%] bottom-40 hidden rotate-6 rounded-full border-3 border-brand bg-brand-soft px-5 py-2 sm:block" aria-hidden="true">
+        <span class="text-sm font-black text-ink">2.175+ atlet</span>
       </div>
       <div class="pointer-events-none absolute top-1/2 left-[12%] hidden h-4 w-4 rotate-45 rounded-sm bg-crimson sm:block" aria-hidden="true"></div>
       <div class="pointer-events-none absolute right-[14%] top-56 hidden h-3 w-3 rounded-full bg-gold sm:block" aria-hidden="true"></div>
 
-      <p data-hero="badge" class="relative z-10 mb-5 inline-block rounded-full border border-brand/30 bg-brand/10 px-4 py-1.5 text-[11px] font-bold tracking-[0.2em] text-brand-dark uppercase sm:text-xs">
+      <p data-hero="badge" class="relative z-10 mb-5 inline-block rounded-full bg-brand px-4 py-1.5 text-[11px] font-bold tracking-[0.2em] text-ink uppercase sm:text-xs">
         #JadiAtletModern
       </p>
 
@@ -72,19 +60,19 @@ const schema = [organizationSchema, faqSchema(faqs)];
       </h1>
 
       <p data-hero="sub" class="relative z-10 mt-5 max-w-md text-sm leading-relaxed text-ink/70 sm:text-base">
-        Public speaking &amp; bahasa Inggris khusus atlet — biar suaramu sekuat performamu.
+        Public speaking &amp; bahasa Inggris khusus atlet, biar suaramu sekuat performamu.
         Online, fleksibel, didampingi coach berpengalaman.
       </p>
 
       <div class="relative z-10 mt-8 w-full max-w-lg sm:max-w-2xl">
         <img
           src="/media/athletes-cutout.webp"
-          alt="Delapan atlet lintas cabang berprestasi membawa piala — wajah atlet modern Prospect Asia"
+          alt="Delapan atlet lintas cabang berprestasi membawa piala sebagai wajah atlet modern Prospect Asia"
           width="910"
           height="405"
           fetchpriority="high"
           data-hero="photo"
-          class="w-full drop-shadow-[0_28px_50px_rgba(36,26,18,0.25)]"
+          class="w-full"
         />
       </div>
 
@@ -97,13 +85,13 @@ const schema = [organizationSchema, faqSchema(faqs)];
         data-source="hero"
         data-magnetic
         data-hero="cta"
-        class="btn-pop relative z-10 mt-7 inline-flex items-center gap-2 rounded-2xl bg-brand px-8 py-4 text-sm font-bold tracking-wide text-ink uppercase shadow-[0_18px_40px_-14px_rgba(255,122,26,0.65)] hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
+        class="btn-pop relative z-10 mt-7 inline-flex items-center gap-2 rounded-2xl bg-brand px-8 py-4 text-sm font-bold tracking-wide text-ink uppercase hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
       >
         Daftar Sekarang
         <span aria-hidden="true">↗</span>
       </a>
-      <p class="relative z-10 mt-3 text-xs text-ink/50">Isi formulir 30 detik · admin balas di jam kerja</p>
-      <div class="relative z-10 mt-10 flex flex-col items-center gap-1.5 text-ink/40" aria-hidden="true">
+      <p class="relative z-10 mt-3 text-xs text-ink/70">Isi formulir 30 detik · admin balas di jam kerja</p>
+      <div class="relative z-10 mt-10 flex flex-col items-center gap-1.5 text-ink/70" aria-hidden="true">
         <span class="text-[10px] font-bold tracking-[0.25em] uppercase">Scroll</span>
         <span class="scroll-hint block h-9 w-5 rounded-full border-2 border-ink/25 pt-1.5">
           <span class="block h-1.5 w-1.5 rounded-full bg-brand"></span>
@@ -140,10 +128,10 @@ const schema = [organizationSchema, faqSchema(faqs)];
 
     <div class="surface-warm">
       <section class="relative mx-auto max-w-6xl overflow-hidden px-4 py-14 sm:px-6">
-        <SportArt variant="net" stroke="#ff7a1a" opacity={0.1} class="absolute inset-0 h-full w-full [mask-image:linear-gradient(to_bottom_right,black,transparent_70%)]" />
+        <SportArt variant="net" stroke="#241a12" opacity={0.1} class="absolute inset-0 h-full w-full [mask-image:linear-gradient(to_bottom_right,black,transparent_70%)]" />
         <div class="pat-grid absolute inset-0 opacity-55 [mask-image:linear-gradient(to_top_left,transparent,black_60%)]" aria-hidden="true"></div>
-        <div class="art-ring left-6 top-14 hidden h-16 w-16 border-gold/40 sm:block" aria-hidden="true"></div>
-        <div class="art-diamond top-10 right-10 h-3 w-3 bg-crimson/50 hidden sm:block" aria-hidden="true"></div>
+        <div class="art-ring left-6 top-14 hidden h-16 w-16 border-gold sm:block" aria-hidden="true"></div>
+        <div class="art-diamond top-10 right-10 h-3 w-3 bg-crimson hidden sm:block" aria-hidden="true"></div>
 
         <Chapter num="04" label="Level & Journey" class="mb-6" />
 
@@ -156,7 +144,7 @@ const schema = [organizationSchema, faqSchema(faqs)];
               </span>
             </h2>
           </div>
-          <p class="max-w-xs pt-6 text-sm leading-relaxed text-ink/60 sm:pt-8">
+          <p class="max-w-xs pt-6 text-sm leading-relaxed text-ink/70 sm:pt-8">
             Tiga level, satu jalur: dasar, berkembang, lalu tampil di depan publik.
           </p>
         </div>
@@ -177,14 +165,13 @@ const schema = [organizationSchema, faqSchema(faqs)];
 
     <div class="surface-warm">
       <section class="relative mx-auto max-w-6xl overflow-hidden px-4 py-14 sm:px-6">
-        <div class="art-blob -top-20 right-[-6rem] h-64 w-64" style="background: radial-gradient(circle, rgba(255,195,46,0.16), transparent 68%);" aria-hidden="true"></div>
         <div class="pat-halftone absolute -bottom-24 -left-24 h-72 w-72 opacity-45 pat-fade-tr" style="--pat-gap: 8px" aria-hidden="true"></div>
 
         <Chapter num="07" label="Testimoni" class="mb-6" />
 
         <div class="mb-8">
           <h2 class="display text-5xl sm:text-6xl lg:text-7xl">
-            Kata <span class="text-brand-dark">mereka</span>
+            Kata <span class="hl-brand">mereka</span>
           </h2>
         </div>
         <Testimonials client:visible items={testimonials} />

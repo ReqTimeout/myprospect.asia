@@ -953,3 +953,69 @@ Dua kali verifier melaporkan angka palsu sebelum penyebabnya ada di sisi tes:
 - **`Δ=NaNpx`**: fungsi pengukur ditulis sebagai *template literal string* lalu dioper ke `page.evaluate`. Playwright mengevaluasi string sebagai **ekspresi**, tidak bisa menyerialisasi fungsi, dan mengembalikan `undefined` tanpa error — arithmetic di atasnya jadi `NaN`. Harus fungsi sungguhan (`(sel) => page.evaluate(…)`).
 - **`Δ=0px` palsu pada auto-play dan klik titik**: jeda 6,5 detik lebih pendek daripada `resumeAuto` 4s + interval 5s, dan klik "Slide 1" saat slide 1 memang sedang aktif. Tes dibuat deterministik: tunggu 11 detik, dan klik titik yang **bukan** sedang aktif.
 - Chrome melaporkan `translate3d` Embla sebagai **`matrix()` 2D** (tx di indeks 4), bukan selalu `matrix3d()` (indeks 12) — parser harus menangani keduanya.
+
+---
+
+## 30. "Terlihat dikembangkan AI" — favicon, tanda pisah, animasi/gradien, oranye pudar (4 Nov 2026)
+
+Permintaan klien: *"ada revisi… katanya ini terlihat di development oleh ai: 1. favicon harusnya P seperti logo, 2. `—` banyak tanda ini harusnya koma, pake skill human copywriting, 3. terlalu ramai animasi dia pengen flat dan gradient2 di buat flat, 4. warna oranye ga cerah… malah jatuhnya ke abu2, pelajari lagi."* Empat keluhan ini satu akar: efek "AI default" (ikon glossy, em dash di semua copy, gradien + blur + animasi latar, oranye dicampur alpha di atas krem).
+
+### 30.1 Peta keluhan → akar masalah
+
+| # | Keluhan | Akar teknis |
+|---|---|---|
+| 1 | Favicon bukan "P" logo | `favicon.png`/`.svg` lama berupa letterform 3D glossy bergradien — khas hasil generator, bukan logo Prospect. |
+| 2 | Terlalu banyak `—` | 30-an em dash tersebar di komponen visitor-facing, data statis, 3 MDX, **dan konten tersimpan di D1** (`posts` + `content_items`). |
+| 3 | Ramai animasi + gradien | Gradien dekoratif di ~15 titik, `backdrop-blur` di header/dock/admin, animasi latar (blob, liveRing, curtain), scrim foto bergradien. |
+| 4 | Oranye jatuh ke abu | Warna inti `#ff7a1a` terlalu lembut **dan** dipakai sebagai *alpha wash* (`bg-brand/10`, `border-gold/40`) di atas krem — hasilnya jadi warna "cangkang telur" kusam, bukan oranye. |
+
+### 30.2 Favicon: letterform P datar
+
+`public/favicon.svg` + `public/favicon.png` (180px) dibuat ulang jadi kotak oranye **solid** `#ff6a00` sudut membulat dengan huruf **miring** "P" hitam `#241a12` — mengikuti bentuk logo, tanpa gradien/shadow/gloss. `Base.astro` menambahkan `apple-touch-icon` (PNG baru) dan menghapus `favicon.svg` lama dari head.
+
+### 30.3 Copy manusiawi: `—` → koma (atau titik/restruktur)
+
+Aturan yang disepakati: **koma** sebagai default; **titik atau kalimat dirombak** kalau lebih enak dibaca. Yang dibersihkan:
+
+- Komponen + data statis (`src/components/*`, `src/data/*`) lewat menyapu skrip per-file.
+- 3 MDX di `src/content/berita/` dan `migrations/0003_seed_posts.sql` supaya basis seed ikut bersih.
+- **D1 produksi**: `0003_seed_posts.sql` memuat 21 em dash, jadi dibuat `.tmp/db-copy-fix.sql` (10 statement: 3 `UPDATE posts`, 5 `UPDATE content_items`, 2 `SELECT` pembuktian) dijalankan `wrangler d1 execute prospect-db --remote` → *Processed 10 queries, 8 rows written*, lalu `--local` untuk kecocokan.
+- Auditor `.tmp/dash-audit.mjs` mengulang **semua tabel × semua kolom** dari `D1_SCHEMA`: hasil **BERSIH**, tidak ada `—`/`–` tersisa. Di `dist/` hasil build: **0** tanda pisah terlihat.
+
+### 30.4 Flat: gradien dan animasi latar dimatikan
+
+- **Gradien dekoratif → warna solid**: token `@theme`, latar seksi, `bg-gradient-to-*` pada chip/kartu/pita, teks bergradien (`background-clip:text`) di judul single post, dan `radial-gradient` pada `body` semuanya dihapus.
+- **Scrim foto → rata-padat**: bukan gradien, tapi satu warna translucen pekat (`rgba(36,26,18,.42)` pada hero post) atau **chip solid** `bg-ink` untuk label "Live"/caption — foto tetap penuh warna (vet `bg-ink/70` selebar gambar dan efek `grayscale` di CtaBand + ProgramSection dihapus).
+- **`backdrop-filter: blur` → 0**: header, `Dock.svelte`, `.dock-in` di `src/lib/dock.ts`, `.hdr` single post, dan 3 tempat di `AdminApp.svelte` kini memakai `var(--paper)`/`bg-white` solid.
+- **Animasi latar yang berulang dimatikan**: `@keyframes` blob/`liveRing` dihapus dan `.art-blob` tidak lagi ada di `global.css` (tinggal `.art-ribbon` + `.sport-ball` sebagai bentuk statis). Yang tersisa di halaman visitor hanya **2 animasi `infinite` yang memang disengaja** (dua marquee rail `rail-slide`) — animasi entrance satu kali (`hero-*`, `curtain-out`, `rd-in`) dipertahankan karena client mengeluh *ramai*, bukan *gerak sama sekali*. Catatan penting dari §29: penyapu `pat-*` harus `pointer-events: none`, kalau tidak ia menyita gestur swipe testimoni.
+- **Latar jadi flat**: pita oranye `page-curtain` kini satu warna rata (tidur gradasi ke kuning), dan setiap section memakai warna blok solid tanpa gambar latar bergerak.
+- **Blend antar seksi tetap ada tanpa gradien**: pemisahan dilakukan lewat warna blok solid bergantian (`--paper` / `--paper-deep` / `--ink`), bukan campuran alpha atau lapisan gradien.
+- `.tmp/gold-flat.pl` menangani residu gold: `bg-gold/10 border-gold/40 text-brand-dark` → `bg-brand-soft border-brand text-ink`, `open:border-gold/40` → `open:border-brand`, `bg-crimson/10` → solid `#f9e1e2`, plus typo "wartawanan" → "wartawan".
+
+### 30.5 Oranye: satu warna, tanpa wash
+
+| Token | Lama | Baru | Alasan |
+|---|---|---|---|
+| `--color-brand` | `#ff7a1a` | **`#ff6a00`** | Saturasi 100%, lebih menyala, tetap satu familia dengan `Logo Black.png`. |
+| `--color-brand-dark` | `#d95a00` | **`#bc4c00`** | Naik ke **4.92:1** di atas `--paper` → lolos AA untuk teks kecil. |
+| `--color-brand-soft` | — | **`#ffe3c4`** | Dasar blok warna solid menggantikan `bg-brand/10`. |
+| `--color-brand-line` | — | **`#ffc49a`** | Garis tepi solid menggantikan `border-brand/30`. |
+
+Yang membuat oranye "jadi abu" adalah **campuran alpha di atas krem** (`bg-brand/10`–`/20`, `border-gold/40`, `text-brand-line` pada angka display). Semua diganti permukaan solid, dan teks yang sebelumnya `text-brand` di atas krem dipindah ke `text-ink`/`text-brand-dark` karena `#ff6a00` di atas `#fffcf7` hanya **2.81:1** — sementara `ink` di atas `brand` = **5.94:1** (dipakai di tombol).
+
+Bersamaan itu kontras yang senyap dinaikkan: `text-ink/40|45|50|55|60` → **`text-ink/70`** di 19 file visitor (≈53 penggantian, dari 2.48–4.47:1 menjadi ≈5.5–6.3:1). Angka display oranye/gold yang murni dekoratif diberi `aria-hidden="true"` dan dinaikkan ke `text-brand` supaya tak lagi dibaca screen reader sebagai teks samar.
+
+### 30.6 Verifikasi — `scripts/verify-ai.mjs` (2 viewport × 7 halaman)
+
+Desktop 1440×900 dan mobile 390×844. Verifier dipromosikan jadi permanen di `scripts/verify-ai.mjs` (cetak JSON ke stdout; arahkan ke `.tmp/ai-report.json` kalau mau disimpan). Hasil: **0 error**.
+
+- Tanda pisah: **0**. Gradien berwarna (computed): **0**. `backdrop-filter`: **0**. Animasi `infinite`: **2** di halaman visitor (keduanya `rail-slide` pada marquee logo); tiga sisanya tinggal di `AdminApp.svelte` sebagai indikator loading, bukan halaman publik.
+- Favicon terverifikasi terbaca sebagai kotak oranye solid + "P" hitam di kedua viewport.
+- `scripts/audit-palette.mjs`: semua token oranye asli — `#ff6a00`, `#bc4c00`, gold `#ffc32e`, brand-soft `#ffe3c4` — tetap **S=100%, L=50%** saat digambar (alpha penuh, tanpa wash). Catatan pembacaan laporan: auditor menyaring per-hue (12–52°, S≥70%), dan `#fff9f4` (skrim putih-krem translucen) lolos penyaring karena HSL menggelembungkan saturasi warna nyaris-putih. Baris `#fff9f4 @0.85 -> S 15%` di laporan adalah **skrim putih lembut yang memang disengaja**, bukan oranye brand yang pudar.
+- Kontras `body *`: **22** flag mentah, seluruhnya masuk tiga kerumunan yang memang diterima desainya — (a) 14× angka display `01/02/03` ber`aria-hidden` dengan `text-brand` (oranye `#ff6a00` di krem = 2.81:1, sengaja dekoratif besar, bukan teks isi), (b) 3–4× *ghost word* `aria-hidden`, (c) 4× teks terang di atas foto (kartu coach `text-white/85`). Motor kontras membaca latar dari warna saja, tidak bisa menyaring piksel foto, jadi (c) positif palsu. Tidak ada teks isi (bukan `aria-hidden`, bukan di atas foto) yang gagal AA.
+- Regresi tetap hijau: `verify-dock`, `verify-testimoni` (17 pemeriksaan), `verify-wa-green`, `verify-home` (0 error), `audit-frames` (0 overflow), `audit-modal`.
+- `npm run build`: 12 halaman, ±13 detik, tanpa peringatan.
+
+### 30.7 Jebakan yang terlewat sekali
+
+`functions/berita/[slug].ts` menyimpan **CSS inline sendiri** (bukan Tailwind), sehingga tidak tersentuh penyapuan `global.css` — di sana masih ada teks bergradien pada `h1`, `backdrop-blur` 14px pada header, dua `radial-gradient` di `body`, `@keyframes liveRing` tak berujung, dan scrim gradien di hero. Semua diratakan di jalur yang sama (`--brand` ikut disesuaikan ke `#ff6a00`). Pelajaran: setiap kali ada permukaan visual baru, cek **tiga** sumber gaya — `global.css`, kelas Tailwind komponen, dan string CSS di `functions/`.

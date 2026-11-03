@@ -37,9 +37,9 @@
     {@const cat = categoryStyle(post.kategori)}
     <a
       href={`/berita/${post.id}`}
-      class="group flex flex-col overflow-hidden rounded-3xl border border-ink/10 bg-paper-deep transition duration-200 hover:-translate-y-1 hover:border-gold/50 focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
+      class="group flex flex-col overflow-hidden rounded-3xl border border-ink/10 bg-paper-deep transition duration-200 hover:-translate-y-1 hover:border-gold focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
     >
-      <div class="relative aspect-16/10 overflow-hidden bg-gradient-to-br from-brand/25 via-brand-soft to-gold/30">
+      <div class="relative aspect-16/10 overflow-hidden bg-brand-soft">
         {#if post.cover}
           <img
             src={post.cover}
@@ -49,20 +49,19 @@
             height="400"
             class="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
           />
-          <div class="absolute inset-0 bg-gradient-to-t from-ink/45 via-transparent to-transparent"></div>
         {/if}
         <span
-          class="absolute top-3 left-3 inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[10px] font-black tracking-wider uppercase backdrop-blur"
-          style="background: rgba(255,252,247,0.92); color: {cat.text}; border-color: {cat.border};"
+          class="absolute top-3 left-3 inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[10px] font-black tracking-wider uppercase"
+          style="background: {cat.wash}; color: {cat.text}; border-color: {cat.border};"
         >
           <span class="h-1.5 w-1.5 rounded-full" style="background: {cat.dot}"></span>
           {post.kategori}
         </span>
       </div>
       <div class="flex flex-1 flex-col p-5">
-        <p class="text-[11px] text-ink/45">{fmt.format(new Date(post.pubDate))}</p>
+        <p class="text-[11px] text-ink/70">{fmt.format(new Date(post.pubDate))}</p>
         <h2 class="mt-1.5 text-base leading-snug font-bold transition group-hover:text-brand-dark">{post.title}</h2>
-        <p class="mt-2 line-clamp-2 text-[13px] text-ink/60">{post.desc}</p>
+        <p class="mt-2 line-clamp-2 text-[13px] text-ink/70">{post.desc}</p>
       </div>
     </a>
   {/each}
