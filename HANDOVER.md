@@ -1019,3 +1019,9 @@ Desktop 1440×900 dan mobile 390×844. Verifier dipromosikan jadi permanen di `s
 ### 30.7 Jebakan yang terlewat sekali
 
 `functions/berita/[slug].ts` menyimpan **CSS inline sendiri** (bukan Tailwind), sehingga tidak tersentuh penyapuan `global.css` — di sana masih ada teks bergradien pada `h1`, `backdrop-blur` 14px pada header, dua `radial-gradient` di `body`, `@keyframes liveRing` tak berujung, dan scrim gradien di hero. Semua diratakan di jalur yang sama (`--brand` ikut disesuaikan ke `#ff6a00`). Pelajaran: setiap kali ada permukaan visual baru, cek **tiga** sumber gaya — `global.css`, kelas Tailwind komponen, dan string CSS di `functions/`.
+
+### 30.8 Jebakan deploy: branch produksi = `main`, bukan `production`
+
+Deploy pertama memakai `--branch=production` dan **berhasil tanpa error**, tetapi Cloudflare mencatatnya sebagai environment **Preview** karena `production_branch` proyek adalah `main` (cek: `GET /pages/projects/myprospect` → `production_branch`). Domain `myprospect.asia` hanya menyajikan environment Production, jadi ia tetap menampilkan build lama — lengkap dengan wash `bg-brand/10`/`border-gold/40` yang sudah kita hapus. `audit-palette` terhadap domain live langsung membongkar ini (oranye masih pudar), padahal build lokal & URL preview sudah bersih.
+
+Perintah yang benar (sudah tercatat di §Depan, baris deploy): `set -a && . ./.env.cf` (token OAuth bawaan wrangler menunjuk akun lain) lalu `npx wrangler pages deploy dist --project-name myprospect --branch=main --commit-dirty=true`. Setelah benar, deployment list menunjukkan Environment **Production** / branch `main` / source `fabd3af`, dan `myprospect.asia` menjadi: 0 wash class, `bg-brand-soft` 28×, `text-ink/70` 145×, `#ff6a00 @1 → S 100%`, favicon `/favicon.svg`. **Selalu verifikasi domain live, bukan hanya URL preview**, karena preview bisa hijau sementara produksi masih basi.
