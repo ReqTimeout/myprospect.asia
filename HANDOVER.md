@@ -1748,3 +1748,28 @@ Fix: **sweep global** (27 file, kecuali admin) — semua `text-ink/NN` & `text-w
 > Pelajaran: alpha-wash teks = ciri desain AI. Print premium memakai kontras penuh; hierarki dari tipografi.
 
 Verifikasi: audit-frames 0 overflow + 0 console error (desktop + mobile), audit-clip 0 overflow/0 covered (1855 clipped false-positive).
+
+### 43.12 Aset section jadi foto asli klien (tema nyambung) + Membership jadi card putih
+
+MiniMax **limit tercapai** ("Token Plan usage limit has reached 2067") — generate baru tidak mungkin sampai klien upgrade. Solusi: pakai **foto asli klien** di `public/media/` yang temanya memang nyambung per section (lebih bagus: real photography = bukan AI):
+
+| Section | Foto |
+|---|---|
+| Hero | hero-athletes.jpg |
+| Tentang | mic-kid.jpg |
+| Program | session-elite.jpg |
+| Workshop | workshop-crowd.jpg |
+| Testimoni | interview-zone.jpg |
+| Coach | docs-1.jpg |
+| Kabar terbaru | workshop-live.jpg |
+| FAQ | session-online.jpg |
+| CTA | workshop-live-2.jpg |
+| Mitra | docs-3.jpg |
+| Detail program/workshop | session-premium / workshop-crowd |
+| Tentang & Berita hero | session-online / workshop-crowd |
+
+Opacity 0.12–0.14 + mask tetap (blend seperti §43.6).
+
+**Membership Program jadi card putih**: border ink/10 + shadow, chip COMING SOON oranye teks putih, heading tinta, CTA oranye teks putih, foto atlet berpiala (hero-athletes.jpg) di bingkai kanan dengan chip "SPORT · COMMUNICATION", dan 4 benefit jadi strip 4 kolom ber-border di bawah. Kartu gelap #121316 dihapus.
+
+Jebakan: replace blok membuat satu `</div>` orphan → build error; hitung ulang penutup div.
