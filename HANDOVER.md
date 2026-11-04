@@ -1885,3 +1885,39 @@ Fix: kartu workshop dapat **pita kepala arang** (sama dengan kelas `.ticket` di 
 ```
 
 Tambahan: chip "1 sesi · 90 menit" + chip oranye "5 benefit" lama diganti pita kepala + satu baris meta plain (lebih tenang); toggle jadi baris teks dengan garis rambut di atas (bukan kotak); CTA full-width di dasar kartu (`mt-auto pt-5`).
+
+---
+
+## 38. Mobile-first: homepage ringkas & fokus ke Program (5 Nov 2026)
+
+Permintaan: *"mobile version harus compact tapi rapih, fokus untuk user, tidak terlalu banyak scroll, dan langsung order / berhenti di Private 1-on-1 & Small Group karena section ini yang harus menjual"*.
+
+**Backup dulu** (permintaan klien): branch `backup/pre-mobile-compact` + tag `pre-mobile-compact-20261104` (commit `e1212a4`) + snapshot `~/backups/myprospect-20261104-pre-mobile.tar.gz`. Revert: `git reset --hard backup/pre-mobile-compact`.
+
+### 38.1 Yang dikerjakan (L1–L4 + L6)
+
+| # | Perubahan | Efek |
+|---|---|---|
+| L1 | Hero mobile: `min-h-[72svh]` (bukan dvh), foto atlet `max-h-28 object-contain`, sembunyikan "SCROLL", headline 8.5vw, chip lebih rapat, padding ↓ | 844 → **681px** |
+| L2 | **Program section naik ke atas**: urutan mobile = Hero → Ticker → Stats → **Program** → About → Workshop → … (About dipindah ke bawah Program) | Program di y=896 = **1,06 layar** (dari 2,2) |
+| L3 | Kartu program: ringkasan + benefit masuk `<details>` "Lihat detail program" (pola kartu workshop); harga + tombol **selalu terlihat** | kartu 404px (dari ~700) |
+| L4 | Foto About disembunyikan di mobile (sudah ada foto serupa di Coach) | About 764 → ~430px |
+| L6 | Padding section mobile `py-14` → `py-10` (desktop tetap `py-14`); galeri Workshop `aspect-16/9` di mobile | −620px |
+
+### 38.2 Angka
+
+| | Sebelum | Sesudah |
+|---|---|---|
+| Total scroll mobile | 11.340px (13,4 layar) | **10.010px (11,9 layar)** |
+| Section Program mulai | y=1.823 (2,2 layar) | **y=896 (1,06 layar)** |
+| Harga + tombol kartu pertama terlihat | – | **y=1.151 (1,36 layar)** |
+
+### 38.3 Yang MASIH perlu keputusan klien
+
+1. Kartu program/workshop mobile: **A)** tetap ditumpuk (semua harga terlihat) atau **B)** rail swipe (1 kartu, paling hemat)?
+2. Section bawah (Blog/Mitra/FAQ ≈ 1.900px): **A)** tetap terbuka atau **B)** jadi toggle tertutup?
+3. Sisa scroll 11,9 layar → target ~8 layar butuh combination di atas (B+B ≈ −3.800px).
+
+### 38.4 Verifikasi
+
+`audit-frames` 0 overflow + 0 console error (desktop + mobile) · build 12 halaman bersih · vision mobile 390×844: ticker → stats → heading "PRIVATE 1-ON-1 & SMALL GROUP" → kartu pertama (nama + harga) langsung terlihat dalam 1,4 layar ✓

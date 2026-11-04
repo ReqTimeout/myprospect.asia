@@ -4,13 +4,13 @@ import SectionImage from './SectionImage.astro';
 
 ---
 
-<section class="relative mx-auto max-w-6xl overflow-hidden px-4 py-14 sm:px-6">
+<section class="relative mx-auto max-w-6xl overflow-hidden px-4 py-10 sm:px-6 sm:py-14">
   <SectionImage src="/media/mic-kid.jpg" pos="tr" opacity={0.3} />
 
   <Chapter num="03" label="Tentang Program" class="mb-6" />
 
   <div class="grid items-center gap-8 md:grid-cols-2 md:gap-12">
-    <div class="relative order-2 md:order-1">
+    <div class="relative order-2 hidden md:block">
       <div data-reveal="fade" class="relative rotate-[-1.5deg] overflow-hidden rounded-3xl border-4 border-white bg-white shadow-[0_24px_50px_-20px_rgba(27,27,31,0.3)] transition-transform duration-500 hover:rotate-0 aspect-4/3">
         <img
           src="/media/mic-kid.jpg"

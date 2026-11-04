@@ -21,7 +21,7 @@ const gallery = [
 ];
 ---
 
-<section id="workshop" class="relative mx-auto max-w-6xl overflow-hidden scroll-mt-20 px-4 py-14 sm:px-6">
+<section id="workshop" class="relative mx-auto max-w-6xl overflow-hidden scroll-mt-20 px-4 py-10 sm:px-6 sm:py-14">
   <SectionImage src="/media/workshop-crowd.jpg" pos="tl" opacity={0.28} />
   <div class="pointer-events-none absolute right-6 top-10 hidden -rotate-6 rounded-2xl border-3 border-ink/15 bg-white px-3.5 py-1.5 shadow-soft sm:block" aria-hidden="true">
     <span class="display text-base text-brand">GO!</span>
@@ -54,7 +54,7 @@ const gallery = [
       <AutoGallery
         images={gallery}
         step={5}
-        class="aspect-4/3 w-full"
+        class="aspect-16/9 w-full sm:aspect-4/3"
         imgClass="h-full w-full object-cover"
       />
       <span class="pointer-events-none absolute top-3 left-3 inline-flex items-center gap-1.5 rounded-full bg-ink px-3 py-1.5 text-[10px] font-black tracking-widest text-white uppercase">

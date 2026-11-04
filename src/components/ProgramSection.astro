@@ -105,20 +105,29 @@ const hemat = (coret: number | undefined, harga: number) =>
               <p class="mt-1.5 text-[11px] text-ink">{p.satuan}</p>
             </div>
 
-            <p class="mt-4 text-sm leading-relaxed text-ink">{p.ringkasan}</p>
+            <!-- Ringkasan + benefit masuk toggle: harga & tombol selalu terlihat,
+                 jadi kartu tidak panjang dan pengguna bisa langsung order. -->
+            <details class="group mt-4 border-t border-ink/10 pt-3">
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-2 text-xs font-bold text-ink transition hover:text-brand">
+                Lihat detail program
+                <span class="shrink-0 transition-transform duration-200 group-open:rotate-45" aria-hidden="true">+</span>
+              </summary>
+              <div class="mt-3 border-l-2 border-brand/40 pl-3">
+                <p class="text-sm leading-relaxed text-ink">{p.ringkasan}</p>
+                <ul class="mt-3 space-y-2 text-[13px] text-ink">
+                  {p.didapat.slice(0, 5).map((d) => (
+                    <li class="flex gap-2">
+                      <span class="text-brand" aria-hidden="true">
+                        ✓
+                      </span>
+                      {d}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </details>
 
-            <ul class="mt-4 space-y-2 text-[13px] text-ink">
-              {p.didapat.slice(0, 5).map((d) => (
-                <li class="flex gap-2">
-                  <span class="text-ink" aria-hidden="true">
-                    ✓
-                  </span>
-                  {d}
-                </li>
-              ))}
-            </ul>
-
-            <div class="mt-6 flex flex-wrap items-center gap-3">
+            <div class="mt-5 flex flex-wrap items-center gap-2">
               <a
                 href={waLink({ program: p.nama, source: `card-${p.slug}` })}
                 target="_blank"
@@ -127,7 +136,7 @@ const hemat = (coret: number | undefined, harga: number) =>
                 data-register
                 data-program={p.nama}
                 data-source={`program-${p.slug}`}
-                class="inline-flex items-center justify-center gap-2 rounded-2xl bg-brand px-5 py-3.5 text-sm font-bold text-white transition hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none active:scale-95"
+                class="inline-flex flex-1 items-center justify-center gap-2 rounded-2xl bg-brand px-5 py-3.5 text-sm font-bold text-white transition hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none active:scale-95"
               >
                 Daftar Sekarang ↗
               </a>

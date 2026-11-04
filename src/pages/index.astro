@@ -33,7 +33,7 @@ const schema = [organizationSchema, faqSchema(faqs)];
   <Header />
 
   <main>
-    <section class="relative flex min-h-dvh flex-col items-center justify-center overflow-hidden px-4 pt-24 pb-24 text-center sm:px-6 sm:pt-28">
+    <section class="relative flex min-h-[72svh] flex-col items-center justify-center overflow-hidden px-4 pt-24 pb-16 text-center sm:min-h-dvh sm:px-6 sm:pt-28 sm:pb-24">
       <SectionImage src="/media/hero-athletes.jpg" pos="tr" opacity={0.3} />
       <div class="pointer-events-none absolute top-24 left-[8%] hidden -rotate-12 rounded-2xl border-3 border-ink/10 bg-white px-4 py-2 shadow-soft sm:block" aria-hidden="true">
         <span class="display text-lg text-ink">SPEAK LOUD!</span>
@@ -42,7 +42,7 @@ const schema = [organizationSchema, faqSchema(faqs)];
         <span class="text-sm font-black text-ink">2.175+ atlet</span>
       </div>
 
-      <h1 data-hero="title" class="display relative z-10 text-[9vw] leading-[0.94] sm:text-5xl md:text-6xl lg:text-7xl">
+      <h1 data-hero="title" class="display relative z-10 text-[8.5vw] leading-[0.94] sm:text-5xl md:text-6xl lg:text-7xl">
         Kini <span class="text-brand">#JadiAtletModern</span><br />
         Harus Bisa Bahasa Inggris<br />
         &amp; Public Speaking!
@@ -52,14 +52,14 @@ const schema = [organizationSchema, faqSchema(faqs)];
       <ul data-hero="sub" class="relative z-10 mt-6 flex max-w-xl flex-wrap items-center justify-center gap-2">
         {
           ['English for Athletes', 'Public Speaking for Athletes', 'Digital Literacy & Personal Branding'].map((c) => (
-            <li class="rounded-full border border-brand bg-brand-soft px-3.5 py-2 text-[11px] font-semibold text-ink sm:text-xs">
+            <li class="rounded-full border border-brand bg-brand-soft px-3 py-1.5 text-[10px] font-semibold text-ink sm:px-3.5 sm:py-2 sm:text-xs">
               {c}
             </li>
           ))
         }
       </ul>
 
-      <div class="relative z-10 mt-8 w-full max-w-lg sm:max-w-2xl">
+      <div class="relative z-10 mt-6 flex w-full max-w-lg justify-center sm:mt-8 sm:max-w-2xl">
         <img
           src="/media/athletes-cutout.webp"
           alt="Delapan atlet lintas cabang berprestasi membawa piala sebagai wajah atlet modern Prospect Asia"
@@ -67,7 +67,7 @@ const schema = [organizationSchema, faqSchema(faqs)];
           height="405"
           fetchpriority="high"
           data-hero="photo"
-          class="w-full"
+          class="max-h-28 w-auto object-contain sm:max-h-none sm:w-full"
         />
       </div>
 
@@ -80,7 +80,7 @@ const schema = [organizationSchema, faqSchema(faqs)];
         data-source="hero"
         data-magnetic
         data-hero="cta"
-        class="btn-pop relative z-10 mt-7 inline-flex items-center gap-2 rounded-2xl bg-brand px-8 py-4 text-sm font-bold tracking-wide text-white uppercase hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
+        class="btn-pop relative z-10 mt-6 inline-flex items-center gap-2 rounded-2xl bg-brand px-8 py-4 text-sm font-bold tracking-wide text-white uppercase hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
       >
         Daftar Sekarang
         <span aria-hidden="true">↗</span>
@@ -104,18 +104,20 @@ const schema = [organizationSchema, faqSchema(faqs)];
          tidak lagi butuh wrapper gelap. -->
     <StatsBar />
 
-    <AboutSection />
+    <ProgramSection />
 
     <!-- Section "Level & Journey" dihapus atas permintaan klien. -->
 
     <!-- Section Program jadi terang (bg-paper-deep di dalamnya); blok gelap
-         yang tersisa di halaman hanya scoreboard, pita CTA, dan footer. -->
-    <ProgramSection />
+         yang tersisa di halaman hanya scoreboard, pita CTA, dan footer.
+         URUTAN MOBILE-FIRST: program naik ke atas (tepat setelah stats)
+         karena ini section yang harus menjual. -->
+    <AboutSection />
 
     <WorkshopSection />
 
     <div class="surface-warm">
-      <section class="relative mx-auto max-w-6xl overflow-hidden px-4 py-14 sm:px-6">
+      <section class="relative mx-auto max-w-6xl overflow-hidden px-4 py-10 sm:px-6 sm:py-14">
 
         <SectionImage src="/media/interview-zone.jpg" pos="tr" opacity={0.28} />
         <Chapter num="07" label="Testimoni" class="mb-6" />
