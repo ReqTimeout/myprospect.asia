@@ -1,20 +1,10 @@
 ---
 import StatsList from './islands/StatsList.svelte';
-import TickerRibbon from './TickerRibbon.astro';
 
 const stats = [
   { to: 2175, suffix: '+', label: 'Atlet teredukasi' },
   { to: 25, suffix: '+', label: 'Akademi olahraga' },
   { to: 6, suffix: '', label: 'Coach berpengalaman' },
-];
-
-const ticker = [
-  '2.175+ atlet teredukasi',
-  '25 akademi mitra',
-  '6 coach berpengalaman',
-  'Public speaking khusus atlet',
-  'English for athletes',
-  'Online · jadwal fleksibel',
 ];
 ---
 
@@ -26,15 +16,7 @@ const ticker = [
     <div class="art-track absolute inset-0 opacity-80" aria-hidden="true"></div>
     <div class="absolute inset-x-0 top-0 h-px bg-brand" aria-hidden="true"></div>
 
-    <div class="relative flex flex-col gap-2 border-b border-white/12 bg-ink-2 px-3 py-2 text-white sm:flex-row sm:items-center sm:gap-3">
-      <span class="flex shrink-0 items-center gap-1.5">
-        <span class="h-2 w-2 rounded-full bg-brand"></span>
-        <span class="text-[10px] font-black tracking-[0.2em] text-white uppercase">Scoreboard</span>
-      </span>
-      <span class="hidden h-3 w-px shrink-0 bg-white/25 sm:block"></span>
-      <TickerRibbon items={ticker} speed={30} tone="none" class="sm:flex-1" />
-    </div>
-
+    <!-- Baris marquee "Scoreboard" dihapus: rangkap dengan ticker ribbon di atas hero. -->
     <div class="relative p-3 sm:p-4">
       <StatsList client:visible stats={stats} />
     </div>

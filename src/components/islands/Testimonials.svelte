@@ -129,8 +129,11 @@
                 height="800"
                 class="absolute inset-0 h-full w-full object-cover"
               />
-              <div class="absolute inset-0 bg-ink/70"></div>
-              <Quote size={26} class="absolute bottom-3 left-4 text-white/90" aria-hidden="true" />
+              <!-- Tanpa overlay gelap di foto (permintaan klien); ikon kutip duduk
+                   di chip hitam pekat supaya tetap terbaca di atas foto terang. -->
+              <span class="absolute bottom-3 left-4 flex h-9 w-9 items-center justify-center rounded-full bg-ink">
+                <Quote size={18} class="text-white/90" aria-hidden="true" />
+              </span>
               <span class="absolute top-3 right-3 rounded-full bg-brand px-2.5 py-1 text-ink text-[10px] font-bold tracking-wide uppercase">
                 Atlet Prospect Asia
               </span>

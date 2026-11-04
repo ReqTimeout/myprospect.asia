@@ -16,13 +16,10 @@ const ticker = [
 <!-- Pita CTA: hitam pekat sebagai bidang, oranye penuh pada tombol dan satu
      kata aksen. Chip cukup garis putih tanpa isi translusen. -->
 <section class="relative overflow-hidden bg-ink">
+  <!-- Permintaan klien: foto tanpa overlay gelap. Foto tampil penuh; teks putih
+       duduk di atas bidang hitam pekat (bukan scrim translusen di atas foto). -->
   <div class="absolute inset-0" aria-hidden="true">
-    <img src="/media/workshop-crowd.jpg" alt="" loading="lazy" class="h-full w-full object-cover opacity-40" />
-  </div>
-  <div
-    class="absolute inset-0 bg-ink/80"
-    aria-hidden="true"
-  >
+    <img src="/media/workshop-crowd.jpg" alt="" loading="lazy" class="h-full w-full object-cover" />
   </div>
   <SportArt variant="stadium" stroke="#ffffff" opacity={0.2} class="absolute inset-0 h-full w-full" />
   <div class="pat-grid-light absolute inset-0 opacity-70" aria-hidden="true"></div>
@@ -38,7 +35,7 @@ const ticker = [
   <div class="relative">
     <TickerRibbon items={ticker} speed={34} tone="ink" class="border-y border-white/20" />
 
-    <div class="relative mx-auto max-w-4xl px-4 py-16 text-center sm:px-6 sm:py-24">
+    <div class="relative mx-auto my-4 max-w-4xl rounded-3xl bg-ink px-6 py-16 text-center sm:my-6 sm:px-10 sm:py-24">
       <p data-reveal="fade" class="inline-block rounded-full border border-white/40 px-4 py-1.5 text-xs font-bold tracking-[0.25em] text-white uppercase">#JadiAtletModern</p>
       <h2 data-reveal class="display mt-4 text-5xl leading-[0.92] text-white sm:text-7xl lg:text-8xl">
         Berani<br />

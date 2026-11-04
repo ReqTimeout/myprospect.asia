@@ -25,7 +25,7 @@ const AREAS = [
   { name: 'partners', sel: 'ul:has(li svg.crest)' },
   { name: 'badge', sel: 'span.live-badge' },
   { name: 'vip', sel: '.vip-card' },
-  { name: 'level', sel: 'img[class*="aspect-16"]' },
+  { name: 'workshop', sel: '#workshop' },
   { name: 'program', sel: '#program' },
 ];
 

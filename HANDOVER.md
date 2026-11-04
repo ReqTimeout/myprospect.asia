@@ -1048,3 +1048,97 @@ Klien mengelak dua hal: (1) oranye **masih gelap/kurang fresh** — ternyata wor
 | Hapus svg dekoratif (net) di Level & Journey | `SportArt variant="net"` di section 04 dihapus |
 
 Verifikasi: `npm run build` 12 halaman; `verify-ai` desktop+mobile → 0 gradien, 0 blur, 0 tanda pisah, `infinite` tetap 2; 404 hanya `/api/pv` & `/api/settings` (Functions, tak ada di `astro dev`). Screenshot: "MODERN" oranye terang, Mitra jadi section terakhir sebelum footer, tanpa banner chapter.
+
+## 32. "Semua foto jangan ada overlay" + 7 anotasi browser, kerja lokal dulu (4 Nov 2026)
+
+Klien meminta **semua foto tampil tanpa overlay gelap** dan menambah 7 anotasi browser. Sesuai permintaan "bisa ga kerjain di local dulu", seluruh perubahan sesi ini **hanya diverifikasi lokal** (`astro dev` port 4321 + `npm run build`) — **belum di-commit dan belum di-deploy**.
+
+### 32.1 Overlay foto dihapus (audit menyeluruh)
+
+| Komponen | Sebelum | Sesudah |
+| --- | --- | --- |
+| `ProgramSection.astro` kartu | scrim `bg-ink/70` di atas foto tiket | scrim dihapus |
+| `ProgramSection.astro` banner Membership | scrim `bg-ink/70` | scrim dihapus; foto diturunkan ke `opacity-25` sebagai tekstur di atas bidang `#1c1208` (teks putih tetap terbaca) |
+| `CoachesSection.astro` foto mic-kid | scrim `bg-ink/70` + `SportArt net` | scrim & net dihapus; caption pindah ke plat solid `bg-ink` |
+| `islands/Testimonials.svelte` | scrim `bg-ink/70` di foto | scrim dihapus; ikon kutip pindah ke chip bulat `bg-ink` solid |
+| `CtaBand.astro` | scrim `bg-ink/80` + foto `opacity-40` | keduanya dihapus — `workshop-crowd.jpg` tampil penuh/terang; blok teks "Berani Bicara?" duduk di kartu `bg-ink` solid `rounded-3xl` (foto aslinya terang/siang, teks putih langsung di atasnya tak akan terbaca) |
+
+Yang **dipertahankan** (bukan foto, jadi bukan pelanggaran): `bg-ink/70` di blok jersey `CoachesSection` (pola CSS `.jersey` coret-oranye), chip caption `bg-ink/80` pada kartu program, dan backdrop modal `bg-ink/65` di `RegisterModal`. Audit `grep` memastikan tidak ada lagi `absolute inset-0 bg-ink/*` atau `bg-gradient` di atas `<img>` di seluruh `src/`.
+
+### 32.2 Anotasi browser (7 butir)
+
+| Anotasi | Tindakan |
+| --- | --- |
+| 3× kartu program "jangan ada overlay" | lihat 32.1 |
+| Ribbon "semua cabang olah raga dong" | `sports.ts` diperluas 8 → 23 cabor (Tenis, Tenis meja, Panahan, Taekwondo, Karate, Pencak silat, Senam, Balap sepeda, E-sports, Hoki, Sepak takraw, Panjat tebing, Judo, Angkat besi, Dayung); tipe `Sport` ikut diperluas; `SportIcon` fallback piala untuk cabor baru |
+| "marquee ini hapus, double dengan di atas" | baris marquee "Scoreboard" dihapus dari `StatsBar.astro` (+ `const ticker` + import `TickerRibbon`) |
+| "hapus section ini" (Level & Journey) | blok `surface-warm` Level & Journey dihapus dari `index.astro`; `LevelJourney.svelte` **dihapus** (tak ada pemanggil lain); import `SportArt` & `LevelJourney` dibersihkan |
+| "backgroundnya ko ga full width?" | `ProgramSection` direstruktur: section `w-full` (latar `prog-bg` full-bleed), konten dibungkus `mx-auto max-w-6xl px-4` di dalam `surface-ink` |
+
+### 32.3 Verifikasi lokal
+
+`npm run build` 12 halaman OK. HTML hasil build/dev: `Scoreboard` hanya tersisa di komentar HTML (tak tampil), 23 nama cabor muncul di ribbon, `bg-ink/70` tinggal 12× semunya pola jersey `CoachesSection`, `bg-ink/80` tinggal 3× chip caption. **Langkah berikutnya bila klien setuju: commit → L3 → deploy `--branch=main`.**
+
+---
+
+## 33. Selesaikan §32 di lokal: bug foto escape + kartu OG baru (4 Nov 2026)
+
+Sesi ini **hanya lokal** (`astro dev` :4321 + `wrangler pages dev dist` :8788). **Belum di-push dan belum di-deploy** — push ke `main` = deploy produksi, jadi harus jelas dulu ke klien.
+
+### 33.1 Bug: foto banner Membership lepas dari kotaknya
+
+Gejala: di section Program, **foto atlet besar transparan menimpa seluruh section** (kelihatan di atas teks kartu "Progress paling cepat…") dan membuat judul "PRIVATE 1-ON-1 BUAT NAIK LEVEL" terlihat pudar seperti bergradien.
+
+Penyebab: `<img class="absolute inset-0 …">` di dalam banner Membership — tapi banner itu **tidak punya `position: relative`**. Containing block-nya jadi wrapper `.relative z-10 mx-auto max-w-6xl` (seluruh section), **bukan** banner. Dan `overflow-hidden` di banner **tidak memotong** anak yang containing block-nya di luar banner (aturan CSS: clipping hanya berlaku kalau containing block berada di dalam elemen yang di-clip).
+
+Akibatnya foto (opacity-25, 1152×1203) menimpa 3 kartu program + judul.
+
+Fix: tambah `relative` pada banner → `src/components/ProgramSection.astro:152`.
+
+```html
+<!-- SEBELUM -->
+<div class="mt-6 overflow-hidden rounded-3xl bg-[#1c1208] …">
+<!-- SESUDAH -->
+<div class="relative mt-6 overflow-hidden rounded-3xl bg-[#1c1208] …">
+```
+
+**Pelajaran (penting untuk agent berikutnya):** setiap `absolute inset-0` wajib dicek apakah induknya `relative`. Kalau tidak, elemen itu keluar dari kotak yang dimaksud dan `overflow-hidden` tidak menolong. Verifikasi cepat: `.tmp/probe-escape.mjs` (semua elemen `position:absolute` yang melebar >12px di luar parent langsung) — jalankan di setiap halaman.
+
+### 33.2 Kartu OG di-regenerate ke tema terang (item §16.1)
+
+OG lama = `src/assets/generated/a2-og-bg.jpg` (MiniMax, nuansa **hitam-merah glossy**) — sama sekali tidak cocok dengan tema paper+oranye yang sekarang. Diganti.
+
+- **Latar** = MiniMax `image-01`, prompt: *"flat minimal, warm off-white cream, semua dekorasi hanya di sudut kanan bawah, garis lapangan + basket oranye, tanpa gradien/3D/teks"*. Kandidat terbaik `.tmp/og2/image_1_*.jpg`; kandidat dengan teks gibberish ("FROM FLOR") dibuang.
+- **Komposisi** = `scripts/gen-og.mjs` (baru): render HTML 1200×630 di Chromium headless, font asli situs (Anton + Plus Jakarta Sans dari `@fontsource`, di-inline sebagai data URL) + logo `public/media/logo-prospect-black.png` + judul + chip `#JADIATLETMODERN` + `myprospect.asia`, lalu screenshot → `src/assets/generated/og-cover.jpg`.
+- `Base.astro` sekarang mengimpor `og-cover.jpg` (bukan `a2-og-bg.jpg`); `a2-og-bg.jpg` **dihapus**.
+- Detail berita tetap pakai `cover` berita sebagai og:image (tidak berubah).
+
+Regenerasi ulang: `node scripts/gen-og.mjs [path-latar]`.
+
+### 33.3 Perbaikan alat uji
+
+- `scripts/verify-home.mjs` → area `level` (selector `img[class*="aspect-16"]`) sudah tidak ada karena section Level & Journey dihapus (§32.2) → diganti area `workshop` (`#workshop`). sebelumnya area itu selalu `ok:false`.
+
+### 33.4 Status verifikasi lokal (semua PASS)
+
+Dijalankan terhadap `wrangler pages dev dist --port 8788` (fungsi Pages aktif, D1 lokal ter-seed 3 berita):
+
+| Verifier | Hasil |
+|---|---|
+| `audit-frames.mjs` | desktop + mobile: `horizontalOverflow:false`, `over:[]`, `revealNotIn 0/22`, **0 console error** |
+| `audit-clip.mjs` | 10 halaman × 2 viewport → **0 overflow, 0 covered** (sisanya `clipped` false-positive dari `line-clamp` + wrapper SplitText) |
+| `verify-ai.mjs` | 7 halaman × 2 viewport → **0 gradien, 0 blur, 0 tanda pisah**, `infinite` tetap 2 (`rail-slide`), 0 error, 0 request gagal |
+| `verify-dock.mjs` | **SEMUA PASS** (termasuk single post + scroll-hide) |
+| `verify-wa-green.mjs` | **SEMUA PASS** (termasuk `hdr-wa` single post) |
+| `verify-testimoni.mjs` | **SEMUA PASS** (swipe jari Δ=±331px, autoplay, klik titik) |
+| `verify-home.mjs` | 0 console error, 0 request gagal; 18 flag kontras = 3 angka `01/02/03` ber`aria-hidden` + 15 `✓` ber`aria-hidden` (kategori yang memang diterima desain) |
+
+> Di `astro dev` (:4321) `verify-dock`/`verify-wa-green` **gagal** pada single post karena `functions/berita/[slug].ts` tidak jalan di dev — itu artefak alat uji, bukan bug. Verifikasi halaman yang dilayani Function **harus** lewat `wrangler pages dev dist`.
+
+### 33.5 Sisa pekerjaan (belum dikerjakan, butuh klien)
+
+1. **GA4 ID** — loader siap, ID belum diberikan (§15.2).
+2. **Harga Workshop Pro** — masih "Custom" (§15.4).
+3. **Logo mitra & foto coach asli** — `Website Material/Coaches Picture/` masih kosong; lencana SVG dipakai sebagai ganti (§15.8).
+4. **Copy "SPEAK LOUD!"** — masih playful; klien mungkin mau lebih formal (§16.5).
+5. Push + deploy (`--branch=main`) **setelah klien setuju**.

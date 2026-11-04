@@ -3,7 +3,7 @@ import '@fontsource-variable/plus-jakarta-sans/index.css';
 import '@fontsource/anton/index.css';
 import '../styles/global.css';
 import { getImage } from 'astro:assets';
-import ogBg from '../assets/generated/a2-og-bg.jpg';
+import ogCover from '../assets/generated/og-cover.jpg';
 import { jsonLd } from '../lib/seo';
 import RegisterModal from '../components/islands/RegisterModal.svelte';
 import { programs } from '../data/programs';
@@ -24,7 +24,7 @@ const {
   schema,
 } = Astro.props;
 
-const ogImage = await getImage({ src: ogBg, width: 1200, height: 630, format: 'jpg', fit: 'cover' });
+const ogImage = await getImage({ src: ogCover, width: 1200, height: 630, format: 'jpg', fit: 'cover' });
 const ogImageUrl = new URL(ogImage.src, Astro.site).href;
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href;
 ---

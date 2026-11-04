@@ -22,13 +22,14 @@ const hemat = (coret: number | undefined, harga: number) =>
   coret && coret > harga ? Math.round(((coret - harga) / coret) * 100) : 0;
 ---
 
-<section id="program" class="relative mx-auto max-w-6xl overflow-hidden scroll-mt-20 px-4 py-14 sm:px-6">
+<section id="program" class="relative w-full overflow-hidden scroll-mt-20 py-14">
   <div class="art-ring right-4 top-8 hidden h-20 w-20 border-crimson/20 sm:block" aria-hidden="true"></div>
   <div class="art-balls-orange absolute -top-6 right-0 h-40 w-40 opacity-60 [mask-image:linear-gradient(to_bottom_left,black,transparent)]" aria-hidden="true"></div>
   <div class="sport-ball sport-ball--orange left-[46%] top-24 hidden h-9 w-9 -rotate-12 lg:block" aria-hidden="true"></div>
   <p class="ghost-word ghost-word--light bottom-2 right-0 hidden text-[5rem] lg:block" aria-hidden="true">1-on-1</p>
   <ProgramBackdrop />
-  <div class="mb-8 relative z-10 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+  <div class="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
+  <div class="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
     <div>
       <Chapter num="05" label="Program Unggulan" tone="light" class="mb-6" />
       <h2 class="display text-5xl leading-[0.9] sm:text-6xl lg:text-7xl text-white">
@@ -41,7 +42,7 @@ const hemat = (coret: number | undefined, harga: number) =>
     </p>
   </div>
 
-  <div class="relative z-10 grid gap-5 md:grid-cols-3" data-reveal-group>
+  <div class="grid gap-5 md:grid-cols-3" data-reveal-group>
     {
       programs.map((p, i) => (
         <article
@@ -61,7 +62,6 @@ const hemat = (coret: number | undefined, harga: number) =>
               height="768"
               class="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
             />
-            <div class="absolute inset-0 bg-ink/70"></div>
             {p.badge && (
               <p
                 class:list={[
@@ -149,14 +149,13 @@ const hemat = (coret: number | undefined, harga: number) =>
     }
   </div>
 
-  <div class="relative z-10 mt-6 overflow-hidden rounded-3xl bg-[#1c1208] shadow-[0_28px_60px_-24px_rgba(0,0,0,0.6)] ring-1 ring-white/12">
+  <div class="relative mt-6 overflow-hidden rounded-3xl bg-[#1c1208] shadow-[0_28px_60px_-24px_rgba(0,0,0,0.6)] ring-1 ring-white/12">
     <img
       src="/media/program-elite.jpg"
       alt=""
       loading="lazy"
-      class=" absolute inset-0 h-full w-full object-cover opacity-90"
+      class="absolute inset-0 h-full w-full object-cover opacity-25"
     />
-    <div class="absolute inset-0 bg-ink/70" aria-hidden="true"></div>
     <SportArt variant="stadium" stroke="#ffffff" opacity={0.18} class="absolute inset-0 h-full w-full" />
     <div class="relative grid gap-6 p-6 sm:p-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
       <div>
@@ -211,5 +210,6 @@ const hemat = (coret: number | undefined, harga: number) =>
         </div>
       </div>
     </div>
+  </div>
   </div>
 </section>
