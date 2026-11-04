@@ -8,16 +8,38 @@ const stats = [
 ];
 ---
 
-<!-- Scoreboard: hitam sebagai bidang, oranye hanya sebagai detail/aksen. -->
+<!-- Scoreboard versi terang: papan putih, panel dipisah garis rambut, angka
+     oranye tabular + strip oranye tipis di kepala. "Kesan scoreboard" berasal
+     dari STRUKTUR (panel, garis, angka tabular, label kecil), bukan dari
+     foto gelap — sehingga tidak ada lagi bidang hitam yang terlihat berat. -->
 <section class="relative mx-auto max-w-6xl px-4 py-10 sm:px-6" aria-label="Stats Prospect Asia">
-  <div class="relative overflow-hidden rounded-3xl bg-ink-2 shadow-[0_24px_50px_-24px_rgba(27,27,31,0.55)] ring-1 ring-brand">
-    <div class="pat-grid-light absolute inset-0 opacity-80" aria-hidden="true"></div>
-    <div class="pat-halftone absolute -top-24 -right-16 h-80 w-80 opacity-70 pat-fade-tr" style="--pat-gap: 9px" aria-hidden="true"></div>
-    <div class="art-track absolute inset-0 opacity-80" aria-hidden="true"></div>
-    <div class="absolute inset-x-0 top-0 h-px bg-brand" aria-hidden="true"></div>
+  <div
+    class="relative overflow-hidden rounded-3xl bg-paper ring-1 ring-ink/10 shadow-[0_18px_44px_-32px_rgba(27,27,31,0.45)]"
+  >
+    <!-- Latar teknis: grid blueprint + garis lapangan, digambar tinta netral
+         dengan opacity sangat tipis supaya tetap putih & bersih. -->
+    <div class="pat-grid absolute inset-0 opacity-60" style="--pat-gap: 24px" aria-hidden="true"></div>
+    <div
+      class="art-pitch absolute inset-0 opacity-45 [mask-image:linear-gradient(to_top,black,transparent_72%)]"
+      aria-hidden="true"
+    >
+    </div>
+    <div
+      class="pat-halftone absolute -bottom-20 -left-16 h-72 w-72 opacity-55 pat-fade-tr"
+      aria-hidden="true"
+    >
+    </div>
 
-    <!-- Baris marquee "Scoreboard" dihapus: rangkap dengan ticker ribbon di atas hero. -->
-    <div class="relative p-3 sm:p-4">
+    <!-- Kepala papan: strip oranye tipis + identitas, seperti header scoreboard. -->
+    <div class="relative flex items-center justify-between gap-3 border-b border-ink/10 px-4 py-2.5 sm:px-6">
+      <span class="flex items-center gap-2">
+        <span class="h-2 w-2 rounded-full bg-brand" aria-hidden="true"></span>
+        <span class="text-[10px] font-black tracking-[0.22em] text-ink/70 uppercase">Prospect Asia · Sports Communication</span>
+      </span>
+      <span class="hidden text-[10px] font-bold tracking-[0.2em] text-brand-text uppercase sm:inline">Angka program</span>
+    </div>
+
+    <div class="relative px-3 py-4 sm:px-5 sm:py-6">
       <StatsList client:visible stats={stats} />
     </div>
   </div>

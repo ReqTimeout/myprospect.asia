@@ -1278,3 +1278,40 @@ Probe opacity 18 detik (`performance.now()`), galeri 3 foto step 5s:
 Siklus 15s (3 foto × 5s) + zoom kontinu; foto berganti benar, tidak pernah frame kosong (screenshot 3 momen: `workshop-live` → `workshop-live-2` → `workshop-crowd`).
 
 Lainnya: `audit-frames` 0 overflow + 0 console error · `audit-clip` **0 overflow / 0 covered** · `verify-ai` 0 gradien/blur/pisah, 0 error, 0 request gagal (animasi `infinite` sekarang: `gallery-fade`, `ken-burns`, `rail-slide`) · `verify-dock` / `verify-wa-green` / `verify-testimoni` **SEMUA PASS**.
+
+---
+
+## 36. Scoreboard jadi panel terang (4 Nov 2026)
+
+Klien (paste HTML blok stats): *"ini tolong kamu pikirkan pake image background apa yang seperti scoreboard jangan kelihatan gelap jelek dan tetap profesional"*.
+
+### 36.1 Keputusan: bukan foto, tapi struktur
+
+Pertanyaan "pakai image background apa" dijawab **tanpa foto**: kalau foto stadion dipakai sebagai latar, teks di atasnya pasti perlu scrim → hasilnya justru kembali ke "gelap & jelek" (persis keluhan §32). Yang bikin terasa scoreboard itu **strukturnya**, bukan fotonya:
+
+| Elemen | Peran |
+|---|---|
+| Panel putih + garis rambut (`ring-ink/10`) | bidang "papan" |
+| `pat-grid` (grid blueprint, tinta netral, opacity 60) + `art-pitch` | tekstur teknis, tetap putih |
+| `pat-halftone` di sudut kiri bawah | detail halftone oranye |
+| Kepala papan: titik oranye + `PROSPECT ASIA · SPORTS COMMUNICATION` + `ANGKA PROGRAM` | header scoreboard |
+| 3 panel dipisah `divide-x divide-ink/10` | kolom papan |
+| Angka `score-digits` (tabular) + strip oranye `w-9` di bawahnya + label kecil tracked | sel papan |
+
+Foto **tidak** dipakai. Alasannya: foto + teks = butuh scrim = gelap. Client sendiri sudah menolak "foto dengan overlay" di §32.
+
+### 36.2 Perubahan
+
+- `src/components/StatsBar.astro` → tulis ulang: `bg-paper` + `ring-ink/10` + grid/pitch/halftone terang + kepala papan. `bg-ink-2`, `pat-grid-light`, `art-track`, dan garis oranye atas dihapus.
+- `src/components/islands/StatsList.svelte` → tile gelap (`bg-ink`) diganti panel terang: `grid divide-x divide-ink/10`, angka `text-brand-dark` (3.41:1, lolos AA untuk teks besar), strip oranye `h-1 w-9`, label `text-ink/60` tracked.
+- `src/pages/index.astro` → wrapper `<div class="surface-ink">` di scoreboard **dihapus** (blok gelap terakhir di section atas halaman).
+
+### 36.3 Jebakan mobile: label jadi yatim
+
+"COACH BERPENGALAMAN" pecah jadi `BERPENGALAMA` + `N` (huruf terakhir sendirian) karena `break-words` memotong di tengah kata. Fix: tracking label dikecilkan di mobile (`tracking-[0.05em]`, desktop tetap `0.18em`) → diukur: tinggi label 1 baris (11px) untuk "Atlet teredukasi", 2 baris (23px) untuk dua label panjang, **tanpa huruf yatim**.
+
+### 36.4 Verifikasi lokal
+
+`audit-frames` 0 overflow + 0 console error · `audit-clip` **0 overflow / 0 covered** · `verify-ai` 0 gradien/blur/pisah, 0 error, 0 request gagal, angka scoreboard **tidak** masuk daftar flag kontras (3.41:1 ≥ 3:1 untuk teks besar) · pw-vision 22/22, 0 overflow, 0 small target · vision desktop 1440×900 + mobile 390×844.
+
+> Pita ticker di atas scoreboard **tetap gelap** (strip tipis 36px) — ritme kontras yang disengaja. Kalau klien mau 100% putih,只需 ganti `tone="ink"` → `tone="brand"` di `index.astro` (1 baris).
