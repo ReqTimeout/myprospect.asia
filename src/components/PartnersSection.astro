@@ -1,6 +1,7 @@
 ---
 import Chapter from './Chapter.astro';
 import PartnerLogo from './PartnerLogo.astro';
+import SectionImage from './SectionImage.astro';
 import { partners } from '../data/partners';
 
 // Jumlah kolom per kelompok dipilih supaya baris terisi penuh di HP:
@@ -12,8 +13,7 @@ const grup = [
 ---
 
 <section class="relative mx-auto max-w-6xl overflow-hidden px-4 py-14 sm:px-6">
-  <div class="art-track absolute inset-x-0 bottom-0 h-24 opacity-40 [mask-image:linear-gradient(to_top,black,transparent)]" aria-hidden="true"></div>
-
+  <SectionImage src="/media/docs-4.jpg" pos="tl" opacity={0.05} />
   <div class="relative">
     <Chapter num="02" label="Mitra & Akademi" />
 

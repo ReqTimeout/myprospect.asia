@@ -1,8 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import { waLink } from '../lib/wa';
-import SportArt from './SportArt.astro';
-import Chapter from './Chapter.astro';
+import SectionImage from './SectionImage.astro';import Chapter from './Chapter.astro';
 
 const posts = (await getCollection('berita', (p) => p.data.status === 'published'))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
@@ -14,8 +13,7 @@ const doubled = posts.length ? [...posts, ...posts] : [];
 ---
 
 <section class="relative mx-auto max-w-6xl overflow-hidden px-4 py-14 sm:px-6">
-  <SportArt variant="net" stroke="#1b1b1f" opacity={0.08} class="absolute inset-0 h-full w-full [mask-image:linear-gradient(to_top_right,black,transparent_65%)]" />
-  <div class="mb-8 flex items-end justify-between gap-4">
+  <SectionImage src="/media/docs-7.jpg" pos="bl" opacity={0.06} />  <div class="mb-8 flex items-end justify-between gap-4">
     <div>
       <Chapter num="09" label="Berita" class="mb-6" />
       <h2 class="display text-5xl leading-[0.9] sm:text-6xl lg:text-7xl">Kabar terbaru</h2>

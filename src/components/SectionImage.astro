@@ -1,0 +1,38 @@
+---
+/**
+ * Latar foto tipis yang MELEBUR ke warna section.
+ *
+ * Menggantikan art CSS (titik/garis/bola) yang dikeluhkan klien sebagai ramai:
+ * foto asli dipasang full-bleed dengan opacity sangat rendah + mask radial,
+ * jadi dia muncul di satu sisi lalu hilang ke warna latar — "blend", bukan
+ * foto yang dipudarkan di belakang teks (itu yang pernah dikeluhkan).
+ *
+ * Posisi kemunculan diatur lewat `pos` (di mana foto terlihat), supaya
+ * tidak pernah bertabrakan dengan teks utama section.
+ */
+interface Props {
+  src: string;
+  pos?: 'b' | 'bl' | 'br' | 'tr' | 'tl';
+  opacity?: number;
+}
+
+const { src, pos = 'b', opacity = 0.08 } = Astro.props;
+
+const MASK: Record<string, string> = {
+  b: 'linear-gradient(to top, black 12%, transparent 78%)',
+  bl: 'radial-gradient(75% 75% at 6% 94%, black 12%, transparent 78%)',
+  br: 'radial-gradient(75% 75% at 94% 94%, black 12%, transparent 78%)',
+  tr: 'radial-gradient(75% 75% at 94% 6%, black 12%, transparent 78%)',
+  tl: 'radial-gradient(75% 75% at 6% 6%, black 12%, transparent 78%)',
+};
+---
+
+<img
+  src={src}
+  alt=""
+  aria-hidden="true"
+  loading="lazy"
+  decoding="async"
+  class="sec-img"
+  style={`--sec-img-o:${opacity}; mask-image:${MASK[pos]}; -webkit-mask-image:${MASK[pos]};`}
+/>

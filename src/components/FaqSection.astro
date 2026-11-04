@@ -2,12 +2,12 @@
 import { faqs } from '../data/faq';
 import FaqAccordion from './islands/FaqAccordion.svelte';
 import Chapter from './Chapter.astro';
+import SectionImage from './SectionImage.astro';
 import { waLink } from '../lib/wa';
 ---
 
 <section class="relative mx-auto max-w-6xl overflow-hidden px-4 py-14 sm:px-6">
-  <div class="art-balls absolute inset-0 opacity-50 [mask-image:linear-gradient(to_left,black,transparent_55%)]" aria-hidden="true"></div>
-
+  <SectionImage src="/media/session-online.jpg" pos="tr" opacity={0.06} />
   <div class="relative grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-14">
     <div class="relative lg:sticky lg:top-24">
       <Chapter num="10" label="FAQ" class="mb-6" />

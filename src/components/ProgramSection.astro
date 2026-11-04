@@ -1,8 +1,7 @@
 ---
 import { waLink } from '../lib/wa';
 import { programs, formatIdr } from '../data/programs';
-import SportArt from './SportArt.astro';
-import ProgramBackdrop from './ProgramBackdrop.astro';
+import SectionImage from './SectionImage.astro';
 import Chapter from './Chapter.astro';
 
 const programPhoto: Record<string, string> = {
@@ -23,7 +22,7 @@ const hemat = (coret: number | undefined, harga: number) =>
 ---
 
 <section id="program" class="relative w-full overflow-hidden scroll-mt-20 bg-paper-deep py-14">
-  <ProgramBackdrop />
+  <SectionImage src="/media/session-smallgroup.jpg" pos="br" opacity={0.07} />
   <div class="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
   <div class="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
     <div>
@@ -146,8 +145,7 @@ const hemat = (coret: number | undefined, harga: number) =>
   </div>
 
   <div class="relative mt-6 overflow-hidden rounded-3xl bg-[#121316] shadow-[0_28px_60px_-24px_rgba(0,0,0,0.45)] ring-1 ring-white/12">
-    <!-- Foto tekstur dihapus (klien: ga suka background gambar) -> kartu gelap rata. -->
-    <SportArt variant="stadium" stroke="#ffffff" opacity={0.18} class="absolute inset-0 h-full w-full" />
+    <SectionImage src="/media/session-premium.jpg" pos="tr" opacity={0.1} />
     <div class="relative grid gap-6 p-6 sm:p-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
       <div>
         <span class="inline-flex items-center gap-2 rounded-full bg-brand px-3 py-1 text-[10px] font-black tracking-widest text-ink uppercase">

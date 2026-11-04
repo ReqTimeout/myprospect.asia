@@ -6,6 +6,7 @@ import Dock from '../../components/islands/Dock.svelte';
 import Footer from '../../components/Footer.astro';
 import BeritaList from '../../components/islands/BeritaList.svelte';
 import { waLink } from '../../lib/wa';
+import SectionImage from '../../components/SectionImage.astro';
 
 const posts = (await getCollection('berita', (p) => p.data.status === 'published')).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
@@ -19,7 +20,7 @@ const kategori = ['Berita', 'Bintang', 'Kolaborasi'] as const;
 
   <main class="pt-14">
     <section class="relative overflow-hidden border-b border-ink/10">
-      <!-- Foto latar dihapus (klien: ga suka background gambar). -->
+      <SectionImage src="/media/workshop-crowd.jpg" pos="tr" opacity={0.07} />
       <div class="art-ring bottom-10 left-[6%] hidden h-12 w-12 border-crimson/25 sm:block" aria-hidden="true"></div>
       <div class="art-court absolute inset-0 opacity-40 [mask-image:linear-gradient(to_bottom,black,transparent_60%)]" aria-hidden="true"></div>
 

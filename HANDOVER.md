@@ -1565,3 +1565,54 @@ Copy klien (hero, chips, "Kenapa Sports Communication Penting?") **tidak disentu
 ### 41.4 Verifikasi lokal (semua PASS)
 
 `audit-frames` 0 overflow + 0 console error · `audit-clip` **0 overflow / 0 covered** · `verify-ai` 23 flag = 15 dekoratif + 8 (2 heading display besar × 4 halaman) · `verify-dock` / `verify-wa-green` / `verify-testimoni` / `verify-admin-ui` **SEMUA PASS** · pw-vision 22/22, 0 overflow, 0 small target · vision desktop + mobile.
+
+---
+
+## 42. Art CSS diganti foto tipis yang melebur + jarak hero (4 Nov 2026)
+
+Permintaan klien: *"art di background di setiap section bisa ga di ganti image background sedikit tapi blend dengan section dan di hero text mepet dengan header menu, verif visual di mobile pastikan rapih"*.
+
+### 42.1 Komponen `SectionImage.astro` (baru)
+
+Menggantikan sisa art CSS dengan **foto asli klien** yang dipasang full-bleed:
+
+- **opacity sangat rendah** (5–9%, default 8%) via `--sec-img-o`
+- **mask** dari preset `pos`: `b` (bawah, linear) / `bl|br|tr|tl` (radial 75% di sudut tsb)
+- jadi foto muncul di satu sisi lalu **hilang ke warna latar** — "blend", bukan foto yang dipudarkan di belakang teks (itu beda, dan sudah dihapus di §41)
+
+CSS: `.sec-img` di `global.css` (absolute inset-0, object-cover, pointer-events-none).
+Konten section harus `relative` supaya berada di atas foto (elemen absolute menggambar di atas konten statis).
+
+### 42.2 Pemetaan section → foto
+
+| Section | Foto | pos | op |
+|---|---|---|---|
+| Hero | docs-6.jpg | tr | .07 |
+| Tentang (home) | docs-2.jpg | tr | .07 |
+| Program (krem) | session-smallgroup.jpg | br | .07 |
+| Workshop | workshop-live-2.jpg | bl | .07 |
+| Testimoni | docs-5.jpg | br | .06 |
+| Coach | interview-zone.jpg | tr | .06 |
+| Kabar terbaru | docs-7.jpg | bl | .06 |
+| FAQ | session-online.jpg | tr | .06 |
+| CTA (krem) | workshop-crowd.jpg | bl | .09 |
+| Mitra | docs-4.jpg | tl | .05 |
+| Hero detail program / workshop | heroFoto masing-masing | tr | .09 |
+| Hero tentang / daftar berita | session-online / workshop-crowd | br / tr | .07 |
+| Kartu Membership (gelap) | session-premium.jpg | tr | .10 |
+
+Art CSS yang tersisa dari §38 kini **nol**: ghost-word "Speak"/"Coach", SportArt stadium/net, art-balls, art-track, pat-halftone, ProgramBackdrop — semuanya diganti foto tipis. `SportArt.astro` dan `ProgramBackdrop.astro` tidak lagi dipakai di mana pun (file boleh dihapus nanti).
+
+### 42.3 Hero: teks tidak lagi mepet dengan header
+
+Hero `pt-14` (56px — persis tinggi header) → **`pt-24 pb-24 sm:pt-28`**. Karena `min-h-dvh` + `justify-center`, konten yang tingginya melebihi viewport tidak pernah terpotong, tapi `pt` lama membuat headline menempel di bawah header (jarak ~0px). Sekarang jarak desktop ±55px, mobile ±40px.
+
+### 42.4 Jebakan saat pemasangan
+
+1. **Import hilang saat mengganti import lama**: mengganti baris `import ProgramBackdrop` dengan `import SectionImage` membuat `SportArt` (yang masih dipakai di banner Membership) jadi tidak terdefinisi → build error "SectionImage/SportArt is not defined" di 3 halaman. Pelajaran: selalu `rg` pemakaian komponen sebelum mengganti importnya.
+2. **Replace multi-baris vs satu baris**: `ringkasan:` di workshops.ts ada yang multi-baris, ada yang satu baris → replace dengan string ber-indent tertentu gagal diam-diam. Solusi: assert + cek `rg` setelah replace.
+3. Mask di inline `style` aman (bukan background-image), jadi tidak menambah flag gradien di `verify-ai`.
+
+### 42.5 Verifikasi lokal (semua PASS)
+
+`audit-frames` 0 overflow + 0 console error (desktop + mobile) · `audit-clip` **0 overflow / 0 covered** · `verify-ai` 20 flag = 12 dekoratif + 8 (2 heading display besar × 4 halaman yang memakai CtaBand) · `verify-home` 0 error · `verify-dock` / `verify-wa-green` / `verify-testimoni` / `verify-admin-ui` **SEMUA PASS** · pw-vision 22/22, 0 overflow, 0 small target · **vision mobile 390×844 frame-by-frame** (hero, scoreboard, tentang, program, workshop, testimoni, CTA, mitra) + desktop.

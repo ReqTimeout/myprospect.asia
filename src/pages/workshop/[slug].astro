@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import SectionImage from '../../components/SectionImage.astro';
 import Header from '../../components/Header.astro';
 import Dock from '../../components/islands/Dock.svelte';
 import Footer from '../../components/Footer.astro';
@@ -37,7 +38,7 @@ const schema = courseSchema({
 
   <main class="pt-14">
     <section class="relative overflow-hidden border-b border-ink/10">
-      <!-- Foto latar dihapus, sama seperti detail program. -->
+      <SectionImage src={hero} pos="tr" opacity={0.09} />
       <div class="art-ring right-10 top-24 hidden h-14 w-14 border-crimson/20 sm:block" aria-hidden="true"></div>
       <div class="art-track absolute inset-x-0 bottom-0 h-48 opacity-50" aria-hidden="true"></div>
       <div class="art-diamond right-24 top-40 h-2.5 w-2.5 bg-crimson/50 hidden sm:block" aria-hidden="true"></div>

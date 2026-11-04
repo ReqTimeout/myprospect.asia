@@ -50,7 +50,7 @@ export const workshops: Workshop[] = [
     nama: 'Workshop Pro',
     durasi: 'Custom',
     harga: 0,
-    ringkasan: 'Program kolaborasi jangka panjang untuk akademi yang ingin pembinaan komunikasi berkelanjutan.',
+    ringkasan: 'Kerja sama jangka panjang buat akademi yang mau membina kemampuan komunikasi atletnya terus-menerus.',
     didapat: [
       'Kurikulum custom sesuai kebutuhan akademi',
       'Sesi berkala & progress report',

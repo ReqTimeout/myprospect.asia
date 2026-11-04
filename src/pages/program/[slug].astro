@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import SectionImage from '../../components/SectionImage.astro';
 import Header from '../../components/Header.astro';
 import Dock from '../../components/islands/Dock.svelte';
 import Footer from '../../components/Footer.astro';
@@ -39,8 +40,7 @@ const schema = courseSchema({
 
   <main class="pt-14">
     <section class="relative overflow-hidden border-b border-ink/10">
-      <!-- Foto sebagai latar dihapus (klien: "ga suka background pake gambar2").
-           Hero jadi bidang rata; foto asli tetap dipakai di dalam konten. -->
+      <SectionImage src={heroFoto} pos="tr" opacity={0.09} />
       <div class="art-ring right-10 top-24 hidden h-14 w-14 border-crimson/20 sm:block" aria-hidden="true"></div>
       <div class="art-pitch absolute inset-0 opacity-40 [mask-image:linear-gradient(to_bottom,black,transparent_65%)]" aria-hidden="true"></div>
       <div class="art-diamond right-24 top-40 h-2.5 w-2.5 bg-crimson/50 hidden sm:block" aria-hidden="true"></div>
