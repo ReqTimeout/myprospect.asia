@@ -1448,7 +1448,7 @@ Sisa 8 mitra tetap pakai **lencana SVG** (satu keluarga desain, bukan logo palsu
 
 ### 39.2 Bug: mekanisme drop-in tidak pernah jalan
 
-`PartnerLogo.astro` mencari file logo dengan `new URL('../public/…', import.meta.url)` — jalur relatif dari `src/components/`指向 `src/public/` (hanya **satu** tingkat ke atas, seharusnya **dua**). Akibatnya `existsSync()` selalu false, jadi **tidak ada** logo asli yang pernah terdeteksi sejak mekanismenya dibuat (§20.1).
+`PartnerLogo.astro` mencari file logo dengan `new URL('../public/…', import.meta.url)` — jalur relatif dari `src/components/` menunjuk `src/public/` (hanya **satu** tingkat ke atas, seharusnya **dua**). Akibatnya `existsSync()` selalu false, jadi **tidak ada** logo asli yang pernah terdeteksi sejak mekanismenya dibuat (§20.1).
 
 Perbaikan: pakai `path.join(process.cwd(), 'public', 'media', 'partners', …)`. Alasannya `import.meta.url` saat build Vite menunjuk URL modul di graf Vite, bukan file sumber — jadi even dengan `../../` pun tetap bisa salah.
 
