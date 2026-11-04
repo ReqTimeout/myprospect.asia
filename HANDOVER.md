@@ -1801,3 +1801,12 @@ Klien: *"maksud sy ini kamu imagenya generate yang bener paham ga? kok setiap se
 `SectionImage.astro` sekarang punya prop `blend` (default `multiply`) + `.sec-img` default `mix-blend-mode: multiply`. Dipakai di 14 section dengan foto asli klien (hero-athletes, mic-kid, session-elite, workshop-crowd, interview-zone, docs-1, workshop-live, session-online, workshop-live-2, docs-3, session-premium).
 
 **MiniMax masih terkunci** ("2067 Token Plan usage limit has been reached") — generate baru butuh upgrade plan. Setelah kuota tersedia, tinggal ganti `src` dengan aset bertema sport per section (piala / mic / laptop / interview) tanpa mengubah teknik blend-nya.
+
+### 43.16 Membership: art "membership pass" oranye, tanpa foto, tanpa "early access"
+
+Permintaan klien: ganti foto atlet dengan *card premium*, buang "early access", dan buat art yang bagus di desktop & mobile.
+
+- Foto `hero-athletes.jpg` **dihapus** dari kartu Membership.
+- Diganti **art "membership pass"**: bidang oranye (`bg-brand`) + `pat-grid` tinta 45% + `art-pitch` 30%, isi: label "PROSPECT ASIA" (ink), angka "04" Anton besar (ink), label "MEMBERSHIP PASS" (ink). Flat, tanpa foto, tanpa efek AI.
+- Copy: "Daftar **early access**…" → "Daftar **duluan**…"; label program di link WA `Membership (early access)` → `Membership Program`; tombol → "Daftar Duluan ↗".
+- Struktur kartu: grid 2 kolom (kiri chip+heading+deskripsi+CTA, kanan art pass) + strip 4 benefit di bawah.
