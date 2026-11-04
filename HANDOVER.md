@@ -1810,3 +1810,14 @@ Permintaan klien: ganti foto atlet dengan *card premium*, buang "early access", 
 - Diganti **art "membership pass"**: bidang oranye (`bg-brand`) + `pat-grid` tinta 45% + `art-pitch` 30%, isi: label "PROSPECT ASIA" (ink), angka "04" Anton besar (ink), label "MEMBERSHIP PASS" (ink). Flat, tanpa foto, tanpa efek AI.
 - Copy: "Daftar **early access**…" → "Daftar **duluan**…"; label program di link WA `Membership (early access)` → `Membership Program`; tombol → "Daftar Duluan ↗".
 - Struktur kartu: grid 2 kolom (kiri chip+heading+deskripsi+CTA, kanan art pass) + strip 4 benefit di bawah.
+
+### 43.17 Kartu foto Coach disembunyikan di mobile + dock jadi melayang premium
+
+Permintaan klien: img `mic-kid.jpg` (alt "Atlet muda siap berbicara di depan mikrofon") **hide di mobile**; dock mobile "sebelumnya sedikit transparant tapi tetap jelas… feel premium".
+
+- Foto tersebut ada di **kartu Coach** (`CoachesSection.astro`, `<aside>` 300px di samping rail), bukan di About — penargetan mengikuti alt text yang klien kutip.
+- `<aside>` → `hidden lg:block` → di mobile rail coach saja (foto tidak lagi menduplikasi foto About).
+- Dock mobile: `bg-paper` (solid) → **`bg-paper/90` + `backdrop-blur-md backdrop-saturate-150`** + bayangan lebih lembut → terasa melayang & premium, teks tetap jelas. `src/lib/dock.ts` (`DOCK_CSS`, dipakai template single post) disamakan: `rgba(255,255,255,.9)` + `blur(12px) saturate(150%)`.
+- Catatan: `backdrop-filter` dipakai lagi — ini **permintaan klien**, bukan gaya "flat" §30.4.
+
+Terukur: dock mobile `background: oklab(... / 0.9)` + `backdrop-filter: blur(12px) saturate(1.5)`; aside coach `display: none` di 390px.
