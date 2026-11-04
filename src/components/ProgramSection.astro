@@ -73,7 +73,7 @@ const hemat = (coret: number | undefined, harga: number) =>
                 Online
               </span>
             )}
-            <p class="absolute bottom-3 left-4 max-w-[calc(100%-2rem)] rounded-2xl bg-ink/80 px-3 py-1.5 text-[11px] font-bold tracking-[0.16em] text-white uppercase">
+            <p class="absolute bottom-3 left-3 max-w-[calc(100%-1.5rem)] rounded-lg bg-ink/80 px-2 py-1 text-[9px] font-bold tracking-[0.1em] text-white uppercase">
               {p.sub}
             </p>
           </div>
@@ -97,7 +97,7 @@ const hemat = (coret: number | undefined, harga: number) =>
                   <p class="display text-2xl leading-none text-ink">Info via WA</p>
                 )}
                 {hemat(p.hargaCoret, p.harga) > 0 && (
-                  <span class="rounded-full bg-ink px-2 py-0.5 text-[10px] font-black tracking-wide text-white uppercase">
+                  <span class="rounded-full bg-discount px-2 py-0.5 text-[10px] font-black tracking-wide text-white uppercase">
                     Hemat {hemat(p.hargaCoret, p.harga)}%
                   </span>
                 )}

@@ -1931,3 +1931,11 @@ Permintaan: *"mobile version harus compact tapi rapih, fokus untuk user, tidak t
 - **Marquee dilambat**: ticker cabang olahraga 34s → **62s**; default `.rail` 46s → 58s, rail coach/blog 40s → 52s.
 
 Catatan jebakan: `SectionImage` di About dihapus **bareng import-nya** — kalau hanya salah satu, build error "SectionImage is not defined" (terjadi sekali di sesi ini).
+
+### 38.6 Kartu program: pill kecil, foto lebih tinggi, pill HEMAT hijau
+
+Permintaan klien: *"terlalu besar pill ini, image kurang tinggi tapi sesuaikan yang penting semuanya rapih cardnya, pill hemat harus hijau stand out agar tau itu potongan harga persen"*.
+
+- **Pill caption foto** diperkecil: `px-3 py-1.5 text-[11px] tracking-[0.16em] rounded-2xl` → `px-2 py-1 text-[9px] tracking-[0.1em] rounded-lg`, dan teks sub Small Group dipendekkan ("Belajar bareng 6–10 atlet lintas cabor") supaya **1 baris** di HP. Caption galeri workshop + badge testimoni ikut diperkecil.
+- **Foto kartu lebih tinggi**: `aspect-16/10` → **`aspect-4/3`**.
+- **Pill "HEMAT n%" jadi HIJAU** — token baru `--color-discount: #0d7f3e` (putih di atasnya 4.9:1). Oranje tetap khusus CTA, hijau = diskon, jadi "potongan harga persen" langsung terbaca.

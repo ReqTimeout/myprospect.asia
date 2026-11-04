@@ -21,7 +21,7 @@ export const programs: Program[] = [
   {
     slug: 'small-group',
     nama: 'Small Group',
-    sub: 'Belajar bareng atlet lintas daerah & cabor (6–10 atlet)',
+    sub: 'Belajar bareng 6–10 atlet lintas cabor',
     hargaCoret: 750_000,
     harga: 299_000,
     satuan: '/ 6 sesi / bulan',

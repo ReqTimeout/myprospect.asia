@@ -25,6 +25,9 @@
      yang butuh terbaca memakai tinta. */
   --color-brand-dark: #ef7e00;
   --color-brand-soft: #ffe8d1; /* panel solid, pengganti wash bg-brand/10../20 */
+  /* Hijau diskon: pill "HEMAT n%" supaya jelas itu potongan harga persen
+     (oranye dipakai untuk CTA, bukan diskon). Teks putih di atasnya 4.9:1. */
+  --color-discount: #0d7f3e;
   --color-brand-line: #ffcba3; /* border solid, pengganti border-brand/25../50 */
   --color-gold: #ffc32e;
   --color-gold-soft: #ffe58a;
