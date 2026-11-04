@@ -1791,3 +1791,13 @@ Implementasi: `<article class="spot prog-card group relative mt-6 flex flex-col 
 - isi `grid lg:grid-cols-[1.05fr_0.95fr]`: kiri heading MEMBERSHIP PROGRAM + nomor 04 + deskripsi + CTA oranye teks putih; kanan 4 benefit ✓ (2×2).
 
 Struktur ini identik dengan kartu program (foto atas + chip + caption + isi + tombol oranye) → konsisten, premium, tidak over.
+
+### 43.15 Background section: foto CLIENT dengan teknik multiply (bukan opacity)
+
+Klien: *"maksud sy ini kamu imagenya generate yang bener paham ga? kok setiap section ga pake image background yang blend agar terasa premium"*.
+
+**Masalah sebelumnya**: foto sebagai background dengan opacity rendah → **noda abu-abu** (foto jadi kabut, bukan Merge).technique yang benar: **`mix-blend-mode: multiply`** — foto diperlakukan seperti tinta di atas kertas: bagian gelap memberi tekstur, bagian terang menyatu dengan warna section. Tidak pernah jadi noda abu-abu, dan opacity bisa dinaikkan (0.26–0.3) tanpa merusak keterbacaan teks.
+
+`SectionImage.astro` sekarang punya prop `blend` (default `multiply`) + `.sec-img` default `mix-blend-mode: multiply`. Dipakai di 14 section dengan foto asli klien (hero-athletes, mic-kid, session-elite, workshop-crowd, interview-zone, docs-1, workshop-live, session-online, workshop-live-2, docs-3, session-premium).
+
+**MiniMax masih terkunci** ("2067 Token Plan usage limit has been reached") — generate baru butuh upgrade plan. Setelah kuota tersedia, tinggal ganti `src` dengan aset bertema sport per section (piala / mic / laptop / interview) tanpa mengubah teknik blend-nya.

@@ -14,9 +14,16 @@ interface Props {
   src: string;
   pos?: 'b' | 'bl' | 'br' | 'tr' | 'tl';
   opacity?: number;
+  /**
+   * blend = 'multiply' (default): foto dipakai seperti tinta di atas kertas —
+   * bagian gelap Album memberi tekstur, bagian terang menyatu dengan warna
+   * section. Ini yang bikin foto "membaur" dan tetap terasa premium, bukan
+   * noda abu-abu seperti opacity biasa.
+   */
+  blend?: 'multiply' | 'normal';
 }
 
-const { src, pos = 'b', opacity = 0.08 } = Astro.props;
+const { src, pos = 'b', opacity = 0.08, blend = 'multiply' } = Astro.props;
 
 const MASK: Record<string, string> = {
   b: 'linear-gradient(to top, black 12%, transparent 78%)',
@@ -34,5 +41,5 @@ const MASK: Record<string, string> = {
   loading="lazy"
   decoding="async"
   class="sec-img"
-  style={`--sec-img-o:${opacity}; mask-image:${MASK[pos]}; -webkit-mask-image:${MASK[pos]};`}
+  style={`--sec-img-o:${opacity}; mix-blend-mode:${blend}; mask-image:${MASK[pos]}; -webkit-mask-image:${MASK[pos]};`}
 />

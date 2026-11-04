@@ -601,6 +601,9 @@ body {
   object-fit: cover;
   pointer-events: none;
   opacity: var(--sec-img-o, 0.08);
+  /* Default: multiply — foto diperlakukan seperti tinta di atas kertas, jadi
+     menyatu dengan warna section (tidak jadi noda abu-abu). */
+  mix-blend-mode: multiply;
 }
 
 /* LED papan skor: segmen yang menyala diberi bloom tipis supaya terbaca
