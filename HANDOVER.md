@@ -1379,3 +1379,48 @@ Papan LED Seven-Segment memang ramping — jadi ini bukan kompromi, tapi memang 
 ### 37.7 Verifikasi revisi
 
 `audit-frames` 0 overflow + 0 console error · `audit-clip` **0 overflow / 0 covered** · `verify-ai` 18 flag (sama seperti sebelumnya, tanpa flag baru) · `verify-home` 0 error · `verify-dock` / `verify-wa-green` / `verify-testimoni` **SEMUA PASS** · pw-vision 22/22, 0 overflow, 0 small target · **pengukuran overlap antar kolom SVG: 0** (mobile & desktop) · tinggi kotak SVG seragam: mobile 44px, desktop 64px.
+
+---
+
+## 38. CTA band dirombak + art background dipangkas (4 Nov 2026)
+
+Permintaan klien: *"ini jelek banget, dan di setiap section kurangi background art buat flat design dan sedikit art saja agar tidak terlalu ramai dan terlihat premium"*.
+
+### 38.1 Pita CTA: dari "dua blok gelap" jadi kartu tenang
+
+| | Lama | Baru |
+|---|---|---|
+| Field | `bg-ink` (hitam penuh, 2 blok hitam berturut-turut dengan ticker) | `bg-paper-deep` (krem) |
+| Foto | full-bleed + **kartu hitam** `bg-ink` mengambang di atasnya | di dalam bingkai bulat `rounded-3xl`, **tanpa scrim, tanpa kartu gelap** |
+| Pita ticker | ada (`tone="ink"`, isi "Gratis konsultasi…") | **dihapus** — isinya dobel dengan ticker 23 cabang olahraga di bawah hero (§32.2) pernah dikeluhkan klien |
+| Judul | putih | tinta, "Bicara?" oranye |
+| Chip | garis putih | chip putih `border-ink/15` di atas krem |
+| Art | SportArt + pat-grid-light + pat-halftone + 2 bola = **6 lapisan** | **1** (`art-pitch` di tepi bawah) |
+
+Layout jadi 2 kolom (teks kiri, foto kanan) di `lg`, susun ke bawah di mobile. Tombol tetap oranye solid + `data-magnetic` + `data-register`.
+
+### 38.2 Art background dipangkas: 41 → 7 elemen
+
+Dihitung dari HTML build (`dist/index.html`), jumlah elemen dekoratif per homepage:
+
+| | Sebelum | Sesudah |
+|---|---|---|
+| `sport-ball` | 13 | **0** |
+| `prog-bg__*` (bola backdrop) | 8 | **1** (garis lapangan saja) |
+| `art-dots` | 3 | 0 |
+| `pat-halftone` | 3 | **1** (pojok hero) |
+| `pat-grid` | 2 | 0 |
+| `art-ring` / `art-diamond` | 2 / 1 | 0 / 0 |
+| `art-pitch` / `art-balls` / `art-track` | 2 / 2 / 2 | 1 / 1 / 1 |
+| `ghost-word` | 3 | **2** (About "Speak", Coach "Coach") |
+| **TOTAL** | **41** | **7** |
+
+Aturan baru yang dipakai: **maksimal 1 lapisan art per section**, dan itu harus tipis. Section yang art-nya dihapus total: Testimoni (halftone), Coach (court + diamond + bola), About (grid + pitch + 2 bola), Program (ring + balls + bola + ghost word), Blog (dots + ring), Hero (dots + pitch + 2 bola + 2 dekor kecil), Workshop (dots + track + bola).
+
+Yang **dipertahankan** karena itu "isi", bukan latar: foto atlet di hero, jersey coach (CSS art kartu), papan LED scoreboard, grid piksel LED, dan 2 stiker hero.
+
+`SportArt` yang tersisa: `stadium` (Workshop) + `net` (Blog). Stroke-nya ikut disinkronkan `#241a12` → `#1b1b1f` (netral).
+
+### 38.3 Verifikasi lokal (semua PASS)
+
+`audit-frames` 0 overflow + 0 console error · `audit-clip` **0 overflow / 0 covered** · `verify-ai` 17 flag (17 = dekoratif saja: ghost-word ×2, angka 01-03 ×6, "MODERN" ×2, dan angka display lain); teks kecil CTA yang tadinya `text-ink/60` (4.41:1) dinaikkan ke `/70` → lolos AA · `verify-dock` / `verify-wa-green` / `verify-testimoni` / `verify-admin-ui` **SEMUA PASS** · pw-vision 22/22, 0 overflow, 0 small target · vision desktop 1440×900 + mobile 390×844.
