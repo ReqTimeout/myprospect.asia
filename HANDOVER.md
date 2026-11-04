@@ -1693,3 +1693,14 @@ Klien: *"mana ga berubah"*. Dua sebab:
 Eyebrow dinaikkan ke 17px + `text-ink` penuh (dari ink/80).
 
 > Pelajaran: asset yang "hampir tak terlihat" itu gagal, bukan berhasil. Kalau menambah latar tipis, langsung **verifikasi di screenshot** apakah dia kelihatan — jangan hanya cek kode.
+
+### 43.7 Revisi: papan LED dihapus + benefit workshop masuk toggle
+
+Klien: papan LED *"jelek sekali, gimana ya biar ga ai banget"* + kartu workshop *"detailnya di toggle saja buat yang premium"*.
+
+1. **Papan LED seven-segment dihapus total** (StatsBar + StatsList ditulis ulang). Penggantinya: tiga angka besar tinta (Counter, tetap menghitung naik) + strip oranye kecil + label tracked, dipisah garis rambut, di atas putih dengan border-y halus. Tanpa dot grid, tanpa corner bracket, tanpa kepala papan. `LedNumber.svelte` dihapus.
+   > Pelajaran: seven-segment + dot grid + corner bracket adalah "stadium UI kit" yang juga jadi ciri template AI. Statistik premium = tipografi besar + whitespace, bukan chrome.
+
+2. **Benefit workshop masuk `<details>` toggle**: ringkasan "Lihat detail program +" (rotate 45° saat terbuka), daftar ✓ bergaris kiri oranye. Kartu jadi rampat; chip "N benefit" di header tetap memberi tahu isinya. `group` + `group-open:rotate-45`.
+
+Verifikasi: audit-frames 0 overflow + 0 console error (mobile 17 — 1 lebih sedikit), audit-clip 0 overflow/0 covered, verify-ai 20 flag (heading display saja), dock/wa-green/testimoni/admin-ui SEMUA PASS, pw-vision 22/22 0 bug. Vision: statistik di atas putih + toggle terbuka di mobile.

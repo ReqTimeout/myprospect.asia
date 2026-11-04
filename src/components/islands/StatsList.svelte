@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import LedNumber from './LedNumber.svelte';
+  import Counter from './Counter.svelte';
   import { liveJson } from '../../lib/live';
 
   type Stat = { to: number; suffix: string; label: string };
@@ -25,13 +25,14 @@
   });
 </script>
 
-<!-- Papan skor: tiga kolom dipisah garis, angka seven-segment (LED). -->
-<ul class="grid grid-cols-3 divide-x divide-white/10">
+<ul class="grid grid-cols-3 divide-x divide-ink/10">
   {#each list as s (s.label)}
-    <li class="min-w-0 px-2 py-3 text-center sm:px-4 sm:py-4">
-      <LedNumber to={s.to} suffix={s.suffix} class="mx-auto h-11 w-full sm:h-16" />
-      <span class="mx-auto mt-3 block h-0.5 w-9 bg-brand/80" aria-hidden="true"></span>
-      <p class="mt-2 text-[9px] leading-tight font-bold tracking-[0.1em] text-white/55 uppercase break-words sm:text-[10px] sm:tracking-[0.16em]">
+    <li class="min-w-0 px-2 py-2 text-center sm:px-4 sm:py-3">
+      <p class="score-digits text-4xl leading-none text-ink sm:text-6xl">
+        <Counter to={s.to} suffix={s.suffix} />
+      </p>
+      <span class="mx-auto mt-3 block h-0.5 w-9 bg-brand" aria-hidden="true"></span>
+      <p class="mt-2 text-[9px] leading-tight font-bold tracking-[0.1em] text-ink/60 uppercase break-words sm:text-[11px] sm:tracking-[0.16em]">
         {s.label}
       </p>
     </li>
