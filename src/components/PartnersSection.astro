@@ -42,10 +42,10 @@ const grup = [
                 {items.map((p, i) => (
                   <li
                     data-reveal="pop"
-                    class="group flex flex-col items-center justify-center gap-2 rounded-xl border border-ink/10 bg-white p-2.5 text-center transition duration-300 hover:-translate-y-0.5 hover:border-brand sm:p-3"
+                    class="group flex flex-col items-center justify-center gap-2 p-2 text-center transition duration-300 hover:-translate-y-0.5"
                     style={`transition-delay:${Math.min(i * 50, 300)}ms`}
                   >
-                    <span class="relative flex h-10 w-full items-center justify-center sm:h-12">
+                    <span class="relative flex h-12 w-full items-center justify-center sm:h-14">
                       <PartnerLogo slug={p.slug} nama={p.nama} crest={p.crest} />
                     </span>
                     <span class="block text-[11px] leading-tight font-bold text-ink transition group-hover:text-brand-text sm:text-xs">

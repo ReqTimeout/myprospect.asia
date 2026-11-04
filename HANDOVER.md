@@ -1467,3 +1467,7 @@ Jumlah kolom per kelompok disimpan di `grup[].cols` supaya **barisnya terisi pen
 ### 39.4 Verifikasi lokal
 
 `audit-frames` 0 overflow + 0 console error · `audit-clip` **0 overflow / 0 covered** · `verify-ai` 17 flag (dekoratif saja) · pw-vision 22/22, 0 overflow, 0 small target · vision desktop 1440×900 + mobile 390×844 (logo asli terbaca jelas, tile rapi).
+
+### 39.5 Revisi: tile mitra tanpa box
+
+Klien: *"bisa ga gausah pake box jadi kelihatan penuh"*. Kartu (`rounded-xl border bg-white`) dihapus — logo + nama langsung di atas latar putih, seperti logo wall biasa. Logo box dinaikkan 40/48 → 48/56px. Hover cukup naik 2px + nama jadi oranye.
