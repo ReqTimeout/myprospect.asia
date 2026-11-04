@@ -1682,3 +1682,14 @@ eyebrow font-serif text-[15px] italic leading-tight text-ink/80
 ### 43.5 Verifikasi lokal (semua PASS)
 
 `audit-frames` 0 overflow + 0 console error (desktop + mobile) · `audit-clip` **0 overflow / 0 covered** · `verify-ai` 20 flag (12 dekoratif + 8 = 2 heading display × 4 halaman) · `verify-home` 0 error · `verify-dock` / `verify-wa-green` / `verify-testimoni` / `verify-admin-ui` **SEMUA PASS** · pw-vision 22/22, 0 overflow, 0 small target · vision desktop 1440×900 + mobile 390×844 (hero, tentang, program, workshop, testimoni, CTA, mitra).
+
+### 43.6 Revisi "mana ga berubah": aset dibuat transparan + diposisikan ulang
+
+Klien: *"mana ga berubah"*. Dua sebab:
+
+1. **Aset hasil generate masih berupa kanvas krem** — di opacity 12–14% garisnya tidak kelihatan. Fix: **difference matte** (bandingkan piksel dengan versi blur σ28, selisih → alpha) → latar krem hilang, tinggal line art transparan (webp + alpha). Setelah itu opacity bisa naik ke 0.45–0.62 dan motifnya **kelihatan jelas** tanpa menutup section.
+2. **Motif ketutupan kartu putih.** Section yang penuh kartu (program, workshop, coach, blog) menutupi 80% area — motif yang diletakkan di sudut bawah tidak terlihat. Fix: motif dipindah ke **sudut atas, di belakang heading** (heading Anton tebal tetap terbaca di atas garis tipis — gaya watermark editorial). Pemosisian ulang dilakukan otomatis: **alpha-bbox** (cari kotak berisi piksel non-transparan) → crop → scale ~42% lebar → composite ke sudut sesuai `pos` mask. Jadi mask dan motif **tidak pernah tidak cocok** lagi.
+
+Eyebrow dinaikkan ke 17px + `text-ink` penuh (dari ink/80).
+
+> Pelajaran: asset yang "hampir tak terlihat" itu gagal, bukan berhasil. Kalau menambah latar tipis, langsung **verifikasi di screenshot** apakah dia kelihatan — jangan hanya cek kode.
