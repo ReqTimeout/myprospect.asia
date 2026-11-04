@@ -1773,3 +1773,11 @@ Opacity 0.12–0.14 + mask tetap (blend seperti §43.6).
 **Membership Program jadi card putih**: border ink/10 + shadow, chip COMING SOON oranye teks putih, heading tinta, CTA oranye teks putih, foto atlet berpiala (hero-athletes.jpg) di bingkai kanan dengan chip "SPORT · COMMUNICATION", dan 4 benefit jadi strip 4 kolom ber-border di bawah. Kartu gelap #121316 dihapus.
 
 Jebakan: replace blok membuat satu `</div>` orphan → build error; hitung ulang penutup div.
+
+### 43.13 Foto section di opacity rendah = NODA (revisi)
+
+Klien: *"jelek sekaliii"*. Penyebab: foto asli klien dipakai sebagai background section di opacity 13% → karena foto dicekup/diperkecil lalu dipudarkan, hasilnya **noda blur besar** (bayang laptop + watermark terbaca di section Program). Bukan premium.
+
+Fix: background section **dikembalikan ke line art** (aset MiniMax, tajam, transparan — §43.6), foto asli tetap dipakai di tempat yang terbaca sebagai foto (bingkai Membership, kartu About, galeri, cover berita, hero).
+
+Bingkai foto Membership: `object-contain object-bottom` di dasar krem (aset `hero-athletes.jpg` punya area kosong di atas, jadi `object-cover`olo membuat bingkai kosong).
