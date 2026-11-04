@@ -226,7 +226,7 @@
           ></textarea>
 
           {#if error}
-            <p class="mt-3 flex items-start gap-2 rounded-2xl bg-[#f9e1e2] px-3 py-2 text-[12px] text-crimson">
+            <p class="mt-3 flex items-start gap-2 rounded-2xl bg-[#f9e1e2] px-3 py-2 text-[12px] text-brand">
               <CircleAlert size={15} class="mt-px shrink-0" />
               {error}
             </p>

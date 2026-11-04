@@ -41,6 +41,7 @@
 
   --radius-card: 1.25rem;
 
+  --font-serif: 'Instrument Serif', Georgia, 'Times New Roman', serif;
   --shadow-soft: 0 14px 34px -22px rgba(27, 27, 31, 0.2);
   --shadow-pop: 0 18px 38px -22px rgb(255 128 0 / 0.45);
 
@@ -147,21 +148,22 @@ body {
   box-decoration-break: clone;
 }
 
+/* Kicker editorial: serif italic + titik oranye. Huruf sans kapital kecil
+   ("EYEBROW + tracking lebar") adalah ciri template AI, jadi diganti. */
 .eyebrow {
   position: relative;
-  padding-left: 18px;
+  padding-left: 16px;
 }
 
 .eyebrow::before {
   content: "";
   position: absolute;
   left: 0;
-  top: calc(50% - 4.5px);
-  width: 9px;
-  height: 9px;
+  top: calc(50% - 3px);
+  width: 6px;
+  height: 6px;
   border-radius: 9999px;
-  background: var(--color-crimson);
-  box-shadow: 0 0 0 3.5px rgba(200, 35, 43, 0.14);
+  background: var(--color-brand);
 }
 
 .ghost-word {

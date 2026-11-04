@@ -1616,3 +1616,69 @@ Hero `pt-14` (56px — persis tinggi header) → **`pt-24 pb-24 sm:pt-28`**. Kar
 ### 42.5 Verifikasi lokal (semua PASS)
 
 `audit-frames` 0 overflow + 0 console error (desktop + mobile) · `audit-clip` **0 overflow / 0 covered** · `verify-ai` 20 flag = 12 dekoratif + 8 (2 heading display besar × 4 halaman yang memakai CtaBand) · `verify-home` 0 error · `verify-dock` / `verify-wa-green` / `verify-testimoni` / `verify-admin-ui` **SEMUA PASS** · pw-vision 22/22, 0 overflow, 0 small target · **vision mobile 390×844 frame-by-frame** (hero, scoreboard, tentang, program, workshop, testimoni, CTA, mitra) + desktop.
+
+---
+
+## 43. Aset section digenerate MiniMax + palet dirapatkan + eyebrow serif (4 Nov 2026)
+
+Permintaan klien: *"generate asset2 pendukung pake minimax tapi jangan terlalu over, setiap section… feels premium, tidak over, warna font copywriting bukan terlihat seperti ai, mobile dan desktop harus rapih"*.
+
+### 43.1 Aset section dari MiniMax (`public/media/sections/*.jpg`)
+
+12 aset dibuat pakai `image-01`, disaring lewat **contact sheet** (montage 4×3) supaya tidak perluAssess 12 file satu per satu.
+
+**Pelajaran penting: MiniMax image-01 menambahkan gloss/shadow/3D** — justru yang disliked klien ("terlihat AI"). Prompt ronde 1 ("minimal flat background texture…") masih menghasilkan benda 3D (kertas bertumpuk, bar oranye glossy, balon). Ronde 2 dengan prompt lebih ketat berhasil:
+
+```
+[NAME] pure 2D technical line drawing printed on plain warm cream paper.
+Uniform 2 pixel thin charcoal strokes plus one or two bright orange accents: …
+Absolutely flat: no shadow, no reflection, no gradient, no glow, no 3D, no
+perspective, no realistic object, no texture, no noise, no text, no letters,
+no numbers, no people. 16:9 wide.
+```
+
+Aset yang dipakai (semua 8–14 KB setelah resize 1600×900 + mozjpeg q72):
+
+| File | Motif | Dipakai di | pos | op |
+|---|---|---|---|---|
+| `hero.jpg` | garis lintasan lari | Hero | tr | .14 |
+| `tentang.jpg` | lingkaran + titik | Tentang (home + /tentang) | tr/br | .13 |
+| `program.jpg` | lingkaran + garis | Program + hero detail | br/tr | .13 |
+| `workshop.jpg` | kotak + tick oranye | Workshop | bl | .13 |
+| `testimoni.jpg` | lengkung kutip | Testimoni | br | .13 |
+| `coach.jpg` | halftone titik | Coach | tr | .12 |
+| `blog.jpg` | halftone titik | Kabar terbaru | bl | .12 |
+| `faq.jpg` | garis + titik oranye | FAQ | tr | .13 |
+| `cta.jpg` | panah ke atas | CTA | bl | .14 |
+| `mitra.jpg` | grid kotak + lingkaran | Mitra | tl | .12 |
+
+Opacity dinaikkan dari 5–9% (foto client) ke 12–14% (garis tipis) supaya motifnya **terlihat** tanpabuat ramai. Kartu Membership (gelap) tetap pakai foto client asli (session-premium.jpg) — aset krem akan jadi blok terang di atas gelap.
+
+### 43.2 Palet dirapatkan
+
+Sisa aksen warna yang bikin tampilan terasa "template": emas (#ffc32e) dan merah (#c8232b). Keduanya kini **tidak dipakai dekoratif**:
+
+- emas → oranye/tinta di: badge MEDIA NASIONAL (jadi `bg-ink text-brand`), ikon bulat, pill BONUS, titik timeline, border tombol, badge workshop, kartu 2.175+, hover kartu berita, bintang testimoni, focus login, dan `.pkg-flag` di template single post.
+- merah → oranye di: titik eyebrow, stiker "GO!", diamond art.
+- Yang **dipertahankan**: chip 3 kategori berita (emas/oranye/merah — semantik) dan hijau WhatsApp (kanal konversi).
+
+Palet akhir situs: **putih/krem + arang + oranye #ff8000**, plus hijau WA. Tidak ada warna aksen lain.
+
+### 43.3 Eyebrow jadi serif editorial
+
+"Huruf sans kapital kecil + tracking lebar" adalah ciri template AI. Semua eyebrow (7 file) diganti:
+
+```
+eyebrow font-serif text-[15px] italic leading-tight text-ink/80
+```
+
+- Font: **Instrument Serif** (`@fontsource/instrument-serif`, 400 + italic) — self-hosted, token baru `--font-serif`.
+- `.eyebrow::before` (titik) mengecil jadi 6px dan berubah dari merah → oranye.
+
+### 43.4 Jebakan: `npm i` memangkas `playwright-core`
+
+`npm i @fontsource/instrument-serif` menghapus `playwright-core` (dipakai skrip audit tapi tidak terdaftar di package.json) → semua skrip audit langsung `ERR_MODULE_NOT_FOUND`. Perbaikan: `npm i -D playwright-core@1.61.0` (sekarang terdaftar di devDependencies, jadi aman).
+
+### 43.5 Verifikasi lokal (semua PASS)
+
+`audit-frames` 0 overflow + 0 console error (desktop + mobile) · `audit-clip` **0 overflow / 0 covered** · `verify-ai` 20 flag (12 dekoratif + 8 = 2 heading display × 4 halaman) · `verify-home` 0 error · `verify-dock` / `verify-wa-green` / `verify-testimoni` / `verify-admin-ui` **SEMUA PASS** · pw-vision 22/22, 0 overflow, 0 small target · vision desktop 1440×900 + mobile 390×844 (hero, tentang, program, workshop, testimoni, CTA, mitra).

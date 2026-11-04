@@ -37,7 +37,7 @@
     {@const cat = categoryStyle(post.kategori)}
     <a
       href={`/berita/${post.id}`}
-      class="group flex flex-col overflow-hidden rounded-3xl border border-ink/10 bg-paper-deep transition duration-200 hover:-translate-y-1 hover:border-gold focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
+      class="group flex flex-col overflow-hidden rounded-3xl border border-ink/10 bg-paper-deep transition duration-200 hover:-translate-y-1 hover:border-brand focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
     >
       <div class="relative aspect-16/10 overflow-hidden bg-brand-soft">
         {#if post.cover}

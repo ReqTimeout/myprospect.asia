@@ -40,10 +40,10 @@ const schema = courseSchema({
 
   <main class="pt-14">
     <section class="relative overflow-hidden border-b border-ink/10">
-      <SectionImage src={heroFoto} pos="tr" opacity={0.09} />
-      <div class="art-ring right-10 top-24 hidden h-14 w-14 border-crimson/20 sm:block" aria-hidden="true"></div>
+      <SectionImage src="/media/sections/detail.jpg" pos="tr" opacity={0.13} />
+      <div class="art-ring right-10 top-24 hidden h-14 w-14 border-brand/25 sm:block" aria-hidden="true"></div>
       <div class="art-pitch absolute inset-0 opacity-40 [mask-image:linear-gradient(to_bottom,black,transparent_65%)]" aria-hidden="true"></div>
-      <div class="art-diamond right-24 top-40 h-2.5 w-2.5 bg-crimson/50 hidden sm:block" aria-hidden="true"></div>
+      <div class="art-diamond right-24 top-40 h-2.5 w-2.5 bg-brand/50 hidden sm:block" aria-hidden="true"></div>
 
       <div class="relative mx-auto max-w-4xl px-4 py-14 sm:px-6">
         <a href="/#program" class="inline-block py-2 text-sm font-bold text-ink transition hover:underline">← Semua program</a>
@@ -53,7 +53,7 @@ const schema = courseSchema({
             <p
               class:list={[
                 'mt-6 inline-block rounded-full px-3 py-1 text-[11px] font-black tracking-widest uppercase',
-                p.badgeTone === 'gold' ? 'bg-gold text-ink' : 'bg-brand text-ink',
+                p.badgeTone === 'gold' ? 'bg-ink text-brand' : 'bg-brand text-ink',
               ]}
             >
               {p.badge}
@@ -100,13 +100,13 @@ const schema = courseSchema({
     </section>
 
     <section class="mx-auto max-w-4xl px-4 py-14 sm:px-6">
-      <p class="eyebrow text-xs font-black tracking-widest text-ink uppercase">Apa yang akan dikuasai</p>
+      <p class="eyebrow font-serif text-[15px] italic leading-tight text-ink/80">Apa yang akan dikuasai</p>
       <h2 class="display mt-2 text-3xl sm:text-4xl">Komunikasi level atlet pro</h2>
       <ul class="mt-6 grid gap-3 sm:grid-cols-2">
         {
           p.dikuasai.map((d) => (
             <li class="flex items-start gap-3 rounded-2xl border border-ink/10 bg-white px-4 py-3.5 text-sm text-ink/85">
-              <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-gold text-[11px] font-black text-ink" aria-hidden="true">
+              <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-ink text-[11px] font-black text-brand" aria-hidden="true">
                 ✓
               </span>
               {d}
@@ -118,7 +118,7 @@ const schema = courseSchema({
 
     <section class="border-y border-ink/10 bg-white">
       <div class="mx-auto max-w-4xl px-4 py-14 sm:px-6">
-        <p class="eyebrow text-xs font-black tracking-widest text-ink uppercase">Yang didapatkan</p>
+        <p class="eyebrow font-serif text-[15px] italic leading-tight text-ink/80">Yang didapatkan</p>
         <h2 class="display mt-2 text-3xl sm:text-4xl">Benefit lengkap</h2>
         <ul class="mt-6 space-y-3">
           {
@@ -133,7 +133,7 @@ const schema = courseSchema({
                 >
                   <span aria-hidden="true">{gold ? '★' : '✓'}</span>
                   {d}
-                  {gold && <span class="ml-auto rounded-full bg-gold px-2 py-0.5 text-[10px] font-black text-ink">BONUS</span>}
+                  {gold && <span class="ml-auto rounded-full bg-brand px-2 py-0.5 text-[10px] font-black text-ink">BONUS</span>}
                 </li>
               );
             })
@@ -143,14 +143,14 @@ const schema = courseSchema({
     </section>
 
     <section class="mx-auto max-w-4xl px-4 py-14 sm:px-6">
-      <p class="eyebrow text-xs font-black tracking-widest text-ink uppercase">Peningkatan bulanan</p>
+      <p class="eyebrow font-serif text-[15px] italic leading-tight text-ink/80">Peningkatan bulanan</p>
       <h2 class="display mt-2 text-3xl sm:text-4xl">4 bulan, 4 lompatan</h2>
       <ol class="relative mt-8 space-y-6 border-l-2 border-brand-line pl-6">
         {
           p.journey.map((j) => (
             <li class="relative">
-              <span class="absolute -left-[31px] top-1 h-4 w-4 rounded-full border-2 border-gold bg-paper" aria-hidden="true" />
-              <p class="eyebrow text-xs font-black tracking-widest text-ink uppercase">{j.bulan}</p>
+              <span class="absolute -left-[31px] top-1 h-4 w-4 rounded-full border-2 border-brand bg-paper" aria-hidden="true" />
+              <p class="eyebrow font-serif text-[15px] italic leading-tight text-ink/80">{j.bulan}</p>
               <p class="mt-1 text-base font-semibold text-ink">{j.teks}</p>
             </li>
           ))
@@ -169,7 +169,7 @@ const schema = courseSchema({
 
     <section class="border-t border-ink/10 bg-white">
       <div class="mx-auto max-w-4xl px-4 py-14 sm:px-6">
-        <p class="eyebrow text-xs font-black tracking-widest text-ink uppercase">FAQ mini</p>
+        <p class="eyebrow font-serif text-[15px] italic leading-tight text-ink/80">FAQ mini</p>
         <h2 class="display mt-2 text-3xl sm:text-4xl">Yang sering ditanya</h2>
         <div class="mt-6 space-y-3">
           {
@@ -190,7 +190,7 @@ const schema = courseSchema({
     <section id="daftar" class="mx-auto max-w-4xl scroll-mt-20 px-4 py-14 sm:px-6">
       <div class="grid gap-8 md:grid-cols-2">
         <div>
-          <p class="eyebrow text-xs font-black tracking-widest text-ink uppercase">Mulai sekarang</p>
+          <p class="eyebrow font-serif text-[15px] italic leading-tight text-ink/80">Mulai sekarang</p>
           <h2 class="display mt-2 text-3xl sm:text-4xl">Isi data,<br />admin lanjut di WA</h2>
           <p class="mt-4 text-sm leading-relaxed text-ink/65">
             Setelah formulir dikirim, WhatsApp langsung terbuka dengan pesan yang sudah terisi, admin tinggal
@@ -201,7 +201,7 @@ const schema = courseSchema({
             target="_blank"
             rel="noopener noreferrer"
             data-wa-cta={`detail-bawah-${p.slug}`}
-            class="mt-6 inline-flex rounded-2xl border border-gold px-6 py-3.5 text-sm font-bold text-ink transition hover:bg-gold hover:text-ink focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none active:scale-95"
+            class="mt-6 inline-flex rounded-2xl border border-brand px-6 py-3.5 text-sm font-bold text-ink transition hover:bg-brand hover:text-ink focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none active:scale-95"
           >
             Chat langsung tanpa form ↗
           </a>

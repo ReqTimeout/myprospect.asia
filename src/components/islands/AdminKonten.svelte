@@ -478,7 +478,7 @@
                     type="button"
                     onclick={() => deletePost(p.slug)}
                     aria-label={`Hapus ${p.title}`}
-                    class="rounded-xl border border-slate-200 p-2.5 text-slate-500 transition hover:border-crimson hover:text-crimson focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:outline-none"
+                    class="rounded-xl border border-slate-200 p-2.5 text-slate-500 transition hover:border-crimson hover:text-brand focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:outline-none"
                   >
                     <Trash2 size={15} />
                   </button>

@@ -38,15 +38,15 @@ const schema = courseSchema({
 
   <main class="pt-14">
     <section class="relative overflow-hidden border-b border-ink/10">
-      <SectionImage src={hero} pos="tr" opacity={0.09} />
-      <div class="art-ring right-10 top-24 hidden h-14 w-14 border-crimson/20 sm:block" aria-hidden="true"></div>
+      <SectionImage src="/media/sections/detail.jpg" pos="tr" opacity={0.13} />
+      <div class="art-ring right-10 top-24 hidden h-14 w-14 border-brand/25 sm:block" aria-hidden="true"></div>
       <div class="art-track absolute inset-x-0 bottom-0 h-48 opacity-50" aria-hidden="true"></div>
-      <div class="art-diamond right-24 top-40 h-2.5 w-2.5 bg-crimson/50 hidden sm:block" aria-hidden="true"></div>
+      <div class="art-diamond right-24 top-40 h-2.5 w-2.5 bg-brand/50 hidden sm:block" aria-hidden="true"></div>
 
       <div class="relative mx-auto max-w-4xl px-4 py-14 sm:px-6">
         <a href="/#workshop" class="inline-block py-2 text-sm font-bold text-ink transition hover:underline">← Semua workshop</a>
 
-        <p class="mt-6 inline-block rounded-full bg-gold px-3 py-1 text-[11px] font-black tracking-widest text-ink uppercase">
+        <p class="mt-6 inline-block rounded-full bg-ink px-3 py-1 text-[11px] font-black tracking-widest text-brand uppercase">
           B2B · Akademi &amp; Klub
         </p>
 
@@ -94,13 +94,13 @@ const schema = courseSchema({
     </section>
 
     <section class="mx-auto max-w-4xl px-4 py-14 sm:px-6">
-      <p class="eyebrow text-xs font-black tracking-widest text-ink uppercase">Yang didapatkan akademi</p>
+      <p class="eyebrow font-serif text-[15px] italic leading-tight text-ink/80">Yang didapatkan akademi</p>
       <h2 class="display mt-2 text-3xl sm:text-4xl">Run-down manfaat</h2>
       <ul class="mt-6 grid gap-3 sm:grid-cols-2">
         {
           w.didapat.map((d, i) => (
             <li class="flex items-start gap-3 rounded-2xl border border-ink/10 bg-white px-4 py-3.5 text-sm text-ink/85">
-              <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-gold text-[11px] font-black text-ink" aria-hidden="true">
+              <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-ink text-[11px] font-black text-brand" aria-hidden="true">
                 {i + 1}
               </span>
               {d}
@@ -111,7 +111,7 @@ const schema = courseSchema({
     </section>
 
     <section class="mx-auto max-w-4xl px-4 py-14 sm:px-6">
-      <p class="eyebrow text-xs font-black tracking-widest text-ink uppercase">Dokumentasi</p>
+      <p class="eyebrow font-serif text-[15px] italic leading-tight text-ink/80">Dokumentasi</p>
       <h2 class="display mt-2 text-3xl sm:text-4xl">Suasana di lapangan</h2>
       <div class="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
         {
@@ -133,7 +133,7 @@ const schema = courseSchema({
 
     <section class="border-y border-ink/10 bg-white">
       <div class="mx-auto max-w-4xl px-4 py-14 sm:px-6">
-        <p class="eyebrow text-xs font-black tracking-widest text-ink uppercase">FAQ mini</p>
+        <p class="eyebrow font-serif text-[15px] italic leading-tight text-ink/80">FAQ mini</p>
         <h2 class="display mt-2 text-3xl sm:text-4xl">Yang ditanya panitia</h2>
         <div class="mt-6 space-y-3">
           {
@@ -154,7 +154,7 @@ const schema = courseSchema({
     <section id="booking" class="mx-auto max-w-4xl scroll-mt-20 px-4 py-14 sm:px-6">
       <div class="grid gap-8 md:grid-cols-2">
         <div>
-          <p class="eyebrow text-xs font-black tracking-widest text-ink uppercase">Booking workshop</p>
+          <p class="eyebrow font-serif text-[15px] italic leading-tight text-ink/80">Booking workshop</p>
           <h2 class="display mt-2 text-3xl sm:text-4xl">Booking workshop<br />untuk akademi</h2>
           <p class="mt-4 text-sm leading-relaxed text-ink/65">
             Isi data singkat, WhatsApp langsung terbuka dengan pesan siap kirim, kami bantu susun jadwal,
@@ -165,7 +165,7 @@ const schema = courseSchema({
             target="_blank"
             rel="noopener noreferrer"
             data-wa-cta={`workshop-bawah-${w.slug}`}
-            class="mt-6 inline-flex rounded-2xl border border-gold px-6 py-3.5 text-sm font-bold text-ink transition hover:bg-gold hover:text-ink focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none active:scale-95"
+            class="mt-6 inline-flex rounded-2xl border border-brand px-6 py-3.5 text-sm font-bold text-ink transition hover:bg-brand hover:text-ink focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none active:scale-95"
           >
             Diskusi langsung via WA ↗
           </a>

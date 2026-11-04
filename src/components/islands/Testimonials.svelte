@@ -139,7 +139,7 @@
               </span>
             </div>
             <div class="flex flex-col justify-center p-6">
-              <p class="mb-3 flex items-center gap-1 text-gold" aria-label="Rating 5 dari 5">
+              <p class="mb-3 flex items-center gap-1 text-brand" aria-label="Rating 5 dari 5">
                 {#each Array(5) as _, s (s)}
                   <svg viewBox="0 0 20 20" class="h-3.5 w-3.5 fill-current" aria-hidden="true">
                     <path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8L10 1.6z"></path>
