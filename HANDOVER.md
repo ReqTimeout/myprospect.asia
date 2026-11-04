@@ -1966,3 +1966,21 @@ height: 100%; object-fit: cover;
 Jebakan: **preflight Tailwind** `img { max-width: 100% }` meng-clamp `100vw` kembali ke lebar container — harus dilepas dengan `max-width: none` (kalau tidak, tetap 1152px).
 
 Terukur: 9 gambar di homepage → semua **1440@0** (desktop) & **390@0** (mobile); `docW == vw` (tanpa scrollbar horizontal) di kedua viewport.
+
+---
+
+## 39. DEPLOY ke produksi (5 Nov 2026)
+
+Deployment: `e1e71995-a58f-4135-b52e-c948c9b45d66` · Environment **Production** · Branch **main** · Source `882015a` · preview `https://e1e71995.myprospect-7uk.pages.dev` · **domain kustom `https://myprospect.asia` = build yang sama** (diverifikasi langsung ke domain, bukan ke URL preview — §30.8).
+
+Perintah:
+```bash
+npm run build
+set -a && . ./.env.cf && set +a
+npx wrangler pages deploy dist --project-name myprospect --branch=main --commit-dirty=true
+git push origin main   # d488b78..882015a
+```
+
+Verifikasi domain live: apex 200 · www → apex 200 (301) · /berita/ 200 · /program/elite-1on1/ 200 · /api/settings 200 · `audit-frames` 0 overflow + 0 console error (desktop + mobile) · probe DOM: background image full-bleed 390@0 (mobile) & 1440@0 (desktop) · animasi `cta-halo` aktif · eyebrow tidak ada · link "Detail →" tidak ada · pill HEMAT bg `rgb(13,127,62)` (hijau diskon) · "MEMBERSHIP PASS" + "COMING SOON" ada · hero 653px · total scroll mobile 9.994px.
+
+Yang **tidak** ikut ter-deploy: perubahan data (D1 tidak disentuh), dan MiniMax belum bisa dipakai (kuota 2067) — aset section tetap foto asli klien + blend `multiply`.
