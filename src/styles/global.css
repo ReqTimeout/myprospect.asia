@@ -10,16 +10,18 @@
   --color-ink-2: #17110b;
   --color-bone: #f7f5f2;
 
-  /* Oranye penuh. #ff7a1a lama mengandung ~12% putih, jadi semua turunannya
-     (chip, border, swash, shadow) terlihat kusam seperti abu. */
-  --color-brand: #ff6a00;
-  /* Teks oranye di atas krem mentok di sini: lightness 37 adalah oranye paling
-     jenuh yang masih lolos AA 4.5:1. Lebih cerah dari itu rasio kontrasnya jatuh,
-     lebih gelap dari itu warnanya jadi cokelat. Karena itu oranye CERAH dipakai
-     sebagai bidang solid (chip, bar, tombol) — bukan sebagai warna teks kecil. */
-  --color-brand-dark: #bc4c00;
-  --color-brand-soft: #ffe3c4; /* panel solid, pengganti wash bg-brand/10../20 */
-  --color-brand-line: #ffc49a; /* border solid, pengganti border-brand/25../50 */
+  /* Oranye penuh dan CERAH. Revisi "masih gelap": #ff6a00 (hue 25) condong ke
+     merah sehingga terasa berat, dan brand-dark #bc4c00 (L31) jatuh ke cokelat.
+     Hue dinaikkan ke ~28 (lebih citrus/segar) dan lightness teks oranye naik ke
+     L40 supaya tetap oranye menyala, bukan bata. */
+  --color-brand: #ff7a00;
+  /* Teks oranye. #bc4c00 terlalu cokelat menurut klien ("masih gelap"), jadi
+     dinaikkan ke #cc5400 (L40): jauh lebih segar, kontras tetap ~4.2:1 di atas
+     paper untuk heading/label bold. Oranye CERAH tetap dipakai sebagai bidang
+     solid (chip, bar, tombol) — bukan sebagai teks kecil di atas krem. */
+  --color-brand-dark: #cc5400;
+  --color-brand-soft: #ffe2cb; /* panel solid, pengganti wash bg-brand/10../20 */
+  --color-brand-line: #ffc59c; /* border solid, pengganti border-brand/25../50 */
   --color-gold: #ffc32e;
   --color-gold-soft: #ffe58a;
   --color-crimson: #c8232b;
@@ -36,7 +38,7 @@
   --radius-card: 1.25rem;
 
   --shadow-soft: 0 14px 34px -22px rgba(36, 26, 18, 0.2);
-  --shadow-pop: 0 18px 38px -22px rgb(255 106 0 / 0.45);
+  --shadow-pop: 0 18px 38px -22px rgb(255 122 0 / 0.45);
 
   /* Yang tersisa hanya gerak yang bermakna: masuk/keluar panel, dan
      carousel konten yang berhenti saat disentuh. Gerak dekoratif
@@ -119,7 +121,7 @@ body {
 }
 
 .art-dots-brand {
-  background-image: radial-gradient(rgb(255 106 0 / 0.32) 1.4px, transparent 1.4px);
+  background-image: radial-gradient(rgb(255 122 0 / 0.32) 1.4px, transparent 1.4px);
   background-size: 20px 20px;
 }
 

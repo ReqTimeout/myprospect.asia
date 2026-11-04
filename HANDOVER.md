@@ -1025,3 +1025,26 @@ Desktop 1440×900 dan mobile 390×844. Verifier dipromosikan jadi permanen di `s
 Deploy pertama memakai `--branch=production` dan **berhasil tanpa error**, tetapi Cloudflare mencatatnya sebagai environment **Preview** karena `production_branch` proyek adalah `main` (cek: `GET /pages/projects/myprospect` → `production_branch`). Domain `myprospect.asia` hanya menyajikan environment Production, jadi ia tetap menampilkan build lama — lengkap dengan wash `bg-brand/10`/`border-gold/40` yang sudah kita hapus. `audit-palette` terhadap domain live langsung membongkar ini (oranye masih pudar), padahal build lokal & URL preview sudah bersih.
 
 Perintah yang benar (sudah tercatat di §Depan, baris deploy): `set -a && . ./.env.cf` (token OAuth bawaan wrangler menunjuk akun lain) lalu `npx wrangler pages deploy dist --project-name myprospect --branch=main --commit-dirty=true`. Setelah benar, deployment list menunjukkan Environment **Production** / branch `main` / source `fabd3af`, dan `myprospect.asia` menjadi: 0 wash class, `bg-brand-soft` 28×, `text-ink/70` 145×, `#ff6a00 @1 → S 100%`, favicon `/favicon.svg`. **Selalu verifikasi domain live, bukan hanya URL preview**, karena preview bisa hijau sementara produksi masih basi.
+
+## 31. Oranye revisi #2 — "kurang fresh, masih gelap" (4 Nov 2026)
+
+Keluhan: setelah §30 tayang, klien masih merasa oranye **terang tapi berat** — `#ff6a00` (hue 25) condong ke merah sehingga terasa "gelap", dan teks/heading oranye memakai `brand-dark #bc4c00` (L31) yang jatuh ke cokelat. Ini bukan lagi soal wash (sudah beres di §30), melainkan **hue + lightness** dua token inti.
+
+### 31.1 Palet baru
+
+| Token | §30 | **§31 (baru)** | Perubahan |
+|---|---|---|---|
+| `--color-brand` | `#ff6a00` | **`#ff7a00`** | Hue 25 → **29** (lebih citrus/segar), L tetap 50, S 100%. Dipakai untuk bidang solid + angka dekoratif. |
+| `--color-brand-dark` | `#bc4c00` | **`#cc5400`** | Lightness 31 → **40** (L40) sehingga oranye heading/label menyala, tidak cokelat. |
+| `--color-brand-soft` | `#ffe3c4` | `#ffe2cb` | Ikut dinaikkan satu tingkat agar sehue dengan brand baru. |
+| `--color-brand-line` | `#ffc49a` | `#ffc59c` | Selaras. |
+
+Nilai turutan yang ikut disinkronkan ke `#ff7a00`/`#cc5400`: `--shadow-pop` dan `.art-dots-brand` di `global.css` (`rgb(255 122 0 …)`), blok `:root` + tautan 404 di `functions/berita/[slug].ts`, serta `border`/`wash` tone `kolaborasi` di `src/data/categories.ts`. **Pengingat §30.7**: tiga sumber gaya harus diubah bersamaan, tidak cukup `global.css` saja.
+
+### 31.2 Kompromi kontras (disengaja)
+
+Menerangkan `brand-dark` adalah trade-off nyata. Fisika warna: **tidak ada oranye yang sekaligus "segar" dan lolos AA 4.5:1 di atas krem** — `#bc4c00` (4.92:1) sudah dipilih di §29 justru karena dia oranye paling cerah yang masih lolos untuk teks kecil. Menaikkan L ke 40 memindahkan label bold kecil (uppercase 9–12px) ke **3.97–4.34:1** (gagal AA kecil, masih lolos large-text 3:1). Semua heading display (≥24px) lolos nyaman. Keputusan ini mengikuti **permintaan eksplisit klien** yang dua kali menolak oranye gelap; prioritas: user request > konvensi AA internal. Kalau nanti aksesibilitas ketat diperlukan lagi, tinggal kembalikan `--color-brand-dark` ke `#bc4c00` dan hanya terapkan `#cc5400` pada heading besar lewat token terpisah.
+
+### 31.3 Verifikasi
+
+`npm run build` 12 halaman bersih. `audit-palette` (localhost): `#ff7a00 @1 → S 100 L 50 H 29` dan `#cc5400 @1 → S 100 L 40 H 25` — keduanya alpha penuh, tanpa wash. `verify-ai` 2 viewport × 7 halaman: 0 error, 0 tanda pisah, 0 gradien warna, 0 blur, animasi `infinite` tetap 2 (`rail-slide`). Flag kontras yang baru hanya baris `rgb(204,84,0)` di 3.97–4.34 (label kecil, trade-off §31.2) plus kerumunan lama (teks di atas foto, ghost word) yang tetap positif palsu.
