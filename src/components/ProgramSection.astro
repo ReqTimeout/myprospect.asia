@@ -145,47 +145,47 @@ const hemat = (coret: number | undefined, harga: number) =>
   </div>
 
   <!-- Membership: kartu PERSIS pola kartu program (foto atas + isi bawah). -->
-  <article class="spot prog-card group relative mt-6 flex flex-col overflow-hidden rounded-3xl">
-    <div class="relative z-10 grid gap-6 p-6 sm:p-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-10">
-      <div>
-        <span class="inline-flex items-center gap-2 rounded-full bg-brand px-3 py-1 text-[10px] font-black tracking-widest text-white uppercase">
-          <span class="h-1.5 w-1.5 rounded-full bg-white" aria-hidden="true"></span>
+  <!-- Membership = satu objek "pass" oranye: semua teks ditata seperti tiket,
+       tanpa tombol dan tanpa foto (permintaan klien). Notch tiket + garis
+       teknis tinta menjaga rasa "sport". -->
+  <article
+    class="ticket relative mt-6 overflow-hidden rounded-3xl bg-brand"
+    style="--notch-y: 50%; --notch-bg: var(--color-paper-deep);"
+  >
+    <div class="pat-grid absolute inset-0 opacity-45" aria-hidden="true"></div>
+    <div
+      class="art-pitch absolute inset-0 opacity-30 [mask-image:linear-gradient(to_top_left,black,transparent_75%)]"
+      aria-hidden="true"
+    >
+    </div>
+    <span class="display absolute right-6 bottom-0 text-8xl leading-none text-ink/15" aria-hidden="true">04</span>
+
+    <div class="relative p-6 sm:p-9">
+      <div class="flex items-center justify-between gap-3">
+        <span class="text-[10px] font-black tracking-[0.22em] text-ink/70 uppercase">Prospect Asia</span>
+        <span class="text-[10px] font-black tracking-[0.22em] text-ink/70 uppercase">Membership pass</span>
+      </div>
+
+      <div class="mt-6">
+        <span class="inline-flex items-center gap-2 rounded-full bg-ink px-3 py-1 text-[10px] font-black tracking-widest text-white uppercase">
+          <span class="h-1.5 w-1.5 rounded-full bg-brand" aria-hidden="true"></span>
           Coming Soon
         </span>
-        <h3 class="display mt-4 text-3xl text-ink sm:text-4xl">Membership Program</h3>
-        <p class="mt-4 inline-flex max-w-sm items-center gap-2 rounded-xl border border-ink/10 bg-paper-deep px-3.5 py-2.5 text-[13px] leading-snug font-semibold text-ink">
-          <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-brand" aria-hidden="true"></span>
-          Sesi rutin, tanpa booking ulang
-        </p>
+        <h3 class="display mt-4 text-4xl text-ink sm:text-5xl">Membership Program</h3>
+        <p class="mt-2 text-sm font-semibold text-ink/85">Sesi rutin, tanpa booking ulang</p>
       </div>
 
-      <!-- Art "membership pass": bidang oranye + garis teknis tinta, tanpa foto.
-           Flat, premium, dan tetap terbaca di desktop maupun mobile. -->
-      <div class="relative overflow-hidden rounded-2xl bg-brand">
-        <div class="pat-grid absolute inset-0 opacity-45" aria-hidden="true"></div>
-        <div
-          class="art-pitch absolute inset-0 opacity-30 [mask-image:linear-gradient(to_top_left,black,transparent_75%)]"
-          aria-hidden="true"
-        >
-        </div>
-        <span class="relative flex min-h-44 flex-col justify-between p-5 sm:min-h-52 sm:p-6">
-          <span class="text-[10px] font-black tracking-[0.22em] text-ink uppercase">Prospect Asia</span>
-          <span class="display text-6xl leading-none text-ink sm:text-7xl">04</span>
-          <span class="text-[10px] font-black tracking-[0.22em] text-ink uppercase">Membership pass</span>
-        </span>
-      </div>
+      <ul class="mt-7 grid gap-x-6 gap-y-2 border-t border-ink/20 pt-5 sm:grid-cols-2 lg:grid-cols-4">
+        {membershipBenefits.map((b) => (
+          <li class="flex items-start gap-2 text-[13px] font-semibold text-ink/90">
+            <span class="text-ink" aria-hidden="true">
+              ✓
+            </span>
+            {b}
+          </li>
+        ))}
+      </ul>
     </div>
-
-    <ul class="grid gap-x-6 gap-y-3 border-t border-ink/10 px-6 py-5 sm:grid-cols-2 sm:px-8 lg:grid-cols-4">
-      {membershipBenefits.map((b) => (
-        <li class="flex items-start gap-2 text-[13px] text-ink">
-          <span class="text-brand" aria-hidden="true">
-            ✓
-          </span>
-          {b}
-        </li>
-      ))}
-    </ul>
   </article>
   </div>
 </section>
