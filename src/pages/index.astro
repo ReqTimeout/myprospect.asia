@@ -41,20 +41,22 @@ const schema = [organizationSchema, faqSchema(faqs)];
         <span class="text-sm font-black text-ink">2.175+ atlet</span>
       </div>
 
-      <p data-hero="badge" class="relative z-10 mb-5 inline-block rounded-full bg-brand px-4 py-1.5 text-[11px] font-bold tracking-[0.2em] text-ink uppercase sm:text-xs">
-        #JadiAtletModern
-      </p>
-
-      <h1 data-hero="title" class="display relative z-10 text-[12vw] leading-[0.92] sm:text-6xl md:text-7xl lg:text-8xl">
-        Jadi Atlet<br />
-        <span class="text-brand">Modern</span> dengan<br />
-        Sports Communication
+      <h1 data-hero="title" class="display relative z-10 text-[9vw] leading-[0.94] sm:text-5xl md:text-6xl lg:text-7xl">
+        Kini <span class="text-brand">#JadiAtletModern</span><br />
+        Harus Bisa Bahasa Inggris<br />
+        &amp; Public Speaking!
       </h1>
 
-      <p data-hero="sub" class="relative z-10 mt-5 max-w-md text-sm leading-relaxed text-ink/70 sm:text-base">
-        Public speaking &amp; bahasa Inggris khusus atlet, biar suaramu sekuat performamu.
-        Online, fleksibel, didampingi coach berpengalaman.
-      </p>
+      <!-- Sub headline sesuai copy klien: tiga pilar program sebagai chip. -->
+      <ul data-hero="sub" class="relative z-10 mt-6 flex max-w-xl flex-wrap items-center justify-center gap-2">
+        {
+          ['English for Athletes', 'Public Speaking for Athletes', 'Digital Literacy & Personal Branding'].map((c) => (
+            <li class="rounded-full border border-brand bg-brand-soft px-3.5 py-2 text-[11px] font-semibold text-ink sm:text-xs">
+              {c}
+            </li>
+          ))
+        }
+      </ul>
 
       <div class="relative z-10 mt-8 w-full max-w-lg sm:max-w-2xl">
         <img

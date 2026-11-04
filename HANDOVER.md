@@ -1471,3 +1471,37 @@ Jumlah kolom per kelompok disimpan di `grup[].cols` supaya **barisnya terisi pen
 ### 39.5 Revisi: tile mitra tanpa box
 
 Klien: *"bisa ga gausah pake box jadi kelihatan penuh"*. Kartu (`rounded-xl border bg-white`) dihapus — logo + nama langsung di atas latar putih, seperti logo wall biasa. Logo box dinaikkan 40/48 → 48/56px. Hover cukup naik 2px + nama jadi oranye.
+
+---
+
+## 40. Hero + About memakai copy resmi klien (4 Nov 2026)
+
+Klien mengirim copy resmi (dokumen teks) untuk dua banner. **Semua dipakai verbatim** — bahasa klien, bukan parafrase.
+
+### 40.1 Banner paling atas (hero)
+
+| Bagian | Copy klien | Implementasi |
+|---|---|---|
+| Headline | "Kini #JadiAtletModern Harus Bisa Bahasa Inggris & Public Speaking!" | h1 display 3 baris; **#JadiAtletModern** oranye (`text-brand`) |
+| Sub headline | [English for Athletes] [Public Speaking for Athletes] [Digital Literacy & Personal Branding] | **3 chip** `bg-brand-soft border-brand` |
+
+- Chip `#JadiAtletModern` yang dulu di atas headline **dihapus** — hashtag sekarang ada di dalam headline, jadi dobel.
+- Sub paragraf lama ("Public speaking & bahasa Inggris khusus atlet…") **dihapus** — diganti 3 chip sesuai spec.
+- Ukuran h1 diturunkan 8xl → 7xl karena headline baru ±2× lebih panjang (3 baris tetap muat).
+- Stiker "SPEAK LOUD!" dan pill "2.175+ atlet" dipertahankan (flair brand, bukan latar).
+
+### 40.2 Banner lainnya (section About)
+
+| Bagian | Copy klien |
+|---|---|
+| Headline | "Kenapa Sports Communication Penting?" |
+| Paragraf 1 | "Karena Sports Communication mengajarkan keterampilan fundamental bagi **anak dan calon atlet** modern untuk berkembang dan naik ke level berikutnya." |
+| Paragraf 2 | "Melalui **Public Speaking** dan **Bahasa Inggris** khusus atlet, anak akan belajar berkomunikasi dengan percaya diri, menghadapi media, berbicara dengan pelatih asing, wasit, serta ofisial, sehingga dapat membuka peluang lebih besar di dunia olahraga." |
+
+- Eyebrow jadi "Tentang Sports Communication"; heading = pertanyaan klien.
+- Perhatikan perubahan nada: klien memakai "**anak dan calon atlet**" (bukan "atlet") — audiens meluas. Jangan "perbaiki" kembali ke copy lama.
+- Chip lama About ("Fun Communication for Active Kids" dst.) **dihapus** — tidak ada di copy klien dan konsepnya sudah dipindah ke hero.
+
+### 40.3 Verifikasi lokal
+
+`audit-frames` 0 overflow + 0 console error · `audit-clip` **0 overflow / 0 covered** · `verify-ai` 17 flag (dekoratif; tambahannya "Modern" → "#JadiAtletModern", kategori sama: teks display besar oranye) · `verify-dock` / `verify-wa-green` / `verify-testimoni` / `verify-admin-ui` **SEMUA PASS** · pw-vision 22/22, 0 overflow, 0 small target · vision desktop + mobile.
