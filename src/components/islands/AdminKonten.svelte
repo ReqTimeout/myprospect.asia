@@ -289,7 +289,7 @@
   const btnPrimary =
     'rounded-2xl bg-brand px-5 py-3 text-sm font-bold text-ink transition hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:outline-none active:scale-95 disabled:opacity-50';
   const btnGhost =
-    'rounded-2xl border border-slate-200 bg-white px-5 py-3 text-sm font-bold text-slate-600 transition hover:border-brand hover:text-brand-dark focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:outline-none';
+    'rounded-2xl border border-slate-200 bg-white px-5 py-3 text-sm font-bold text-slate-600 transition hover:border-brand hover:text-brand-text focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:outline-none';
 </script>
 
 <div class="space-y-5">
@@ -314,7 +314,7 @@
         onclick={() => (sub = s.id)}
         class={[
           'rounded-full border px-4 py-2 text-xs font-bold transition focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:outline-none',
-          sub === s.id ? 'border-brand bg-brand/10 text-brand-dark' : 'border-slate-200 bg-white text-slate-500 hover:border-slate-300',
+          sub === s.id ? 'border-brand bg-brand/10 text-brand-text' : 'border-slate-200 bg-white text-slate-500 hover:border-slate-300',
         ]}
       >
         {s.label}
@@ -323,7 +323,7 @@
   </div>
 
   {#if msg}<p class="text-xs font-bold text-emerald-600">{msg}</p>{/if}
-  {#if err}<p class="text-xs font-bold text-brand-dark">{err}</p>{/if}
+  {#if err}<p class="text-xs font-bold text-brand-text">{err}</p>{/if}
 
   {#if !loaded}
     <p class="text-sm text-slate-500">Memuat…</p>
@@ -392,7 +392,7 @@
                 <input type="file" class="sr-only" accept="image/*" disabled={coverBusy} onchange={unggahSampul} />
               </label>
 
-              {#if coverErr}<p class="text-xs font-bold text-brand-dark">{coverErr}</p>{/if}
+              {#if coverErr}<p class="text-xs font-bold text-brand-text">{coverErr}</p>{/if}
               {#if coverMsg}<p class="text-xs font-bold text-emerald-600">{coverMsg}</p>{/if}
 
               <div>
@@ -470,7 +470,7 @@
                     type="button"
                     onclick={() => editPost(p)}
                     aria-label={`Edit ${p.title}`}
-                    class="rounded-xl border border-slate-200 p-2.5 text-slate-500 transition hover:border-brand hover:text-brand-dark focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:outline-none"
+                    class="rounded-xl border border-slate-200 p-2.5 text-slate-500 transition hover:border-brand hover:text-brand-text focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:outline-none"
                   >
                     <Pen size={15} />
                   </button>
@@ -545,7 +545,7 @@
                   type="button"
                   onclick={() => deleteItem('testimonials', t.id)}
                   aria-label={`Hapus ${t.title}`}
-                  class="rounded-xl border border-slate-200 p-2.5 text-slate-500 transition hover:border-brand hover:text-brand-dark focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:outline-none"
+                  class="rounded-xl border border-slate-200 p-2.5 text-slate-500 transition hover:border-brand hover:text-brand-text focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:outline-none"
                 >
                   <Trash2 size={15} />
                 </button>
@@ -610,7 +610,7 @@
                   type="button"
                   onclick={() => deleteItem('faq', f.id)}
                   aria-label={`Hapus ${f.title}`}
-                  class="rounded-xl border border-slate-200 p-2.5 text-slate-500 transition hover:border-brand hover:text-brand-dark focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:outline-none"
+                  class="rounded-xl border border-slate-200 p-2.5 text-slate-500 transition hover:border-brand hover:text-brand-text focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:outline-none"
                 >
                   <Trash2 size={15} />
                 </button>

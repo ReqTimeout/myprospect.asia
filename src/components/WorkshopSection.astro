@@ -53,7 +53,7 @@ const gallery = [
       </div>
     </div>
 
-    <div class="relative overflow-hidden rounded-3xl border border-ink/10 shadow-[0_28px_60px_-30px_rgba(36,26,18,0.45)]">
+    <div class="relative overflow-hidden rounded-3xl border border-ink/10 shadow-[0_28px_60px_-30px_rgba(27,27,31,0.45)]">
       <AutoGallery
         images={gallery}
         step={5}
@@ -101,7 +101,7 @@ const gallery = [
                 )}
                 <p class="mt-1.5 text-[11px] text-ink/70">per sesi · {w.target}</p>
               </div>
-              <p class="mt-1.5 min-h-[1rem] text-[11px] font-black text-brand-dark">{w.catatan ?? ''}</p>
+              <p class="mt-1.5 min-h-[1rem] text-[11px] font-black text-brand-text">{w.catatan ?? ''}</p>
             </div>
 
             <p class="mt-4 min-h-[4.5rem] text-sm leading-relaxed text-ink/70">{w.ringkasan}</p>
@@ -109,7 +109,7 @@ const gallery = [
             <ul class="mt-4 flex-1 space-y-2 text-[13px] text-ink/75">
               {w.didapat.map((d) => (
                 <li class="flex gap-2">
-                  <span class="text-brand-dark" aria-hidden="true">
+                  <span class="text-brand-text" aria-hidden="true">
                     ✓
                   </span>
                   {d}
@@ -132,7 +132,7 @@ const gallery = [
               </a>
               <a
                 href={`/workshop/${w.slug}`}
-                class="rounded-xl px-2 py-3 text-xs font-bold text-brand-dark transition hover:underline focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
+                class="rounded-xl px-2 py-3 text-xs font-bold text-brand-text transition hover:underline focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
               >
                 Detail →
               </a>

@@ -28,9 +28,9 @@
 <div class="space-y-3">
   {#each list as f, i (f.q)}
     <details class="group rounded-2xl border border-ink/10 bg-white shadow-sm open:border-brand" open={i === 0}>
-      <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-sm font-bold transition hover:text-brand-dark focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none sm:text-base">
+      <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-sm font-bold transition hover:text-brand-text focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none sm:text-base">
         {f.q}
-        <span class="shrink-0 text-brand-dark transition-transform duration-200 group-open:rotate-45" aria-hidden="true">+</span>
+        <span class="shrink-0 text-brand-text transition-transform duration-200 group-open:rotate-45" aria-hidden="true">+</span>
       </summary>
       <p class="px-5 pb-5 text-sm leading-relaxed text-ink/70">{f.a}</p>
     </details>

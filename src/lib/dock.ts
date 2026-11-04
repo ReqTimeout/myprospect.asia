@@ -111,16 +111,16 @@ export const DOCK_CSS = `
 /* ---- Dock mobile (identik dengan Dock.svelte di situs Astro) ---- */
 .dock{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;justify-content:center;pointer-events:none;padding:0 12px calc(0.75rem + env(safe-area-inset-bottom))}
 @media(min-width:1024px){.dock{display:none}}
-.dock-in{display:flex;width:100%;max-width:28rem;align-items:stretch;gap:4px;pointer-events:auto;background:var(--paper);border:1px solid rgba(36,26,18,.1);border-radius:24px;padding:8px;box-shadow:0 18px 40px -12px rgba(36,26,18,.28);transition:transform .3s ease-out}
+.dock-in{display:flex;width:100%;max-width:28rem;align-items:stretch;gap:4px;pointer-events:auto;background:var(--paper);border:1px solid rgba(27,27,31,.1);border-radius:24px;padding:8px;box-shadow:0 18px 40px -12px rgba(27,27,31,.28);transition:transform .3s ease-out}
 .dock.is-hidden .dock-in{transform:translateY(130%)}
-.dock-item{display:flex;min-width:0;flex:1 1 0;flex-direction:column;align-items:center;gap:4px;padding:6px 4px;border-radius:16px;text-decoration:none;color:rgba(36,26,18,.7);transition:color .2s,background-color .2s}
-.dock-item[aria-current="page"]{color:var(--brand-dark)}
+.dock-item{display:flex;min-width:0;flex:1 1 0;flex-direction:column;align-items:center;gap:4px;padding:6px 4px;border-radius:16px;text-decoration:none;color:rgba(27,27,31,.7);transition:color .2s,background-color .2s}
+.dock-item[aria-current="page"]{color:var(--brand-text)}
 .dock-ico{display:grid;width:40px;height:40px;place-items:center;border-radius:16px;transition:transform .3s ease}
 .dock-item[aria-current="page"] .dock-ico{background:var(--brand-soft);transform:translateY(-2px) scale(1.1)}
 .dock-lbl{font-size:9px;line-height:1;font-weight:600;letter-spacing:-.01em;white-space:nowrap}
 .dock-wa{background:#25d366;color:var(--ink)}
 .dock-wa svg{width:22px;height:22px}
-.dock-lbl--wa{color:rgba(36,26,18,.7)}
+.dock-lbl--wa{color:rgba(27,27,31,.7)}
 `;
 
 /** Scroll-hide dock — perilaku yang sama dengan onMount() di Dock.svelte. */

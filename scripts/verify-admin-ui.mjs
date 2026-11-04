@@ -304,8 +304,13 @@ for (const vp of VIEWPORTS) {
   // 7) kebersihan runtime
   // /cdn-cgi/rum = beacon Real User Monitoring yang disuntik Cloudflare sendiri, bukan kode aplikasi
   const isNoise = (t) => /favicon|robots\.txt|cdn-cgi\/rum/i.test(t);
+  // Login → /admin dan logout → /admin/login memindahkan halaman sebelum fetch
+  // selesai dibaca. Di edge produksi responsnya cepat (tidak ada requestfailed),
+  // di wrangler pages dev lokal sering ter-*"abort"* karena navigasi duluan.
+  // Itu balapan timing, bukan kegagalan — jangan dihitung.
+  const isAbortRace = (t) => /^POST .*\/api\/admin\/(login|logout)$/.test(t);
   const noisyConsole = consoleErrors.filter((t) => !isNoise(t));
-  const noisyReq = failedReq.filter((t) => !isNoise(t));
+  const noisyReq = failedReq.filter((t) => !isNoise(t) && !isAbortRace(t));
   check('7 tidak ada console error', noisyConsole.length === 0, noisyConsole.slice(0, 3).join(' | '));
   check('7 tidak ada request gagal', noisyReq.length === 0, noisyReq.slice(0, 3).join(' | '));
 

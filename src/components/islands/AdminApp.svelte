@@ -94,7 +94,7 @@
     gagal: 'Gagal',
   };
   const statusClass: Record<Status, string> = {
-    baru: 'bg-brand/10 text-brand-dark',
+    baru: 'bg-brand/10 text-brand-text',
     dikontak: 'bg-amber-100 text-amber-700',
     terjadwal: 'bg-sky-100 text-sky-700',
     daftar: 'bg-emerald-100 text-emerald-700',
@@ -484,7 +484,7 @@
         <button
           type="button"
           onclick={logout}
-          class="flex items-center gap-1.5 rounded-xl border border-slate-200 px-3 py-2 text-xs font-bold text-slate-500 transition hover:border-brand hover:text-brand-dark focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:outline-none active:scale-95"
+          class="flex items-center gap-1.5 rounded-xl border border-slate-200 px-3 py-2 text-xs font-bold text-slate-500 transition hover:border-brand hover:text-brand-text focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:outline-none active:scale-95"
         >
           <LogOut size={14} />
           Keluar
@@ -576,7 +576,7 @@
                         deltaUv.naik
                           ? 'bg-emerald-500/15 text-emerald-600'
                           : deltaUv.turun
-                            ? 'bg-brand/15 text-brand-dark'
+                            ? 'bg-brand/15 text-brand-text'
                             : 'bg-slate-100 text-slate-500',
                       ]}
                     >
@@ -628,7 +628,7 @@
                   <span
                     class={[
                       'inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-black',
-                      d.naik ? 'bg-emerald-500/15 text-emerald-600' : d.turun ? 'bg-brand/15 text-brand-dark' : 'bg-slate-100 text-slate-500',
+                      d.naik ? 'bg-emerald-500/15 text-emerald-600' : d.turun ? 'bg-brand/15 text-brand-text' : 'bg-slate-100 text-slate-500',
                     ]}
                   >
                     {#if d.naik}<ChevronUp size={11} />{:else if d.turun}<ChevronDown size={11} />{/if}
@@ -712,7 +712,7 @@
                     style="left: {Math.min(88, Math.max(12, (hover / Math.max(1, n - 1)) * 100))}%"
                   >
                     <p class="text-slate-500">{labelHari(titikAktif.day)}</p>
-                    <p class="mt-0.5 text-brand-dark">{titikAktif.pv} halaman</p>
+                    <p class="mt-0.5 text-brand-text">{titikAktif.pv} halaman</p>
                     <p class="text-amber-700">{titikAktif.uv} pengunjung</p>
                     <p class="text-slate-500">{titikAktif.klik} klik WA · {titikAktif.lead} lead</p>
                   </div>
@@ -1014,7 +1014,7 @@
               onclick={() => setFilter(f as typeof filter)}
               class={[
                 'rounded-full px-3.5 py-2 text-xs font-bold transition focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:outline-none',
-                filter === f ? 'bg-brand text-ink' : 'border border-slate-200 bg-white text-slate-500 hover:border-brand/50 hover:text-brand-dark',
+                filter === f ? 'bg-brand text-ink' : 'border border-slate-200 bg-white text-slate-500 hover:border-brand/50 hover:text-brand-text',
               ]}
             >
               {f === 'semua' ? 'Semua' : statusLabel[f as Status]}
@@ -1136,7 +1136,7 @@
           </div>
 
           {#if mediaError}
-            <p class="mt-2 text-xs text-brand-dark">{mediaError}</p>
+            <p class="mt-2 text-xs text-brand-text">{mediaError}</p>
           {:else if media?.siap}
             <p class="mt-2 text-xs text-slate-500">Bucket sudah ter-binding. Unggah di bawah, key-nya dipakai di form konten.</p>
           {:else}
@@ -1174,7 +1174,7 @@
               <input type="file" class="sr-only" accept="image/*,video/mp4" disabled={sedangKirim} onchange={kirimBerkas} />
             </label>
             {#if pesanMedia}<p class="mt-2 text-xs text-emerald-600">{pesanMedia}</p>{/if}
-            {#if salahMedia}<p class="mt-2 text-xs text-brand-dark">{salahMedia}</p>{/if}
+            {#if salahMedia}<p class="mt-2 text-xs text-brand-text">{salahMedia}</p>{/if}
 
             {#if berkas.length > 0}
               <p class="mt-4 mb-2 text-[11px] text-slate-500">
@@ -1306,7 +1306,7 @@
                 <p class="text-xs text-amber-700">{settingsMsg}</p>
               {/if}
               {#if settingsErr}
-                <p class="text-xs text-brand-dark">{settingsErr}</p>
+                <p class="text-xs text-brand-text">{settingsErr}</p>
               {/if}
             </div>
           {/if}
@@ -1323,7 +1323,7 @@
           onclick={() => (tab = t.id)}
           class={[
             'flex min-w-0 flex-1 flex-col items-center gap-0.5 rounded-xl px-1 py-2 transition focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:outline-none active:scale-95',
-            tab === t.id ? 'bg-brand/10 text-brand-dark' : 'text-slate-500',
+            tab === t.id ? 'bg-brand/10 text-brand-text' : 'text-slate-500',
           ]}
         >
           <t.icon size={17} />

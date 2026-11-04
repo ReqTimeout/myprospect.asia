@@ -1142,3 +1142,99 @@ Dijalankan terhadap `wrangler pages dev dist --port 8788` (fungsi Pages aktif, D
 3. **Logo mitra & foto coach asli** — `Website Material/Coaches Picture/` masih kosong; lencana SVG dipakai sebagai ganti (§15.8).
 4. **Copy "SPEAK LOUD!"** — masih playful; klien mungkin mau lebih formal (§16.5).
 5. Push + deploy (`--branch=main`) **setelah klien setuju**.
+
+---
+
+## 34. Arah warna "Putih dominan" — akar masalah "kumal" ditemukan (4 Nov 2026)
+
+Keluhan klien: *"gimana ya warna orange dan hitam dark jadinya kumal, kamu ada ide warna ga.. orange fresh dengan putih?"*
+
+### 34.1 Akar masalahnya: hue oranye = hue "hitam"
+
+Token lama diuji dengan HSL:
+
+| Token | Nilai | HSL | Hue |
+|---|---|---|---|
+| `--color-brand` (oranye) | `#ff8000` | 30, 100%, 50% | **30.1** |
+| `--color-ink-2` ("hitam") | `#17110b` | 30, 35%, 7% | **30.0** |
+| `--color-ink` (teks) | `#241a12` | 27, 33%, 11% | 26.7 |
+
+"Hitam" yang dipakai situs **bukan hitam** — dia cokelat gelap di **hue yang sama persis** dengan oranye. Dua warna hue-30 berdampingan = tanah liat/terakota, hasilnya persis "kumal". Oranye yang sama akan teriak kalau field gelapnya **netral**.
+
+### 34.2 Arah yang dipilih klien: A — Putih dominan, dark minimal
+
+Sudah diterapkan di localhost (belum di-deploy). Prinsipnya:
+
+| Token | Lama | Baru | Alasan |
+|---|---|---|---|
+| `--color-paper` | `#fffcf7` | **`#ffffff`** | putih jadi field utama |
+| `--color-paper-deep` | `#fff3e4` | **`#fff5ea`** | krem sangat tipis untuk section/kaki |
+| `--color-ink` | `#241a12` | **`#1b1b1f`** | arang netral, bukan cokelat → teks lebih tajam |
+| `--color-ink-2` | `#17110b` | **`#121316`** | hitam netral (bukan cokelat) |
+| `--color-brand` | `#ff8000` | **`#ff8000` (tidak diubah)** | sudah disetujui klien 3×; kesegaran datang dari putih dominannya |
+| `--color-brand-dark` | `#d96a00` | `#d96a00` (tidak diubah) | hanya untuk teks besar/decor |
+| **`--color-brand-text`** | — | **`#ad5000`** (BARU) | teks oranye **kecil**: `#d96a00` cuma 3.4:1, `#ad5000` tembus **5.3:1 di putih & 5.0:1 di krem** (AA) |
+| `--color-brand-soft` | `#ffe6cc` | `#ffe8d1` | |
+| `--color-bone` | `#f7f5f2` | tidak diubah | teks di atas permukaan gelap |
+
+Semua warna hardcoded cokelat ikut disinkronkan: `rgba(36,26,18,…)` → `rgba(27,27,31,…)` (21 file), SVG data-URI `%23241a12` → `%231b1b1f`, `%23ff6a00` → `%23ff8000`, `.crest-stop-*` → `#1b1b1f`.
+
+### 34.3 Blok gelap direduksi
+
+Dulu ada 5 blok gelap penuh; sekarang **3** (+ 2 kartu, bukan field):
+
+| Blok | Status |
+|---|---|
+| ticker + scoreboard (`surface-ink`) | **tetap gelap** — momen 1 |
+| Section Program | **jadi terang** (`bg-paper-deep`, kartu putih, judul tinta) |
+| Banner Membership | tetap gelap (`#121316`) — kartu premium, foto turun ke opacity-15 |
+| Kartu jersey coach | tetap gelap — kartu, bukan field |
+| Pita CTA (`CtaBand`) | **tetap gelap** — momen 2 |
+| Footer | terang sejak dulu (`bg-paper-deep`) |
+| Strip mitra | terang (lencana ink di kartu putih) |
+
+`ProgramBackdrop` (garis lapangan) digambar dari putih → tinta netral, `prog-bg__vignette` dihapus.
+
+### 34.4 Teks kecil oranye → `text-brand-text`
+
+Sweep 21 file: `text-brand-dark` → `text-brand-text` **kecuali** yang berawalan `display` (teks besar, 3.4:1 sudah cukup untuk ≥24px). Yang kena: eyebrow, label form, link "Detail →", caption harga, centang `✓`, label kategori berita, dock label aktif.
+
+### 34.5 Tiga sumber gaya (jebakan §30.7) — semuanya disinkronkan
+
+1. `src/styles/global.css` (token + utilitas)
+2. `src/lib/dock.ts` (`DOCK_CSS` — dipakai island + Function)
+3. `functions/berita/[slug].ts` (CSS inline halaman detail berita): `:root` → `--ink:#1b1b1f; --paper:#ffffff; --paper-deep:#fff5ea; --brand-text:#ad5000`, semua `rgba(36,26,18,…)` → `rgba(27,27,31,…)`
+
+### 34.6 Trade-off yang diterima
+
+`text-brand` (#ff8000) di atas putih = **2.52:1**, jadi kata "MODERN" di hero (96px) dan angka dekoratif `01/02/03` di kartu program masih di bawah ambang 3:1. Ini **meminta klien secara eksplisit** (§31.2: "Modern jangan di-highlight, teks oranye"), jadi tidak diubah — sama seperti catatan §31.1. Semua teks isi kecil sudah naik ke AA lewat `brand-text`.
+
+### 34.7 Verifikasi lokal (semua PASS, `wrangler pages dev dist` :8788)
+
+| Verifier | Hasil |
+|---|---|
+| `npm run build` | 12 halaman, bersih |
+| `audit-frames.mjs` | desktop+mobile: `horizontalOverflow:false`, `over:[]`, `revealNotIn 0/22`, **0 console error** |
+| `audit-clip.mjs` | 10 halaman × 2 viewport → **0 overflow, 0 covered** |
+| `verify-ai.mjs` | 7 halaman × 2 viewport → 0 gradien, 0 blur, 0 tanda pisah, 0 error, 0 request gagal; 18 flag kontras = **semua dekoratif** (`ghost-word`, angka `01-03`, "MODERN" besar) |
+| `verify-home.mjs` | 0 console error, 0 request gagal |
+| `verify-dock.mjs` | **SEMUA PASS** |
+| `verify-wa-green.mjs` | **SEMUA PASS** |
+| `verify-testimoni.mjs` | **SEMUA PASS** (17 pemeriksaan) |
+| `verify-admin-ui.mjs` | **SEMUA PASS** (desktop + mobile) |
+| pw-vision 22 kombinasi | **22/22, 0 bug struktural, 0 overflow, 0 small target** |
+| Vision (desktop 1440×900 + mobile 390×844) | hero putih + judul tinta + "MODERN" oranye; scoreboard arang + angka oranye; section Program krem + kartu putih + judul tinta; kartu jersey tetap gelap; pita CTA & footer bersih |
+
+### 34.8 Alat uji yang diperbaiki
+
+- `scripts/verify-admin-ui.mjs` → `requestfailed` untuk `POST /api/admin/login|logout` **tidak** lagi dihitung sebagai kegagalan..ini balapan timing antara navigasi dan fetch yang selesai (di edge produksi respons cepat, di wrangler dev lokal navigasi menang). Sebelum diperbaiki, verifier gagal lokal padahal produknya benar.
+- **Prasyarat lokal**: `wrangler pages dev` butuh secret admin. Buat `.dev.vars` (sudah masuk `.gitignore`):
+  ```
+  ADMIN_PASSWORD=<isi .env.admin>
+  ADMIN_SESSION_SECRET=<apa saja, untuk lokal>
+  ```
+  Tanpa itu, `/admin/` balas **503** (middleware butuh `ADMIN_PASSWORD`).
+
+### 34.9 Preview 3 arah (dipakai untuk memilih arah)
+
+`~/Downloads/palet-preview.png` + `palet-preview.html` (bisa dibuka di browser) berisi 3 mock arah: A Putih dominan, B Arang netral + oranye, C Jeruk lebih kuning. Klien memilih **A**.

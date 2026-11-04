@@ -22,7 +22,7 @@ const doubled = posts.length ? [...posts, ...posts] : [];
       <Chapter num="09" label="Berita" class="mb-6" />
       <h2 class="display text-5xl leading-[0.9] sm:text-6xl lg:text-7xl">Kabar terbaru</h2>
     </div>
-    <a href="/berita" class="shrink-0 py-1.5 text-sm font-bold text-brand-dark transition hover:underline focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none">
+    <a href="/berita" class="shrink-0 py-1.5 text-sm font-bold text-brand-text transition hover:underline focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none">
       Lihat semua →
     </a>
   </div>
@@ -49,15 +49,15 @@ const doubled = posts.length ? [...posts, ...posts] : [];
                   height="400"
                   class="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
                 />
-                <span class="absolute top-3 left-3 rounded-full bg-paper px-2.5 py-1 text-[10px] font-black tracking-wider text-brand-dark uppercase">
+                <span class="absolute top-3 left-3 rounded-full bg-paper px-2.5 py-1 text-[10px] font-black tracking-wider text-brand-text uppercase">
                   {post.data.kategori}
                 </span>
               </div>
               <div class="flex flex-1 flex-col p-5">
                 <p class="text-[11px] text-ink/70">{fmt.format(post.data.pubDate)}</p>
-                <h3 class="mt-1.5 text-base leading-snug font-bold transition group-hover:text-brand-dark">{post.data.title}</h3>
+                <h3 class="mt-1.5 text-base leading-snug font-bold transition group-hover:text-brand-text">{post.data.title}</h3>
                 <p class="mt-2 line-clamp-2 text-[13px] text-ink/70">{post.data.desc}</p>
-                <span class="mt-4 inline-flex items-center gap-1 text-[12px] font-bold text-brand-dark">
+                <span class="mt-4 inline-flex items-center gap-1 text-[12px] font-bold text-brand-text">
                   Baca artikel <span aria-hidden="true">→</span>
                 </span>
               </div>
@@ -75,7 +75,7 @@ const doubled = posts.length ? [...posts, ...posts] : [];
       target="_blank"
       rel="noopener noreferrer"
       data-wa-cta="blog-cta"
-      class="inline-block py-1.5 font-bold text-brand-dark hover:underline"
+      class="inline-block py-1.5 font-bold text-brand-text hover:underline"
     >
       Kirim ke kami via WhatsApp ↗
     </a>

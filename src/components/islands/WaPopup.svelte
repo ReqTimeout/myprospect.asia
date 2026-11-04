@@ -136,7 +136,7 @@
     role="dialog"
     aria-label="Chat admin"
   >
-    <div class="rounded-3xl border border-ink/10 bg-paper-deep p-4 shadow-[0_24px_50px_-16px_rgba(36,26,18,0.3)]">
+    <div class="rounded-3xl border border-ink/10 bg-paper-deep p-4 shadow-[0_24px_50px_-16px_rgba(27,27,31,0.3)]">
       <div class="mb-2 flex items-start justify-between gap-2">
         <div class="flex items-center gap-2">
           <span class="flex h-8 w-8 items-center justify-center rounded-full bg-brand text-[11px] font-black text-ink italic">
