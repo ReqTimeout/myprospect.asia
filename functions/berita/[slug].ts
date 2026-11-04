@@ -229,7 +229,7 @@ h1{font-family:var(--display);font-size:clamp(32px,7vw,54px);line-height:1.02;ma
 @media(min-width:1024px){.pkg-list{display:grid;grid-template-columns:1fr;overflow:visible;padding:14px 0 0}}
 .pkg-card{flex:0 0 84%;scroll-snap-align:start;position:relative;border:1px solid rgba(27,27,31,.12);border-radius:20px;padding:14px;background:#fff;color:var(--ink)}
 @media(min-width:1024px){.pkg-card{flex:1 1 auto;width:auto}}
-.pkg-flag{position:absolute;top:-9px;left:14px;background:var(--ink);color:var(--brand);font-size:9px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;padding:3px 9px;border-radius:999px}
+.pkg-flag{position:absolute;top:-9px;left:14px;background:var(--ink);color:#ffffff;font-size:9px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;padding:3px 9px;border-radius:999px}
 .pkg-name{font-family:var(--display);font-size:18px;line-height:1.1;margin:0}
 .pkg-name a:hover{color:var(--brand-dark)}
 .pkg-tags{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:6px 0 0}

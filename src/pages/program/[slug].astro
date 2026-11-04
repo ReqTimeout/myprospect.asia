@@ -53,7 +53,7 @@ const schema = courseSchema({
             <p
               class:list={[
                 'mt-6 inline-block rounded-full px-3 py-1 text-[11px] font-black tracking-widest uppercase',
-                p.badgeTone === 'gold' ? 'bg-ink text-brand' : 'bg-brand text-white',
+                p.badgeTone === 'gold' ? 'bg-ink text-white' : 'bg-brand text-white',
               ]}
             >
               {p.badge}
@@ -105,7 +105,7 @@ const schema = courseSchema({
         {
           p.dikuasai.map((d) => (
             <li class="flex items-start gap-3 rounded-2xl border border-ink/10 bg-white px-4 py-3.5 text-sm text-ink">
-              <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-ink text-[11px] font-black text-brand" aria-hidden="true">
+              <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-ink text-[11px] font-black text-white" aria-hidden="true">
                 ✓
               </span>
               {d}

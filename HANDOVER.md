@@ -1851,3 +1851,19 @@ Permintaan klien: hapus daftar 4 benefit, *"pake animasi yang interaktif sedikit
   - `pat-grid` di dalam pass **drift sangat lambat** 28s (seamless, 26px) + terang saat hover;
   - watermark "04" naik 2px & makin tegas saat hover (0.7s);
   - titik chip COMING SOON berdenyut halus (`pulse-dot`, 2.6s, scale .82 di tengah).
+
+### 43.21 Aturan warna teks di atas latar gelap: selalu putih
+
+Kritik klien: *"kelemahan km warna font nyatu di background gelap, kalau [background gelap] harusnya putih fontnya, tapi kamu variasikan agar look premium"*.
+
+Audit DOM (7 halaman, walking ancestor mencari background solid, hitung rasio WCAG) menemukan **6 tempat background gelap (`bg-ink`) membawa teks non-putih**:
+
+| Tempat | Lama | Baru |
+|---|---|---|
+| Badge "★ MEDIA NASIONAL" (kartu program + detail program) | `bg-ink text-brand` | `bg-ink text-white` |
+| Pill "HEMAT 60%" | `bg-ink text-brand` | `bg-ink text-white` |
+| Ikon bulat (program + workshop detail) | `bg-ink text-brand` | `bg-ink text-white` |
+| Badge workshop detail | `bg-ink text-brand` | `bg-ink text-white` |
+| `.pkg-flag` di template single post | `color: var(--brand)` | `color: #ffffff` |
+
+Aturan baru yang dipakai: **di atas bidang gelap → teks putih polos** (oranye/emas/merah tidak dipakai sebagai warna teks di atas arang). Yang tetap oranye hanya **latar**-nya. Verifikasi audit: 0 teks non-putih di atas latar gelap di 7 halaman.
