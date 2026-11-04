@@ -5,7 +5,6 @@ import Dock from '../components/islands/Dock.svelte';
 import WaPopup from '../components/islands/WaPopup.svelte';
 import TickerRibbon from '../components/TickerRibbon.astro';
 import Chapter from '../components/Chapter.astro';
-import SportBranches from '../components/SportBranches.astro';
 import PartnersSection from '../components/PartnersSection.astro';
 import SportArt from '../components/SportArt.astro';
 import StatsBar from '../components/StatsBar.astro';
@@ -20,6 +19,7 @@ import FaqSection from '../components/FaqSection.astro';
 import CtaBand from '../components/CtaBand.astro';
 import Footer from '../components/Footer.astro';
 import { waLink } from '../lib/wa';
+import { cabangOlahraga } from '../data/sports';
 import { testimonials } from '../data/testimonials';
 import { faqs } from '../data/faq';
 import { organizationSchema, faqSchema } from '../lib/seo';
@@ -55,7 +55,7 @@ const schema = [organizationSchema, faqSchema(faqs)];
 
       <h1 data-hero="title" class="display relative z-10 text-[12vw] leading-[0.92] sm:text-6xl md:text-7xl lg:text-8xl">
         Jadi Atlet<br />
-        <span class="hl-brand">Modern</span> dengan<br />
+        <span class="text-brand">Modern</span> dengan<br />
         Sports Communication
       </h1>
 
@@ -100,25 +100,10 @@ const schema = [organizationSchema, faqSchema(faqs)];
     </section>
 
     <TickerRibbon
-      items={[
-        'Sports Communication',
-        'Public Speaking',
-        'English for Athletes',
-        'Media Interview',
-        'Personal Branding',
-        'Jalur Atlet Modern',
-      ]}
+      items={cabangOlahraga.map((c) => c.nama)}
       speed={34}
       tone="ink"
     />
-
-    <div class="surface-warm">
-      <SportBranches />
-    </div>
-
-    <div class="surface-hair">
-      <PartnersSection />
-    </div>
 
     <div class="surface-ink">
       <StatsBar />
@@ -128,7 +113,6 @@ const schema = [organizationSchema, faqSchema(faqs)];
 
     <div class="surface-warm">
       <section class="relative mx-auto max-w-6xl overflow-hidden px-4 py-14 sm:px-6">
-        <SportArt variant="net" stroke="#241a12" opacity={0.1} class="absolute inset-0 h-full w-full [mask-image:linear-gradient(to_bottom_right,black,transparent_70%)]" />
         <div class="pat-grid absolute inset-0 opacity-55 [mask-image:linear-gradient(to_top_left,transparent,black_60%)]" aria-hidden="true"></div>
         <div class="art-ring left-6 top-14 hidden h-16 w-16 border-gold sm:block" aria-hidden="true"></div>
         <div class="art-diamond top-10 right-10 h-3 w-3 bg-crimson hidden sm:block" aria-hidden="true"></div>
@@ -187,6 +171,10 @@ const schema = [organizationSchema, faqSchema(faqs)];
     <FaqSection />
 
     <CtaBand />
+
+    <div class="surface-hair">
+      <PartnersSection />
+    </div>
   </main>
 
   <Footer />

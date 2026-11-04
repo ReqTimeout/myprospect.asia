@@ -9,8 +9,6 @@ interface Props {
 const { num, label, tone = 'ink', class: cls = '' } = Astro.props;
 ---
 
-<p class:list={['chapter', cls]} data-tone={tone}>
-  <span class="chapter-num">{num}</span>
-  <span class="chapter-label">{label}</span>
-  <span class="chapter-rule" aria-hidden="true"></span>
-</p>
+<!-- Penanda chapter (nomor 01..10 + garis) dihapus atas permintaan klien di
+     semua section. Komponen dipertahankan sebagai no-op agar 10 pemanggilnya
+     tidak perlu diubah satu per satu dan tidak ada penanda yang terlewat. -->

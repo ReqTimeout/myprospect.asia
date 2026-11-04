@@ -58,7 +58,7 @@ const safeCover = (raw: string | undefined, kategori: string): string => {
 
 const notFound = (): Response =>
   new Response(
-    `<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Berita tidak ditemukan | Prospect Asia</title><style>body{background:#fffcf7;color:#241a12;font-family:system-ui,sans-serif;display:grid;place-items:center;min-height:100vh;margin:0;text-align:center;padding:24px}a{color:#cc5400;font-weight:700;text-decoration:none}</style></head><body><div><p style="font-size:48px;margin:0">404</p><p>Berita ini tidak ada atau sudah dicabut.</p><a href="/berita/">← Semua berita</a></div></body></html>`,
+    `<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Berita tidak ditemukan | Prospect Asia</title><style>body{background:#fffcf7;color:#241a12;font-family:system-ui,sans-serif;display:grid;place-items:center;min-height:100vh;margin:0;text-align:center;padding:24px}a{color:#d96a00;font-weight:700;text-decoration:none}</style></head><body><div><p style="font-size:48px;margin:0">404</p><p>Berita ini tidak ada atau sudah dicabut.</p><a href="/berita/">← Semua berita</a></div></body></html>`,
     { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8' } },
   );
 
@@ -167,7 +167,7 @@ const page = (opts: {
 <script type="application/ld+json">${schema}</script>
 ${ga}
 <style>
-:root{--ink:#241a12;--paper:#fffcf7;--paper-deep:#fff3e4;--brand:#ff7a00;--brand-dark:#cc5400;--brand-soft:#ffe2cb;--brand-line:#ffc59c;--gold:#ffc32e;--crimson:#c8232b;--display:"Anton",sans-serif;--sans:"Plus Jakarta Sans",system-ui,sans-serif;--container:72rem}
+:root{--ink:#241a12;--paper:#fffcf7;--paper-deep:#fff3e4;--brand:#ff8000;--brand-dark:#d96a00;--brand-soft:#ffe6cc;--brand-line:#ffcba3;--gold:#ffc32e;--crimson:#c8232b;--display:"Anton",sans-serif;--sans:"Plus Jakarta Sans",system-ui,sans-serif;--container:72rem}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}

@@ -1026,25 +1026,25 @@ Deploy pertama memakai `--branch=production` dan **berhasil tanpa error**, tetap
 
 Perintah yang benar (sudah tercatat di §Depan, baris deploy): `set -a && . ./.env.cf` (token OAuth bawaan wrangler menunjuk akun lain) lalu `npx wrangler pages deploy dist --project-name myprospect --branch=main --commit-dirty=true`. Setelah benar, deployment list menunjukkan Environment **Production** / branch `main` / source `fabd3af`, dan `myprospect.asia` menjadi: 0 wash class, `bg-brand-soft` 28×, `text-ink/70` 145×, `#ff6a00 @1 → S 100%`, favicon `/favicon.svg`. **Selalu verifikasi domain live, bukan hanya URL preview**, karena preview bisa hijau sementara produksi masih basi.
 
-## 31. Oranye revisi #2 — "kurang fresh, masih gelap" (4 Nov 2026)
+## 31. Oranye masih gelap + anotasi browser belum dikerjakan (4 Nov 2026)
 
-Keluhan: setelah §30 tayang, klien masih merasa oranye **terang tapi berat** — `#ff6a00` (hue 25) condong ke merah sehingga terasa "gelap", dan teks/heading oranye memakai `brand-dark #bc4c00` (L31) yang jatuh ke cokelat. Ini bukan lagi soal wash (sudah beres di §30), melainkan **hue + lightness** dua token inti.
+Klien mengelak dua hal: (1) oranye **masih gelap/kurang fresh** — ternyata working tree sempat **di-revert** dari `#ff7a00` kembali ke `#ff6a00`/`#bc4c00`, jadi yang dilihat klien adalah oranye merah-berat; (2) **anotasi browser tidak dikerjakan sama sekali** ("masih sama aja").
 
-### 31.1 Palet baru
+### 31.1 Oranye dipersegar (penolakan ke-3)
 
-| Token | §30 | **§31 (baru)** | Perubahan |
-|---|---|---|---|
-| `--color-brand` | `#ff6a00` | **`#ff7a00`** | Hue 25 → **29** (lebih citrus/segar), L tetap 50, S 100%. Dipakai untuk bidang solid + angka dekoratif. |
-| `--color-brand-dark` | `#bc4c00` | **`#cc5400`** | Lightness 31 → **40** (L40) sehingga oranye heading/label menyala, tidak cokelat. |
-| `--color-brand-soft` | `#ffe3c4` | `#ffe2cb` | Ikut dinaikkan satu tingkat agar sehue dengan brand baru. |
-| `--color-brand-line` | `#ffc49a` | `#ffc59c` | Selaras. |
+`#ff6a00` (hue 25) dan `#ff7a00`/`#cc5400` sama-sama ditolak "gelap". Token final: `--color-brand: #ff8000` (bidang solid — badge, tombol, chip) dan `--color-brand-dark: #d96a00` (teks/heading oranye), `brand-soft #ffe6cc`, `brand-line #ffcba3`. Semua pola dekoratif hardcoded `rgb(255 106 0)`/`rgb(255 122 0)` di `global.css` disinkron ke `rgb(255 128 0)`; `categories.ts` dan CSS inline `functions/berita/[slug].ts` ikut. Trade-off kontras kecil pada label uppercase (≈3.4:1) diterima sesuai keputusan estetika klien.
 
-Nilai turutan yang ikut disinkronkan ke `#ff7a00`/`#cc5400`: `--shadow-pop` dan `.art-dots-brand` di `global.css` (`rgb(255 122 0 …)`), blok `:root` + tautan 404 di `functions/berita/[slug].ts`, serta `border`/`wash` tone `kolaborasi` di `src/data/categories.ts`. **Pengingat §30.7**: tiga sumber gaya harus diubah bersamaan, tidak cukup `global.css` saja.
+### 31.2 Anotasi browser (8 butir)
 
-### 31.2 Kompromi kontras (disengaja)
+| Anotasi | Tindakan |
+| --- | --- |
+| Hero "Modern" jangan di-highlight, teks oranye | `hl-brand` → `text-brand` (`index.astro`) |
+| Hapus section "Cabang Olahraga" | blok `surface-warm > SportBranches` dihapus; `SportBranches.astro` dihapus |
+| Ticker ribbon → text cabang olahraga | `items` jadi `cabangOlahraga.map(c=>c.nama)` |
+| Hapus chapter (01..10) di semua section | `Chapter.astro` dijadikan no-op (satu titik, 10 pemanggil aman) |
+| Section Mitra pindah paling bawah sebelum footer | blok `surface-hair > PartnersSection` dipindah ke akhir `<main>` |
+| Logo akademi & mitra pakai gambar asli | `PartnerLogo` sudah auto-pakai `public/media/partners/<slug>.png|svg|...`; **masih perlu file logo asli** — tidak bisa unduh dari Google. Fallback lencana tetap tampil. |
+| Garis stripe swash hapus semua | `.hl-swash::before { content: none }` (varian `--dark` ikut mati) |
+| Hapus svg dekoratif (net) di Level & Journey | `SportArt variant="net"` di section 04 dihapus |
 
-Menerangkan `brand-dark` adalah trade-off nyata. Fisika warna: **tidak ada oranye yang sekaligus "segar" dan lolos AA 4.5:1 di atas krem** — `#bc4c00` (4.92:1) sudah dipilih di §29 justru karena dia oranye paling cerah yang masih lolos untuk teks kecil. Menaikkan L ke 40 memindahkan label bold kecil (uppercase 9–12px) ke **3.97–4.34:1** (gagal AA kecil, masih lolos large-text 3:1). Semua heading display (≥24px) lolos nyaman. Keputusan ini mengikuti **permintaan eksplisit klien** yang dua kali menolak oranye gelap; prioritas: user request > konvensi AA internal. Kalau nanti aksesibilitas ketat diperlukan lagi, tinggal kembalikan `--color-brand-dark` ke `#bc4c00` dan hanya terapkan `#cc5400` pada heading besar lewat token terpisah.
-
-### 31.3 Verifikasi
-
-`npm run build` 12 halaman bersih. `audit-palette` (localhost): `#ff7a00 @1 → S 100 L 50 H 29` dan `#cc5400 @1 → S 100 L 40 H 25` — keduanya alpha penuh, tanpa wash. `verify-ai` 2 viewport × 7 halaman: 0 error, 0 tanda pisah, 0 gradien warna, 0 blur, animasi `infinite` tetap 2 (`rail-slide`). Flag kontras yang baru hanya baris `rgb(204,84,0)` di 3.97–4.34 (label kecil, trade-off §31.2) plus kerumunan lama (teks di atas foto, ghost word) yang tetap positif palsu.
+Verifikasi: `npm run build` 12 halaman; `verify-ai` desktop+mobile → 0 gradien, 0 blur, 0 tanda pisah, `infinite` tetap 2; 404 hanya `/api/pv` & `/api/settings` (Functions, tak ada di `astro dev`). Screenshot: "MODERN" oranye terang, Mitra jadi section terakhir sebelum footer, tanpa banner chapter.
