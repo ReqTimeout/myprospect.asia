@@ -1736,3 +1736,15 @@ Klien: *"hapus bagian ini dan card buat lebih premium tapi jangan terlihat seper
 - vip-card (corner bracket + Early Access + Slot terbatas + Batch 01 + vip-cta) **dihapus semua**.
 - Banner jadi satu blok: chip COMING SOON, heading MEMBERSHIP PROGRAM (Anton 4xl/5xl), satu paragraf, CTA oranye teks putih, dan **benefit jadi 4 tile ber-border** di kolom kanan (2×2).
 - Tanpa SectionImage tambahan, tanpa chrome. `.vip-card*`/`.vip-rule`/`.vip-cta` kini tak berpemakai (CSS boleh dibersihkan nanti).
+
+### 43.11 "Warna font semuanya abu-abu, tulisan kecil kurang kelihatan"
+
+Klien: *"kurang premium dan warna font ini semuanya abu2 ya kalau tulisan kecil kurang kelihatan, kamu pikirkan warnanya harus terlihat"*.
+
+Akar: semua teks sekunder memakai **alpha pudar** (`text-ink/60..85`, `text-white/55..90`, rgba 0.7 di template/dock) → kelihatan abu-abu.
+
+Fix: **sweep global** (27 file, kecuali admin) — semua `text-ink/NN` & `text-white/NN` (NN ≤ 90) → **penuh**; rgba template/dock 0.7–0.78 → 0.95. Hierarki kini dari **ukuran & ketebalan**, bukan opacity. Placeholder input tetap pudar (memang seharusnya).
+
+> Pelajaran: alpha-wash teks = ciri desain AI. Print premium memakai kontras penuh; hierarki dari tipografi.
+
+Verifikasi: audit-frames 0 overflow + 0 console error (desktop + mobile), audit-clip 0 overflow/0 covered (1855 clipped false-positive).

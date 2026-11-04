@@ -132,7 +132,7 @@
               <!-- Tanpa overlay gelap di foto (permintaan klien); ikon kutip duduk
                    di chip hitam pekat supaya tetap terbaca di atas foto terang. -->
               <span class="absolute bottom-3 left-4 flex h-9 w-9 items-center justify-center rounded-full bg-ink">
-                <Quote size={18} class="text-white/90" aria-hidden="true" />
+                <Quote size={18} class="text-white" aria-hidden="true" />
               </span>
               <span class="absolute top-3 right-3 rounded-full bg-brand px-2.5 py-1 text-white text-[10px] font-bold tracking-wide uppercase">
                 Atlet Prospect Asia
@@ -146,7 +146,7 @@
                   </svg>
                 {/each}
               </p>
-              <blockquote class="text-sm leading-relaxed text-ink/85 sm:text-base">
+              <blockquote class="text-sm leading-relaxed text-ink sm:text-base">
                 “{t.kutipan}”
               </blockquote>
               <figcaption class="mt-5 flex items-center gap-3">
@@ -155,7 +155,7 @@
                 </span>
                 <div class="leading-tight">
                   <p class="text-sm font-bold">{t.nama}</p>
-                  <p class="text-xs text-ink/70">{t.asal}{t.olahraga ? ` · ${t.olahraga}` : ''}</p>
+                  <p class="text-xs text-ink">{t.asal}{t.olahraga ? ` · ${t.olahraga}` : ''}</p>
                 </div>
               </figcaption>
             </div>
@@ -181,7 +181,7 @@
         ></span>
       </button>
     {/each}
-    <span class="ml-3 hidden items-center gap-1.5 text-[11px] font-bold tracking-wide text-ink/70 uppercase sm:inline-flex">
+    <span class="ml-3 hidden items-center gap-1.5 text-[11px] font-bold tracking-wide text-ink uppercase sm:inline-flex">
       <span class="h-1.5 w-1.5 rounded-full bg-brand"></span>
       Auto
     </span>

@@ -62,12 +62,12 @@ const schema = courseSchema({
         }
 
         <h1 class="display mt-4 text-5xl leading-[0.95] sm:text-7xl">{p.nama}</h1>
-        <p class="mt-3 text-base text-ink/70 sm:text-lg">{p.sub}</p>
+        <p class="mt-3 text-base text-ink sm:text-lg">{p.sub}</p>
 
         <div class="mt-6 flex flex-wrap gap-2">
           {
             chips.map((c) => (
-              <span class="rounded-full border border-ink/20 bg-white px-3.5 py-1.5 text-xs font-semibold text-ink/75">
+              <span class="rounded-full border border-ink/20 bg-white px-3.5 py-1.5 text-xs font-semibold text-ink">
                 {c}
               </span>
             ))
@@ -76,7 +76,7 @@ const schema = courseSchema({
 
         <div class="mt-8 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            {p.hargaCoret ? <p class="text-sm text-ink/70 line-through">Rp{formatIdr(p.hargaCoret)}</p> : null}
+            {p.hargaCoret ? <p class="text-sm text-ink line-through">Rp{formatIdr(p.hargaCoret)}</p> : null}
             {
               p.harga > 0 ? (
                 <p class="display text-5xl text-brand">Rp{formatIdr(p.harga)}</p>
@@ -84,7 +84,7 @@ const schema = courseSchema({
                 <p class="display text-4xl text-brand">Info via WhatsApp</p>
               )
             }
-            <p class="mt-1 text-xs text-ink/70">{p.satuan}</p>
+            <p class="mt-1 text-xs text-ink">{p.satuan}</p>
           </div>
           <a
             href={ctaWa}
@@ -104,7 +104,7 @@ const schema = courseSchema({
       <ul class="mt-6 grid gap-3 sm:grid-cols-2">
         {
           p.dikuasai.map((d) => (
-            <li class="flex items-start gap-3 rounded-2xl border border-ink/10 bg-white px-4 py-3.5 text-sm text-ink/85">
+            <li class="flex items-start gap-3 rounded-2xl border border-ink/10 bg-white px-4 py-3.5 text-sm text-ink">
               <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-ink text-[11px] font-black text-brand" aria-hidden="true">
                 ✓
               </span>
@@ -126,7 +126,7 @@ const schema = courseSchema({
                 <li
                   class:list={[
                     'flex items-start gap-3 rounded-2xl px-4 py-3.5 text-sm',
-                    gold ? 'border border-brand bg-brand-soft text-ink' : 'border border-ink/10 bg-white text-ink/85',
+                    gold ? 'border border-brand bg-brand-soft text-ink' : 'border border-ink/10 bg-white text-ink',
                   ]}
                 >
                   <span aria-hidden="true">{gold ? '★' : '✓'}</span>
@@ -157,8 +157,8 @@ const schema = courseSchema({
 
     <section class="mx-auto max-w-4xl px-4 pb-14 sm:px-6">
       <figure class="rounded-3xl border border-ink/10 bg-brand-soft p-7">
-        <blockquote class="text-lg leading-relaxed text-ink/90 italic sm:text-xl">“{testi.kutipan}”</blockquote>
-        <figcaption class="mt-4 text-sm text-ink/70">
+        <blockquote class="text-lg leading-relaxed text-ink italic sm:text-xl">“{testi.kutipan}”</blockquote>
+        <figcaption class="mt-4 text-sm text-ink">
           <span class="font-bold text-ink">{testi.nama}</span> · {testi.asal} · {testi.olahraga}
         </figcaption>
       </figure>
@@ -175,7 +175,7 @@ const schema = courseSchema({
                   {f.q}
                   <span class="text-ink transition-transform group-open:rotate-45" aria-hidden="true">+</span>
                 </summary>
-                <p class="px-5 pb-5 text-sm leading-relaxed text-ink/70">{f.a}</p>
+                <p class="px-5 pb-5 text-sm leading-relaxed text-ink">{f.a}</p>
               </details>
             ))
           }
@@ -187,7 +187,7 @@ const schema = courseSchema({
       <div class="grid gap-8 md:grid-cols-2">
         <div>
           <h2 class="display mt-2 text-3xl sm:text-4xl">Isi data,<br />admin lanjut di WA</h2>
-          <p class="mt-4 text-sm leading-relaxed text-ink/65">
+          <p class="mt-4 text-sm leading-relaxed text-ink">
             Setelah formulir dikirim, WhatsApp langsung terbuka dengan pesan yang sudah terisi, admin tinggal
             membalas untuk jadwal, tes penempatan, dan cara bayar.
           </p>

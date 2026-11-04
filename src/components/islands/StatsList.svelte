@@ -32,7 +32,7 @@
         <Counter to={s.to} suffix={s.suffix} />
       </p>
       <span class="mx-auto mt-3 block h-0.5 w-9 bg-brand" aria-hidden="true"></span>
-      <p class="mt-2 text-[9px] leading-tight font-bold tracking-[0.1em] text-ink/60 uppercase break-words sm:text-[11px] sm:tracking-[0.16em]">
+      <p class="mt-2 text-[9px] leading-tight font-bold tracking-[0.1em] text-ink uppercase break-words sm:text-[11px] sm:tracking-[0.16em]">
         {s.label}
       </p>
     </li>

@@ -144,20 +144,20 @@
           </span>
           <div class="leading-tight">
             <p class="text-xs font-bold">Admin Prospect</p>
-            <p class="text-[10px] text-ink/70">online · balas cepat</p>
+            <p class="text-[10px] text-ink">online · balas cepat</p>
           </div>
         </div>
         <button
           type="button"
           onclick={close}
-          class="rounded-full p-1 text-ink/70 transition hover:bg-ink/[0.06] hover:text-ink focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
+          class="rounded-full p-1 text-ink transition hover:bg-ink/[0.06] hover:text-ink focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
           aria-label="Tutup"
         >
           <X size={14} />
         </button>
       </div>
 
-      <p class="mb-3 rounded-2xl rounded-tl-md bg-paper-deep px-3 py-2 text-[13px] leading-relaxed text-ink/85">
+      <p class="mb-3 rounded-2xl rounded-tl-md bg-paper-deep px-3 py-2 text-[13px] leading-relaxed text-ink">
         {popupText}
       </p>
 

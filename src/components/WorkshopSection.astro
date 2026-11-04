@@ -34,17 +34,17 @@ const gallery = [
         Workshop untuk<br />
         <span class="text-brand">akademi &amp; klub</span>
       </h2>
-      <p class="mt-4 text-sm leading-relaxed text-ink/65 sm:text-base">
+      <p class="mt-4 text-sm leading-relaxed text-ink sm:text-base">
         Sesi 90–120 menit, langsung praktik. Minimal 10 peserta, tetap dibimbing coach Sports Communication.
       </p>
       <div class="mt-5 flex flex-wrap gap-2">
-        <span class="rounded-full border border-ink/12 bg-white px-3 py-1.5 text-[11px] font-bold tracking-wide text-ink/70">
+        <span class="rounded-full border border-ink/12 bg-white px-3 py-1.5 text-[11px] font-bold tracking-wide text-ink">
           2.175+ atlet teredukasi
         </span>
-        <span class="rounded-full border border-ink/12 bg-white px-3 py-1.5 text-[11px] font-bold tracking-wide text-ink/70">
+        <span class="rounded-full border border-ink/12 bg-white px-3 py-1.5 text-[11px] font-bold tracking-wide text-ink">
           25 akademi mitra
         </span>
-        <span class="rounded-full border border-ink/12 bg-white px-3 py-1.5 text-[11px] font-bold tracking-wide text-ink/70">
+        <span class="rounded-full border border-ink/12 bg-white px-3 py-1.5 text-[11px] font-bold tracking-wide text-ink">
           Sesi 90–120 menit
         </span>
       </div>
@@ -79,7 +79,7 @@ const gallery = [
               </span>
             </div>
             <div class="mt-2.5 flex flex-wrap items-center gap-2">
-              <span class="shrink-0 rounded-full border border-ink/15 px-2.5 py-1 text-[10px] font-bold text-ink/70">
+              <span class="shrink-0 rounded-full border border-ink/15 px-2.5 py-1 text-[10px] font-bold text-ink">
                 {w.durasi}
               </span>
               <span class="rounded-full bg-brand px-2.5 py-1 text-[10px] font-black tracking-wide text-white uppercase">
@@ -91,7 +91,7 @@ const gallery = [
                  kartu hanya menampilkan nama, durasi, dan jumlah benefit
                  (permintaan klien: "yang tampil hanya ini saja"). -->
             <details class="group mt-4">
-              <summary class="flex cursor-pointer list-none items-center justify-between gap-2 rounded-xl border border-ink/10 px-3.5 py-2.5 text-xs font-bold text-ink/70 transition hover:border-brand hover:text-ink">
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-2 rounded-xl border border-ink/10 px-3.5 py-2.5 text-xs font-bold text-ink transition hover:border-brand hover:text-ink">
                 Lihat detail &amp; harga
                 <span class="shrink-0 transition-transform duration-200 group-open:rotate-45" aria-hidden="true">+</span>
               </summary>
@@ -101,10 +101,10 @@ const gallery = [
                 ) : (
                   <p class="display text-3xl leading-none text-ink">Custom</p>
                 )}
-                <p class="mt-1.5 text-[11px] text-ink/70">per sesi · {w.target}</p>
+                <p class="mt-1.5 text-[11px] text-ink">per sesi · {w.target}</p>
                 <p class="mt-1.5 text-[11px] font-black text-ink">{w.catatan ?? ''}</p>
-                <p class="mt-3 text-sm leading-relaxed text-ink/70">{w.ringkasan}</p>
-                <ul class="mt-3 space-y-2 text-[13px] text-ink/75">
+                <p class="mt-3 text-sm leading-relaxed text-ink">{w.ringkasan}</p>
+                <ul class="mt-3 space-y-2 text-[13px] text-ink">
                   {w.didapat.map((d) => (
                     <li class="flex gap-2">
                       <span class="text-brand" aria-hidden="true">

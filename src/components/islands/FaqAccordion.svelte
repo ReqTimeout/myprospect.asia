@@ -32,7 +32,7 @@
         {f.q}
         <span class="shrink-0 text-ink transition-transform duration-200 group-open:rotate-45" aria-hidden="true">+</span>
       </summary>
-      <p class="px-5 pb-5 text-sm leading-relaxed text-ink/70">{f.a}</p>
+      <p class="px-5 pb-5 text-sm leading-relaxed text-ink">{f.a}</p>
     </details>
   {/each}
 </div>

@@ -195,7 +195,7 @@ img{max-width:100%}
 @media(min-width:1024px){.hdr-mnav{display:none}}
 .hdr-mnav ul{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;max-width:var(--container);margin:0 auto;padding:8px 16px}
 .hdr-mnav ul::-webkit-scrollbar{display:none}
-.hdr-mnav a{flex:0 0 auto;font-size:12px;font-weight:700;color:rgba(27,27,31,.7);background:#fff5ea;border-radius:999px;padding:6px 13px;white-space:nowrap;transition:background .2s,color .2s}
+.hdr-mnav a{flex:0 0 auto;font-size:12px;font-weight:700;color:rgba(27,27,31,.95);background:#fff5ea;border-radius:999px;padding:6px 13px;white-space:nowrap;transition:background .2s,color .2s}
 .hdr-mnav a:hover,.hdr-mnav a[aria-current]{background:var(--brand);color:var(--ink)}
 
 /* ---- Kepala artikel ---- */
@@ -258,7 +258,7 @@ h1{font-family:var(--display);font-size:clamp(32px,7vw,54px);line-height:1.02;ma
 .prose ol{padding-left:1.5rem;margin:1.4rem 0}
 .prose ol li{margin-bottom:.6rem}
 .prose ol li::marker{color:var(--brand)}
-.prose blockquote{border-left:3px solid var(--brand);background:var(--paper-deep);border-radius:0 16px 16px 0;padding:16px 20px;margin:1.75rem 0;font-style:italic;color:rgba(27,27,31,.88)}
+.prose blockquote{border-left:3px solid var(--brand);background:var(--paper-deep);border-radius:0 16px 16px 0;padding:16px 20px;margin:1.75rem 0;font-style:italic;color:rgba(27,27,31,.95)}
 .cta-box{margin-top:40px;border:1px solid var(--brand-line);background:var(--brand-soft);border-radius:24px;padding:24px;text-align:center;font-size:14px;color:var(--ink)}
 .btn{display:inline-block;margin-top:12px;background:var(--brand);color:var(--ink);border-radius:16px;padding:13px 24px;font-size:14px;font-weight:800;transition:background .15s,transform .2s}
 .btn:hover{background:var(--brand-dark);transform:translateY(-2px)}
@@ -275,7 +275,7 @@ h1{font-family:var(--display);font-size:clamp(32px,7vw,54px);line-height:1.02;ma
 .rel-t{font-size:14px;font-weight:700;line-height:1.35;margin:8px 0 0}
 
 /* ---- Footer ---- */
-footer{border-top:1px solid rgba(27,27,31,.12);margin-top:48px;padding:26px 16px 104px;text-align:center;font-size:12px;color:rgba(27,27,31,.7)}
+footer{border-top:1px solid rgba(27,27,31,.12);margin-top:48px;padding:26px 16px 104px;text-align:center;font-size:12px;color:rgba(27,27,31,.95)}
 footer a{color:var(--ink);font-weight:700;display:inline-block;padding:6px 4px}
 footer nav{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-bottom:6px}
 

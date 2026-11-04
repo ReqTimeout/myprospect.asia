@@ -25,7 +25,7 @@ const doubled = posts.length ? [...posts, ...posts] : [];
 
   {
     posts.length === 0 ? (
-      <p class="rounded-3xl border border-dashed border-ink/15 p-8 text-center text-sm text-ink/70">
+      <p class="rounded-3xl border border-dashed border-ink/15 p-8 text-center text-sm text-ink">
         Artikel sedang disiapkan. Mau jadi yang pertama tahu? Chat admin.
       </p>
     ) : (
@@ -50,9 +50,9 @@ const doubled = posts.length ? [...posts, ...posts] : [];
                 </span>
               </div>
               <div class="flex flex-1 flex-col p-5">
-                <p class="text-[11px] text-ink/70">{fmt.format(post.data.pubDate)}</p>
+                <p class="text-[11px] text-ink">{fmt.format(post.data.pubDate)}</p>
                 <h3 class="mt-1.5 text-base leading-snug font-bold transition group-hover:text-ink">{post.data.title}</h3>
-                <p class="mt-2 line-clamp-2 text-[13px] text-ink/70">{post.data.desc}</p>
+                <p class="mt-2 line-clamp-2 text-[13px] text-ink">{post.data.desc}</p>
                 <span class="mt-4 inline-flex items-center gap-1 text-[12px] font-bold text-ink">
                   Baca artikel <span aria-hidden="true">→</span>
                 </span>
@@ -64,7 +64,7 @@ const doubled = posts.length ? [...posts, ...posts] : [];
     )
   }
 
-  <p class="mt-8 text-center text-sm text-ink/70">
+  <p class="mt-8 text-center text-sm text-ink">
     Punya cerita atlet hebat?{' '}
     <a
       href={waLink({ program: 'Berita Atlet Modern', source: 'blog-cta' })}

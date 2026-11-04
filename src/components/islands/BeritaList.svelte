@@ -59,9 +59,9 @@
         </span>
       </div>
       <div class="flex flex-1 flex-col p-5">
-        <p class="text-[11px] text-ink/70">{fmt.format(new Date(post.pubDate))}</p>
+        <p class="text-[11px] text-ink">{fmt.format(new Date(post.pubDate))}</p>
         <h2 class="mt-1.5 text-base leading-snug font-bold transition group-hover:text-ink">{post.title}</h2>
-        <p class="mt-2 line-clamp-2 text-[13px] text-ink/70">{post.desc}</p>
+        <p class="mt-2 line-clamp-2 text-[13px] text-ink">{post.desc}</p>
       </div>
     </a>
   {/each}

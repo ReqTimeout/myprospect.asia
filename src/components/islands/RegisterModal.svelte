@@ -129,13 +129,13 @@
         <div>
           <p class="text-[10px] font-black tracking-[0.24em] text-ink uppercase">Formulir Daftar</p>
           <h2 class="display mt-1 text-2xl leading-tight sm:text-3xl">Ambil slot kamu</h2>
-          <p class="mt-1 text-[11px] text-ink/70">Isi 30 detik, admin balas di jam kerja.</p>
+          <p class="mt-1 text-[11px] text-ink">Isi 30 detik, admin balas di jam kerja.</p>
         </div>
         <button
           type="button"
           onclick={close}
           aria-label="Tutup formulir"
-          class="rounded-full p-1.5 text-ink/70 transition hover:bg-ink/6 hover:text-ink focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
+          class="rounded-full p-1.5 text-ink transition hover:bg-ink/6 hover:text-ink focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
         >
           <X size={16} />
         </button>
@@ -147,7 +147,7 @@
             <Check size={26} strokeWidth={2.6} />
           </span>
           <p class="display text-xl">Data terkirim!</p>
-          <p class="text-sm text-ink/70">Lanjutkan pendaftaran lewat WhatsApp.</p>
+          <p class="text-sm text-ink">Lanjutkan pendaftaran lewat WhatsApp.</p>
           <a
             href={waUrl}
             target="_blank"
@@ -160,7 +160,7 @@
           <button
             type="button"
             onclick={close}
-            class="mt-1 text-xs font-bold text-ink/70 underline transition hover:text-ink focus-visible:outline-none"
+            class="mt-1 text-xs font-bold text-ink underline transition hover:text-ink focus-visible:outline-none"
           >
             Tutup
           </button>
@@ -179,7 +179,7 @@
             maxlength="80"
             autocomplete="name"
             placeholder="Nama lengkap"
-            class="mt-2 w-full rounded-2xl border border-ink/15 bg-white px-4 py-3 text-sm text-ink placeholder:text-ink/35 focus:border-brand focus:outline-none"
+            class="mt-2 w-full rounded-2xl border border-ink/15 bg-white px-4 py-3 text-sm text-ink placeholder:text-ink focus:border-brand focus:outline-none"
           />
 
           <label for="reg-wa" class="mt-4 block text-[11px] font-black tracking-widest text-ink uppercase">
@@ -194,7 +194,7 @@
             inputmode="tel"
             autocomplete="tel"
             placeholder="08xx xxxx xxxx"
-            class="mt-2 w-full rounded-2xl border border-ink/15 bg-white px-4 py-3 text-sm text-ink placeholder:text-ink/35 focus:border-brand focus:outline-none"
+            class="mt-2 w-full rounded-2xl border border-ink/15 bg-white px-4 py-3 text-sm text-ink placeholder:text-ink focus:border-brand focus:outline-none"
           />
 
           <label for="reg-program" class="mt-4 block text-[11px] font-black tracking-widest text-ink uppercase">
@@ -213,7 +213,7 @@
           </select>
 
           <label for="reg-catatan" class="mt-4 block text-[11px] font-black tracking-widest text-ink uppercase">
-            Catatan <span class="font-semibold tracking-normal text-ink/70 normal-case">(opsional)</span>
+            Catatan <span class="font-semibold tracking-normal text-ink normal-case">(opsional)</span>
           </label>
           <textarea
             id="reg-catatan"
@@ -222,7 +222,7 @@
             rows="2"
             maxlength="200"
             placeholder="cth: atlet futsal usia 16, ingin ikut workshop"
-            class="mt-2 w-full resize-none rounded-2xl border border-ink/15 bg-white px-4 py-3 text-sm text-ink placeholder:text-ink/35 focus:border-brand focus:outline-none"
+            class="mt-2 w-full resize-none rounded-2xl border border-ink/15 bg-white px-4 py-3 text-sm text-ink placeholder:text-ink focus:border-brand focus:outline-none"
           ></textarea>
 
           {#if error}
@@ -241,7 +241,7 @@
             <Send size={16} strokeWidth={2.4} />
             {sending ? 'Mengirim…' : 'Kirim & buka WhatsApp'}
           </button>
-          <p class="mt-3 text-center text-[11px] leading-relaxed text-ink/70">
+          <p class="mt-3 text-center text-[11px] leading-relaxed text-ink">
             Data hanya dipakai admin untuk membalas via WhatsApp.
           </p>
         </form>
