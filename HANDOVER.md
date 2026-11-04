@@ -1261,7 +1261,7 @@ Revisi "flat" (§30.4) menghapus **animasi latar** (blob, liveRing, ken-burns, c
 | `@keyframes ken-burns` (zoom 1.04→1.16 + geser 1.6%) | **hidup lagi**, dipakai di foto pita CTA (`CtaBand.astro`) & foto banner Membership (`ProgramSection.astro`) |
 | grayscale pada foto itu | **tidak** dikembalikan (klien minta foto penuh warna) |
 
-Yang tetap mati: animasi latar (blob/liveRing/curtain), marquee lain, rail. "Terlalu ramai" yang dikeluhkan kliensovbelum terjadi.
+Yang tetap mati: animasi latar (blob / liveRing / curtain). Rail marquee tetap hidup seperti sebelumnya, jadi "terlalu ramai" yang dulu dikeluhkan klien **belum** terjadi.
 
 ### 35.3 Verifikasi (terukur, bukan dikira)
 
