@@ -1324,7 +1324,7 @@ Klien: *"sy kira kaya scoreboard beneran art gitu entah image km generate atau a
 
 ### 37.1 Keputusan: bukan foto, tapi Seven-Segment sungguhan
 
-Versi §36 (panel putih + angka Anton) ditolak karena masih terasa "panel SaaS", bukan papan skor. Dipakai:hover **art seven-segment asli**:
+Versi §36 (panel putih + angka Anton) ditolak karena masih terasa "panel SaaS", bukan papan skor. Diputuskan: pakai **art seven-segment asli**:
 
 - **Bukan gambar** — angka digambar dari 7 segmen polygonal (`a`…`g`) di dalam SVG, jadi Seven-Segment asli.
 - **Segmen mati tetap terlihat** (`rgba(255,128,0,.09)`) — seperti LED papan stadion yang belum menyala.
@@ -1344,7 +1344,7 @@ Versi §36 (panel putih + angka Anton) ditolak karena masih terasa "panel SaaS",
 `src/components/StatsBar.astro` → papan:
 - Field **arang netral `#0b0c0e`** (bukan cokelat — itu sebab "kumal" di §34), `ring-white/10`, shadow lembut.
 - **Grid piksel LED**: `radial-gradient(rgb(255 128 0 / .09) 1px, transparent 1.15px)`every 5px.
-- **Sudut papan**: 4 penjok oranye (L-shape) + garis oranye 1px di atas.
+- **Sudut papan**: 4 pojok oranye (L-shape) + garis oranye 1px di atas.
 - Kepala papan: `● PROSPECT ASIA` di kiri, `SPORTS COMMUNICATION` di kanan.
 - 3 kolom dipisah `divide-x divide-white/10`, label `text-white/55` tracked.
 
