@@ -1781,3 +1781,13 @@ Klien: *"jelek sekaliii"*. Penyebab: foto asli klien dipakai sebagai background 
 Fix: background section **dikembalikan ke line art** (aset MiniMax, tajam, transparan — §43.6), foto asli tetap dipakai di tempat yang terbaca sebagai foto (bingkai Membership, kartu About, galeri, cover berita, hero).
 
 Bingkai foto Membership: `object-contain object-bottom` di dasar krem (aset `hero-athletes.jpg` punya area kosong di atas, jadi `object-cover`olo membuat bingkai kosong).
+
+### 43.14 Membership = kartu dengan bahasa desain kartu program
+
+Permintaan klien: *"bagian Membership Program ini juga seperti card design dong premium jangan over harus tema sport"* —含义: bagian itu harus berbentuk **kartu** seperti kartu program lain, bukan banner khusus.
+
+Implementasi: `<article class="spot prog-card group relative mt-6 flex flex-col overflow-hidden rounded-3xl">` dengan:
+- header foto banner `aspect-21/9` (pas untuk aset atlet 910×405) + chip "COMING SOON" oranye + caption "MEMBERSHIP · SESI RUTIN";
+- isi `grid lg:grid-cols-[1.05fr_0.95fr]`: kiri heading MEMBERSHIP PROGRAM + nomor 04 + deskripsi + CTA oranye teks putih; kanan 4 benefit ✓ (2×2).
+
+Struktur ini identik dengan kartu program (foto atas + chip + caption + isi + tombol oranye) → konsisten, premium, tidak over.
