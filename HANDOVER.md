@@ -1828,3 +1828,15 @@ Permintaan klien: *"blur naikan"*, *"Membership Program… ini kecil saja berupa
 
 - Dock: `backdrop-blur-md` (12px) → **`backdrop-blur-xl` (24px)** + `saturate-175`; `DOCK_CSS` di `lib/dock.ts` disamakan.
 - Membership: paragraf panjang diganti **kartu kecil** (pill-card `border-ink/10 bg-paper-deep`, 13px): "● Sesi rutin, tanpa booking ulang". **Tombol "Daftar Duluan" dihapus** (link WA `data-wa-cta="membership"` ikut hilang), menyisakan COMING SOON + art membership pass + strip benefit.
+
+### 43.19 Membership = satu objek "pass" oranye (semua teks ditata seperti tiket)
+
+Permintaan: *"Coming Soon / Membership Program / Sesi rutin, tanpa booking ulang — ini saja textnya pikirkan designnya"*. Tanpa tombol & tanpa foto, teksnya sendiri yang jadi desainnya.
+
+Final: **satu kartu pass oranye** (bukan kartu putih + panel gambar terpisah):
+- notch tiket di tepi kiri & kanan (kelas `.ticket` + `--notch-bg` = warna section);
+- header: "PROSPECT ASIA" (kiri) · "MEMBERSHIP PASS" (kanan), 10px tracked tinta 70%;
+- chip "● COMING SOON" **kebalik**: arang bg + teks putih + titik oranye;
+- heading Anton "MEMBERSHIP PROGRAM" tinta + sub-teks "Sesi rutin, tanpa booking ulang";
+- garis tinta 20% + 4 benefit (✓ tinta, bukan oranye — di atas oranye oranye tidak terlihat);
+- watermark angka "04" tinta 15% di kanan bawah.
