@@ -560,9 +560,13 @@ body {
   border-style: dashed;
 }
 
-/* Galeri foto: satu bingkai, satu foto, tanpa crossfade. Dahulu gambar
-   saling menimpa lewat opacity beranimasi — sekarang gambar pertama yang
-   tampil dan sisanya tetap ada di DOM untuk aksesibilitas/SEO. */
+/* Galeri foto: crossfade + zoom pelan antar foto.
+   Revisi "flat" (4 Nov 2026 pagi) sempat menghapus animasi ini karena klien
+   mengeluh "terlalu ramai animasi" — tapi yang di complaints itu animasi
+   LATAR (blob, liveRing, curtain). Foto yang berganti pelan di galeri
+   justru diminta klien dikembalikan (4 Nov 2026 sore): "sebelumnya slide
+   foto dan kenburn bagus". Jadi: crossfade + ken-burns hidup lagi, sisanya
+   tetap flat. */
 .gallery {
   position: relative;
   overflow: hidden;
@@ -575,11 +579,26 @@ body {
   width: 100%;
   object-fit: cover;
   opacity: 0;
+  animation: gallery-fade var(--gallery-step, 5s) ease-in-out infinite;
 }
 
-.gallery img:first-child {
-  position: relative;
-  opacity: 1;
+@keyframes gallery-fade {
+  0% { opacity: 0; transform: scale(1.08); }
+  7% { opacity: 1; }
+  30% { opacity: 1; transform: scale(1); }
+  38% { opacity: 0; }
+  100% { opacity: 0; transform: scale(1.03); }
+}
+
+/* Ken-burns: zoom sangat pelan ke satu sisi. Dipakai di foto besar
+   (pita CTA & banner Membership). Tanpa grayscale — foto tetap penuh warna. */
+.ken-burns {
+  animation: ken-burns 20s ease-in-out infinite alternate;
+}
+
+@keyframes ken-burns {
+  from { transform: scale(1.04) translate3d(0, 0, 0); }
+  to { transform: scale(1.16) translate3d(-1.6%, -1.6%, 0); }
 }
 
 .rail-wrap {

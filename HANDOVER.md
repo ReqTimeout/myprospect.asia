@@ -1238,3 +1238,43 @@ Sweep 21 file: `text-brand-dark` → `text-brand-text` **kecuali** yang berawala
 ### 34.9 Preview 3 arah (dipakai untuk memilih arah)
 
 `~/Downloads/palet-preview.png` + `palet-preview.html` (bisa dibuka di browser) berisi 3 mock arah: A Putih dominan, B Arang netral + oranye, C Jeruk lebih kuning. Klien memilih **A**.
+
+---
+
+## 35. Animasi galeri + ken-burns dikembalikan (4 Nov 2026)
+
+Klien: *"ini sebelumnya slide foto dan kenburn bagus ko jadi engga"* (menunjuk `<img src="/media/workshop-crowd.jpg" … style="animation-delay:10s; animation-duration:15s">`).
+
+### 35.1 Kenapa mati
+
+Revisi "flat" (§30.4) menghapus **animasi latar** (blob, liveRing, ken-burns, crossfade galeri) karena klien mengeluh *"terlalu ramai animasi"*. Yang ikut terbuang adalah `gallery-fade` — padahal itu **transisi antar foto di galeri**, bukan animasi latar. Efeknya:
+
+- `src/styles/global.css` → `.gallery img` jadi `opacity: 0` **tanpa** `animation`, lalu `.gallery img:first-child { position: relative; opacity: 1 }` menampilkan hanya foto pertama.
+- `style="animation-delay:…; animation-duration:…"` di `AutoGallery.astro:27` jadi **sisa mati** (nilai delay/duration masih benar, tapi tidak ada `animation-name`).
+- `@keyframes ken-burns` dihapus, dan `.ken-burns` tidak lagi dipakai di `CtaBand.astro` maupun banner Membership.
+
+### 35.2 Yang dikembalikan
+
+| Aset | Status |
+|---|---|
+| `@keyframes gallery-fade` (crossfade + zoom 1.08→1) | **hidup lagi** di `.gallery img`; aturan `:first-child` yang membekukan galeri **dihapus** |
+| `@keyframes ken-burns` (zoom 1.04→1.16 + geser 1.6%) | **hidup lagi**, dipakai di foto pita CTA (`CtaBand.astro`) & foto banner Membership (`ProgramSection.astro`) |
+| grayscale pada foto itu | **tidak** dikembalikan (klien minta foto penuh warna) |
+
+Yang tetap mati: animasi latar (blob/liveRing/curtain), marquee lain, rail. "Terlalu ramai" yang dikeluhkan kliensovbelum terjadi.
+
+### 35.3 Verifikasi (terukur, bukan dikira)
+
+Probe opacity 18 detik (`performance.now()`), galeri 3 foto step 5s:
+
+| t | img1 | img2 | img3 | ken-burns CTA |
+|---|---|---|---|---|
+| 2s | 0.97 (scale 1.073) | 0 | 0 | scale 1.040 |
+| 6s | 0.73 | 0 | 0 | scale 1.055 |
+| 10s | 0 | **1** | 0 | scale 1.089 |
+| 14s | 0 | 0 | **1** | scale 1.129 |
+| 18s | **1** | 0 | 0 | scale 1.154 |
+
+Siklus 15s (3 foto × 5s) + zoom kontinu; foto berganti benar, tidak pernah frame kosong (screenshot 3 momen: `workshop-live` → `workshop-live-2` → `workshop-crowd`).
+
+Lainnya: `audit-frames` 0 overflow + 0 console error · `audit-clip` **0 overflow / 0 covered** · `verify-ai` 0 gradien/blur/pisah, 0 error, 0 request gagal (animasi `infinite` sekarang: `gallery-fade`, `ken-burns`, `rail-slide`) · `verify-dock` / `verify-wa-green` / `verify-testimoni` **SEMUA PASS**.
