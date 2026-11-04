@@ -1867,3 +1867,21 @@ Audit DOM (7 halaman, walking ancestor mencari background solid, hitung rasio WC
 | `.pkg-flag` di template single post | `color: var(--brand)` | `color: #ffffff` |
 
 Aturan baru yang dipakai: **di atas bidang gelap → teks putih polos** (oranye/emas/merah tidak dipakai sebagai warna teks di atas arang). Yang tetap oranye hanya **latar**-nya. Verifikasi audit: 0 teks non-putih di atas latar gelap di 7 halaman.
+
+### 43.22 Kartu workshop diberi pita kepala tiket
+
+Kritik klien: *"ini masih kurang designnya"* (kartu workshop). Penyebabnya: kartu program punya header foto, kartu workshop polos putih → dua kartu berbeda级别 dalam satu grid.
+
+Fix: kartu workshop dapat **pita kepala arang** (sama dengan kelas `.ticket` di situs) berisi durasi + nomor besar, **teks putih di atas arang** (sesuai aturan §43.21):
+
+```
+┌ 1 SESI · 90 MENIT            01 ┐  ← pita arang, teks putih
+│ WORKSHOP STARTER                 │
+│ 5 benefit · untuk akademi & klub │
+│ ─────────────────────────────────│
+│ Lihat detail & harga           + │
+│ [     Booking Sekarang ↗      ] │
+└───────────────────────────────────┘
+```
+
+Tambahan: chip "1 sesi · 90 menit" + chip oranye "5 benefit" lama diganti pita kepala + satu baris meta plain (lebih tenang); toggle jadi baris teks dengan garis rambut di atas (bukan kotak); CTA full-width di dasar kartu (`mt-auto pt-5`).

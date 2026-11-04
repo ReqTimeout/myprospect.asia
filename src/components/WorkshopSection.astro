@@ -71,27 +71,25 @@ const gallery = [
     {
       workshops.map((w, i) => (
         <article data-reveal="pop" class="spot card-soft card-lift flex flex-col overflow-hidden rounded-3xl">
+          <!-- Pita kepala seperti tiket: durasi + nomor, teks putih di atas arang. -->
+          <div class="relative flex items-center justify-between gap-3 bg-ink px-5 py-3.5">
+            <span class="text-[10px] font-black tracking-[0.2em] text-white uppercase">{w.durasi}</span>
+            <span class="display text-2xl leading-none text-white" aria-hidden="true">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+          </div>
+
           <div class="relative z-10 flex flex-1 flex-col p-6">
-            <div class="flex items-start justify-between gap-3">
-              <h3 class="display line-clamp-2 text-2xl leading-tight">{w.nama}</h3>
-              <span class="display shrink-0 text-3xl leading-none text-brand" aria-hidden="true">
-                {String(i + 1).padStart(2, '0')}
-              </span>
-            </div>
-            <div class="mt-2.5 flex flex-wrap items-center gap-2">
-              <span class="shrink-0 rounded-full border border-ink/15 px-2.5 py-1 text-[10px] font-bold text-ink">
-                {w.durasi}
-              </span>
-              <span class="rounded-full bg-brand px-2.5 py-1 text-[10px] font-black tracking-wide text-white uppercase">
-                {w.didapat.length} benefit
-              </span>
-            </div>
+            <h3 class="display text-2xl leading-tight">{w.nama}</h3>
+            <p class="mt-2 text-[11px] text-ink">
+              {w.didapat.length} benefit · untuk akademi &amp; klub
+            </p>
 
             <!-- Semua detail (harga, ringkasan, benefit) masuk satu toggle —
                  kartu hanya menampilkan nama, durasi, dan jumlah benefit
                  (permintaan klien: "yang tampil hanya ini saja"). -->
-            <details class="group mt-4">
-              <summary class="flex cursor-pointer list-none items-center justify-between gap-2 rounded-xl border border-ink/10 px-3.5 py-2.5 text-xs font-bold text-ink transition hover:border-brand hover:text-ink">
+            <details class="group mt-5 border-t border-ink/10 pt-4">
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-2 text-xs font-bold text-ink transition hover:text-brand">
                 Lihat detail &amp; harga
                 <span class="shrink-0 transition-transform duration-200 group-open:rotate-45" aria-hidden="true">+</span>
               </summary>
@@ -117,19 +115,19 @@ const gallery = [
               </div>
             </details>
 
-            <div class="mt-5 flex">
-            <a
-              href={waLink({ program: w.nama, source: `workshop-${w.slug}` })}
-              target="_blank"
-              rel="noopener noreferrer"
-              data-wa-cta={`workshop-${w.slug}`}
-              data-register
-              data-program={w.nama}
-              data-source={`workshop-${w.slug}`}
-              class="mt-auto inline-flex items-center justify-center gap-2 rounded-2xl bg-brand px-5 pt-3.5 pb-3.5 text-sm font-bold text-white transition hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none active:scale-95"
-            >
-              Booking Sekarang ↗
-            </a>
+            <div class="mt-auto pt-5">
+              <a
+                href={waLink({ program: w.nama, source: `workshop-${w.slug}` })}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-wa-cta={`workshop-${w.slug}`}
+                data-register
+                data-program={w.nama}
+                data-source={`workshop-${w.slug}`}
+                class="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-brand px-5 py-3.5 text-sm font-bold text-white transition hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none active:scale-95"
+              >
+                Booking Sekarang ↗
+              </a>
             </div>
           </div>
         </article>
