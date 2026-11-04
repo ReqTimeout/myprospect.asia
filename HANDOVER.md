@@ -1921,3 +1921,13 @@ Permintaan: *"mobile version harus compact tapi rapih, fokus untuk user, tidak t
 ### 38.4 Verifikasi
 
 `audit-frames` 0 overflow + 0 console error (desktop + mobile) · build 12 halaman bersih · vision mobile 390×844: ticker → stats → heading "PRIVATE 1-ON-1 & SMALL GROUP" → kartu pertama (nama + harga) langsung terlihat dalam 1,4 layar ✓
+
+### 38.5 Polish: background About dihapus, art tiket dianimasikan, scroll hint hidup, marquee dilambat
+
+- **Background image section About dihapus** (SectionImage mic-kid) — section itu sekarang murni teks + kartu foto (foto sudah disembunyikan di mobile, §38.1 L4).
+- **Art tiket Membership** diberi gerak premium: `.pass-lines` (garis lapangan bergeser 44s), `.pass-num` (angka 04 melayang 7s), grid drift diperlambat 28s → 36s, chip "COMING SOON" tetap berdenyut, hover: kartu naik + grid terang + 04 makin tegas.
+- **Scroll hint dianimasikan**: titik turun-naik halus (`scroll-dot` 2.2s, opacity .35→1). Sebelumnya sengaja diam (§30.4) — sekarang diminta klien.
+- **Teks hero "Isi formulir 30 detik · admin balas di jam kerja" dihapus.**
+- **Marquee dilambat**: ticker cabang olahraga 34s → **62s**; default `.rail` 46s → 58s, rail coach/blog 40s → 52s.
+
+Catatan jebakan: `SectionImage` di About dihapus **bareng import-nya** — kalau hanya salah satu, build error "SectionImage is not defined" (terjadi sekali di sesi ini).

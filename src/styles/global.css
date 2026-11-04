@@ -438,10 +438,35 @@ body {
   to { opacity: 1; transform: none; }
 }
 
-/* Tab "Scroll" dibiarkan diam. Titik yang turun-naik terus-menerus adalah
-   gerak dekoratif murni — petunjuk teks + panah sudah cukup. */
+/* Tab "Scroll": titik turun-naik pelan (permintaan klien). */
 .scroll-hint span {
   display: block;
+  animation: scroll-dot 2.2s ease-in-out infinite;
+}
+
+@keyframes scroll-dot {
+  0%, 100% { transform: translateY(0); opacity: 0.35; }
+  50% { transform: translateY(16px); opacity: 1; }
+}
+
+/* Art tiket Membership: garis lapangan bergeser pelan, angka 04 melayang
+   halus — hidup tapi tenang, bukan=dekoratif rame. */
+.pass-lines {
+  animation: pass-drift 44s linear infinite;
+}
+
+@keyframes pass-drift {
+  from { transform: translateX(0); }
+  to { transform: translateX(-26px); }
+}
+
+.pass-num {
+  animation: pass-float 7s ease-in-out infinite alternate;
+}
+
+@keyframes pass-float {
+  from { transform: translateY(0); }
+  to { transform: translateY(-5px); }
 }
 
 /* Layar buka: bidang oranye rata satu warna, bukan gradasi ke kuning. */
@@ -594,7 +619,7 @@ body {
 /* Papan Membership: garis teknis bergerak sangat lambat (hidup tapi tenang)
    + titik chip yang berdenyut halus. */
 .pat-grid--drift {
-  animation: pat-drift 28s linear infinite;
+  animation: pat-drift 36s linear infinite;
 }
 
 @keyframes pat-drift {
@@ -655,7 +680,7 @@ body {
   display: flex;
   gap: 1.25rem;
   width: max-content;
-  animation: rail-slide var(--rail-speed, 46s) linear infinite;
+  animation: rail-slide var(--rail-speed, 58s) linear infinite;
 }
 
 .rail-wrap:hover .rail,
@@ -789,7 +814,7 @@ body {
 .ribbon {
   display: flex;
   width: max-content;
-  animation: rail-slide var(--rail-speed, 40s) linear infinite;
+  animation: rail-slide var(--rail-speed, 52s) linear infinite;
 }
 
 .ribbon-pill {
