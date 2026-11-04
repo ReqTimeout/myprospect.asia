@@ -1314,4 +1314,4 @@ Foto **tidak** dipakai. Alasannya: foto + teks = butuh scrim = gelap. Client sen
 
 `audit-frames` 0 overflow + 0 console error · `audit-clip` **0 overflow / 0 covered** · `verify-ai` 0 gradien/blur/pisah, 0 error, 0 request gagal, angka scoreboard **tidak** masuk daftar flag kontras (3.41:1 ≥ 3:1 untuk teks besar) · pw-vision 22/22, 0 overflow, 0 small target · vision desktop 1440×900 + mobile 390×844.
 
-> Pita ticker di atas scoreboard **tetap gelap** (strip tipis 36px) — ritme kontras yang disengaja. Kalau klien mau 100% putih,只需 ganti `tone="ink"` → `tone="brand"` di `index.astro` (1 baris).
+> Pita ticker di atas scoreboard **tetap gelap** (strip tipis 36px) — ritme kontras yang disengaja. Kalau klien mau 100% putih, cukup ganti `tone="ink"` → `tone="brand"` di `index.astro` (1 baris).
