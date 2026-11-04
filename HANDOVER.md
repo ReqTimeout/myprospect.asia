@@ -1840,3 +1840,14 @@ Final: **satu kartu pass oranye** (bukan kartu putih + panel gambar terpisah):
 - heading Anton "MEMBERSHIP PROGRAM" tinta + sub-teks "Sesi rutin, tanpa booking ulang";
 - garis tinta 20% + 4 benefit (✓ tinta, bukan oranye — di atas oranye oranye tidak terlihat);
 - watermark angka "04" tinta 15% di kanan bawah.
+
+### 43.20 Benefit Membership dihapus + animasi interaktif halus
+
+Permintaan klien: hapus daftar 4 benefit, *"pake animasi yang interaktif sedikit agar feel premium keluar"*.
+
+- 4 benefit (Sesi rutin tanpa ribet booking ulang / Materi & e-library eksklusif atlet / Priority support dari coach / Community atlet lintas cabang) **dihapus** beserta garis pemisah. Kartu kini: PROSPECT ASIA · MEMBERSHIP PASS → chip COMING SOON → MEMBERSHIP PROGRAM → "Sesi rutin, tanpa booking ulang" → watermark 04.
+- Interaksi premium (ringan, bukan ramai):
+  - hover: kartu naik 1px + bayangan menguat (0.5s ease);
+  - `pat-grid` di dalam pass **drift sangat lambat** 28s (seamless, 26px) + terang saat hover;
+  - watermark "04" naik 2px & makin tegas saat hover (0.7s);
+  - titik chip COMING SOON berdenyut halus (`pulse-dot`, 2.6s, scale .82 di tengah).

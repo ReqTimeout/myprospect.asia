@@ -591,6 +591,26 @@ body {
   100% { opacity: 0; transform: scale(1.03); }
 }
 
+/* Papan Membership: garis teknis bergerak sangat lambat (hidup tapi tenang)
+   + titik chip yang berdenyut halus. */
+.pat-grid--drift {
+  animation: pat-drift 28s linear infinite;
+}
+
+@keyframes pat-drift {
+  from { background-position: 0 0; }
+  to { background-position: 26px 26px; }
+}
+
+.pulse-dot {
+  animation: pulse-dot 2.6s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.45; transform: scale(0.82); }
+}
+
 /* Latar foto tipis per section (pengganti art CSS). Full-bleed + mask dari
    komponen; opacity rendah supaya melebur ke warna latar. */
 .sec-img {

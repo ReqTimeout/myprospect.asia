@@ -149,16 +149,16 @@ const hemat = (coret: number | undefined, harga: number) =>
        tanpa tombol dan tanpa foto (permintaan klien). Notch tiket + garis
        teknis tinta menjaga rasa "sport". -->
   <article
-    class="ticket relative mt-6 overflow-hidden rounded-3xl bg-brand"
+    class="ticket group/pass relative mt-6 overflow-hidden rounded-3xl bg-brand transition-[transform,box-shadow] duration-500 hover:-translate-y-1 hover:shadow-[0_28px_60px_-28px_rgba(27,27,31,0.45)]"
     style="--notch-y: 50%; --notch-bg: var(--color-paper-deep);"
   >
-    <div class="pat-grid absolute inset-0 opacity-45" aria-hidden="true"></div>
+    <div class="pat-grid pat-grid--drift absolute inset-0 opacity-45 transition-opacity duration-500 group-hover/pass:opacity-70" aria-hidden="true"></div>
     <div
       class="art-pitch absolute inset-0 opacity-30 [mask-image:linear-gradient(to_top_left,black,transparent_75%)]"
       aria-hidden="true"
     >
     </div>
-    <span class="display absolute right-6 bottom-0 text-8xl leading-none text-ink/15" aria-hidden="true">04</span>
+    <span class="display absolute right-6 bottom-0 text-8xl leading-none text-ink/15 transition-all duration-700 group-hover/pass:-translate-y-2 group-hover/pass:text-ink/25" aria-hidden="true">04</span>
 
     <div class="relative p-6 sm:p-9">
       <div class="flex items-center justify-between gap-3">
@@ -168,23 +168,13 @@ const hemat = (coret: number | undefined, harga: number) =>
 
       <div class="mt-6">
         <span class="inline-flex items-center gap-2 rounded-full bg-ink px-3 py-1 text-[10px] font-black tracking-widest text-white uppercase">
-          <span class="h-1.5 w-1.5 rounded-full bg-brand" aria-hidden="true"></span>
+          <span class="pulse-dot h-1.5 w-1.5 rounded-full bg-brand" aria-hidden="true"></span>
           Coming Soon
         </span>
         <h3 class="display mt-4 text-4xl text-ink sm:text-5xl">Membership Program</h3>
         <p class="mt-2 text-sm font-semibold text-ink/85">Sesi rutin, tanpa booking ulang</p>
       </div>
 
-      <ul class="mt-7 grid gap-x-6 gap-y-2 border-t border-ink/20 pt-5 sm:grid-cols-2 lg:grid-cols-4">
-        {membershipBenefits.map((b) => (
-          <li class="flex items-start gap-2 text-[13px] font-semibold text-ink/90">
-            <span class="text-ink" aria-hidden="true">
-              ✓
-            </span>
-            {b}
-          </li>
-        ))}
-      </ul>
     </div>
   </article>
   </div>
