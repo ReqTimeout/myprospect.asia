@@ -8,38 +8,44 @@ const stats = [
 ];
 ---
 
-<!-- Scoreboard versi terang: papan putih, panel dipisah garis rambut, angka
-     oranye tabular + strip oranye tipis di kepala. "Kesan scoreboard" berasal
-     dari STRUKTUR (panel, garis, angka tabular, label kecil), bukan dari
-     foto gelap — sehingga tidak ada lagi bidang hitam yang terlihat berat. -->
-<section class="relative mx-auto max-w-6xl px-4 py-10 sm:px-6" aria-label="Stats Prospect Asia">
+<!--
+  Papan skor LED.
+
+ _field_ gelapnya TIDAP cokelat (itu yang bikin "kumal" di §34) tapi arang
+  netral #0b0c0e, dan isinya bukan foto melainkan elemen papan LED sungguhan:
+  grid piksel, angka seven-segment, segmen mati yang masih kelihatan, dan
+  garis oranye tipis. Papan ini jadi satu-satunya objek gelap di halaman —
+  sisanya putih.
+-->
+<section class="relative mx-auto max-w-5xl px-4 py-10 sm:px-6" aria-label="Stats Prospect Asia">
   <div
-    class="relative overflow-hidden rounded-3xl bg-paper ring-1 ring-ink/10 shadow-[0_18px_44px_-32px_rgba(27,27,31,0.45)]"
+    class="relative overflow-hidden rounded-2xl bg-[#0b0c0e] shadow-[0_30px_70px_-40px_rgba(11,12,14,0.9)] ring-1 ring-white/10"
   >
-    <!-- Latar teknis: grid blueprint + garis lapangan, digambar tinta netral
-         dengan opacity sangat tipis supaya tetap putih & bersih. -->
-    <div class="pat-grid absolute inset-0 opacity-60" style="--pat-gap: 24px" aria-hidden="true"></div>
+    <!-- Grid piksel LED (titik oranye sangat redup) -->
     <div
-      class="art-pitch absolute inset-0 opacity-45 [mask-image:linear-gradient(to_top,black,transparent_72%)]"
+      class="absolute inset-0"
+      style="background-image: radial-gradient(rgb(255 128 0 / 0.09) 1px, transparent 1.15px); background-size: 5px 5px;"
       aria-hidden="true"
     >
     </div>
-    <div
-      class="pat-halftone absolute -bottom-20 -left-16 h-72 w-72 opacity-55 pat-fade-tr"
-      aria-hidden="true"
-    >
-    </div>
+    <div class="absolute inset-x-0 top-0 h-px bg-brand" aria-hidden="true"></div>
 
-    <!-- Kepala papan: strip oranye tipis + identitas, seperti header scoreboard. -->
-    <div class="relative flex items-center justify-between gap-3 border-b border-ink/10 px-4 py-2.5 sm:px-6">
+    <!-- Sudut papan (detail teknis alaineries) -->
+    <span class="absolute top-2 left-2 h-3 w-3 border-t border-l border-brand/60" aria-hidden="true"></span>
+    <span class="absolute top-2 right-2 h-3 w-3 border-t border-r border-brand/60" aria-hidden="true"></span>
+    <span class="absolute bottom-2 left-2 h-3 w-3 border-b border-l border-brand/60" aria-hidden="true"></span>
+    <span class="absolute bottom-2 right-2 h-3 w-3 border-b border-r border-brand/60" aria-hidden="true"></span>
+
+    <!-- Kepala papan -->
+    <div class="relative flex items-center justify-between gap-3 border-b border-white/10 px-4 py-2.5 sm:px-6">
       <span class="flex items-center gap-2">
-        <span class="h-2 w-2 rounded-full bg-brand" aria-hidden="true"></span>
-        <span class="text-[10px] font-black tracking-[0.22em] text-ink/70 uppercase">Prospect Asia · Sports Communication</span>
+        <span class="h-1.5 w-1.5 rounded-full bg-brand" aria-hidden="true"></span>
+        <span class="text-[10px] font-black tracking-[0.22em] text-white/75 uppercase">Prospect Asia</span>
       </span>
-      <span class="hidden text-[10px] font-bold tracking-[0.2em] text-brand-text uppercase sm:inline">Angka program</span>
+      <span class="text-[10px] font-bold tracking-[0.2em] text-white/45 uppercase">Sports Communication</span>
     </div>
 
-    <div class="relative px-3 py-4 sm:px-5 sm:py-6">
+    <div class="relative px-3 py-6 sm:px-6 sm:py-8">
       <StatsList client:visible stats={stats} />
     </div>
   </div>

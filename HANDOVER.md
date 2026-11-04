@@ -1315,3 +1315,50 @@ Foto **tidak** dipakai. Alasannya: foto + teks = butuh scrim = gelap. Client sen
 `audit-frames` 0 overflow + 0 console error · `audit-clip` **0 overflow / 0 covered** · `verify-ai` 0 gradien/blur/pisah, 0 error, 0 request gagal, angka scoreboard **tidak** masuk daftar flag kontras (3.41:1 ≥ 3:1 untuk teks besar) · pw-vision 22/22, 0 overflow, 0 small target · vision desktop 1440×900 + mobile 390×844.
 
 > Pita ticker di atas scoreboard **tetap gelap** (strip tipis 36px) — ritme kontras yang disengaja. Kalau klien mau 100% putih, cukup ganti `tone="ink"` → `tone="brand"` di `index.astro` (1 baris).
+
+---
+
+## 37. Scoreboard jadi papan LED seven-segment (4 Nov 2026)
+
+Klien: *"sy kira kaya scoreboard beneran art gitu entah image km generate atau art paham ga sih"*.
+
+### 37.1 Keputusan: bukan foto, tapi Seven-Segment sungguhan
+
+Versi §36 (panel putih + angka Anton) ditolak karena masih terasa "panel SaaS", bukan papan skor. Dipakai:hover **art seven-segment asli**:
+
+- **Bukan gambar** — angka digambar dari 7 segmen polygonal (`a`…`g`) di dalam SVG, jadi Seven-Segment asli.
+- **Segmen mati tetap terlihat** (`rgba(255,128,0,.09)`) — seperti LED papan stadion yang belum menyala.
+- **Miring satu baris** (`skewX(-5)` pada seluruh baris angka, bukan per digit).
+- Angka ikut **menghitung naik** (rAF + easing 1200 ms) → saat data masuk, papannya berdenyut seperti LED yang di-update. Terbukti: jumlah polygon berubah 35 → 49 saat digit bertambah.
+
+### 37.2 File baru
+
+`src/components/islands/LedNumber.svelte` (baru):
+- `SEG_POINTS` = 7 polygon segmen; `LIT` = peta digit → segmen yang menyala.
+- `DIGIT_OFFSET` = pergeseran per digit (lihat jebakan 37.4).
+- Glyph: digit · titik (pemisah ribuan `id-ID`) · tanda `+`.
+- Teks untuk screen reader memakai **nilai final** (`to`), bukan angka yang sedang berdenyut, dan warnanya `text-white/75` supaya audit kontras tidak salah baca papan gelap.
+
+`src/components/islands/StatsList.svelte` → memakai `LedNumber` (angka `Counter` dihapus dari sini; `Counter.svelte` masih dipakai tak lagi di tempat lain — boleh dihapus).
+
+`src/components/StatsBar.astro` → papan:
+- Field **arang netral `#0b0c0e`** (bukan cokelat — itu sebab "kumal" di §34), `ring-white/10`, shadow lembut.
+- **Grid piksel LED**: `radial-gradient(rgb(255 128 0 / .09) 1px, transparent 1.15px)`every 5px.
+- **Sudut papan**: 4 penjok oranye (L-shape) + garis oranye 1px di atas.
+- Kepala papan: `● PROSPECT ASIA` di kiri, `SPORTS COMMUNICATION` di kanan.
+- 3 kolom dipisah `divide-x divide-white/10`, label `text-white/55` tracked.
+
+### 37.3 Kenapa tidak pakai foto
+
+Papan LED harus **hitam** — itu nature-nya. Yang bikin "terlihatdeveloped by AI" itu bukan warnanya, tapi **detail yangMurahan**: gradien glossy, blur, glow. Papan ini kebalikannya: field rata, satu warna, geometri presisi (7 segmen), tanpa glow. Jadi "hitam" di sini terbaca sebagai *objek*, bukan *bajakan*.
+
+### 37.4 Jebakan geometri (3 bug yang hanya terlihat lewat vision)
+
+1. **Digit '1' nabrak '7'** — segmen '1' hanya menyala di sisi kanan sel, jadi glifnya menempel ke digit berikutnya. Fix: `DIGIT_OFFSET = { '1': -33 }` (geser ke tengah sel).
+2. **Angka tidak center** — koordinat segmen meleset 6 unit dari tengah sel 108. Fix: semua koordinat digeser +6.
+3. **Tanda '+' melayang di tengah atas** — harus di garis dasar. Fix: digeser ke `y=115..148`.
+4. Plus: **skew per digit** bikin digit saling menabrak di bawah → skew dipindah ke satu `<g>` untuk seluruh baris.
+
+### 37.5 Verifikasi lokal (semua PASS)
+
+`audit-frames` 0 overflow + 0 console error · `audit-clip` **0 overflow / 0 covered** · `verify-ai` 0 gradien/blur/pisah, 0 error, 0 request gagal; 18 flag kontras = **sama seperti sebelum** (ghost-word, angka 01-03, "MODERN") — tidak ada flag baru dari papan LED · `verify-home` 0 console error, 0 request gagal · `verify-dock` / `verify-wa-green` / `verify-testimoni` / `verify-admin-ui` **SEMUA PASS** · pw-vision 22/22, 0 overflow, 0 small target · vision desktop 1440×900 + mobile 390×844 (zoom 4× untuk cek geometri digit).
