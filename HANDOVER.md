@@ -1718,3 +1718,13 @@ Klien: *"Workshop Starter / 01 / 1 sesi · 90 menit / 5 benefit — ini yang tam
 **Trade-off kontras (putih di atas #ff8c00 = 2.33:1)**: gagal WCAG 4.5:1 — ini keputusan estetika klien yang diminta eksplisit dua kali. `verify-ai` kini 134 flag yang seluruhnya pola ini. Teks panjang/fungsional (harga, isi, FAQ) tetap tinta di atas putih ✓.
 
 Verifikasi: audit-frames 0 overflow + 0 console error, verify-home 0 error, dock/testimoni SEMUA PASS.
+
+### 43.9 Eyebrow serif dihapus total — "jangan ada huruf sambung, font harus nyaming"
+
+Klien: *"Tentang Sports Communication hapus ini dan jangan ada huruf sambung, font harus nyaming"*. Instrument Serif *italic* dibaca klien sebagai **huruf sambung** (cursive) — eksperimen editorial gagal.
+
+- **16 eyebrow serif italic dihapus** (About "Tentang Sports Communication", FAQ, berita, tentang, program detail ×5, workshop detail ×4). Section kini langsung dibuka heading Anton.
+- **3 dipertahankan tapi ganti Anton** (fungsional): label bulan journey (`display text-sm text-brand`) dan heading kolom footer ("Jelajahi"/"Kontak" → `display text-base text-ink`).
+- **Instrument Serif dicabut total**: import di Base.astro, token `--font-serif`, dan package-nya dihapus dari package.json.
+- `.eyebrow` CSS kini tak berpemakai (sisa mati, boleh dihapus).
+- Identitas font akhir: **Anton** (display, nyaming) + **Plus Jakarta Sans** (teks). Tidak ada lagi font ketiga.
