@@ -1,5 +1,6 @@
 ---
 import { existsSync } from 'node:fs';
+import path from 'node:path';
 import type { CrestShape } from '../data/crest';
 
 interface Props {
@@ -26,11 +27,13 @@ const mono = (nama: string) => {
 
 // Kalau klien sempat menaruh file logo asli (public/media/partners/<slug>.png|jpg|webp|svg)
 // komponen otomatis memakainya — tidak perlu ubah kode.
+// Jalur dihitung dari root project (process.cwd()), bukan dari import.meta.url:
+// waktu build, import.meta.url menunjuk URL modul Vite, bukan file sumbernya.
 const exts = ['svg', 'png', 'jpg', 'jpeg', 'webp', 'avif'];
+const dir = path.join(process.cwd(), 'public', 'media', 'partners');
 const realLogo =
   exts
-    .map((e) => `media/partners/${slug}.${e}`)
-    .map((p) => new URL(`../public/${p}`, import.meta.url).pathname)
+    .map((e) => path.join(dir, `${slug}.${e}`))
     .find((p) => existsSync(p)) ?? null;
 
 const outer: Record<CrestShape, string> = {

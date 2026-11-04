@@ -1424,3 +1424,46 @@ Yang **dipertahankan** karena itu "isi", bukan latar: foto atlet di hero, jersey
 ### 38.3 Verifikasi lokal (semua PASS)
 
 `audit-frames` 0 overflow + 0 console error · `audit-clip` **0 overflow / 0 covered** · `verify-ai` 17 flag (17 = dekoratif saja: ghost-word ×2, angka 01-03 ×6, "MODERN" ×2, dan angka display lain); teks kecil CTA yang tadinya `text-ink/60` (4.41:1) dinaikkan ke `/70` → lolos AA · `verify-dock` / `verify-wa-green` / `verify-testimoni` / `verify-admin-ui` **SEMUA PASS** · pw-vision 22/22, 0 overflow, 0 small target · vision desktop 1440×900 + mobile 390×844.
+
+---
+
+## 39. Mitra: 2 logo asli + grid compact 3 kolom (4 Nov 2026)
+
+Permintaan klien: *"bagian ini kamu bisa cari logo realnya dan buat kecil2 compact dan di mobile 3 kolom buat yang rapih"*.
+
+### 39.1 Dua logo asli berhasil didapat
+
+| Mitra | Sumber | File |
+|---|---|---|
+| **RSIA Limijati** | situs resmi `rsia-limijati.com` → berkas "Logo Lengkap.png" (Wix CDN) | `public/media/partners/rs-limijati.png` (900×330, alpha) |
+| **Little Pep** | Linktree resmi `linktr.ee/littlepep` → OG image, **dipotong** jadi bulatan logo | `public/media/partners/little-pep.png` (320×320) |
+
+Sisanya **tidak** punya logo yang bisa diambil tanpa login:
+
+| Mitra | Kenapa gagal |
+|---|---|
+| Djanur Football Academy, Akademi Futsal Margahayu Raya, MFC Marunda, PB Jaya Raya Ragunan, SSBRBC, Dream Baller ID, Pep Sports, Exortive | akun Instagram saja. `webfetch` ke IG mengembalikan **login wall** (500 KB HTML shell, tidak ada `profile_pic_url`/`og:image`). `linktr.ee/og/image/<handle>.jpg` hanya 200 untuk handle yang memang punya Linktree — hasil yang ketemu (`djanur` → "objkt.com", `dreamballer` → "Contact admin") **bukan brand yang benar**, jadi dibuang. `ssbrbc.com` (ada di bio IG-nya) tidak bisa diakses (connection 000) |
+
+Sisa 8 mitra tetap pakai **lencana SVG** (satu keluarga desain, bukan logo palsu). Cara drop-in logo asli sudah aktif dan otomatis: taruh file di `public/media/partners/<slug>.png|jpg|webp|svg` → dipakai tanpa ubah kode.
+
+### 39.2 Bug: mekanisme drop-in tidak pernah jalan
+
+`PartnerLogo.astro` mencari file logo dengan `new URL('../public/…', import.meta.url)` — jalur relatif dari `src/components/`指向 `src/public/` (hanya **satu** tingkat ke atas, seharusnya **dua**). Akibatnya `existsSync()` selalu false, jadi **tidak ada** logo asli yang pernah terdeteksi sejak mekanismenya dibuat (§20.1).
+
+Perbaikan: pakai `path.join(process.cwd(), 'public', 'media', 'partners', …)`. Alasannya `import.meta.url` saat build Vite menunjuk URL modul di graf Vite, bukan file sumber — jadi even dengan `../../` pun tetap bisa salah.
+
+### 39.3 Layout: compact + 3 kolom di HP
+
+| | Lama | Baru |
+|---|---|---|
+| Kolom HP | 2 (akademi), 3 (mitra) | **3** (akademi, 6 item = 2 baris penuh) · **2** (mitra, 4 item = 2×2 penuh) |
+| Kolom desktop | 3 | **6** (akademi satu baris) · **4** (mitra satu baris) |
+| Isi kartu | logo + nama + label "AKADEMI/MITRA" | **logo + nama saja** (label redundant, sudah ada di judul kelompok) |
+| Ukuran | logo 48–56px, kartu `p-3.5`, `rounded-2xl`, `shadow-soft` | logo **40–48px**, kartu `p-2.5`, `rounded-xl`, tanpa shadow |
+| Label jumlah | "6 mitra" (salah untuk kelompok akademi) | "6 akademi" / "4 mitra" |
+
+Jumlah kolom per kelompok disimpan di `grup[].cols` supaya **barisnya terisi penuh** di HP (6 → 3 kolom, 4 → 2 kolom).
+
+### 39.4 Verifikasi lokal
+
+`audit-frames` 0 overflow + 0 console error · `audit-clip` **0 overflow / 0 covered** · `verify-ai` 17 flag (dekoratif saja) · pw-vision 22/22, 0 overflow, 0 small target · vision desktop 1440×900 + mobile 390×844 (logo asli terbaca jelas, tile rapi).
