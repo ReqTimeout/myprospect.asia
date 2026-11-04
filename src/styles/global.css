@@ -590,6 +590,12 @@ body {
   100% { opacity: 0; transform: scale(1.03); }
 }
 
+/* LED papan skor: segmen yang menyala diberi bloom tipis supaya terbaca
+   sebagai cahaya, bukan sekadar bentuk oranye. 1 filter per digit. */
+.led-lit {
+  filter: drop-shadow(0 0 5px rgb(255 128 0 / 0.4));
+}
+
 /* Ken-burns: zoom sangat pelan ke satu sisi. Dipakai di foto besar
    (pita CTA & banner Membership). Tanpa grayscale — foto tetap penuh warna. */
 .ken-burns {

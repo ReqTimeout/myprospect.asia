@@ -1362,3 +1362,20 @@ Papan LED harus **hitam** — itu nature-nya. Yang bikin "terlihatdeveloped by A
 ### 37.5 Verifikasi lokal (semua PASS)
 
 `audit-frames` 0 overflow + 0 console error · `audit-clip` **0 overflow / 0 covered** · `verify-ai` 0 gradien/blur/pisah, 0 error, 0 request gagal; 18 flag kontras = **sama seperti sebelum** (ghost-word, angka 01-03, "MODERN") — tidak ada flag baru dari papan LED · `verify-home` 0 console error, 0 request gagal · `verify-dock` / `verify-wa-green` / `verify-testimoni` / `verify-admin-ui` **SEMUA PASS** · pw-vision 22/22, 0 overflow, 0 small target · vision desktop 1440×900 + mobile 390×844 (zoom 4× untuk cek geometri digit).
+
+### 37.6 Revisi setelah kritik klien: "jelek ga kebaca"
+
+Klien menilai versi §37 pertama: **"jelek ga kebaca"** — dan itu memang bener. Tiga masalah nyata (terlihat hanya dari screenshot, bukan dari angka):
+
+| Masalah | Sebab | Fix |
+|---|---|---|
+| "2.175" susah dibaca, angka "1" dan "7" tenggelam di kabut | **segmen mati terlalu terang** (`rgba(255,128,0,.09)`) → di belakang "1" dan "7" muncul bentuk "8" gelap yang mengotorkan | segmen mati diredupkan ke `rgba(255,128,0,.045)` |
+| Terlihat seperti bentuk oranye datar, bukan LED yang menyala | tidak ada cahaya | kelas `.led-lit` → `filter: drop-shadow(0 0 5px rgb(255 128 0 / .4))`, **1 filter per digit** (bukan per polygon) |
+| Di mobile "2.175+" meluber ke kolom sebelah | `w-auto` → lebar SVG = tinggi × aspect, jadi 4 digit melebihi kolom | `w-full` + `preserveAspectRatio="xMidYMid meet"` → konten skala-tayang di dalam kotak |
+| "2.175+" jauh lebih kecil dari "25"/"6" | 4 digit memang butuh 4× lebar sel | glif dirapatkan (x diskale ~0.72), `DIGIT_W` 108→82, `DOT_W` 32→24, `PLUS_W` 56→42, `DIGIT_OFFSET['1']` -33→-27. Tinggi semua angka di HP kini ~39px vs 44px (dari 30 vs 44) |
+
+Papan LED Seven-Segment memang ramping — jadi ini bukan kompromi, tapi memang bentuk aslinya.
+
+### 37.7 Verifikasi revisi
+
+`audit-frames` 0 overflow + 0 console error · `audit-clip` **0 overflow / 0 covered** · `verify-ai` 18 flag (sama seperti sebelumnya, tanpa flag baru) · `verify-home` 0 error · `verify-dock` / `verify-wa-green` / `verify-testimoni` **SEMUA PASS** · pw-vision 22/22, 0 overflow, 0 small target · **pengukuran overlap antar kolom SVG: 0** (mobile & desktop) · tinggi kotak SVG seragam: mobile 44px, desktop 64px.

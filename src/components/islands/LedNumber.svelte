@@ -24,20 +24,24 @@
     | { kind: 'dot'; x: number }
     | { kind: 'plus'; x: number };
 
+  /* Glif seven-segment dirapatkan (x discale ~0.72 dari lebar semula) supaya
+     angka panjang "2.175+" tetap muat dalam satu kolom di HP dengan tinggi
+     yang hampir sama dengan angka pendek. Layar LED Seven-Segment aslinya
+     memang ramping. */
   const SEG_POINTS: Record<string, string> = {
-    a: '20,8 92,8 84,25 28,25',
-    g: '22,80 90,80 82,97 30,97',
-    d: '24,152 88,152 80,169 32,169',
-    f: '14,12 33,12 33,78 14,78',
-    b: '79,12 98,12 98,78 79,78',
-    e: '14,99 33,99 33,165 14,165',
-    c: '79,99 98,99 98,165 79,165',
+    a: '18,8 70,8 64,25 24,25',
+    g: '15,80 64,80 58,97 21,97',
+    d: '17,152 63,152 57,169 23,169',
+    f: '14,12 28,12 28,78 14,78',
+    b: '61,12 75,12 75,78 61,78',
+    e: '14,99 28,99 28,165 14,165',
+    c: '61,99 75,99 75,165 61,165',
   };
 
   /* Digit '1' hanya menyalakan segmen kanan, jadi glifnya harus digeser ke
      tengah sel — kalau tidak dia menempel ke digit berikutnya ("2175" jadi
      "21 75" dan huruf '1' nabrak '7'). */
-  const DIGIT_OFFSET: Record<string, number> = { '1': -33 };
+  const DIGIT_OFFSET: Record<string, number> = { '1': -27 };
 
   const LIT: Record<string, string> = {
     '0': 'abcdef',
@@ -53,9 +57,9 @@
   };
 
   const SKEW = -5;
-  const DIGIT_W = 108;
-  const DOT_W = 32;
-  const PLUS_W = 56;
+  const DIGIT_W = 82;
+  const DOT_W = 24;
+  const PLUS_W = 42;
 
   let el = $state<HTMLElement | undefined>(undefined);
   let value = $state(0);
@@ -130,18 +134,24 @@
       {#if g.kind === 'digit'}
         <g transform={`translate(${g.x + (DIGIT_OFFSET[g.ch] ?? 0)},0)`}>
           {#each Object.entries(SEG_POINTS) as [name, pts] (name)}
-            <polygon
-              points={pts}
-              fill={LIT[g.ch].includes(name) ? 'var(--color-brand)' : 'rgba(255,128,0,0.09)'}
-            />
+            {#if !LIT[g.ch].includes(name)}
+              <polygon points={pts} fill="rgba(255,128,0,0.045)" />
+            {/if}
           {/each}
+          <g class="led-lit">
+            {#each Object.entries(SEG_POINTS) as [name, pts] (name)}
+              {#if LIT[g.ch].includes(name)}
+                <polygon points={pts} fill="var(--color-brand)" />
+              {/if}
+            {/each}
+          </g>
         </g>
       {:else if g.kind === 'dot'}
-        <circle cx={g.x + 16} cy="162" r="7" fill="var(--color-brand)" />
+        <circle cx={g.x + 12} cy="160" r="6" fill="var(--color-brand)" />
       {:else}
         <g transform={`translate(${g.x + (DIGIT_OFFSET[g.ch] ?? 0)},0)`}>
-          <rect x="12" y="126" width="34" height="13" fill="var(--color-brand)" />
-          <rect x="23" y="115" width="13" height="35" fill="var(--color-brand)" />
+          <rect x="8" y="126" width="26" height="12" fill="var(--color-brand)" />
+          <rect x="15" y="116" width="12" height="32" fill="var(--color-brand)" />
         </g>
       {/if}
     {/each}
