@@ -152,7 +152,7 @@
             href={waUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="mt-2 inline-flex items-center gap-2 rounded-2xl bg-brand px-6 py-3.5 text-sm font-bold text-ink transition hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none active:scale-95"
+            class="mt-2 inline-flex items-center gap-2 rounded-2xl bg-brand px-6 py-3.5 text-sm font-bold text-white transition hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none active:scale-95"
           >
             <Send size={16} strokeWidth={2.4} />
             Buka WhatsApp
@@ -236,7 +236,7 @@
             type="submit"
             disabled={sending}
             data-wa-cta="register-modal"
-            class="mt-5 flex w-full items-center justify-center gap-2 rounded-2xl bg-brand px-6 py-3.5 text-sm font-bold text-ink transition hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none active:scale-95 disabled:opacity-60"
+            class="mt-5 flex w-full items-center justify-center gap-2 rounded-2xl bg-brand px-6 py-3.5 text-sm font-bold text-white transition hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none active:scale-95 disabled:opacity-60"
           >
             <Send size={16} strokeWidth={2.4} />
             {sending ? 'Mengirim…' : 'Kirim & buka WhatsApp'}

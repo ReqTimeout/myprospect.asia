@@ -26,10 +26,10 @@ const TONES: Record<CatTone, CategoryStyle> = {
   },
   kolaborasi: {
     tone: 'kolaborasi',
-    text: '#241a12',
-    border: '#ff8000',
-    dot: '#241a12',
-    wash: '#ff8000',
+    text: '#ffffff',
+    border: '#ff8c00',
+    dot: '#ffffff',
+    wash: '#ff8c00',
   },
   berita: {
     tone: 'berita',

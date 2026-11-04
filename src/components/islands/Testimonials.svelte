@@ -134,7 +134,7 @@
               <span class="absolute bottom-3 left-4 flex h-9 w-9 items-center justify-center rounded-full bg-ink">
                 <Quote size={18} class="text-white/90" aria-hidden="true" />
               </span>
-              <span class="absolute top-3 right-3 rounded-full bg-brand px-2.5 py-1 text-ink text-[10px] font-bold tracking-wide uppercase">
+              <span class="absolute top-3 right-3 rounded-full bg-brand px-2.5 py-1 text-white text-[10px] font-bold tracking-wide uppercase">
                 Atlet Prospect Asia
               </span>
             </div>
@@ -150,7 +150,7 @@
                 “{t.kutipan}”
               </blockquote>
               <figcaption class="mt-5 flex items-center gap-3">
-                <span class="flex h-11 w-11 items-center justify-center rounded-full bg-brand text-base font-black text-ink italic">
+                <span class="flex h-11 w-11 items-center justify-center rounded-full bg-brand text-base font-black text-white italic">
                   {t.nama[0]}
                 </span>
                 <div class="leading-tight">

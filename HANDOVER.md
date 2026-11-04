@@ -1704,3 +1704,17 @@ Klien: papan LED *"jelek sekali, gimana ya biar ga ai banget"* + kartu workshop 
 2. **Benefit workshop masuk `<details>` toggle**: ringkasan "Lihat detail program +" (rotate 45° saat terbuka), daftar ✓ bergaris kiri oranye. Kartu jadi rampat; chip "N benefit" di header tetap memberi tahu isinya. `group` + `group-open:rotate-45`.
 
 Verifikasi: audit-frames 0 overflow + 0 console error (mobile 17 — 1 lebih sedikit), audit-clip 0 overflow/0 covered, verify-ai 20 flag (heading display saja), dock/wa-green/testimoni/admin-ui SEMUA PASS, pw-vision 22/22 0 bug. Vision: statistik di atas putih + toggle terbuka di mobile.
+
+### 43.8 Kartu workshop hanya header + toggle semua; teks di atas oranye jadi PUTIH; oranye dicerahkan
+
+Klien: *"Workshop Starter / 01 / 1 sesi · 90 menit / 5 benefit — ini yang tampil hanya ini saja, ada detail toggle untuk buka semuanya bukan pindah halaman"*, *"kalau background orange tulisan harus putih jangan hitam"*, *"cerahkan lagi oranye nya"*.
+
+1. **Kartu workshop**: hanya nama + nomor + chip (durasi, N benefit) yang tampil. **Harga, catatan, ringkasan, dan daftar benefit semuanya masuk satu toggle** "Lihat detail & harga". Link "Detail →" (pindah halaman) **dihapus** — yang tersisa CTA "Booking Sekarang ↗" (WA, tetap terlihat). min-h penyejajar kartu dihapus; tombol `mt-auto` supaya menempel di bawah kartu.
+
+2. **Teks di atas bidang oranye → PUTIH** (permintaan eksplisit, 2×): sweep 17 file — `bg-brand text-ink` → `text-white`, `hover:bg-brand` + `hover:text-ink` → `hover:text-white`, `'bg-brand text-ink'` (class:list JS) → `text-white`, `.hl-brand` → putih. Chip kategori Kolaborasi (categories.ts) → teks putih.
+
+3. **Oranye dicerahkan**: `--color-brand` #ff8000 → **#ff8c00** (hue 33), hover `#ef7e00`, pola hardcoded `rgb(255 128 0)` → `rgb(255 140 0)`, template single post & chip Kolaborasi ikut.
+
+**Trade-off kontras (putih di atas #ff8c00 = 2.33:1)**: gagal WCAG 4.5:1 — ini keputusan estetika klien yang diminta eksplisit dua kali. `verify-ai` kini 134 flag yang seluruhnya pola ini. Teks panjang/fungsional (harga, isi, FAQ) tetap tinta di atas putih ✓.
+
+Verifikasi: audit-frames 0 overflow + 0 console error, verify-home 0 error, dock/testimoni SEMUA PASS.

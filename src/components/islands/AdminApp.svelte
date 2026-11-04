@@ -462,7 +462,7 @@
   <header class="sticky top-0 z-30 border-b border-slate-200 bg-white">
     <div class="mx-auto flex w-full max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
       <div class="flex items-center gap-3">
-        <span class="grid h-9 w-9 place-items-center rounded-xl bg-brand text-ink shadow-[0_8px_22px_-10px_rgba(255,122,26,.8)]">
+        <span class="grid h-9 w-9 place-items-center rounded-xl bg-brand text-white shadow-[0_8px_22px_-10px_rgba(255,122,26,.8)]">
           <Activity size={17} />
         </span>
         <div class="leading-tight">
@@ -1014,7 +1014,7 @@
               onclick={() => setFilter(f as typeof filter)}
               class={[
                 'rounded-full px-3.5 py-2 text-xs font-bold transition focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:outline-none',
-                filter === f ? 'bg-brand text-ink' : 'border border-slate-200 bg-white text-slate-500 hover:border-brand/50 hover:text-ink',
+                filter === f ? 'bg-brand text-white' : 'border border-slate-200 bg-white text-slate-500 hover:border-brand/50 hover:text-ink',
               ]}
             >
               {f === 'semua' ? 'Semua' : statusLabel[f as Status]}
@@ -1050,7 +1050,7 @@
                     target="_blank"
                     rel="noopener noreferrer"
                     data-wa-cta="admin-lead-wa"
-                    class="inline-flex items-center gap-1.5 rounded-xl bg-brand px-3.5 py-2 text-xs font-bold text-ink transition hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:outline-none active:scale-95"
+                    class="inline-flex items-center gap-1.5 rounded-xl bg-brand px-3.5 py-2 text-xs font-bold text-white transition hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:outline-none active:scale-95"
                   >
                     <ExternalLink size={13} />
                     WA · {l.wa}
@@ -1087,7 +1087,7 @@
                       type="button"
                       disabled={saving}
                       onclick={() => saveCatatan(l.id)}
-                      class="rounded-xl bg-brand px-4 py-2.5 text-xs font-bold text-ink transition hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:outline-none disabled:opacity-50"
+                      class="rounded-xl bg-brand px-4 py-2.5 text-xs font-bold text-white transition hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:outline-none disabled:opacity-50"
                     >
                       {saving ? '…' : 'Simpan'}
                     </button>
@@ -1297,7 +1297,7 @@
                 type="button"
                 disabled={settingsSaving}
                 onclick={saveSettings}
-                class="w-full rounded-2xl bg-brand px-6 py-3.5 text-sm font-bold text-ink transition hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:outline-none active:scale-95 disabled:opacity-50"
+                class="w-full rounded-2xl bg-brand px-6 py-3.5 text-sm font-bold text-white transition hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:outline-none active:scale-95 disabled:opacity-50"
               >
                 {settingsSaving ? 'Menyimpan…' : 'Simpan pengaturan'}
               </button>

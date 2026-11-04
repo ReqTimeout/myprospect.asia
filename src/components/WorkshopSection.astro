@@ -72,74 +72,64 @@ const gallery = [
       workshops.map((w, i) => (
         <article data-reveal="pop" class="spot card-soft card-lift flex flex-col overflow-hidden rounded-3xl">
           <div class="relative z-10 flex flex-1 flex-col p-6">
-            <div class="min-h-[3.25rem] md:min-h-[5.25rem]">
-              <div class="flex items-start justify-between gap-3">
-                <h3 class="display line-clamp-2 text-2xl leading-tight">{w.nama}</h3>
-                <span class="display shrink-0 text-3xl leading-none text-brand" aria-hidden="true">
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-              </div>
-              <div class="mt-2.5 flex flex-wrap items-center gap-2">
-                <span class="shrink-0 rounded-full border border-ink/15 px-2.5 py-1 text-[10px] font-bold text-ink/70">
-                  {w.durasi}
-                </span>
-                <span class="rounded-full bg-brand px-2.5 py-1 text-[10px] font-black tracking-wide text-ink uppercase">
-                  {w.didapat.length} benefit
-                </span>
-              </div>
+            <div class="flex items-start justify-between gap-3">
+              <h3 class="display line-clamp-2 text-2xl leading-tight">{w.nama}</h3>
+              <span class="display shrink-0 text-3xl leading-none text-brand" aria-hidden="true">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+            </div>
+            <div class="mt-2.5 flex flex-wrap items-center gap-2">
+              <span class="shrink-0 rounded-full border border-ink/15 px-2.5 py-1 text-[10px] font-bold text-ink/70">
+                {w.durasi}
+              </span>
+              <span class="rounded-full bg-brand px-2.5 py-1 text-[10px] font-black tracking-wide text-white uppercase">
+                {w.didapat.length} benefit
+              </span>
             </div>
 
-            <div class="mt-4 border-t border-ink/10 pt-4">
-              <div class="min-h-[3.4rem]">
+            <!-- Semua detail (harga, ringkasan, benefit) masuk satu toggle —
+                 kartu hanya menampilkan nama, durasi, dan jumlah benefit
+                 (permintaan klien: "yang tampil hanya ini saja"). -->
+            <details class="group mt-4">
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-2 rounded-xl border border-ink/10 px-3.5 py-2.5 text-xs font-bold text-ink/70 transition hover:border-brand hover:text-ink">
+                Lihat detail &amp; harga
+                <span class="shrink-0 transition-transform duration-200 group-open:rotate-45" aria-hidden="true">+</span>
+              </summary>
+              <div class="mt-3 border-l-2 border-brand/40 pl-3">
                 {w.harga > 0 ? (
                   <p class="display text-3xl leading-none text-ink">Rp{formatIdr(w.harga)}</p>
                 ) : (
                   <p class="display text-3xl leading-none text-ink">Custom</p>
                 )}
                 <p class="mt-1.5 text-[11px] text-ink/70">per sesi · {w.target}</p>
+                <p class="mt-1.5 text-[11px] font-black text-ink">{w.catatan ?? ''}</p>
+                <p class="mt-3 text-sm leading-relaxed text-ink/70">{w.ringkasan}</p>
+                <ul class="mt-3 space-y-2 text-[13px] text-ink/75">
+                  {w.didapat.map((d) => (
+                    <li class="flex gap-2">
+                      <span class="text-brand" aria-hidden="true">
+                        ✓
+                      </span>
+                      {d}
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <p class="mt-1.5 min-h-[1rem] text-[11px] font-black text-ink">{w.catatan ?? ''}</p>
-            </div>
-
-            <p class="mt-4 min-h-[4.5rem] text-sm leading-relaxed text-ink/70">{w.ringkasan}</p>
-
-            <!-- Daftar benefit masuk toggle supaya kartu rampat (permintaan klien). -->
-            <details class="group mt-4">
-              <summary class="flex cursor-pointer list-none items-center justify-between gap-2 rounded-xl border border-ink/10 px-3.5 py-2.5 text-xs font-bold text-ink/70 transition hover:border-brand hover:text-ink">
-                Lihat detail program
-                <span class="shrink-0 transition-transform duration-200 group-open:rotate-45" aria-hidden="true">+</span>
-              </summary>
-              <ul class="mt-3 space-y-2 border-l-2 border-brand/40 pl-3 text-[13px] text-ink/75">
-                {w.didapat.map((d) => (
-                  <li class="flex gap-2">
-                    <span class="text-brand" aria-hidden="true">
-                      ✓
-                    </span>
-                    {d}
-                  </li>
-                ))}
-              </ul>
             </details>
 
-            <div class="mt-6 flex flex-wrap items-center gap-3">
-              <a
-                href={waLink({ program: w.nama, source: `workshop-${w.slug}` })}
-                target="_blank"
-                rel="noopener noreferrer"
-                data-wa-cta={`workshop-${w.slug}`}
-                data-register
-                data-program={w.nama}
-                data-source={`workshop-${w.slug}`}
-                class="inline-flex items-center justify-center gap-2 rounded-2xl border border-brand px-5 py-3.5 text-sm font-bold text-ink transition hover:bg-brand hover:text-ink focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none active:scale-95"
-              >
-                Booking Sekarang ↗
-              </a>
-              <a
-                href={`/workshop/${w.slug}`}
-                class="rounded-xl px-2 py-3 text-xs font-bold text-ink transition hover:underline focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
-              >
-                Detail →
-              </a>
+            <div class="mt-5 flex">
+            <a
+              href={waLink({ program: w.nama, source: `workshop-${w.slug}` })}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-wa-cta={`workshop-${w.slug}`}
+              data-register
+              data-program={w.nama}
+              data-source={`workshop-${w.slug}`}
+              class="mt-auto inline-flex items-center justify-center gap-2 rounded-2xl bg-brand px-5 pt-3.5 pb-3.5 text-sm font-bold text-white transition hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none active:scale-95"
+            >
+              Booking Sekarang ↗
+            </a>
             </div>
           </div>
         </article>

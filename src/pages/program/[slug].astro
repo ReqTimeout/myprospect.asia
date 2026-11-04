@@ -53,7 +53,7 @@ const schema = courseSchema({
             <p
               class:list={[
                 'mt-6 inline-block rounded-full px-3 py-1 text-[11px] font-black tracking-widest uppercase',
-                p.badgeTone === 'gold' ? 'bg-ink text-brand' : 'bg-brand text-ink',
+                p.badgeTone === 'gold' ? 'bg-ink text-brand' : 'bg-brand text-white',
               ]}
             >
               {p.badge}
@@ -91,7 +91,7 @@ const schema = courseSchema({
             target="_blank"
             rel="noopener noreferrer"
             data-wa-cta={`detail-${p.slug}`}
-            class="inline-flex items-center justify-center rounded-2xl bg-brand px-7 py-4 text-sm font-bold text-ink transition hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none active:scale-95"
+            class="inline-flex items-center justify-center rounded-2xl bg-brand px-7 py-4 text-sm font-bold text-white transition hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none active:scale-95"
           >
             Daftar via WhatsApp ↗
           </a>
@@ -133,7 +133,7 @@ const schema = courseSchema({
                 >
                   <span aria-hidden="true">{gold ? '★' : '✓'}</span>
                   {d}
-                  {gold && <span class="ml-auto rounded-full bg-brand px-2 py-0.5 text-[10px] font-black text-ink">BONUS</span>}
+                  {gold && <span class="ml-auto rounded-full bg-brand px-2 py-0.5 text-[10px] font-black text-white">BONUS</span>}
                 </li>
               );
             })
@@ -201,7 +201,7 @@ const schema = courseSchema({
             target="_blank"
             rel="noopener noreferrer"
             data-wa-cta={`detail-bawah-${p.slug}`}
-            class="mt-6 inline-flex rounded-2xl border border-brand px-6 py-3.5 text-sm font-bold text-ink transition hover:bg-brand hover:text-ink focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none active:scale-95"
+            class="mt-6 inline-flex rounded-2xl border border-brand px-6 py-3.5 text-sm font-bold text-ink transition hover:bg-brand hover:text-white focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none active:scale-95"
           >
             Chat langsung tanpa form ↗
           </a>

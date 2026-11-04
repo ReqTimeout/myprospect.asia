@@ -299,7 +299,7 @@
       <p class="mt-1 text-sm text-slate-500">Edit langsung tampil di situs — tanpa deploy.</p>
     </div>
     {#if sub === 'berita' && !postForm}
-      <button type="button" onclick={newPost} class="flex items-center gap-2 rounded-2xl bg-brand px-4 py-2.5 text-xs font-black text-ink transition hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:outline-none">
+      <button type="button" onclick={newPost} class="flex items-center gap-2 rounded-2xl bg-brand px-4 py-2.5 text-xs font-black text-white transition hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:outline-none">
         <Plus size={15} /> Tulis berita
       </button>
     {/if}

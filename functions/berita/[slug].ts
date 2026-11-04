@@ -167,7 +167,7 @@ const page = (opts: {
 <script type="application/ld+json">${schema}</script>
 ${ga}
 <style>
-:root{--ink:#1b1b1f;--paper:#ffffff;--paper-deep:#fff5ea;--brand:#ff8000;--brand-dark:#e87300;--brand-soft:#ffe8d1;--brand-line:#ffcba3;--crimson:#c8232b;--display:"Anton",sans-serif;--sans:"Plus Jakarta Sans",system-ui,sans-serif;--container:72rem}
+:root{--ink:#1b1b1f;--paper:#ffffff;--paper-deep:#fff5ea;--brand:#ff8c00;--brand-dark:#e87300;--brand-soft:#ffe8d1;--brand-line:#ffcba3;--crimson:#c8232b;--display:"Anton",sans-serif;--sans:"Plus Jakarta Sans",system-ui,sans-serif;--container:72rem}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
