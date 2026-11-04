@@ -1939,3 +1939,13 @@ Permintaan klien: *"terlalu besar pill ini, image kurang tinggi tapi sesuaikan y
 - **Pill caption foto** diperkecil: `px-3 py-1.5 text-[11px] tracking-[0.16em] rounded-2xl` → `px-2 py-1 text-[9px] tracking-[0.1em] rounded-lg`, dan teks sub Small Group dipendekkan ("Belajar bareng 6–10 atlet lintas cabor") supaya **1 baris** di HP. Caption galeri workshop + badge testimoni ikut diperkecil.
 - **Foto kartu lebih tinggi**: `aspect-16/10` → **`aspect-4/3`**.
 - **Pill "HEMAT n%" jadi HIJAU** — token baru `--color-discount: #0d7f3e` (putih di atasnya 4.9:1). Oranje tetap khusus CTA, hijau = diskon, jadi "potongan harga persen" langsung terbaca.
+
+### 38.7 Kartu program/workshop: link Detail dihapus, CTA full-width + 1 animasi per kartu
+
+Permintaan klien: *"gausah ada ini [Detail →] kan sudah di toggle, tolong card, pill, badge semuanya harus rapih, menarik dan pastikan di mobile compact mudah convert, boleh pake animasi agar makin hidup hanya 1 titik saja di card yang di animasikan, designnya buat lebih jelas, premium dan high convert"*.
+
+- **Link "Detail →" dihapus** dari kartu program (detail sudah tersedia di toggle; halaman detail program tetap ada & bisa diakses dari nav/URL).
+- **CTA full-width** (308px dari lebar kartu 358px) + `py-4` — jadi satu tombol besar yang jelas, tanpa buttons bersebelahan.
+- **Satu-satunya elemen beranimasi per kartu**: `.cta-halo` — halo oranye yang napasnya pelan (3.2s, `box-shadow` 0→7px→0). Probe DOM: tepat **1** elemen `animation-iteration-count: infinite` di dalam tiap kartu (titik ONLINE sengaja diam).
+- Kartu workshop ikut memakai `.cta-halo` (konsistensi).
+- Pill & badge: caption foto 9px/rounded-lg, badge program `px-3 py-1 text-[10px]`, pill ONLINE pill, pill HEMAT hijau — semua radius & tracking seragam.

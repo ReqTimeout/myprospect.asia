@@ -452,6 +452,18 @@ body {
   50% { transform: translateY(16px); opacity: 1; }
 }
 
+/* CTA kartu program/workshop: satu-satunya elemen beranimasi di tiap kartu —
+   halo oranye lembut yang napasnya pelan (3,2s) supaya mata tertuju ke
+   tombol order tanpaabetes着gdalam. */
+.cta-halo {
+  animation: cta-halo 3.2s ease-in-out infinite;
+}
+
+@keyframes cta-halo {
+  0%, 100% { box-shadow: 0 0 0 0 rgb(255 140 0 / 0.34); }
+  50% { box-shadow: 0 0 0 7px rgb(255 140 0 / 0); }
+}
+
 /* Art tiket Membership: garis lapangan bergeser pelan, angka 04 melayang
    halus — hidup tapi tenang, bukan=dekoratif rame. */
 .pass-lines {
