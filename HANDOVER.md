@@ -1949,3 +1949,20 @@ Permintaan klien: *"gausah ada ini [Detail →] kan sudah di toggle, tolong card
 - **Satu-satunya elemen beranimasi per kartu**: `.cta-halo` — halo oranye yang napasnya pelan (3.2s, `box-shadow` 0→7px→0). Probe DOM: tepat **1** elemen `animation-iteration-count: infinite` di dalam tiap kartu (titik ONLINE sengaja diam).
 - Kartu workshop ikut memakai `.cta-halo` (konsistensi).
 - Pill & badge: caption foto 9px/rounded-lg, badge program `px-3 py-1 text-[10px]`, pill ONLINE pill, pill HEMAT hijau — semua radius & tracking seragam.
+
+### 38.8 Background image section jadi FULL-BLEED (tidak berhenti di max-w-6xl)
+
+Permintaan klien: *"perhatikan lebar image background semua section, ga full jadi jelek di desktop ini penting"*.
+
+Penyebab: `.sec-img` (`absolute inset-0`) berada di dalam section `mx-auto max-w-6xl` → gambarnya **hanya selebar container (1152px)**, jadi di desktop ada tepi container yang kelihatan → sumber "jelek".
+
+Fix (di `.sec-img`):
+```css
+position: absolute; top: 0; bottom: 0;
+left: 50%; width: 100vw; max-width: none;
+transform: translateX(-50%);
+height: 100%; object-fit: cover;
+```
+Jebakan: **preflight Tailwind** `img { max-width: 100% }` meng-clamp `100vw` kembali ke lebar container — harus dilepas dengan `max-width: none` (kalau tidak, tetap 1152px).
+
+Terukur: 9 gambar di homepage → semua **1440@0** (desktop) & **390@0** (mobile); `docW == vw` (tanpa scrollbar horizontal) di kedua viewport.

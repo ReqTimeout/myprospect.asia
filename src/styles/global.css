@@ -654,9 +654,19 @@ body {
 /* Latar foto tipis per section (pengganti art CSS). Full-bleed + mask dari
    komponen; opacity rendah supaya melebur ke warna latar. */
 .sec-img {
+  /* Full-bleed: elemennya absolute di dalam section yang lebarnya
+     max-w-6xl, jadi kalau cuma inset-0 gambarnya berhenti di tepi container
+     dan ujungnya kelihatan (jelek di desktop). Trik: lebar 100vw + geser ke
+     tengah viewport. Section sudah overflow-hidden, jadi tidak ada scrollbar. */
   position: absolute;
-  inset: 0;
-  width: 100%;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  /* preflight Tailwind: img { max-width: 100% } -&gt; meng-clamp 100vw ke
+     lebar container. Harus dilepas supaya benar-benar full-bleed. */
+  max-width: none;
+  transform: translateX(-50%);
   height: 100%;
   object-fit: cover;
   pointer-events: none;
