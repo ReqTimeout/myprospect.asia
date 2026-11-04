@@ -1821,3 +1821,10 @@ Permintaan klien: img `mic-kid.jpg` (alt "Atlet muda siap berbicara di depan mik
 - Catatan: `backdrop-filter` dipakai lagi — ini **permintaan klien**, bukan gaya "flat" §30.4.
 
 Terukur: dock mobile `background: oklab(... / 0.9)` + `backdrop-filter: blur(12px) saturate(1.5)`; aside coach `display: none` di 390px.
+
+### 43.18 Blur dock naik + Membership jadi kartu ringkas tanpa tombol
+
+Permintaan klien: *"blur naikan"*, *"Membership Program… ini kecil saja berupa card jangan terlalu panjang dan button hilangkan hanya comingsoon"*.
+
+- Dock: `backdrop-blur-md` (12px) → **`backdrop-blur-xl` (24px)** + `saturate-175`; `DOCK_CSS` di `lib/dock.ts` disamakan.
+- Membership: paragraf panjang diganti **kartu kecil** (pill-card `border-ink/10 bg-paper-deep`, 13px): "● Sesi rutin, tanpa booking ulang". **Tombol "Daftar Duluan" dihapus** (link WA `data-wa-cta="membership"` ikut hilang), menyisakan COMING SOON + art membership pass + strip benefit.

@@ -111,7 +111,7 @@ export const DOCK_CSS = `
 /* ---- Dock mobile (identik dengan Dock.svelte di situs Astro) ---- */
 .dock{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;justify-content:center;pointer-events:none;padding:0 12px calc(0.75rem + env(safe-area-inset-bottom))}
 @media(min-width:1024px){.dock{display:none}}
-.dock-in{display:flex;width:100%;max-width:28rem;align-items:stretch;gap:4px;pointer-events:auto;background:rgba(255,255,255,.9);-webkit-backdrop-filter:blur(12px) saturate(150%);backdrop-filter:blur(12px) saturate(150%);border:1px solid rgba(27,27,31,.1);border-radius:24px;padding:8px;box-shadow:0 18px 40px -14px rgba(27,27,31,.35);transition:transform .3s ease-out}
+.dock-in{display:flex;width:100%;max-width:28rem;align-items:stretch;gap:4px;pointer-events:auto;background:rgba(255,255,255,.9);-webkit-backdrop-filter:blur(24px) saturate(175%);backdrop-filter:blur(24px) saturate(175%);border:1px solid rgba(27,27,31,.1);border-radius:24px;padding:8px;box-shadow:0 18px 40px -14px rgba(27,27,31,.35);transition:transform .3s ease-out}
 .dock.is-hidden .dock-in{transform:translateY(130%)}
 .dock-item{display:flex;min-width:0;flex:1 1 0;flex-direction:column;align-items:center;gap:4px;padding:6px 4px;border-radius:16px;text-decoration:none;color:rgba(27,27,31,.95);transition:color .2s,background-color .2s}
 .dock-item[aria-current="page"]{color:var(--ink)}

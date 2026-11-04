@@ -63,7 +63,7 @@
   ]}
 >
   <div
-    class="flex w-full max-w-md items-stretch gap-1 rounded-3xl border border-ink/10 bg-paper/90 px-2 py-2 shadow-[0_18px_40px_-14px_rgba(27,27,31,0.35)] backdrop-blur-md backdrop-saturate-150"
+    class="flex w-full max-w-md items-stretch gap-1 rounded-3xl border border-ink/10 bg-paper/90 px-2 py-2 shadow-[0_18px_40px_-14px_rgba(27,27,31,0.35)] backdrop-blur-xl backdrop-saturate-175"
   >
     {#each items as item (item.id)}
       {@const isActive = item.id === current && !item.wa}
