@@ -1728,3 +1728,11 @@ Klien: *"Tentang Sports Communication hapus ini dan jangan ada huruf sambung, fo
 - **Instrument Serif dicabut total**: import di Base.astro, token `--font-serif`, dan package-nya dihapus dari package.json.
 - `.eyebrow` CSS kini tak berpemakai (sisa mati, boleh dihapus).
 - Identitas font akhir: **Anton** (display, nyaming) + **Plus Jakarta Sans** (teks). Tidak ada lagi font ketiga.
+
+### 43.10 Kartu "Slot terbatas" dihapus — banner Membership jadi satu blok bersih
+
+Klien: *"hapus bagian ini dan card buat lebih premium tapi jangan terlihat seperti ai"* (menunjuk vip-card EARLY ACCESS/SLOT TERBATAS/Batch 01).
+
+- vip-card (corner bracket + Early Access + Slot terbatas + Batch 01 + vip-cta) **dihapus semua**.
+- Banner jadi satu blok: chip COMING SOON, heading MEMBERSHIP PROGRAM (Anton 4xl/5xl), satu paragraf, CTA oranye teks putih, dan **benefit jadi 4 tile ber-border** di kolom kanan (2×2).
+- Tanpa SectionImage tambahan, tanpa chrome. `.vip-card*`/`.vip-rule`/`.vip-cta` kini tak berpemakai (CSS boleh dibersihkan nanti).
