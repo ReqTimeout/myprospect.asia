@@ -25,7 +25,7 @@ const opsi = pilihWorkshop ? workshops.map((w) => w.nama) : programs.map((p) => 
   {
     variant === 'akademi' ? (
       <>
-        <label for="lead-nama" class="block text-xs font-black tracking-widest text-brand-text uppercase">
+        <label for="lead-nama" class="block text-xs font-black tracking-widest text-ink uppercase">
           Nama PIC
         </label>
         <input
@@ -37,7 +37,7 @@ const opsi = pilihWorkshop ? workshops.map((w) => w.nama) : programs.map((p) => 
           placeholder="Nama Anda"
           class="mt-2 w-full rounded-2xl border border-ink/15 bg-paper px-4 py-3 text-sm text-ink placeholder:text-ink/35 focus:border-brand focus:outline-none"
         />
-        <label for="lead-akademi" class="mt-4 block text-xs font-black tracking-widest text-brand-text uppercase">
+        <label for="lead-akademi" class="mt-4 block text-xs font-black tracking-widest text-ink uppercase">
           Nama akademi / klub
         </label>
         <input
@@ -51,7 +51,7 @@ const opsi = pilihWorkshop ? workshops.map((w) => w.nama) : programs.map((p) => 
       </>
     ) : (
       <>
-        <label for="lead-nama" class="block text-xs font-black tracking-widest text-brand-text uppercase">
+        <label for="lead-nama" class="block text-xs font-black tracking-widest text-ink uppercase">
           Nama atlet / wali
         </label>
         <input
@@ -67,7 +67,7 @@ const opsi = pilihWorkshop ? workshops.map((w) => w.nama) : programs.map((p) => 
     )
   }
 
-  <label for="lead-wa" class="mt-4 block text-xs font-black tracking-widest text-brand-text uppercase">
+  <label for="lead-wa" class="mt-4 block text-xs font-black tracking-widest text-ink uppercase">
     Nomor WhatsApp
   </label>
   <input
@@ -84,7 +84,7 @@ const opsi = pilihWorkshop ? workshops.map((w) => w.nama) : programs.map((p) => 
 
   {
     pilihProgram ? (
-      <label for="lead-program" class="mt-4 block text-xs font-black tracking-widest text-brand-text uppercase">
+      <label for="lead-program" class="mt-4 block text-xs font-black tracking-widest text-ink uppercase">
         Program yang diminati
       </label>
     ) : (

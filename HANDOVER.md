@@ -1505,3 +1505,63 @@ Klien mengirim copy resmi (dokumen teks) untuk dua banner. **Semua dipakai verba
 ### 40.3 Verifikasi lokal
 
 `audit-frames` 0 overflow + 0 console error · `audit-clip` **0 overflow / 0 covered** · `verify-ai` 17 flag (dekoratif; tambahannya "Modern" → "#JadiAtletModern", kategori sama: teks display besar oranye) · `verify-dock` / `verify-wa-green` / `verify-testimoni` / `verify-admin-ui` **SEMUA PASS** · pw-vision 22/22, 0 overflow, 0 small target · vision desktop + mobile.
+
+---
+
+## 41. "Copy AI banget, ga suka background gambar, orange bukan coklat" (4 Nov 2026)
+
+Tiga keluhan klien sekaligus. Semua dikerjakan di lokal.
+
+### 41.1 Warna: semua oranye "coklat" dimatikan
+
+Akar masalahnya BUKAN `--color-brand` (#ff8000 — itu terang), tapi dua token turunannya yang dipakai buat teks:
+
+| Token | Lama | Dipakai di | Kenapa terbaca coklat |
+|---|---|---|---|
+| `--color-brand-dark` | `#d96a00` | heading display ("AKADEMI & MITRA", "Bicara?", harga) | hue 30 + L 43 = cokelat |
+| `--color-brand-text` | `#ad5000` | eyebrow, link, ✓, label kecil | lebih gelap lagi |
+
+Perubahan:
+- **Semua `text-brand-dark` → `text-brand`** (#ff8000, terang) — 7 pemakaian heading.
+- **Semua `text-brand-text` → `text-ink`** — 40+ pemakaian teks kecil (24 file). Teks kecil oranye memang tidak akan pernah lolos kontras, jadi teks kecil = tinta.
+- `--color-brand-dark` nilainya jadi `#e87300` dan **hanya** dipakai untuk hover (tetap oranye terang, bukan coklat).
+- Token `--color-brand-text` dihapus dari `@theme` dan dari `:root` template single post; `var(--brand-text)` → `var(--ink)`; `.prose-custom a` → tinta; label dock aktif → tinta.
+- Heading grup FAQ (24px, teks fungsional) → tinta + strip oranye `w-9` (bukan teks oranye 2.5:1 yang susah dibaca).
+
+Sisa teks oranye di seluruh situs sekarang hanya **heading display besar** ("#JadiAtletModern" 72px, "Bicara?" 72px) — pilihan estetika klien yang sudah 4× ditegaskan. Flag `verify-ai`: 23 (8 non-dekoratif = 2 heading display besar itu, diulang di 3 halaman yang sama karena CtaBand global).
+
+### 41.2 Foto sebagai background dihapus total
+
+Yang dikeluhkan bukan foto dalam bingkai (itu konten), tapi **foto yang dipudarkan di belakang teks** (`opacity-25..35`). Semuanya dihapus:
+
+| Halaman | Foto latar yang dihapus |
+|---|---|
+| Detail program (`program/[slug]`) | `session-*.jpg` opacity-30 |
+| Detail workshop (`workshop/[slug]`) | `workshop-*.jpg` opacity-30 |
+| Tentang | `session-online.jpg` opacity-35 |
+| Daftar berita | `workshop-crowd.jpg` opacity-25 |
+| Banner Membership | `program-elite.jpg` tekstur opacity-15 → kartu gelap rata |
+
+Hero halaman detail sekarang bidang rata + 1 art tipis (`art-pitch`). Foto tetap dipakai di dalam bingkai: kartu About, galeri workshop, testimoni, cover berita, CTA, cover post.
+
+### 41.3 Copy: nada template AI dibuang
+
+Kata-kata yang jadi ciri tulisan AI di situs ini: superlatif kosong ("Progres paling cepat"), frasa "naik ke level berikutnya" di luar konteks, pola kalimat paralel di tiap kartu, dan kata "buat" yang diulang di semua heading. Semua diganti kalimat konkret dengan fakta yang benar:
+
+| Sebelum | Sesudah |
+|---|---|
+| "Progres paling cepat. Coach khusus menemani atlet dari nol sampai siap wawancara media." | "Satu atlet, satu coach. Latihan dari nol sampai berani wawancara media dan tampil di depan kamera." |
+| "Cocok untuk rekan setim atau atlet lintas cabang. Belajar bareng, harga lebih ringan." | "Kelas kecil 6–10 atlet lintas cabang. Latihan bicara bareng, biaya per orang jadi lebih ringan." |
+| "Semua benefit Elite, plus eksposur profil atletmu di portal berita nasional." | "Semua sesi Elite, plus profil atletmu diberitakan di portal berita nasional." |
+| "Benefit berkelanjutan buat atlet, daftar early access dulu biar dapat slot lebih awal." | "Satu langganan untuk sesi rutin, tanpa perlu booking ulang. Daftar early access buat dapat slot di batch pertama." |
+| "Mulai dari chat singkat. Ceritakan atlet & akademimu, kami bantu susun programnya." | "Ceritakan dulu atlet atau akademimu, nanti kami bantu arahkan ke program yang pas." |
+| Heading "Private 1-on-1 buat naik level" | "Private 1-on-1 & Small Group" (isi aslinya) |
+| Heading "Workshop buat atlet binaanmu" | "Workshop untuk akademi & klub" |
+| "Level up: simulasi interview bersama 3+ assessor…" | "Simulasi interview di depan 3+ assessor, tiap atlet dapat assessment, e-certificate, dan e-book." |
+| FAQ "Keterampilan fundamental buat atlet modern…" | "Kemampuan bicara di depan orang dan media, plus bahasa Inggris khusus olahraga. Latihannya nyata: wawancara media, konferensi pers, sampai bicara dengan pelatih asing, wasit, dan ofisial." |
+
+Copy klien (hero, chips, "Kenapa Sports Communication Penting?") **tidak disentuh**.
+
+### 41.4 Verifikasi lokal (semua PASS)
+
+`audit-frames` 0 overflow + 0 console error · `audit-clip` **0 overflow / 0 covered** · `verify-ai` 23 flag = 15 dekoratif + 8 (2 heading display besar × 4 halaman) · `verify-dock` / `verify-wa-green` / `verify-testimoni` / `verify-admin-ui` **SEMUA PASS** · pw-vision 22/22, 0 overflow, 0 small target · vision desktop + mobile.

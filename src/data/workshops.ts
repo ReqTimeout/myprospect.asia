@@ -16,12 +16,12 @@ export const workshops: Workshop[] = [
     durasi: '1 sesi · 90 menit',
     harga: 1_999_000,
     ringkasan:
-      'Pembekalan singkat & interaktif: peserta berlatih menghadapi press conference dan wawancara media.',
+      '90 menit langsung praktik: peserta latihan menghadapi press conference dan wawancara media.',
     didapat: [
       'Mini simulasi wawancara media nasional & internasional',
-      'Mengenal public speaking khusus atlet',
-      'Pembuatan konten tentang Sports Communication',
-      'Dampingan Sports Communication coach berpengalaman',
+      'Pengenalan public speaking khusus atlet',
+      'Praktik bikin konten Sports Communication',
+      'Dibimbing coach Sports Communication',
       'Gifts & E-certificate',
     ],
     target: 'Akademi / klub · minimal 10 peserta',
@@ -33,12 +33,12 @@ export const workshops: Workshop[] = [
     durasi: '1 sesi · 120 menit (fun practical)',
     harga: 3_899_000,
     ringkasan:
-      'Level up: simulasi interview bersama 3+ assessor, individual assessment, sampai e-certificate & e-book.',
+      'Simulasi interview di depan 3+ assessor, tiap atlet dapat assessment, e-certificate, dan e-book.',
     didapat: [
       'Simulasi interview bersama 3+ assessor Sports Communication',
       'Individual assessment untuk setiap atlet',
       'E-certificate & e-book',
-      'Tips public speaking khusus atlet',
+      'Tips public speaking untuk atlet',
       'Pemberitaan akademi di portal media',
       'Door prize',
     ],

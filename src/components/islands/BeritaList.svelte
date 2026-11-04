@@ -60,7 +60,7 @@
       </div>
       <div class="flex flex-1 flex-col p-5">
         <p class="text-[11px] text-ink/70">{fmt.format(new Date(post.pubDate))}</p>
-        <h2 class="mt-1.5 text-base leading-snug font-bold transition group-hover:text-brand-text">{post.title}</h2>
+        <h2 class="mt-1.5 text-base leading-snug font-bold transition group-hover:text-ink">{post.title}</h2>
         <p class="mt-2 line-clamp-2 text-[13px] text-ink/70">{post.desc}</p>
       </div>
     </a>

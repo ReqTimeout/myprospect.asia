@@ -31,11 +31,11 @@ const gallery = [
     <div class="max-w-2xl">
       <Chapter num="06" label="Workshop" class="mb-6" />
       <h2 class="display text-5xl leading-[0.9] sm:text-6xl lg:text-7xl">
-        Workshop buat<br />
-        <span class="hl-swash text-ink">atlet binaanmu</span>
+        Workshop untuk<br />
+        <span class="text-brand">akademi &amp; klub</span>
       </h2>
       <p class="mt-4 text-sm leading-relaxed text-ink/65 sm:text-base">
-        Sesi 90–120 menit, interaktif, praktik langsung. Minimal 10 peserta, tetap didampingi coach Sports Communication.
+        Sesi 90–120 menit, langsung praktik. Minimal 10 peserta, tetap dibimbing coach Sports Communication.
       </p>
       <div class="mt-5 flex flex-wrap gap-2">
         <span class="rounded-full border border-ink/12 bg-white px-3 py-1.5 text-[11px] font-bold tracking-wide text-ink/70">
@@ -98,7 +98,7 @@ const gallery = [
                 )}
                 <p class="mt-1.5 text-[11px] text-ink/70">per sesi · {w.target}</p>
               </div>
-              <p class="mt-1.5 min-h-[1rem] text-[11px] font-black text-brand-text">{w.catatan ?? ''}</p>
+              <p class="mt-1.5 min-h-[1rem] text-[11px] font-black text-ink">{w.catatan ?? ''}</p>
             </div>
 
             <p class="mt-4 min-h-[4.5rem] text-sm leading-relaxed text-ink/70">{w.ringkasan}</p>
@@ -106,7 +106,7 @@ const gallery = [
             <ul class="mt-4 flex-1 space-y-2 text-[13px] text-ink/75">
               {w.didapat.map((d) => (
                 <li class="flex gap-2">
-                  <span class="text-brand-text" aria-hidden="true">
+                  <span class="text-ink" aria-hidden="true">
                     ✓
                   </span>
                   {d}
@@ -129,7 +129,7 @@ const gallery = [
               </a>
               <a
                 href={`/workshop/${w.slug}`}
-                class="rounded-xl px-2 py-3 text-xs font-bold text-brand-text transition hover:underline focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
+                class="rounded-xl px-2 py-3 text-xs font-bold text-ink transition hover:underline focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
               >
                 Detail →
               </a>

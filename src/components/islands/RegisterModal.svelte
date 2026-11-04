@@ -127,7 +127,7 @@
     >
       <div class="flex items-start justify-between gap-3 border-b border-ink/10 px-5 py-4 sm:px-6">
         <div>
-          <p class="text-[10px] font-black tracking-[0.24em] text-brand-text uppercase">Formulir Daftar</p>
+          <p class="text-[10px] font-black tracking-[0.24em] text-ink uppercase">Formulir Daftar</p>
           <h2 class="display mt-1 text-2xl leading-tight sm:text-3xl">Ambil slot kamu</h2>
           <p class="mt-1 text-[11px] text-ink/70">Isi 30 detik, admin balas di jam kerja.</p>
         </div>
@@ -167,7 +167,7 @@
         </div>
       {:else}
         <form class="px-5 pt-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] sm:px-6 sm:pb-6" onsubmit={submit}>
-          <label for="reg-nama" class="block text-[11px] font-black tracking-widest text-brand-text uppercase">
+          <label for="reg-nama" class="block text-[11px] font-black tracking-widest text-ink uppercase">
             Nama atlet / wali
           </label>
           <input
@@ -182,7 +182,7 @@
             class="mt-2 w-full rounded-2xl border border-ink/15 bg-white px-4 py-3 text-sm text-ink placeholder:text-ink/35 focus:border-brand focus:outline-none"
           />
 
-          <label for="reg-wa" class="mt-4 block text-[11px] font-black tracking-widest text-brand-text uppercase">
+          <label for="reg-wa" class="mt-4 block text-[11px] font-black tracking-widest text-ink uppercase">
             Nomor WhatsApp
           </label>
           <input
@@ -197,7 +197,7 @@
             class="mt-2 w-full rounded-2xl border border-ink/15 bg-white px-4 py-3 text-sm text-ink placeholder:text-ink/35 focus:border-brand focus:outline-none"
           />
 
-          <label for="reg-program" class="mt-4 block text-[11px] font-black tracking-widest text-brand-text uppercase">
+          <label for="reg-program" class="mt-4 block text-[11px] font-black tracking-widest text-ink uppercase">
             Program yang diminati
           </label>
           <select
@@ -212,7 +212,7 @@
             {/each}
           </select>
 
-          <label for="reg-catatan" class="mt-4 block text-[11px] font-black tracking-widest text-brand-text uppercase">
+          <label for="reg-catatan" class="mt-4 block text-[11px] font-black tracking-widest text-ink uppercase">
             Catatan <span class="font-semibold tracking-normal text-ink/70 normal-case">(opsional)</span>
           </label>
           <textarea

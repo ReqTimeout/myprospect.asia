@@ -78,7 +78,7 @@
         class={[
           'flex min-w-0 flex-1 flex-col items-center gap-1 rounded-2xl px-1 py-1.5 transition focus-visible:ring-2 focus-visible:outline-none active:scale-95',
           item.wa ? 'focus-visible:ring-wa' : 'focus-visible:ring-brand',
-          isActive ? 'text-brand-text' : 'text-ink/70',
+          isActive ? 'text-ink' : 'text-ink/70',
         ]}
       >
         <span
@@ -112,7 +112,7 @@
         <span
           class={[
             'text-[9px] leading-none font-semibold tracking-tight whitespace-nowrap',
-            item.wa ? 'text-ink/70' : isActive ? 'text-brand-text' : 'text-ink/70',
+            item.wa ? 'text-ink/70' : isActive ? 'text-ink' : 'text-ink/70',
           ]}
         >
           {item.label}

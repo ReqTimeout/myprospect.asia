@@ -34,13 +34,18 @@
 <div class="space-y-10">
   {#each grouped as g (g.grup)}
     <section>
-      <h2 class="display mb-4 text-2xl text-brand-dark">{g.grup}</h2>
+      <!-- Heading grup pakai tinta (24px, teks fungsional); oranye tetap ada di
+           aksen garis supaya tidak jadi teks kecil yang susah dibaca. -->
+      <h2 class="display mb-3 flex items-center gap-3 text-2xl text-ink">
+        {g.grup}
+        <span class="h-1 w-9 bg-brand" aria-hidden="true"></span>
+      </h2>
       <div class="space-y-3">
         {#each g.items as f, i (f.q)}
           <details class="group rounded-2xl border border-ink/10 bg-white shadow-sm open:border-brand" open={i === 0 && g.grup === 'Umum'}>
-            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-sm font-bold transition hover:text-brand-text focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none sm:text-base">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-sm font-bold transition hover:text-ink focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none sm:text-base">
               {f.q}
-              <span class="shrink-0 text-brand-text transition-transform duration-200 group-open:rotate-45" aria-hidden="true">+</span>
+              <span class="shrink-0 text-ink transition-transform duration-200 group-open:rotate-45" aria-hidden="true">+</span>
             </summary>
             <p class="px-5 pb-5 text-sm leading-relaxed text-ink/70">{f.a}</p>
           </details>

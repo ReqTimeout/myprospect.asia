@@ -37,20 +37,13 @@ const schema = courseSchema({
 
   <main class="pt-14">
     <section class="relative overflow-hidden border-b border-ink/10">
-      <img
-        src={hero}
-        alt="Suasana workshop Sports Communication bersama akademi olahraga"
-        width="1600"
-        height="900"
-        fetchpriority="high"
-        class="absolute inset-0 h-full w-full object-cover opacity-30"
-      />
+      <!-- Foto latar dihapus, sama seperti detail program. -->
       <div class="art-ring right-10 top-24 hidden h-14 w-14 border-crimson/20 sm:block" aria-hidden="true"></div>
       <div class="art-track absolute inset-x-0 bottom-0 h-48 opacity-50" aria-hidden="true"></div>
       <div class="art-diamond right-24 top-40 h-2.5 w-2.5 bg-crimson/50 hidden sm:block" aria-hidden="true"></div>
 
       <div class="relative mx-auto max-w-4xl px-4 py-14 sm:px-6">
-        <a href="/#workshop" class="inline-block py-2 text-sm font-bold text-brand-text transition hover:underline">← Semua workshop</a>
+        <a href="/#workshop" class="inline-block py-2 text-sm font-bold text-ink transition hover:underline">← Semua workshop</a>
 
         <p class="mt-6 inline-block rounded-full bg-gold px-3 py-1 text-[11px] font-black tracking-widest text-ink uppercase">
           B2B · Akademi &amp; Klub
@@ -76,11 +69,11 @@ const schema = courseSchema({
                 <>
                   <p class="display text-5xl text-brand">Rp{formatIdr(w.harga)}</p>
                   <p class="mt-1 text-xs text-ink/70">/ sesi · {durasiKecil}</p>
-                  {w.catatan && <p class="mt-1.5 text-xs font-black text-brand-text">{w.catatan}</p>}
+                  {w.catatan && <p class="mt-1.5 text-xs font-black text-ink">{w.catatan}</p>}
                 </>
               ) : (
                 <>
-                  <p class="display text-4xl text-brand-dark">Harga custom</p>
+                  <p class="display text-4xl text-brand">Harga custom</p>
                   <p class="mt-1 text-xs text-ink/70">disusun sesuai kebutuhan akademi</p>
                 </>
               )
@@ -100,7 +93,7 @@ const schema = courseSchema({
     </section>
 
     <section class="mx-auto max-w-4xl px-4 py-14 sm:px-6">
-      <p class="eyebrow text-xs font-black tracking-widest text-brand-text uppercase">Yang didapatkan akademi</p>
+      <p class="eyebrow text-xs font-black tracking-widest text-ink uppercase">Yang didapatkan akademi</p>
       <h2 class="display mt-2 text-3xl sm:text-4xl">Run-down manfaat</h2>
       <ul class="mt-6 grid gap-3 sm:grid-cols-2">
         {
@@ -117,7 +110,7 @@ const schema = courseSchema({
     </section>
 
     <section class="mx-auto max-w-4xl px-4 py-14 sm:px-6">
-      <p class="eyebrow text-xs font-black tracking-widest text-brand-text uppercase">Dokumentasi</p>
+      <p class="eyebrow text-xs font-black tracking-widest text-ink uppercase">Dokumentasi</p>
       <h2 class="display mt-2 text-3xl sm:text-4xl">Suasana di lapangan</h2>
       <div class="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
         {
@@ -139,7 +132,7 @@ const schema = courseSchema({
 
     <section class="border-y border-ink/10 bg-white">
       <div class="mx-auto max-w-4xl px-4 py-14 sm:px-6">
-        <p class="eyebrow text-xs font-black tracking-widest text-brand-text uppercase">FAQ mini</p>
+        <p class="eyebrow text-xs font-black tracking-widest text-ink uppercase">FAQ mini</p>
         <h2 class="display mt-2 text-3xl sm:text-4xl">Yang ditanya panitia</h2>
         <div class="mt-6 space-y-3">
           {
@@ -147,7 +140,7 @@ const schema = courseSchema({
               <details class="group rounded-2xl border border-ink/10 bg-paper-deep open:border-brand" open={i === 0}>
                 <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-sm font-bold sm:text-base focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none">
                   {f.q}
-                  <span class="text-brand-text transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+                  <span class="text-ink transition-transform group-open:rotate-45" aria-hidden="true">+</span>
                 </summary>
                 <p class="px-5 pb-5 text-sm leading-relaxed text-ink/70">{f.a}</p>
               </details>
@@ -160,7 +153,7 @@ const schema = courseSchema({
     <section id="booking" class="mx-auto max-w-4xl scroll-mt-20 px-4 py-14 sm:px-6">
       <div class="grid gap-8 md:grid-cols-2">
         <div>
-          <p class="eyebrow text-xs font-black tracking-widest text-brand-text uppercase">Booking workshop</p>
+          <p class="eyebrow text-xs font-black tracking-widest text-ink uppercase">Booking workshop</p>
           <h2 class="display mt-2 text-3xl sm:text-4xl">Booking workshop<br />untuk akademi</h2>
           <p class="mt-4 text-sm leading-relaxed text-ink/65">
             Isi data singkat, WhatsApp langsung terbuka dengan pesan siap kirim, kami bantu susun jadwal,
@@ -171,7 +164,7 @@ const schema = courseSchema({
             target="_blank"
             rel="noopener noreferrer"
             data-wa-cta={`workshop-bawah-${w.slug}`}
-            class="mt-6 inline-flex rounded-2xl border border-gold px-6 py-3.5 text-sm font-bold text-brand-text transition hover:bg-gold hover:text-ink focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none active:scale-95"
+            class="mt-6 inline-flex rounded-2xl border border-gold px-6 py-3.5 text-sm font-bold text-ink transition hover:bg-gold hover:text-ink focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none active:scale-95"
           >
             Diskusi langsung via WA ↗
           </a>

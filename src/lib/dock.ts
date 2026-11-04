@@ -114,7 +114,7 @@ export const DOCK_CSS = `
 .dock-in{display:flex;width:100%;max-width:28rem;align-items:stretch;gap:4px;pointer-events:auto;background:var(--paper);border:1px solid rgba(27,27,31,.1);border-radius:24px;padding:8px;box-shadow:0 18px 40px -12px rgba(27,27,31,.28);transition:transform .3s ease-out}
 .dock.is-hidden .dock-in{transform:translateY(130%)}
 .dock-item{display:flex;min-width:0;flex:1 1 0;flex-direction:column;align-items:center;gap:4px;padding:6px 4px;border-radius:16px;text-decoration:none;color:rgba(27,27,31,.7);transition:color .2s,background-color .2s}
-.dock-item[aria-current="page"]{color:var(--brand-text)}
+.dock-item[aria-current="page"]{color:var(--ink)}
 .dock-ico{display:grid;width:40px;height:40px;place-items:center;border-radius:16px;transition:transform .3s ease}
 .dock-item[aria-current="page"] .dock-ico{background:var(--brand-soft);transform:translateY(-2px) scale(1.1)}
 .dock-lbl{font-size:9px;line-height:1;font-weight:600;letter-spacing:-.01em;white-space:nowrap}

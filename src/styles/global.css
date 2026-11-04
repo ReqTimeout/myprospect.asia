@@ -18,12 +18,12 @@
      tanpa jatuh ke kuning"). Kesegaran datang dari putih dominannya, bukan
      dari menaikkan oranye lagi. */
   --color-brand: #ff8000;
-  /* Oranye untuk heading/decorasi besar (gaya klien, kontras ~3.4:1 —
-     dipakai pada ukuran besar & dekoratif saja). */
-  --color-brand-dark: #d96a00;
-  /* Oranye untuk TEKS KECIL (label, link, centang). #d96a00 hanya 3.4:1 di
-     putih; #ad5000 tembus 5.3:1 di putih dan 5.0:1 di krem (AA). */
-  --color-brand-text: #ad5000;
+  /* "brand-dark" kini HANYA untuk hover (sedikit lebih dalam dari brand).
+     Dulu #d96a00 dipakai buat heading & teks kecil — itu penyebab klien
+     bilang "orange bukan coklat": hue 30 + L 43 memang terbaca cokelat.
+     Sekarang SEMUA teks oranye memakai brand #ff8000 (terang); teks kecil
+     yang butuh terbaca memakai tinta. */
+  --color-brand-dark: #e87300;
   --color-brand-soft: #ffe8d1; /* panel solid, pengganti wash bg-brand/10../20 */
   --color-brand-line: #ffcba3; /* border solid, pengganti border-brand/25../50 */
   --color-gold: #ffc32e;
@@ -519,7 +519,7 @@ body {
 }
 
 .prose-custom a {
-  color: var(--color-brand-dark);
+  color: var(--color-ink);
   text-decoration: underline;
   text-underline-offset: 3px;
 }

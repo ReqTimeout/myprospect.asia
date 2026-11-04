@@ -167,7 +167,7 @@ const page = (opts: {
 <script type="application/ld+json">${schema}</script>
 ${ga}
 <style>
-:root{--ink:#1b1b1f;--paper:#ffffff;--paper-deep:#fff5ea;--brand:#ff8000;--brand-dark:#d96a00;--brand-text:#ad5000;--brand-soft:#ffe8d1;--brand-line:#ffcba3;--gold:#ffc32e;--crimson:#c8232b;--display:"Anton",sans-serif;--sans:"Plus Jakarta Sans",system-ui,sans-serif;--container:72rem}
+:root{--ink:#1b1b1f;--paper:#ffffff;--paper-deep:#fff5ea;--brand:#ff8000;--brand-dark:#e87300;--brand-soft:#ffe8d1;--brand-line:#ffcba3;--gold:#ffc32e;--crimson:#c8232b;--display:"Anton",sans-serif;--sans:"Plus Jakarta Sans",system-ui,sans-serif;--container:72rem}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
@@ -200,7 +200,7 @@ img{max-width:100%}
 
 /* ---- Kepala artikel ---- */
 .post-head{padding-top:14px}
-.back{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--brand-text);padding:10px 0}
+.back{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--ink);padding:10px 0}
 .back:hover{text-decoration:underline}
 .hero{position:relative;margin:8px 0 18px;border-radius:24px;overflow:hidden;background:var(--paper-deep);box-shadow:0 22px 50px -28px rgba(27,27,31,.45)}
 .hero img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover}
@@ -220,7 +220,7 @@ h1{font-family:var(--display);font-size:clamp(32px,7vw,54px);line-height:1.02;ma
 
 /* ---- Sidebar paket program ---- */
 .pkg{background:#fff;border:1px solid rgba(27,27,31,.09);border-radius:24px;padding:16px;box-shadow:0 14px 34px -22px rgba(27,27,31,.28)}
-.pkg-eyebrow{margin:0;font-size:10px;font-weight:900;letter-spacing:.2em;text-transform:uppercase;color:var(--brand-text)}
+.pkg-eyebrow{margin:0;font-size:10px;font-weight:900;letter-spacing:.2em;text-transform:uppercase;color:var(--ink)}
 .pkg-title{font-family:var(--display);font-size:21px;line-height:1.05;margin:4px 0 0;font-weight:400}
 .pkg-note{margin:6px 0 0;font-size:12px;line-height:1.5;color:rgba(27,27,31,.68)}
 .pkg-list{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;list-style:none;margin:0;padding:14px 2px 6px}
@@ -251,7 +251,7 @@ h1{font-family:var(--display);font-size:clamp(32px,7vw,54px);line-height:1.02;ma
 .prose h3{font-size:18px;font-weight:800;color:var(--ink);margin:1.8em 0 .4em}
 .prose p{margin:0 0 1.1rem}
 .prose strong{color:var(--ink)}
-.prose a{color:var(--brand-text);text-decoration:underline;text-underline-offset:3px}
+.prose a{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
 .prose ul{list-style:none;padding:0;margin:1.4rem 0}
 .prose ul li{position:relative;padding-left:1.6rem;margin-bottom:.6rem}
 .prose ul li::before{content:"✓";position:absolute;left:0;color:var(--brand)}
@@ -276,7 +276,7 @@ h1{font-family:var(--display);font-size:clamp(32px,7vw,54px);line-height:1.02;ma
 
 /* ---- Footer ---- */
 footer{border-top:1px solid rgba(27,27,31,.12);margin-top:48px;padding:26px 16px 104px;text-align:center;font-size:12px;color:rgba(27,27,31,.7)}
-footer a{color:var(--brand-text);font-weight:700;display:inline-block;padding:6px 4px}
+footer a{color:var(--ink);font-weight:700;display:inline-block;padding:6px 4px}
 footer nav{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-bottom:6px}
 
 /* ---- Dock mobile — dibangun dari src/lib/dock.ts supaya identik dengan Dock.svelte ---- */

@@ -27,7 +27,7 @@ export const programs: Program[] = [
     satuan: '/ 6 sesi / bulan',
     badge: 'KELOMPOK',
     badgeTone: 'red',
-    ringkasan: 'Cocok untuk rekan setim atau atlet lintas cabang. Belajar bareng, harga lebih ringan.',
+    ringkasan: 'Kelas kecil 6–10 atlet lintas cabang. Latihan bicara bareng, biaya per orang jadi lebih ringan.',
     dikuasai: [
       'Percaya diri memperkenalkan diri',
       'Mengenal gaya komunikasi atlet',
@@ -38,9 +38,9 @@ export const programs: Program[] = [
     didapat: [
       '6 sesi live coaching (60 menit/sesi)',
       'E-book Public Speaking & English',
-      '2 masterclass video learning',
-      'Berkenalan & belajar bareng atlet lain',
-      'Belajar dengan Sports Communication Coach',
+      '2 video masterclass',
+      'Latihan bareng atlet dari cabang lain',
+      'Dibimbing coach Sports Communication',
       'Classroom group report',
     ],
     journey: [
@@ -60,7 +60,7 @@ export const programs: Program[] = [
     satuan: '/ 6 sesi / bulan',
     badge: 'PROMO',
     badgeTone: 'red',
-    ringkasan: 'Progres paling cepat. Coach khusus menemani atlet dari nol sampai siap wawancara media.',
+    ringkasan: 'Satu atlet, satu coach. Latihan dari nol sampai berani wawancara media dan tampil di depan kamera.',
     dikuasai: [
       'Percaya diri memperkenalkan diri',
       'Mengenal gaya komunikasi atlet',
@@ -71,7 +71,7 @@ export const programs: Program[] = [
     didapat: [
       '6 sesi live coaching (60 menit/sesi)',
       'E-book Public Speaking & English',
-      '2 masterclass video learning',
+      '2 video masterclass',
       'Konten atlet di Instagram Prospect Asia',
       'Bebas pilih jadwal',
       'E-certificate',
@@ -94,7 +94,7 @@ export const programs: Program[] = [
     satuan: '/ 6 sesi / bulan',
     badge: '★ MEDIA NASIONAL',
     badgeTone: 'gold',
-    ringkasan: 'Semua benefit Elite, plus eksposur profil atletmu di portal berita nasional.',
+    ringkasan: 'Semua sesi Elite, plus profil atletmu diberitakan di portal berita nasional.',
     dikuasai: [
       'Percaya diri memperkenalkan diri',
       'Mengenal gaya komunikasi atlet',
@@ -105,7 +105,7 @@ export const programs: Program[] = [
     didapat: [
       '6 sesi live coaching (60 menit/sesi)',
       'E-book Public Speaking & English',
-      '2 masterclass video learning',
+      '2 video masterclass',
       'Konten atlet di Instagram Prospect Asia',
       'Bebas pilih jadwal',
       'E-certificate',

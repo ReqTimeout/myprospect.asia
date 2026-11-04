@@ -4,7 +4,7 @@ export const faqs: FaqItem[] = [
   {
     grup: 'Umum',
     q: 'Apa itu Sports Communication?',
-    a: 'Keterampilan fundamental buat atlet modern: public speaking & bahasa Inggris khusus konteks atlet. Jadi kamu percaya diri menghadapi media, membuka peluang lebih besar, dan mewakili diri serta tim dengan baik.',
+    a: 'Kemampuan bicara di depan orang dan media, plus bahasa Inggris khusus olahraga. Latihannya nyata: wawancara media, konferensi pers, sampai bicara dengan pelatih asing, wasit, dan ofisial.',
   },
   {
     grup: 'Umum',
