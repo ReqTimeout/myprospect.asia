@@ -6,8 +6,9 @@ import SectionImage from './SectionImage.astro';
 import { waLink } from '../lib/wa';
 ---
 
-<section class="relative mx-auto max-w-6xl overflow-hidden px-4 py-10 sm:px-6 sm:py-14">
+<section class="relative overflow-hidden py-10 sm:py-14">
   <SectionImage src="/media/session-online.jpg" pos="tl" opacity={0.28} />
+  <div class="relative mx-auto max-w-6xl px-4 sm:px-6">
   <div class="relative grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-14">
     <div class="relative lg:sticky lg:top-24">
       <Chapter num="10" label="FAQ" class="mb-6" />
@@ -44,5 +45,6 @@ import { waLink } from '../lib/wa';
     <div class="relative">
       <FaqAccordion client:visible items={faqs.slice(0, 5)} limit={5} />
     </div>
+  </div>
   </div>
 </section>

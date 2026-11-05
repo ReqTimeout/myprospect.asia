@@ -66,10 +66,12 @@ const page = (opts: {
   post: PostRow;
   related: { slug: string; title: string; kategori: string }[];
   waUrl: string;
+  /** URL dock tanpa baris sumber; dulu tidak ikut dilempar ke opts -> ReferenceError 500. */
+  waUrlDock: string;
   waNumber: string;
   ga4: string;
 }): string => {
-  const { post, related, waUrl, waNumber, ga4 } = opts;
+  const { post, related, waUrl, waUrlDock, waNumber, ga4 } = opts;
   const htmlBody = marked.parse(post.body, { async: false }) as string;
   const canonical = `${SITE}/berita/${post.slug}`;
   const cover = safeCover(post.cover, post.kategori);
@@ -402,6 +404,7 @@ export const onRequestGet = async (context: {
       post,
       related: relatedRes.results ?? [],
       waUrl,
+      waUrlDock,
       waNumber: settings.wa_number,
       ga4: settings.ga4_id ?? '',
     }),

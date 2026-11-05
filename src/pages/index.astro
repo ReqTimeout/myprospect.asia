@@ -116,17 +116,19 @@ const schema = [organizationSchema, faqSchema(faqs)];
     <WorkshopSection />
 
     <div class="surface-warm">
-      <section class="relative mx-auto max-w-6xl overflow-hidden px-4 py-10 sm:px-6 sm:py-14">
+      <section class="relative overflow-hidden py-10 sm:py-14">
 
         <SectionImage src="/media/interview-zone.jpg" pos="tr" opacity={0.28} />
+        <div class="relative mx-auto max-w-6xl px-4 sm:px-6">
         <Chapter num="07" label="Testimoni" class="mb-6" />
 
         <div class="mb-8">
           <h2 class="display text-5xl sm:text-6xl lg:text-7xl">
-            Kata <span class="hl-brand">mereka</span>
+            Atlet Binaan <span class="hl-brand">Kami</span>
           </h2>
         </div>
         <Testimonials client:visible items={testimonials} />
+        </div>
       </section>
     </div>
 
