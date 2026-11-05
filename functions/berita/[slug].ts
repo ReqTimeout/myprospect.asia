@@ -334,7 +334,7 @@ ${DOCK_CSS}
   © ${year} ${SITE_CFG.legal}. All rights reserved.
 </footer>
 
-${dockMarkup({ waUrl, active: 'berita', source: 'berita-dock' })}
+${dockMarkup({ waUrl: waUrlDock, active: 'berita', source: 'berita-dock' })}
 
 <script>
 (function () {
@@ -394,6 +394,8 @@ export const onRequestGet = async (context: {
   ]);
 
   const waUrl = waLink({ program: post.title, source: 'berita-detail', number: settings.wa_number });
+  // Dock: tanpa baris sumber (sumber sudah jelas dari posisinya).
+  const waUrlDock = waLink({ program: post.title, number: settings.wa_number, showSource: false });
 
   return new Response(
     page({

@@ -8,7 +8,7 @@
   let { active = '' }: { active?: string } = $props();
 
   const items: DockItem[] = DOCK_ITEMS.map((i) =>
-    i.wa ? { ...i, href: waLink({ source: 'dock' }) } : i,
+    i.wa ? { ...i, href: waLink({ source: 'dock', showSource: false }) } : i,
   );
 
   let current = $state(active);
