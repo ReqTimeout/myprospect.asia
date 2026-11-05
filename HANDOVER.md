@@ -1984,3 +1984,11 @@ git push origin main   # d488b78..882015a
 Verifikasi domain live: apex 200 · www → apex 200 (301) · /berita/ 200 · /program/elite-1on1/ 200 · /api/settings 200 · `audit-frames` 0 overflow + 0 console error (desktop + mobile) · probe DOM: background image full-bleed 390@0 (mobile) & 1440@0 (desktop) · animasi `cta-halo` aktif · eyebrow tidak ada · link "Detail →" tidak ada · pill HEMAT bg `rgb(13,127,62)` (hijau diskon) · "MEMBERSHIP PASS" + "COMING SOON" ada · hero 653px · total scroll mobile 9.994px.
 
 Yang **tidak** ikut ter-deploy: perubahan data (D1 tidak disentuh), dan MiniMax belum bisa dipakai (kuota 2067) — aset section tetap foto asli klien + blend `multiply`.
+
+### 39.1 Koreksi harga Small Group (5 Nov 2026)
+
+Klien: *"ada salah harga small group bukan Rp. 299.000 tapi Rp. 325.000"*.
+
+- `src/data/programs.ts` → `harga: 299_000` → **`325_000`** (Small Group). Harga coret tetap Rp750.000.
+- Badge diskon **dihitung otomatis** → **HEMAT 57%** (sebelumnya 60%). Komentar urutan harga ikut disinkronkan.
+- Deploy ulang: `a60748a6` (Production/main) → live terverifikasi: `Rp325.000` + `Hemat 57%` di homepage & `/program/small-group/` (200).
