@@ -2056,3 +2056,12 @@ Materi di `/Volumes/macmini/Downloads/Website Material` diperiksa dulu (md5 vs m
 `npm run build` 12 halaman OK. `dist/index.html`: 6 foto coach, 3 foto testimoni, 8 logo mitra + Knuckles ter-referensi; dev server 200 untuk aset baru. **Menunggu konfirmasi klien**: data lengkap Azka (peran/olahraga/IELTS), nasib Zio, jenis keanggotaan Knuckles.
 
 **Deploy (5 Nov):** commit `81395cd` (favicon) + `fddbc07` (materi) → L3 deep review 0 temuan → push `origin/main` → `wrangler pages deploy --branch=main` (preview `eee79314`). Verifikasi domain live `myprospect.asia`: 6 foto coach, 3 testimoni, logo Knuckles, favicon-32 — semua 200. ✅ Production.
+
+## 46 — Kartu Coach: compact, foto face-align, detail satu baris (5 Nov, live)
+
+Komplain klien: kartu coach jelek — foto terpotong, terlalu panjang, detail panel mengganggu.
+
+- **Foto**: keenam `public/media/coaches/*.webp` di-crop ulang per-foto (PIL) — ubun-ubun ±12% dari atas, pusat muka di 34%, tinggi kepala ±38% frame → garis mata sejajar lintas kartu. Ayya & Ido (muka kecil/rendah) di-zoom ke wajah; keluaran 512×512, nama file tetap.
+- **Kartu**: `w-48/sm:w-56`, foto `aspect-1/1 object-top`, skill bar fiktif (88/74/62) + chip IELTS/Coach Senior/cabang olahraga **dihapus** (tidak ada di materi klien — lihat §45 catatan konfirmasi). Headline intro diperbaiki: "Enam coach pendamping, dipimpin ex-media PERSIB Bandung & PSSI" (klaim "berlisensi"/"atlet JPN" dihapus, tak ber-sumber).
+- **Detail**: eksperimen toggle panel (details absolute) ditolak klien "mengganggu" → final: satu baris kecil `detail?` di bawah peran (10px, `text-ink/70`), hanya coach dengan detail terkonfirmasi. Ferri: "Ex-media PERSIB Bandung & PSSI · 2.175+ atlet teredukasi". Booking `mt-auto` → tinggi kartu seragam.
+- **Deploy**: commit `64db42a` → L3 review 0 temuan → push → `wrangler pages deploy --branch=main` (preview `16debc49`). Verifikasi live: foto 512×512, baris detail ada, IELTS/skill-bar lama 0. ✅
