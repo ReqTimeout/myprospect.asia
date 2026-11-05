@@ -2020,3 +2020,37 @@ waShowSource: false,   // semua tombol jadi tanpa "_sumber"
 ```
 
 Perilaku **saat ini tidak berubah** (dock tanpa sumber, 23 CTA lain dengan sumber). Uji performed: saklar `false` → 0 pesan bersumber; saklar `true` → 23 bersumber + 1 tanpa.
+
+## 44. Favicon set Prospect Asia dirapikan (5 Nov 2026)
+
+Sesi sebelumnya meninggalkan working tree berisi aset ikon baru (belum di-commit, belum terdokumentasi): `favicon.png` 512×512 (mark P miring hitam di atas kotak oranye `#ff8c00` sudut membulat, sesuai wordmark PROSPECT), `apple-touch-icon.png` 180×180, `favicon-32.png` baru, dan `favicon.svg` versi embed-raster.
+
+### 44.1 Perbaikan
+
+- **`favicon.svg` cacat → diperbaiki.** Versi lama menempel PNG master 512×512 ke dalam kotak 252×348 (`x=130 y=82`) — mark P jadi **kurus/terstretch vertikal** dan ukurannya berbeda dari PNG. Sekarang PNG di-embed penuh kanvas (`x=0 y=0 512×512`) sehingga SVG ≡ PNG (21,8 KB). Alternatif vector murni tidak dipakai karena glyph vektor lama (fabd3af) sudah **beda bentuk** dengan mark brand baru, dan tidak ada tracer (potrace/vtracer) di mesin.
+- **`favicon-32.png` yang tak dirujuk → di-wire** ke `Base.astro` sebagai `<link rel="icon" type="image/png" sizes="32x32">`. Template single post (`functions/berita/[slug].ts`) tetap pakai `/favicon.png` (PNG master) — tidak berubah.
+
+### 44.2 Verifikasi lokal (belum deploy)
+
+Render `favicon.svg` (qlmanage) identik dengan `favicon.png` — distorsi hilang. `npm run build` 12 halaman OK; `dist/index.html` memuat 4 link ikon (svg, 32px, png, apple-touch). Dev server: `/favicon.svg` 200 (sama byte per byte dengan sumber), `/favicon-32.png` 200. **Belum di-commit/deploy** — menunggu persetujuan klien.
+
+## 45 — Materi terbaru klien diterapkan: foto coach, testimoni asli, logo mitra (5 Nov)
+
+Materi di `/Volumes/macmini/Downloads/Website Material` diperiksa dulu (md5 vs materi lama: file lama identik, tidak ada duplikat kerja). Copywriting PDF sudah sesuai dengan home — tidak diubah. Yang diterapkan:
+
+### 45.1 Aset baru (webp, hasil optimasi PIL)
+
+- `public/media/coaches/*.webp` — 7 foto coach (6 yang ada di `coaches.ts` + `azka.webp` disiapkan, belum dipakai karena data Azka belum dikonfirmasi; statistik "6 coach" tetap konsisten).
+- `public/media/testimoni/*.webp` — Gohan, Haidar, Hudzaifah (maks 800px).
+- `public/media/partners/*.webp` — 8 logo; background dibuang via flood-fill kecuali `mfc-marunda` (teks putih → navy dipertahankan). Diverifikasi visual di atas background terang: semua bersih.
+
+### 45.2 Data & UI
+
+- `coaches.ts`: field `foto?` + isi; `CoachesSection.astro`: plat jersey/no/pill posisi diganti foto asli (`object-cover object-top`), jersey tetap cadangan bila coach tanpa foto.
+- `testimonials.ts`: 3 testimoni **asli** dari Testimonial.pdf (Gohan TC Ajax & NAC Breda 10 th; Haidar kapten KFA Lamongan 12 th; Hudzaifah eks Timnas Qatar U-16 17 th). Zio dihapus (tidak ada di materi). Bentuk tipe `{nama,asal,olahraga,kutipan}` dipertahankan agar kontrak admin/D1 tidak berubah; `foto?` opsional — data live dari admin fallback ke foto generik.
+- `Testimonials.svelte`: foto per-orang (`t.foto ??` fallback), tanda kutip “…” dilepas karena teks materi bergaya deskriptif.
+- `partners.ts`: **+Knuckles Basketball** (`knuckles-basketball`, akademi) — `PartnerLogo.astro` otomatis memakai file webp per-slug. Mitra tanpa logo masih 3: margahayu-raya, little-pep, rs-limijati (fallback crest).
+
+### 45.3 Verifikasi lokal (belum deploy)
+
+`npm run build` 12 halaman OK. `dist/index.html`: 6 foto coach, 3 foto testimoni, 8 logo mitra + Knuckles ter-referensi; dev server 200 untuk aset baru. **Menunggu konfirmasi klien**: data lengkap Azka (peran/olahraga/IELTS), nasib Zio, jenis keanggotaan Knuckles.

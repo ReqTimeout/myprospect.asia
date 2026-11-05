@@ -5,7 +5,6 @@ import SectionImage from './SectionImage.astro';
 import { waLink } from '../lib/wa';
 
 const doubled = [...coaches, ...coaches];
-const posisi = ['GK', 'CB', 'CM', 'ST', 'WF', 'PG'];
 const fokus = ['Public Speaking', 'Simulasi Wawancara Media', 'English for Athletes'];
 const skill = [88, 74, 62];
 ---
@@ -35,18 +34,18 @@ const skill = [88, 74, 62];
             <article
               class="spot card-soft card-lift group relative flex w-60 shrink-0 flex-col overflow-hidden rounded-3xl sm:w-64"
             >
-              <div class="relative aspect-16/11 overflow-hidden bg-ink">
-                <div class="jersey absolute inset-0"></div>
-                <div class="absolute inset-0 bg-ink/70"></div>
-                <span class="display absolute top-1 right-3 text-6xl leading-none text-white italic" aria-hidden="true">
-                  {String((i % coaches.length) + 1).padStart(2, '0')}
-                </span>
-                <span class="absolute bottom-1 left-4 display text-5xl leading-none text-white italic">
-                  {c.nama[0]}
-                </span>
-                <span class="absolute right-3 bottom-3 rounded-full bg-brand px-2 py-0.5 text-[9px] font-black tracking-widest text-white uppercase">
-                  {posisi[i % posisi.length]}
-                </span>
+              {/* Foto asli coach dari materi klien; pola jersey hanya cadangan kalau belum ada foto. */}
+              <div class="relative aspect-16/11 overflow-hidden bg-paper-deep">
+                {c.foto ? (
+                  <img
+                    src={c.foto}
+                    alt={`Coach ${c.nama}`}
+                    loading="lazy"
+                    class="absolute inset-0 h-full w-full object-cover object-top"
+                  />
+                ) : (
+                  <div class="jersey absolute inset-0"></div>
+                )}
               </div>
 
               <div class="relative z-10 flex flex-1 flex-col p-5">

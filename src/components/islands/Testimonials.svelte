@@ -122,12 +122,12 @@
           <div class="relative z-10 grid sm:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
             <div class="relative aspect-16/10 overflow-hidden bg-paper-deep sm:aspect-auto">
               <img
-                src={photos[i % photos.length].src}
-                alt={photos[i % photos.length].alt}
+                src={t.foto ?? photos[i % photos.length].src}
+                alt={t.foto ? `${t.nama} — atlet Prospect Asia` : photos[i % photos.length].alt}
                 loading="lazy"
                 width="1280"
                 height="800"
-                class="absolute inset-0 h-full w-full object-cover"
+                class="absolute inset-0 h-full w-full object-cover object-[center_22%]"
               />
               <!-- Tanpa overlay gelap di foto (permintaan klien); ikon kutip duduk
                    di chip hitam pekat supaya tetap terbaca di atas foto terang. -->
@@ -147,7 +147,7 @@
                 {/each}
               </p>
               <blockquote class="text-sm leading-relaxed text-ink sm:text-base">
-                “{t.kutipan}”
+                {t.kutipan}
               </blockquote>
               <figcaption class="mt-5 flex items-center gap-3">
                 <span class="flex h-11 w-11 items-center justify-center rounded-full bg-brand text-base font-black text-white italic">

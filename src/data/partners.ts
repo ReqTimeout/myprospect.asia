@@ -10,6 +10,7 @@ export type Partner = {
 export const partners: Partner[] = [
   { nama: 'Djanur Football Academy', slug: 'djanur-football-academy', jenis: 'akademi', crest: 'shield' },
   { nama: 'Dream Baller ID', slug: 'dream-baller-id', jenis: 'akademi', crest: 'round' },
+  { nama: 'Knuckles Basketball', slug: 'knuckles-basketball', jenis: 'akademi', crest: 'shield' },
   { nama: 'PB Jaya Raya Ragunan', slug: 'pb-jaya-raya-ragunan', jenis: 'akademi', crest: 'banner' },
   {
     nama: 'Akademi Futsal Margahayu Raya',
