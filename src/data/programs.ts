@@ -23,7 +23,7 @@ export const programs: Program[] = [
     nama: 'Small Group',
     sub: 'Belajar bareng 6–10 atlet lintas cabor',
     hargaCoret: 750_000,
-    harga: 299_000,
+    harga: 325_000,
     satuan: '/ 6 sesi / bulan',
     badge: 'KELOMPOK',
     badgeTone: 'red',
