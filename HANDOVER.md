@@ -1992,3 +1992,11 @@ Klien: *"ada salah harga small group bukan Rp. 299.000 tapi Rp. 325.000"*.
 - `src/data/programs.ts` → `harga: 299_000` → **`325_000`** (Small Group). Harga coret tetap Rp750.000.
 - Badge diskon **dihitung otomatis** → **HEMAT 57%** (sebelumnya 60%). Komentar urutan harga ikut disinkronkan.
 - Deploy ulang: `a60748a6` (Production/main) → live terverifikasi: `Rp325.000` + `Hemat 57%` di homepage & `/program/small-group/` (200).
+
+### 39.2 Headline hero baru + sumber WA di dock disembunyikan (5 Nov 2026)
+
+- Hero h1: "Kini #JadiAtletModern Harus Bisa Bahasa Inggris & Public Speaking!" → **"SAATNYA #JADIATLETMODERN YANG JAGO BAHASA INGGRIS & PUBLIC SPEAKING!"** (hashtag tetap oranye). Hero mobile 653 → 685px.
+- `waLink()` dapat opsi baru **`showSource?: boolean`** (default `true`) → baris `_sumber: …` bisa disembunyikan.
+- **Dock** (homepage `Dock.svelte` + template single post `functions/berita/[slug].ts` → `waUrlDock`) memakai `showSource: false` → pesan WA dari dock **tanpa "_sumber: dock"**. CTA lain (header, hero, kartu, form, CTA band) **tetap menyimpan sumber** untuk atribusi.
+
+Deploy `ce524151` (Production/main) → live terverifikasi: h1 = "SAATNYA #JADIATLETMODERN YANG JAGO BAHASA INGGRIS & PUBLIC SPEAKING!", dock tanpa "_sumber" ✓.
