@@ -2000,3 +2000,23 @@ Klien: *"ada salah harga small group bukan Rp. 299.000 tapi Rp. 325.000"*.
 - **Dock** (homepage `Dock.svelte` + template single post `functions/berita/[slug].ts` → `waUrlDock`) memakai `showSource: false` → pesan WA dari dock **tanpa "_sumber: dock"**. CTA lain (header, hero, kartu, form, CTA band) **tetap menyimpan sumber** untuk atribusi.
 
 Deploy `ce524151` (Production/main) → live terverifikasi: h1 = "SAATNYA #JADIATLETMODERN YANG JAGO BAHASA INGGRIS & PUBLIC SPEAKING!", dock tanpa "_sumber" ✓.
+
+### 39.3 Saklar global sumber WhatsApp (5 Nov 2026)
+
+Permintaan: *"kalau nanti mau sumber disembunyikan juga di tombol lain kerjakan ini"*.
+
+`waLink()` (`src/lib/wa.ts`) kini punya 3 tingkat kontrol:
+
+| Pemakaian | Perilaku |
+|---|---|
+| `showSource: false` | **paksa sembunyikan** baris `_sumber: …` (dipakai dock) |
+| `showSource: true` | **paksa tampilkan**, walau saklar global mati |
+| tidak diisi | ikut saklar global **`SITE.waShowSource`** (`src/data/site.ts`) |
+
+Jadi untuk menyembunyikan sumber di **semua** tombol nanti: ubah 1 baris di `src/data/site.ts`:
+
+```ts
+waShowSource: false,   // semua tombol jadi tanpa "_sumber"
+```
+
+Perilaku **saat ini tidak berubah** (dock tanpa sumber, 23 CTA lain dengan sumber). Uji performed: saklar `false` → 0 pesan bersumber; saklar `true` → 23 bersumber + 1 tanpa.
