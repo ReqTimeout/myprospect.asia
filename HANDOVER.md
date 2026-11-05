@@ -2065,3 +2065,11 @@ Komplain klien: kartu coach jelek — foto terpotong, terlalu panjang, detail pa
 - **Kartu**: `w-48/sm:w-56`, foto `aspect-1/1 object-top`, skill bar fiktif (88/74/62) + chip IELTS/Coach Senior/cabang olahraga **dihapus** (tidak ada di materi klien — lihat §45 catatan konfirmasi). Headline intro diperbaiki: "Enam coach pendamping, dipimpin ex-media PERSIB Bandung & PSSI" (klaim "berlisensi"/"atlet JPN" dihapus, tak ber-sumber).
 - **Detail**: eksperimen toggle panel (details absolute) ditolak klien "mengganggu" → final: satu baris kecil `detail?` di bawah peran (10px, `text-ink/70`), hanya coach dengan detail terkonfirmasi. Ferri: "Ex-media PERSIB Bandung & PSSI · 2.175+ atlet teredukasi". Booking `mt-auto` → tinggi kartu seragam.
 - **Deploy**: commit `64db42a` → L3 review 0 temuan → push → `wrangler pages deploy --branch=main` (preview `16debc49`). Verifikasi live: foto 512×512, baris detail ada, IELTS/skill-bar lama 0. ✅
+
+## 47 — Bug 500 berita diperbaiki + full-bleed background section + judul testimoni (5 Nov, live)
+
+- **`/berita/<slug>` 500 di production** (regresi commit saklar `waShowSource` 3b2455f): template `page()` di `functions/berita/[slug].ts` memakai `waUrlDock` yang tidak pernah masuk opts/destructuring → ReferenceError. Fix: teruskan `waUrlDock` ke `page()`. Tidak terdeteksi lokal karena `astro dev` tidak menjalankan Functions (pelajaran: route functions hanya bisa diverifikasi post-deploy). Live kini 200 untuk ketiga post, dock utuh.
+- **Full-bleed background**: akar masalah `.sec-img` 100vw selama ini di-clip oleh section root `max-w-6xl overflow-hidden`. 6 section (Mitra, Berita, FAQ, Coach, Workshop, Testimoni-home) direstruktur: root full-width, konten di wrapper `mx-auto max-w-6xl px-4 sm:px-6` (`relative` agar badge absolut tidak bergeser). Halaman tentang/berita-list/program/workshop-detail memang sudah full-width.
+- **Judul**: "Kata mereka" → **"Atlet Binaan Kami"** (hl-brand di "Kami").
+- Catatan QA: form lead gagal di localhost itu normal (Functions tidak jalan di dev); production `/api/leads` 200. Ada lead tes "QA TEST" di D1 — abaikan.
+- **Deploy**: commit `90e7514` → L3 0 temuan → push → deploy `--branch=main` (preview `a3e0c9b2`). Verifikasi live: 3 halaman berita 200, "Atlet Binaan" tampil, 5 section root baru. ✅
