@@ -2054,3 +2054,5 @@ Materi di `/Volumes/macmini/Downloads/Website Material` diperiksa dulu (md5 vs m
 ### 45.3 Verifikasi lokal (belum deploy)
 
 `npm run build` 12 halaman OK. `dist/index.html`: 6 foto coach, 3 foto testimoni, 8 logo mitra + Knuckles ter-referensi; dev server 200 untuk aset baru. **Menunggu konfirmasi klien**: data lengkap Azka (peran/olahraga/IELTS), nasib Zio, jenis keanggotaan Knuckles.
+
+**Deploy (5 Nov):** commit `81395cd` (favicon) + `fddbc07` (materi) → L3 deep review 0 temuan → push `origin/main` → `wrangler pages deploy --branch=main` (preview `eee79314`). Verifikasi domain live `myprospect.asia`: 6 foto coach, 3 testimoni, logo Knuckles, favicon-32 — semua 200. ✅ Production.
