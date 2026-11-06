@@ -2073,3 +2073,11 @@ Komplain klien: kartu coach jelek — foto terpotong, terlalu panjang, detail pa
 - **Judul**: "Kata mereka" → **"Atlet Binaan Kami"** (hl-brand di "Kami").
 - Catatan QA: form lead gagal di localhost itu normal (Functions tidak jalan di dev); production `/api/leads` 200. Ada lead tes "QA TEST" di D1 — abaikan.
 - **Deploy**: commit `90e7514` → L3 0 temuan → push → deploy `--branch=main` (preview `a3e0c9b2`). Verifikasi live: 3 halaman berita 200, "Atlet Binaan" tampil, 5 section root baru. ✅
+
+## 48 — Testimonial dummy tuntas: D1 disentuh, foto disambung by nama (6 Nov, live)
+
+Akar: §45 hanya mengganti data statis `testimonials.ts`, padahal island `Testimonials.svelte` saat hydration **menimpa** dengan data live `/api/content/testimonials` (D1 `content_items`) yang masih berisi seed dummy 0002 (quote karangan + Zio). Pelajaran umum: dua sumber data (statis vs D1) harus diubah sepasang.
+
+- **`migrations/0004_testimonials_real.sql`** dieksekusi `wrangler d1 execute --remote`: DELETE semua kind=testimonials, INSERT Gohan/Haidar/Hudzaifah sesuai Testimonial.pdf (Zio hilang). Berlaku seketika tanpa deploy.
+- **Foto**: D1 tidak punya field foto → mapping live di island kini `foto: items.find(s => s.nama === t.title)?.foto` (join by nama ke data statis). Testimoni admin baru tanpa nama cocok tetap aman: fallback foto generik.
+- **Deploy**: commit `7f86b91` → L3 0 temuan → push → `--branch=main` (preview `acb0c548`). Verifikasi live: API mengembalikan 3 asli, HTML 0 dummy, chunk `Testimonials.*.js` memuat logika join, `media/testimoni/*.webp` 200. ✅
