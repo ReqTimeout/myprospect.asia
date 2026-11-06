@@ -12,12 +12,6 @@ export const partners: Partner[] = [
   { nama: 'Dream Baller ID', slug: 'dream-baller-id', jenis: 'akademi', crest: 'round' },
   { nama: 'Knuckles Basketball', slug: 'knuckles-basketball', jenis: 'akademi', crest: 'shield' },
   { nama: 'PB Jaya Raya Ragunan', slug: 'pb-jaya-raya-ragunan', jenis: 'akademi', crest: 'banner' },
-  {
-    nama: 'Akademi Futsal Margahayu Raya',
-    slug: 'akademi-futsal-margahayu-raya',
-    jenis: 'akademi',
-    crest: 'hex',
-  },
   { nama: 'MFC Marunda', slug: 'mfc-marunda', jenis: 'akademi', crest: 'oval' },
   { nama: 'SSBRBC', slug: 'ssbrbc', jenis: 'akademi', crest: 'hex' },
   { nama: 'Little Pep', slug: 'little-pep', jenis: 'mitra', crest: 'round' },

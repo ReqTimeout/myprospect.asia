@@ -28,18 +28,3 @@ Perubahan itu datang dari sesi 1-on-1 bersama personal coach: latihan mikrofon, 
 - Bahasa Inggris dasar untuk media internasional
 
 Ingin atletmu seperti Gohan? Chat admin untuk jadwal tes penempatan.', 'published') ON CONFLICT(slug) DO UPDATE SET title=excluded.title, "desc"=excluded."desc", kategori=excluded.kategori, pub_date=excluded.pub_date, body=excluded.body, status=excluded.status, updated_at=datetime('now');
-INSERT INTO posts (slug, title, "desc", kategori, pub_date, body, status) VALUES ('kolaborasi-workshop-starter', 'Kolaborasi: Workshop Starter untuk Akademi Futsal Margahayu Raya', 'Sesi 90 menit Sports Communication Workshop Starter digelar untuk atlet binaan akademi futsal.', 'Kolaborasi', '2026-10-08', 'Workshop **Sports Communication Starter** digelar untuk atlet binaan akademi. Sesi 90 menit ini padat dan interaktif.
-
-## Isi sesi
-
-1. **Mini simulasi wawancara**: atlet berlatih menjawab pertanyaan seusai pertandingan, seperti konferensi pers sesungguhnya.
-2. **Public speaking khusus atlet**: struktur bicara, body language, dan cara bawa diri di depan kamera.
-3. **Konten bersama**: peserta membuat konten tentang Sports Communication sebagai penutup sesi.
-
-## Kenapa akademi ikut
-
-Kompetisi menuntut atlet tampil ganda: jago di lapangan **dan** bisa bicara di depan media. Workshop ini dirancang untuk minimal 10 peserta, didampingi Sports Communication coach berpengalaman.
-
-Untuk paket yang lebih lengkap, dengan 3+ assessor, individual assessment, dan pemberitaan akademi di portal media, tersedia **Workshop Premium**.
-
-Tertarik menghadirkan ke akademimu? Booking via WhatsApp.', 'published') ON CONFLICT(slug) DO UPDATE SET title=excluded.title, "desc"=excluded."desc", kategori=excluded.kategori, pub_date=excluded.pub_date, body=excluded.body, status=excluded.status, updated_at=datetime('now');
