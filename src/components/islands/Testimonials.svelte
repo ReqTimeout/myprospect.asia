@@ -57,11 +57,14 @@
       '/api/content/testimonials',
     );
     if (data && data.length > 0) {
+      // Data admin D1 tidak punya field foto — sambungkan kembali ke data statis
+      // by nama supaya testimoni asli tetap tampil dengan foto aslinya.
       list = data.map((t) => ({
         nama: t.title,
         asal: t.meta.asal ?? 'Atlet Prospect Asia',
         olahraga: t.meta.olahraga ?? '',
         kutipan: t.body,
+        foto: items.find((s) => s.nama === t.title)?.foto,
       }));
       embla?.reInit?.();
     }
