@@ -2081,3 +2081,10 @@ Akar: §45 hanya mengganti data statis `testimonials.ts`, padahal island `Testim
 - **`migrations/0004_testimonials_real.sql`** dieksekusi `wrangler d1 execute --remote`: DELETE semua kind=testimonials, INSERT Gohan/Haidar/Hudzaifah sesuai Testimonial.pdf (Zio hilang). Berlaku seketika tanpa deploy.
 - **Foto**: D1 tidak punya field foto → mapping live di island kini `foto: items.find(s => s.nama === t.title)?.foto` (join by nama ke data statis). Testimoni admin baru tanpa nama cocok tetap aman: fallback foto generik.
 - **Deploy**: commit `7f86b91` → L3 0 temuan → push → `--branch=main` (preview `acb0c548`). Verifikasi live: API mengembalikan 3 asli, HTML 0 dummy, chunk `Testimonials.*.js` memuat logika join, `media/testimoni/*.webp` 200. ✅
+
+## 49 — Akademi Futsal Margahayu Raya dihapus total (6 Nov, live)
+
+- Permintaan klien: hapus dari daftar mitra **dan** beritanya.
+- **Mitra**: entri `partners.ts` dihapus → penghitung otomatis jadi 6 akademi; placeholder form lead "cth: Akademi Futsal Margahayu Raya" → "cth: Akademi Sepak Bola Kota". Logo `media/partners/akademi-futsal-margahayu-raya.webp` dibiarkan (tidak direferensikan).
+- **Berita dua sumber** (pelajaran §48 diterapkan sejak awal): MDX `kolaborasi-workshop-starter.mdx` dihapus (list home+/berita+sitemap), seed `0003`/`0005` dibersihkan dari post itu (agar tidak hidup di environment baru), migration `0006_delete_kolaborasi_post.sql` dieksekusi `--remote` ke D1 production (detail page + /api/posts).
+- **Deploy**: commit `cd6b387` → L3 0 temuan → push → `--branch=main` (preview `ab13cb5b`). Verifikasi live: home & /berita 0 kata "margahayu", `/berita/kolaborasi-workshop-starter` 404, sitemap bersih, ">6 akademi<" tampil. ✅
